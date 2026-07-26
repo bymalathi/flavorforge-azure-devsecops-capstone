@@ -1,5 +1,6 @@
 import "./Hero.css";
 import heroImage from "../../assets/hero.png";
+import Button from "../ui/Button/Button";
 
 function Hero() {
   return (
@@ -13,8 +14,13 @@ function Hero() {
         </p>
 
         <div className="hero-buttons">
-          <button className="btn btn-primary">Get Started</button>
-          <button className="btn btn-secondary">Learn More</button>
+          <Button variant="primary">
+            Get Started
+          </Button>
+
+          <Button variant="secondary">
+            Learn More
+          </Button>
         </div>
       </div>
 
