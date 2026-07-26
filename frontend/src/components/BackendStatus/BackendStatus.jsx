@@ -23,7 +23,10 @@ function BackendStatus({ health, error }) {
 
       {health && (
         <Card>
-          <p><strong>Status:</strong> {health.status}</p>
+          <p>
+  <strong>Status:</strong>{" "}
+  {health.status}
+</p>
           <p><strong>Application:</strong> {health.application}</p>
           <p><strong>Version:</strong> {health.version}</p>
           <p><strong>Timestamp:</strong> {health.timestamp}</p>
