@@ -1,3 +1,5 @@
+
+
 import { useEffect, useState } from "react";
 
 import Hero from "../components/Hero/Hero";
@@ -25,6 +27,9 @@ function HomePage() {
 
     loadHealth();
   }, []);
+
+
+
 
  return (
   <>

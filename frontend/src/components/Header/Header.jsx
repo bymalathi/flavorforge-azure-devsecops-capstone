@@ -1,19 +1,58 @@
+import { useState } from "react";
+import { NavLink } from "react-router-dom";
+
 import "./Header.css";
-import { Link } from "react-router-dom";
 
 function Header() {
+
+  const [menuOpen, setMenuOpen] = useState(false);
+
   return (
     <header>
-      <nav>
-        <div className="logo">🍽️ FlavorForge</div>
 
-        <div className="nav-links">
-          <Link to="/">Home</Link>
-          <Link to="/recipes">Recipes</Link>
-          <Link to="/about">About</Link>
-          <Link to="/contact">Contact</Link>
+      <nav>
+
+        <div className="logo">
+          FlavorForge
         </div>
+
+
+        <button
+          className="menu-toggle"
+          onClick={() => setMenuOpen(!menuOpen)}
+        >
+          ☰
+        </button>
+
+
+        <div
+          className={
+            menuOpen
+              ? "nav-links active"
+              : "nav-links"
+          }
+        >
+
+          <NavLink to="/" onClick={() => setMenuOpen(false)}>
+            Home
+          </NavLink>
+
+          <NavLink to="/recipes" onClick={() => setMenuOpen(false)}>
+            Recipes
+          </NavLink>
+
+          <NavLink to="/about" onClick={() => setMenuOpen(false)}>
+            About
+          </NavLink>
+
+          <NavLink to="/contact" onClick={() => setMenuOpen(false)}>
+            Contact
+          </NavLink>
+
+        </div>
+
       </nav>
+
     </header>
   );
 }

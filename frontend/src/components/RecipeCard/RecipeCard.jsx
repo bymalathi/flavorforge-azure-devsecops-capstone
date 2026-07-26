@@ -1,20 +1,36 @@
 import "./RecipeCard.css";
 import Card from "../ui/Card/Card";
+import Badge from "../ui/Badge/Badge";
 
 function RecipeCard({ recipe }) {
   return (
     <Card>
       <div className="recipe-card">
 
-        <h3>{recipe.name}</h3>
+        <img
+          src={recipe.image}
+          alt={recipe.name}
+          className="recipe-image"
+        />
 
-        <p>
-          <strong>Category:</strong> {recipe.category}
-        </p>
+        <div className="recipe-content">
 
-        <p>
-          <strong>Difficulty:</strong> {recipe.difficulty}
-        </p>
+          <h3>{recipe.name}</h3>
+
+          <div className="recipe-badges">
+            <Badge>{recipe.category}</Badge>
+            <Badge>{recipe.difficulty}</Badge>
+          </div>
+
+          <p className="cook-time">
+            ⏱ {recipe.cookTime}
+          </p>
+
+          <button className="view-button">
+            View Recipe →
+          </button>
+
+        </div>
 
       </div>
     </Card>
