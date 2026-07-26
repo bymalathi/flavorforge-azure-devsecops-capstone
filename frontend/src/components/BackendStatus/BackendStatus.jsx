@@ -2,7 +2,7 @@ import "./BackendStatus.css";
 import Card from "../ui/Card/Card";
 
 import Loading from "../ui/Loading/Loading";
-
+import Badge from "../ui/Badge/Badge";
 
 function BackendStatus({ health, error }) {
   return (
@@ -23,9 +23,13 @@ function BackendStatus({ health, error }) {
 
       {health && (
         <Card>
-          <p>
+ <p>
   <strong>Status:</strong>{" "}
-  {health.status}
+  <Badge
+    variant={health.status === "UP" ? "success" : "error"}
+  >
+    {health.status}
+  </Badge>
 </p>
           <p><strong>Application:</strong> {health.application}</p>
           <p><strong>Version:</strong> {health.version}</p>
