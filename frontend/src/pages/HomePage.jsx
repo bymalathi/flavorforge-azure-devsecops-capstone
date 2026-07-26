@@ -1,17 +1,26 @@
+import Header from "../components/Header/Header";
+import Footer from "../components/Footer/Footer";
+
 function HomePage() {
   return (
-    <main>
-      <h1>🍽️ FlavorForge</h1>
+    <>
+      <Header />
 
-      <p>
-        Welcome to the FlavorForge Azure DevSecOps Capstone Project.
-      </p>
+      <main>
+        <h1>🍽️ FlavorForge</h1>
 
-      <p>
-        Building a production-ready cloud-native recipe platform using React,
-        Express, Docker, Kubernetes, Azure DevOps, and AKS.
-      </p>
-    </main>
+        <p>
+          Welcome to the FlavorForge Azure DevSecOps Capstone Project.
+        </p>
+
+        <p>
+          Building a production-ready cloud-native recipe platform using React,
+          Express, Docker, Kubernetes, Azure DevOps, and AKS.
+        </p>
+      </main>
+
+      <Footer />
+    </>
   );
 }
 
