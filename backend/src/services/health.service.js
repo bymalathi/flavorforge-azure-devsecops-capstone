@@ -1,6 +1,8 @@
 function getHealthStatus() {
     console.log("➡️ Service reached");
 
+    //await new Promise((resolve) => setTimeout(resolve, 10000));
+
     return {
         status: "UP",
         application: "FlavorForge Backend",
