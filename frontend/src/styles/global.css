@@ -13,9 +13,7 @@ body {
 }
 
 main {
-  max-width: 900px;
-  margin: 60px auto;
-  padding: 20px;
+  min-height: calc(100vh - 140px);
 }
 
 h1 {

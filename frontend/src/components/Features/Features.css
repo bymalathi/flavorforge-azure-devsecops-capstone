@@ -14,3 +14,9 @@
   grid-template-columns: repeat(3, 1fr);
   gap: var(--spacing-lg);
 }
+
+@media (max-width: 768px) {
+  .feature-grid {
+    grid-template-columns: 1fr;
+  }
+}
