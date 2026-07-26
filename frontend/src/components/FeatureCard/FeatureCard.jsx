@@ -1,14 +1,17 @@
 import "./FeatureCard.css";
+import Card from "../ui/Card/Card";
 
-function FeatureCard({ title, description, icon }) {
+function FeatureCard({ icon, title, description }) {
   return (
-    <article className="feature-card">
-      <div className="feature-icon">{icon}</div>
+    <Card>
+      <div className="feature-card">
+        <div className="feature-icon">{icon}</div>
 
-      <h3>{title}</h3>
+        <h3>{title}</h3>
 
-      <p>{description}</p>
-    </article>
+        <p>{description}</p>
+      </div>
+    </Card>
   );
 }
 
