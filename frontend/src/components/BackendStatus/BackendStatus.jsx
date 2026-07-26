@@ -1,6 +1,9 @@
 import "./BackendStatus.css";
 import Card from "../ui/Card/Card";
 
+import Loading from "../ui/Loading/Loading";
+
+
 function BackendStatus({ health, error }) {
   return (
     <section className="backend-status">
@@ -14,8 +17,8 @@ function BackendStatus({ health, error }) {
 
       {!health && !error && (
         <Card>
-          <p>Loading backend status...</p>
-        </Card>
+  <Loading message="Checking backend health..." />
+</Card>
       )}
 
       {health && (
