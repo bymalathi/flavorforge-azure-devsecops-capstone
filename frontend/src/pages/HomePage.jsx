@@ -6,6 +6,8 @@ import Features from "../components/Features/Features";
 import { getHealthStatus } from "../services/healthService";
 
 import BackendStatus from "../components/BackendStatus/BackendStatus";
+import RecipeList from "../components/RecipeList/RecipeList";
+
 
 function HomePage() {
   const [health, setHealth] = useState(null);
@@ -24,11 +26,13 @@ function HomePage() {
     loadHealth();
   }, []);
 
-  return (
+ return (
   <>
     <Hero />
 
     <Features />
+
+    <RecipeList />
 
     <BackendStatus
       health={health}

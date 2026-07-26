@@ -1,0 +1,12 @@
+.recipe-card h3 {
+  color: var(--color-primary);
+  margin-bottom: var(--spacing-md);
+}
+
+.recipe-card p {
+  margin-bottom: var(--spacing-sm);
+}
+
+.recipe-card strong {
+  color: var(--color-text);
+}
