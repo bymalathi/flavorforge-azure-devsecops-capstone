@@ -34,3 +34,20 @@ nav {
 .nav-links a:hover {
   color: var(--color-primary);
 }
+
+@media (max-width: 768px) {
+  nav {
+    flex-direction: column;
+    gap: var(--spacing-md);
+  }
+
+  .nav-links {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--spacing-md);
+  }
+
+  .logo {
+    text-align: center;
+  }
+}
