@@ -1,13 +1,13 @@
 function AboutPage() {
   return (
-    <main>
+    <section>
       <h1>About FlavorForge</h1>
 
       <p>
         FlavorForge demonstrates modern cloud-native application development
-        using Azure DevSecOps practices.
+        using Azure DevSecOps best practices.
       </p>
-    </main>
+    </section>
   );
 }
 

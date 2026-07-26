@@ -19,3 +19,27 @@ If you are developing a production application, we recommend using TypeScript wi
 ## Frontend Structure
 
 The React frontend follows an enterprise-style folder organization, separating reusable components, pages, services, configuration, utilities, and styling to support scalability and maintainability.
+
+
+## 📦 Project Dependencies
+
+| Package | Purpose |
+|----------|---------|
+| React | User Interface library |
+| Vite | Development server and build tool |
+| React Router DOM | Client-side routing |
+
+## Dependency Security Note
+
+During frontend development, `npm audit` reported a high-severity advisory related to `react-router`.
+
+Assessment:
+
+- The advisory targets React Server Components (RSC) action handling.
+- FlavorForge currently uses a client-side React SPA with Vite.
+- The affected RSC functionality is not used in this project.
+
+Decision:
+
+- Do not apply `npm audit fix --force`.
+- Re-evaluate dependency updates after testing in the CI/CD pipeline.

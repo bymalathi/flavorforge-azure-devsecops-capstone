@@ -1,10 +1,12 @@
 function ContactPage() {
   return (
-    <main>
+    <section>
       <h1>Contact</h1>
 
-      <p>Contact information will be added in a future phase.</p>
-    </main>
+      <p>
+        Contact information will be added in future phases.
+      </p>
+    </section>
   );
 }
 

@@ -1,10 +1,12 @@
 function RecipesPage() {
   return (
-    <main>
+    <section>
       <h1>Recipes</h1>
 
-      <p>Recipe management functionality will be added in future phases.</p>
-    </main>
+      <p>
+        Recipe management functionality will be added in future phases.
+      </p>
+    </section>
   );
 }
 
