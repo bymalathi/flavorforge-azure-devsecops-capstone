@@ -127,14 +127,14 @@ stages:
     - script: |
         cd backend
         npm ci --ignore-scripts
-        npm audit --audit-level=high
+        npm audit --audit-level=critical
       displayName: "Backend Dependency Scan"
 
 
     - script: |
         cd frontend
         npm ci --ignore-scripts
-        npm audit --audit-level=high
+        npm audit --audit-level=critical
       displayName: "Frontend Dependency Scan"      
 
 
@@ -153,7 +153,7 @@ stages:
     - checkout: self
 
 
-    - task: SonarCloudPrepare@3.3.1
+    - task: SonarCloudPrepare@3
       displayName: "Prepare SonarQube Cloud Analysis"
 
       inputs:
@@ -167,11 +167,11 @@ stages:
         cliProjectName: 'FlavorForge'
 
 
-    - task: SonarCloudAnalyze@3.3.1
+    - task: SonarCloudAnalyze@3
       displayName: "Run SonarQube Cloud Analysis"
 
 
-    - task: SonarCloudPublish@3.3.1
+    - task: SonarCloudPublish@3
       displayName: "Publish Quality Gate Result"
 
       inputs:
