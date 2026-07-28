@@ -17,7 +17,7 @@ stages:
 
     - checkout: self
 
-    - task: NodeTool@0
+    - task: UseNode@1
       displayName: "Install Node.js"
       inputs:
         versionSpec: "18.x"
