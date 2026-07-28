@@ -21,7 +21,7 @@ stages:
     - task: UseNode@1
       displayName: "Install Node.js"
       inputs:
-        version: "18.x"
+        version: "22.x"
 
     - script: |
         cd backend
@@ -44,7 +44,7 @@ stages:
     - task: UseNode@1
       displayName: "Install Node.js"
       inputs:
-        version: "18.x"
+        version: "22.x"
 
     - script: |
         cd frontend
