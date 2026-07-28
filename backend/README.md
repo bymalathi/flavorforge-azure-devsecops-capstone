@@ -177,7 +177,7 @@ Future configuration may include:
 
 | Method | Endpoint  | Description                   |
 | ------ | --------- | ----------------------------- |
-| GET    | `/health` | Returns backend health status |
+| GET    | `/api/health` | Returns backend health status |
 
 Example Response
 
@@ -196,7 +196,7 @@ Example Response
 
 | Method | Endpoint   | Description                   |
 | ------ | ---------- | ----------------------------- |
-| GET    | `/recipes` | Returns the available recipes |
+| GET    | `/api/recipes` | Returns the available recipes |
 
 The recipe endpoint currently returns sample in-memory data and is designed for future integration with a persistent database.
 
@@ -264,13 +264,13 @@ Verify that the backend is running.
 Open a browser:
 
 ```text
-http://localhost:3000/health
+http://localhost:3000/api/health
 ```
 
 Or use curl:
 
 ```bash
-curl http://localhost:3000/health
+curl http://localhost:3000/api/health
 ```
 
 A successful response confirms that:

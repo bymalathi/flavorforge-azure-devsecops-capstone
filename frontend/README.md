@@ -142,8 +142,8 @@ Current endpoints:
 
 | Endpoint | Purpose |
 |----------|---------|
-| GET /health | Backend health check |
-| GET /recipes | Retrieve recipe list |
+| GET /api/health | Backend health check |
+| GET /api/recipes | Retrieve recipe list |
 
 Environment variable:
 
