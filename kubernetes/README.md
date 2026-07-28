@@ -125,3 +125,67 @@ Deploy to Azure Kubernetes Service (AKS)
 The manifest files in this repository are intentionally developed incrementally.
 
 As the project progresses, each manifest will be completed, tested, and documented with explanations and deployment examples.
+
+
+---
+
+## Kubernetes Secrets
+
+### Goal
+Store sensitive configuration securely outside the application image.
+
+### Secret Created
+- JWT_SECRET
+- DATABASE_PASSWORD
+
+### Deployment Integration
+The backend Deployment consumes these values using `secretKeyRef`.
+
+### Verification
+
+```bash
+kubectl get secrets -n flavorforge
+kubectl exec <backend-pod> -n flavorforge -- printenv | grep -E "JWT_SECRET|DATABASE_PASSWORD"
+```
+
+### Result
+
+The backend successfully reads the Secret values as environment variables.
+
+### Enterprise Notes
+
+- Non-sensitive configuration is stored in ConfigMaps.
+- Sensitive values are stored in Kubernetes Secrets.
+- Secrets are Base64 encoded by Kubernetes.
+- In production, Secrets are often integrated with external secret managers such as Azure Key Vault.
+
+---
+
+## Horizontal Pod Autoscaler (HPA)
+
+### Goal
+
+Automatically scale backend Pods based on CPU utilization.
+
+### Configuration
+
+- Minimum Replicas: 2
+- Maximum Replicas: 5
+- Target CPU Utilization: 70%
+
+### Verification
+
+```bash
+kubectl get hpa -n flavorforge
+kubectl describe hpa backend-hpa -n flavorforge
+```
+
+### Result
+
+The HPA successfully monitors backend CPU utilization and adjusts replica counts automatically within the configured limits.
+
+### Enterprise Notes
+
+- HPA uses Metrics Server to collect CPU metrics.
+- CPU requests must be configured for utilization-based scaling.
+- `minReplicas` ensures application availability during low traffic.

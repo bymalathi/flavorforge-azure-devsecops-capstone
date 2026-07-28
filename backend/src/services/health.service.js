@@ -5,6 +5,7 @@ function getHealthStatus() {
         status: "UP",
         application: config.appName,
         version: config.appVersion,
+        build: config.buildVersion,
         environment: config.nodeEnv,
         port: config.port,
         corsOrigin: config.corsOrigin,
@@ -13,5 +14,5 @@ function getHealthStatus() {
 }
 
 module.exports = {
-    getHealthStatus
+    getHealthStatus,
 };

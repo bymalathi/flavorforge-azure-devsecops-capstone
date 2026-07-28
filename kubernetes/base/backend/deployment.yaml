@@ -24,7 +24,7 @@ spec:
       containers:
         - name: backend
 
-          image: flavorforgeacr2026ms.azurecr.io/flavorforge-backend:1.1
+          image: flavorforgeacr2026ms.azurecr.io/flavorforge-backend:1.3
 
           imagePullPolicy: Always
 
@@ -61,6 +61,24 @@ spec:
                 configMapKeyRef:
                   name: backend-config
                   key: APP_VERSION
+
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secret
+                  key: JWT_SECRET
+
+            - name: DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secret
+                  key: DATABASE_PASSWORD
+
+            - name: BUILD_VERSION
+              valueFrom:
+                configMapKeyRef:
+                  name: backend-config
+                  key: BUILD_VERSION
 
           resources:
             requests:
