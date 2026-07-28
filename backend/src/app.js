@@ -7,7 +7,7 @@ const recipeRoutes = require("./routes/recipe.routes");
 const config = require("./config/app.config");
 
 const app = express();
-
+app.disable("x-powered-by");
 app.use(
   cors({
     origin: config.corsOrigin,

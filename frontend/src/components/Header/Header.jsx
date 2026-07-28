@@ -17,7 +17,7 @@ function Header() {
         </div>
 
 
-        <button
+        <button type="button"
           className="menu-toggle"
           onClick={() => setMenuOpen(!menuOpen)}
         >

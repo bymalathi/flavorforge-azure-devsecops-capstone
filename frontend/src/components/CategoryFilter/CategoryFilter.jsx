@@ -9,7 +9,7 @@ function CategoryFilter({
     <div className="category-filter">
 
       {categories.map((category) => (
-        <button
+        <button type="button"
           key={category}
           className={
             selectedCategory === category

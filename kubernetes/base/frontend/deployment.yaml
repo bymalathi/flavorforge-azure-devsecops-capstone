@@ -21,6 +21,8 @@ spec:
         app: frontend
 
     spec:
+      automountServiceAccountToken: false
+      
       containers:
         - name: frontend
 

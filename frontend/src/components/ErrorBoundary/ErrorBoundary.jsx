@@ -31,7 +31,7 @@ class ErrorBoundary extends React.Component {
             An unexpected error occurred.
           </p>
 
-          <button
+          <button type="button"
             onClick={() => window.location.reload()}
           >
             Reload Page

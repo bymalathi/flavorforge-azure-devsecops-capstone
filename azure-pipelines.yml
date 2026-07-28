@@ -104,3 +104,35 @@ stages:
         npm ci
         npm run build
       displayName: "Validate Frontend Production Build"
+
+- stage: Security
+  displayName: "Security Validation"
+  dependsOn: Test
+
+  jobs:
+
+  - job: DependencyScan
+    displayName: "Node Dependency Security Scan"
+
+    steps:
+
+    - checkout: self
+
+    - task: UseNode@1
+      displayName: "Install Node.js 22 LTS"
+      inputs:
+        version: "22.x"
+
+
+    - script: |
+        cd backend
+        npm ci
+        npm audit --audit-level=high
+      displayName: "Backend Dependency Scan"
+
+
+    - script: |
+        cd frontend
+        npm ci
+        npm audit --audit-level=high
+      displayName: "Frontend Dependency Scan"      

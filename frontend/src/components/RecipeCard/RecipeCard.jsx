@@ -26,7 +26,7 @@ function RecipeCard({ recipe }) {
             ⏱ {recipe.cookTime}
           </p>
 
-          <button className="view-button">
+          <button type="button" className="view-button">
             View Recipe →
           </button>
 
