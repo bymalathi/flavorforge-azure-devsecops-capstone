@@ -24,7 +24,7 @@ spec:
       containers:
         - name: backend
 
-          image: flavorforgeacr2026ms.azurecr.io/flavorforge-backend:1.0
+          image: flavorforgeacr2026ms.azurecr.io/flavorforge-backend:1.1
 
           imagePullPolicy: Always
 
@@ -33,7 +33,34 @@ spec:
 
           env:
             - name: PORT
-              value: "3000"
+              valueFrom:
+                configMapKeyRef:
+                  name: backend-config
+                  key: PORT
+
+            - name: NODE_ENV
+              valueFrom:
+                configMapKeyRef:
+                  name: backend-config
+                  key: NODE_ENV
+                  
+            - name: CORS_ORIGIN
+              valueFrom:
+                configMapKeyRef:
+                  name: backend-config
+                  key: CORS_ORIGIN
+
+            - name: APP_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: backend-config
+                  key: APP_NAME
+
+            - name: APP_VERSION
+              valueFrom:
+                configMapKeyRef:
+                  name: backend-config
+                  key: APP_VERSION
 
           resources:
             requests:
