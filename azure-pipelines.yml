@@ -55,3 +55,52 @@ stages:
         cd frontend
         npm run build
       displayName: "Build React Application"
+
+- stage: Test
+  displayName: "Test and Quality Validation"
+  dependsOn: Build
+
+  jobs:
+
+  - job: BackendSmokeTest
+    displayName: "Backend API Smoke Test"
+
+    steps:
+
+    - checkout: self
+
+    - task: UseNode@1
+      displayName: "Install Node.js 22 LTS"
+      inputs:
+        version: "22.x"
+
+    - script: |
+        cd backend
+        npm ci
+      displayName: "Install Backend Dependencies"
+
+    - script: |
+        cd backend
+        node src/server.js &
+        sleep 10
+        curl --fail http://localhost:3000/api/health
+      displayName: "Verify Backend Health Endpoint"
+
+
+  - job: FrontendValidation
+    displayName: "Frontend Build Validation"
+
+    steps:
+
+    - checkout: self
+
+    - task: UseNode@1
+      displayName: "Install Node.js 22 LTS"
+      inputs:
+        version: "22.x"
+
+    - script: |
+        cd frontend
+        npm ci
+        npm run build
+      displayName: "Validate Frontend Production Build"
