@@ -126,13 +126,52 @@ stages:
 
     - script: |
         cd backend
-        npm ci
+        npm ci --ignore-scripts
         npm audit --audit-level=high
       displayName: "Backend Dependency Scan"
 
 
     - script: |
         cd frontend
-        npm ci
+        npm ci --ignore-scripts
         npm audit --audit-level=high
       displayName: "Frontend Dependency Scan"      
+
+- stage: CodeQuality
+  displayName: "SonarQube Cloud Code Quality Analysis"
+
+  dependsOn: Build
+
+  jobs:
+
+  - job: SonarScan
+    displayName: "Run SonarQube Cloud Scan"
+
+    steps:
+
+    - checkout: self
+
+
+    - task: SonarQubeCloudPrepare@3
+      displayName: "Prepare SonarQube Cloud Analysis"
+
+      inputs:
+        SonarQubeCloud: 'flavorforge-sonarcloud-sc'
+        organization: 'malathi-shetty'
+        scannerMode: 'cli'
+        configMode: 'manual'
+
+        cliProjectKey: 'shettymalathib_flavorforge-azure-devsecops-capstone'
+
+        cliProjectName: 'FlavorForge'
+
+
+    - task: SonarQubeCloudAnalyze@3
+      displayName: "Run SonarQube Cloud Analysis"
+
+
+    - task: SonarQubeCloudPublish@3
+      displayName: "Publish Quality Gate Result"
+
+      inputs:
+        pollingTimeoutSec: '300'
