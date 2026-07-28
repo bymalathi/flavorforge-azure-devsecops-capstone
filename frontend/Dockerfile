@@ -4,17 +4,23 @@ WORKDIR /app
 
 COPY package*.json ./
 
-RUN npm ci
+RUN npm ci --ignore-scripts
 
-COPY . .
+COPY src ./src
+COPY public ./public
+COPY index.html ./
+COPY vite.config.js ./
+COPY eslint.config.js ./
 
 RUN npm run build -- --mode docker
 
 
-USER nginx:1.29-alpine
+FROM nginx:1.29-alpine
 
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 COPY --from=builder /app/dist /usr/share/nginx/html
+
+USER nginx
 
 EXPOSE 80
