@@ -176,3 +176,46 @@ stages:
 
       inputs:
         pollingTimeoutSec: '300'
+
+
+- stage: TrivyScan
+  displayName: "Trivy Security Scan"
+
+  dependsOn: Security
+
+  jobs:
+
+  - job: FilesystemScan
+
+    displayName: "Filesystem Vulnerability Scan"
+
+    steps:
+
+    - checkout: self
+
+    - script: |
+
+        sudo apt-get update
+
+        sudo apt-get install wget apt-transport-https gnupg lsb-release -y
+
+        wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key \
+        | gpg --dearmor \
+        | sudo tee /usr/share/keyrings/trivy.gpg > /dev/null
+
+        echo \
+        "deb [signed-by=/usr/share/keyrings/trivy.gpg] https://aquasecurity.github.io/trivy-repo/deb \
+        $(lsb_release -sc) main" \
+        | sudo tee /etc/apt/sources.list.d/trivy.list
+
+        sudo apt-get update
+
+        sudo apt-get install trivy -y
+
+      displayName: "Install Trivy"
+
+    - script: |
+
+        trivy fs .
+
+      displayName: "Run Trivy Filesystem Scan"        
