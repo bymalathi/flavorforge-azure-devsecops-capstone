@@ -6,11 +6,7 @@ COPY package*.json ./
 
 RUN npm ci --ignore-scripts
 
-COPY src ./src
-COPY public ./public
-COPY index.html ./
-COPY vite.config.js ./
-COPY eslint.config.js ./
+COPY . .
 
 RUN npm run build -- --mode docker
 
