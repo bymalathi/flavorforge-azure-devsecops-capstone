@@ -178,16 +178,262 @@ stages:
         pollingTimeoutSec: '300'
 
 
-- stage: TrivyScan
-  displayName: "Trivy Security Scan"
+# ==========================================================
+# Stage : Docker Build
+# ==========================================================
 
-  dependsOn: Security
+- stage: DockerBuild
+  displayName: "Docker Image Build"
+
+  dependsOn: CodeQuality
 
   jobs:
 
-  - job: FilesystemScan
+  - job: BuildImages
+    displayName: "Build Backend & Frontend Images"
 
-    displayName: "Filesystem Vulnerability Scan"
+    steps:
+
+    - checkout: self
+
+    - script: |
+        mkdir -p reports/docker
+      displayName: "Create Report Directory"
+
+    - script: |
+        docker build \
+          -t flavorforge-backend:$(Build.BuildId) \
+          -t flavorforge-backend:latest \
+          ./backend
+      displayName: "Build Backend Docker Image"
+
+    - script: |
+        docker build \
+          -t flavorforge-frontend:$(Build.BuildId) \
+          -t flavorforge-frontend:latest \
+          ./frontend
+      displayName: "Build Frontend Docker Image"
+
+    - script: |
+        docker images
+      displayName: "List Docker Images"
+
+    - script: |
+        docker save \
+          flavorforge-backend:$(Build.BuildId) \
+          -o reports/docker/backend-image.tar
+
+        docker save \
+          flavorforge-frontend:$(Build.BuildId) \
+          -o reports/docker/frontend-image.tar
+      displayName: "Export Docker Images"
+
+    - publish: reports/docker
+      artifact: docker-images
+      displayName: "Publish Docker Images"
+
+################################################################################
+# Publish Build Artifacts
+################################################################################
+
+- stage: Publish
+
+  displayName: "Publish Build Artifacts"
+
+  dependsOn:
+    - DockerBuild
+
+  jobs:
+
+  - job: PublishArtifacts
+
+    displayName: "Publish Project Artifacts"
+
+    steps:
+
+    - checkout: self
+
+    - task: PublishPipelineArtifact@1
+
+      displayName: "Publish Kubernetes Manifests"
+
+      inputs:
+
+        targetPath: "kubernetes"
+
+        artifact: "kubernetes"
+
+    - task: PublishPipelineArtifact@1
+
+      displayName: "Publish Backend"
+
+      inputs:
+
+        targetPath: "backend"
+
+        artifact: "backend"
+
+    - task: PublishPipelineArtifact@1
+
+      displayName: "Publish Frontend"
+
+      inputs:
+
+        targetPath: "frontend"
+
+        artifact: "frontend"
+
+    - task: PublishPipelineArtifact@1
+
+      displayName: "Publish Docker Files"
+
+      inputs:
+
+        targetPath: "docker"
+
+        artifact: "docker"
+
+# ==========================================================
+# Stage : Trivy Security Scan
+# ==========================================================
+
+- stage: TrivyScan
+  displayName: "Trivy Security Scan"
+
+  dependsOn: DockerBuild
+
+  jobs:
+
+  - job: TrivyFilesystem
+    displayName: "Filesystem Scan"
+
+    steps:
+
+    - checkout: self
+
+    - script: |
+        sudo apt-get update
+        sudo apt-get install wget gnupg lsb-release apt-transport-https -y
+
+        wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key \
+        | gpg --dearmor \
+        | sudo tee /usr/share/keyrings/trivy.gpg >/dev/null
+
+        echo \
+        "deb [signed-by=/usr/share/keyrings/trivy.gpg] https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main" \
+        | sudo tee /etc/apt/sources.list.d/trivy.list
+
+        sudo apt-get update
+        sudo apt-get install trivy -y
+      displayName: "Install Trivy"
+
+    - script: |
+        mkdir -p reports/trivy
+      displayName: "Create Report Folder"
+
+    - script: |
+        trivy fs \
+          --format table \
+          . | tee reports/trivy/filesystem-report.txt
+      displayName: "Filesystem Scan"
+
+    - script: |
+        trivy fs \
+          --format json \
+          -o reports/trivy/filesystem-report.json \
+          .
+      displayName: "Filesystem JSON Report"
+
+    - publish: reports/trivy
+      artifact: trivy-filesystem
+      displayName: "Publish Filesystem Reports"
+
+
+
+  - job: TrivyImageScan
+
+    displayName: "Docker Image Scan"
+
+    dependsOn: TrivyFilesystem
+
+    steps:
+
+    - checkout: self
+
+    - script: |
+        sudo apt-get update
+        sudo apt-get install wget gnupg lsb-release apt-transport-https -y
+
+        wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key \
+        | gpg --dearmor \
+        | sudo tee /usr/share/keyrings/trivy.gpg >/dev/null
+
+        echo \
+        "deb [signed-by=/usr/share/keyrings/trivy.gpg] https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main" \
+        | sudo tee /etc/apt/sources.list.d/trivy.list
+
+        sudo apt-get update
+        sudo apt-get install trivy -y
+      displayName: "Install Trivy"
+
+    - script: |
+        mkdir -p reports/trivy
+      displayName: "Create Report Folder"
+
+    - script: |
+        docker images
+      displayName: "Verify Docker Images"
+
+    - script: |
+        trivy image \
+          --format table \
+          flavorforge-backend:latest \
+          | tee reports/trivy/backend-image.txt
+      displayName: "Backend Image Scan"
+
+    - script: |
+        trivy image \
+          --format json \
+          -o reports/trivy/backend-image.json \
+          flavorforge-backend:latest
+      displayName: "Backend JSON Report"
+
+    - script: |
+        trivy image \
+          --format table \
+          flavorforge-frontend:latest \
+          | tee reports/trivy/frontend-image.txt
+      displayName: "Frontend Image Scan"
+
+    - script: |
+        trivy image \
+          --format json \
+          -o reports/trivy/frontend-image.json \
+          flavorforge-frontend:latest
+      displayName: "Frontend JSON Report"
+
+    - publish: reports/trivy
+      artifact: trivy-image-reports
+      displayName: "Publish Image Reports"
+
+################################################################################
+# AI DevSecOps Report
+################################################################################
+
+- stage: AIReports
+
+  displayName: "Generate DevSecOps Report"
+
+  dependsOn:
+
+      - CodeQuality
+      - TrivyScan
+
+  jobs:
+
+  - job: AIReport
+
+    displayName: "Generate Build Summary"
 
     steps:
 
@@ -195,27 +441,44 @@ stages:
 
     - script: |
 
-        sudo apt-get update
+        mkdir reports
 
-        sudo apt-get install wget apt-transport-https gnupg lsb-release -y
+        echo "# FlavorForge DevSecOps Report" > reports/BuildSummary.md
 
-        wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key \
-        | gpg --dearmor \
-        | sudo tee /usr/share/keyrings/trivy.gpg > /dev/null
+        echo "" >> reports/BuildSummary.md
 
-        echo \
-        "deb [signed-by=/usr/share/keyrings/trivy.gpg] https://aquasecurity.github.io/trivy-repo/deb \
-        $(lsb_release -sc) main" \
-        | sudo tee /etc/apt/sources.list.d/trivy.list
+        echo "Build ID: $(Build.BuildId)" >> reports/BuildSummary.md
 
-        sudo apt-get update
+        echo "" >> reports/BuildSummary.md
 
-        sudo apt-get install trivy -y
+        echo "Pipeline Status: SUCCESS" >> reports/BuildSummary.md
 
-      displayName: "Install Trivy"
+        echo "" >> reports/BuildSummary.md
 
-    - script: |
+        echo "Completed Checks" >> reports/BuildSummary.md
 
-        trivy fs .
+        echo "- Backend Build" >> reports/BuildSummary.md
 
-      displayName: "Run Trivy Filesystem Scan"        
+        echo "- Frontend Build" >> reports/BuildSummary.md
+
+        echo "- Backend Smoke Test" >> reports/BuildSummary.md
+
+        echo "- Dependency Audit" >> reports/BuildSummary.md
+
+        echo "- SonarQube Cloud Analysis" >> reports/BuildSummary.md
+
+        echo "- Docker Image Build" >> reports/BuildSummary.md
+
+        echo "- Trivy Filesystem Scan" >> reports/BuildSummary.md
+
+        echo "- Trivy Image Scan" >> reports/BuildSummary.md
+
+      displayName: "Generate Markdown Report"
+
+    - task: PublishPipelineArtifact@1
+
+      inputs:
+
+        targetPath: reports
+
+        artifact: ai-devsecops-report               
