@@ -153,7 +153,7 @@ stages:
     - checkout: self
 
 
-    - task: SonarCloudPrepare@3
+    - task: SonarCloudPrepare@3.3.1
       displayName: "Prepare SonarQube Cloud Analysis"
 
       inputs:
@@ -167,11 +167,11 @@ stages:
         cliProjectName: 'FlavorForge'
 
 
-    - task: SonarCloudAnalyze@3
+    - task: SonarCloudAnalyze@3.3.1
       displayName: "Run SonarQube Cloud Analysis"
 
 
-    - task: SonarCloudPublish@3
+    - task: SonarCloudPublish@3.3.1
       displayName: "Publish Quality Gate Result"
 
       inputs:
