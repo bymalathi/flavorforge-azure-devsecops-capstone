@@ -137,10 +137,11 @@ stages:
         npm audit --audit-level=high
       displayName: "Frontend Dependency Scan"      
 
+
 - stage: CodeQuality
   displayName: "SonarQube Cloud Code Quality Analysis"
 
-  dependsOn: Build
+  dependsOn: Security
 
   jobs:
 
@@ -152,11 +153,11 @@ stages:
     - checkout: self
 
 
-    - task: SonarQubeCloudPrepare@3
+    - task: SonarCloudPrepare@3
       displayName: "Prepare SonarQube Cloud Analysis"
 
       inputs:
-        SonarQubeCloud: 'flavorforge-sonarcloud-sc'
+        SonarCloud: 'flavorforge-sonarcloud-sc'
         organization: 'malathi-shetty'
         scannerMode: 'cli'
         configMode: 'manual'
@@ -166,11 +167,11 @@ stages:
         cliProjectName: 'FlavorForge'
 
 
-    - task: SonarQubeCloudAnalyze@3
+    - task: SonarCloudAnalyze@3
       displayName: "Run SonarQube Cloud Analysis"
 
 
-    - task: SonarQubeCloudPublish@3
+    - task: SonarCloudPublish@3
       displayName: "Publish Quality Gate Result"
 
       inputs:
