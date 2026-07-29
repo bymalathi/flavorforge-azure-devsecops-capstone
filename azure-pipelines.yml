@@ -199,10 +199,12 @@ stages:
       displayName: Verify Jest Coverage Report
 
     - task: PublishCodeCoverageResults@2
+      displayName: "Publish Backend Code Coverage"
+
       inputs:
-        codeCoverageTool: Cobertura
-        summaryFileLocation: backend/coverage/cobertura-coverage.xml
-        reportDirectory: backend/coverage
+        codeCoverageTool: "LCOV"
+        summaryFileLocation: "$(System.DefaultWorkingDirectory)/backend/coverage/lcov.info"
+        reportDirectory: "$(System.DefaultWorkingDirectory)/backend/coverage/lcov-report"
 
 
     - task: SonarCloudAnalyze@4
