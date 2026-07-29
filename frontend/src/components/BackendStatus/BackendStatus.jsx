@@ -11,7 +11,7 @@ function BackendStatus({ health, error }) {
 
       {error && (
         <Card>
-          <p>❌ {error}</p>
+          <p>{error}</p>
         </Card>
       )}
 

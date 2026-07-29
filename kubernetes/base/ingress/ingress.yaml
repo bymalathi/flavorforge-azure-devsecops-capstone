@@ -9,22 +9,22 @@ spec:
   ingressClassName: nginx
 
   rules:
-    - http:
-        paths:
-          - path: /
-            pathType: Prefix
+  - http:
+      paths:
 
-            backend:
-              service:
-                name: frontend
-                port:
-                  number: 80
+      - path: /api
+        pathType: Prefix
+        backend:
+          service:
+            name: backend
+            port:
+              number: 3000
 
-          - path: /api
-            pathType: Prefix
 
-            backend:
-              service:
-                name: backend
-                port:
-                  number: 3000
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: frontend
+            port:
+              number: 80

@@ -1,5 +1,7 @@
 import apiRequest from "../api/apiClient";
 
-export async function getHealthStatus() {
+async function getHealthStatus() {
   return apiRequest("/health");
 }
+
+export { getHealthStatus };

@@ -3,13 +3,22 @@ kind: Deployment
 
 metadata:
   name: backend
-  namespace: flavorforge
+
+  annotations:
+    kubernetes.io/change-cause: "Release 1.8 - Backend health probe update"
+
 
   labels:
     app: backend
 
 spec:
   replicas: 2
+
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 0
+      maxUnavailable: 1
 
   selector:
     matchLabels:
@@ -25,7 +34,7 @@ spec:
       containers:
         - name: backend
 
-          image: flavorforgeacr2026ms.azurecr.io/flavorforge-backend:1.3
+          image: flavorforgeacr2026ms.azurecr.io/flavorforge-backend:1.9
 
           imagePullPolicy: Always
 
@@ -83,7 +92,7 @@ spec:
 
           resources:
             requests:
-              cpu: "100m"
+              cpu: "50m"
               memory: "128Mi"
               ephemeral-storage: "256Mi"
 
