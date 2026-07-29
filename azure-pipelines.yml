@@ -25,13 +25,18 @@ stages:
         version: "22.x"
 
     - script: |
-        cd backend
-        npm ci --ignore-scripts
-      displayName: "Backend Dependency Scan"
+        node -v
+        npm -v
+      displayName: "Verify Node Installation"
 
     - script: |
         cd backend
-        npm test -- --coverage
+        npm ci --ignore-scripts
+      displayName: "Install Backend Dependencies"
+
+    - script: |
+        cd backend
+        npm test
       displayName: "Run Backend Validation"
 
 
@@ -51,7 +56,7 @@ stages:
     - script: |
         cd frontend
         npm ci --ignore-scripts
-      displayName: "Frontend Dependency Scan"
+      displayName: "Install Frontend Dependencies"
 
     - script: |
         cd frontend
@@ -140,7 +145,7 @@ stages:
         cd frontend
         npm ci --ignore-scripts
         npm audit --audit-level=critical
-      displayName: Run Jest Tests with Coverage  
+      displayName: Run Frontend Dependency Audit
 
 
 - stage: CodeQuality
@@ -193,19 +198,30 @@ stages:
         npm test -- --coverage
       displayName: "Run Jest Tests with Coverage"
 
+    - task: PublishTestResults@2
+      displayName: "Publish Jest Test Results"
+
+      inputs:
+        testResultsFormat: "JUnit"
+        testResultsFiles: "backend/coverage/junit.xml"
+        failTaskOnFailedTests: true
+
+
+    - task: PublishCodeCoverageResults@2
+      displayName: "Publish Jest Coverage"
+
+      inputs:
+        codeCoverageTool: "Cobertura"
+        summaryFileLocation: "$(System.DefaultWorkingDirectory)/backend/coverage/cobertura-coverage.xml"
+        reportDirectory: "$(System.DefaultWorkingDirectory)/backend/coverage/lcov-report"
+
     - script: |
         ls -R backend/coverage
         cat backend/coverage/lcov.info | head -20
       displayName: Verify Jest Coverage Report
 
-    - task: PublishCodeCoverageResults@2
-      displayName: "Publish Backend Code Coverage"
-
-      inputs:
-        codeCoverageTool: "LCOV"
-        summaryFileLocation: "$(System.DefaultWorkingDirectory)/backend/coverage/lcov.info"
-        reportDirectory: "$(System.DefaultWorkingDirectory)/backend/coverage/lcov-report"
-
+    
+       
 
     - task: SonarCloudAnalyze@4
       displayName: "Run SonarQube Cloud Analysis"
