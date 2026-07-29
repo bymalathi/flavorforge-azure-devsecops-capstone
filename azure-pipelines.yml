@@ -17,6 +17,7 @@ stages:
     steps:
 
     - checkout: self
+      fetchDepth: 0
 
     - task: UseNode@1
       displayName: "Install Node.js"
@@ -26,11 +27,11 @@ stages:
     - script: |
         cd backend
         npm ci --ignore-scripts
-      displayName: "Install Backend Dependencies"
+      displayName: "Backend Dependency Scan"
 
     - script: |
         cd backend
-        npm test
+        npm test -- --coverage
       displayName: "Run Backend Validation"
 
 
@@ -40,6 +41,7 @@ stages:
     steps:
 
     - checkout: self
+      fetchDepth: 0
 
     - task: UseNode@1
       displayName: "Install Node.js"
@@ -49,7 +51,7 @@ stages:
     - script: |
         cd frontend
         npm ci --ignore-scripts
-      displayName: "Install Frontend Dependencies"
+      displayName: "Frontend Dependency Scan"
 
     - script: |
         cd frontend
@@ -68,6 +70,7 @@ stages:
     steps:
 
     - checkout: self
+      fetchDepth: 0
 
     - task: UseNode@1
       displayName: "Install Node.js 22 LTS"
@@ -93,6 +96,7 @@ stages:
     steps:
 
     - checkout: self
+      fetchDepth: 0
 
     - task: UseNode@1
       displayName: "Install Node.js 22 LTS"
@@ -117,6 +121,7 @@ stages:
     steps:
 
     - checkout: self
+      fetchDepth: 0
 
     - task: UseNode@1
       displayName: "Install Node.js 22 LTS"
@@ -151,6 +156,7 @@ stages:
     steps:
 
     - checkout: self
+      fetchDepth: 0
 
 
     - task: SonarCloudPrepare@4
@@ -183,13 +189,20 @@ stages:
 
     - script: |
         cd backend
-        npm test
+        npm test -- --coverage
       displayName: "Run Jest Tests with Coverage"
 
     - script: |
         ls -R backend/coverage
         cat backend/coverage/lcov.info | head -20
       displayName: Verify Jest Coverage Report
+
+    - task: PublishCodeCoverageResults@2
+      inputs:
+        codeCoverageTool: Cobertura
+        summaryFileLocation: backend/coverage/cobertura-coverage.xml
+        reportDirectory: backend/coverage
+
 
     - task: SonarCloudAnalyze@4
       displayName: "Run SonarQube Cloud Analysis"
@@ -219,6 +232,7 @@ stages:
     steps:
 
     - checkout: self
+      fetchDepth: 0
 
     - script: |
         mkdir -p reports/docker
@@ -276,6 +290,7 @@ stages:
     steps:
 
     - checkout: self
+      fetchDepth: 0
 
     - task: PublishPipelineArtifact@1
 
@@ -381,6 +396,7 @@ stages:
     steps:
 
     - checkout: self
+      fetchDepth: 0
 
     - script: |
         sudo apt-get update
@@ -480,6 +496,7 @@ stages:
     steps:
 
     - checkout: self
+      fetchDepth: 0
 
     - script: |
 
@@ -584,7 +601,7 @@ stages:
   dependsOn: DeployDev
 
   variables:
-    - group: FlavorForge-QA
+    - group: FlavorForge-QA-Variables
 
   jobs:
 
@@ -603,6 +620,7 @@ stages:
             steps:
 
               - checkout: self
+                fetchDepth: 0
 
               - download: current
 
@@ -634,7 +652,7 @@ stages:
   dependsOn: DeployQA
 
   variables:
-    - group: FlavorForge-Prod
+    - group: FlavorForge-Prod-Variables
 
   jobs:
 
@@ -653,6 +671,7 @@ stages:
             steps:
 
               - checkout: self
+                fetchDepth: 0
 
               - download: current
 
@@ -696,6 +715,7 @@ stages:
       steps:
 
         - checkout: self
+          fetchDepth: 0
 
         - script: |
 
@@ -715,11 +735,11 @@ stages:
 
             ## Deployment Status
 
-            - Development
+             ✅ Development
 
-            - QA
+             ✅ QA
 
-            - Production
+             ✅ Production
 
             ## Generated
 
