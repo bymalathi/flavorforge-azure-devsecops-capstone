@@ -573,3 +573,168 @@ stages:
               sleep 10
               echo "Deployment completed successfully."
             displayName: "Simulate Deployment"        
+
+
+################################################################################
+# Deploy to QA
+################################################################################
+
+- stage: DeployQA
+  displayName: "Deploy to QA"
+  dependsOn: DeployDev
+
+  variables:
+    - group: FlavorForge-QA
+
+  jobs:
+
+    - deployment: DeployQA
+
+      displayName: "QA Deployment"
+
+      environment: FlavorForge-QA
+
+      strategy:
+
+        runOnce:
+
+          deploy:
+
+            steps:
+
+              - checkout: self
+
+              - download: current
+
+              - script: |
+
+                  echo "======================================"
+                  echo "FlavorForge QA Deployment"
+                  echo "======================================"
+
+                  echo "Environment : $(APP_ENV)"
+                  echo "Build Number: $(Build.BuildNumber)"
+                  echo "Build ID    : $(Build.BuildId)"
+                  echo "Repository  : $(Build.Repository.Name)"
+                  echo "Branch      : $(Build.SourceBranchName)"
+                  echo "Commit      : $(Build.SourceVersion)"
+                  echo "Requested By: $(Build.RequestedFor)"
+                  echo "API URL     : $(API_URL)"
+                  echo "Log Level   : $(LOG_LEVEL)"
+                  echo "Deployment completed successfully."
+
+                displayName: "Simulate QA Deployment"
+
+################################################################################
+# Deploy to Production
+################################################################################
+
+- stage: DeployProd
+  displayName: "Deploy to Production"
+  dependsOn: DeployQA
+
+  variables:
+    - group: FlavorForge-Prod
+
+  jobs:
+
+    - deployment: DeployProduction
+
+      displayName: "Production Deployment"
+
+      environment: FlavorForge-Prod
+
+      strategy:
+
+        runOnce:
+
+          deploy:
+
+            steps:
+
+              - checkout: self
+
+              - download: current
+
+              - script: |
+
+                  echo "======================================"
+                  echo "FlavorForge Production Deployment"
+                  echo "======================================"
+
+                  echo "Environment : $(APP_ENV)"
+                  echo "Build Number: $(Build.BuildNumber)"
+                  echo "Build ID    : $(Build.BuildId)"
+                  echo "Repository  : $(Build.Repository.Name)"
+                  echo "Branch      : $(Build.SourceBranchName)"
+                  echo "Commit      : $(Build.SourceVersion)"
+                  echo "Requested By: $(Build.RequestedFor)"
+                  echo "API URL     : $(API_URL)"
+                  echo "Log Level   : $(LOG_LEVEL)"
+                  echo "Deployment completed successfully."
+
+                displayName: "Simulate Production Deployment"
+
+################################################################################
+# Release Summary
+################################################################################
+
+- stage: ReleaseSummary
+
+  displayName: "Release Summary"
+
+  dependsOn:
+
+    - DeployProd
+
+  jobs:
+
+    - job: Summary
+
+      displayName: "Generate Release Notes"
+
+      steps:
+
+        - checkout: self
+
+        - script: |
+
+            mkdir -p reports
+
+            cat > reports/ReleaseSummary.md << EOF
+            # FlavorForge Release Summary
+
+            ## Release Information
+
+            - Build Number: $(Build.BuildNumber)
+            - Build ID: $(Build.BuildId)
+            - Repository: $(Build.Repository.Name)
+            - Branch: $(Build.SourceBranchName)
+            - Commit: $(Build.SourceVersion)
+            - Requested By: $(Build.RequestedFor)
+
+            ## Deployment Status
+
+            - Development
+
+            - QA
+
+            - Production
+
+            ## Generated
+
+            $(Date:yyyy-MM-dd)
+
+            EOF
+
+          displayName: "Generate Release Summary"
+
+        - task: PublishPipelineArtifact@1
+
+          displayName: "Publish Release Summary"
+
+          inputs:
+
+            targetPath: reports
+
+            artifact: release-summary            
