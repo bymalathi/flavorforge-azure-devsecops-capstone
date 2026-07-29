@@ -903,7 +903,7 @@ stages:
 
       inputs:
 
-        azureSubscription: 'flavorforge-azure-service'
+        azureSubscription: 'flavorforge-azure-sc'
 
         scriptType: bash
 
