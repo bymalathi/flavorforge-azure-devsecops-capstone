@@ -85,10 +85,12 @@ spec:
             requests:
               cpu: "100m"
               memory: "128Mi"
+              ephemeral-storage: "256Mi"
 
             limits:
-              cpu: "250m"
-              memory: "256Mi"
+              cpu: "500m"
+              memory: "512Mi"
+              ephemeral-storage: "1000Mi"
 
           readinessProbe:
             httpGet:
