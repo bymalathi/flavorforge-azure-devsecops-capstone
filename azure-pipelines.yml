@@ -900,11 +900,11 @@ stages:
 
     - task: AzureCLI@2
 
-      displayName: AKS Deployment
+      displayName: "Deploy to AKS"
 
       inputs:
 
-        azureSubscription: 'flavorforge-azure-sc'
+        connectedServiceNameARM: 'flavorforge-azure-sc'
 
         scriptType: bash
 
