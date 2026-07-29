@@ -261,6 +261,15 @@ stages:
 # Stage : Docker Build
 # ==========================================================
 
+- script: |
+    echo "Checking frontend files"
+    ls -la frontend
+    echo "Checking env file"
+    cat frontend/.env.docker
+  displayName: "Debug frontend env"
+
+
+
 - stage: DockerBuild
   displayName: "Docker Image Build"
 
