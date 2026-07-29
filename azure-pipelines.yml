@@ -283,16 +283,6 @@ stages:
 
         artifact: "frontend"
 
-    - task: PublishPipelineArtifact@1
-
-      displayName: "Publish Docker Files"
-
-      inputs:
-
-        targetPath: "docker"
-
-        artifact: "docker"
-
 # ==========================================================
 # Stage : Trivy Security Scan
 # ==========================================================
@@ -380,9 +370,22 @@ stages:
         mkdir -p reports/trivy
       displayName: "Create Report Folder"
 
+
+    - script: |
+        docker build \
+          -t flavorforge-backend:latest \
+          ./backend
+
+        docker build \
+          -t flavorforge-frontend:latest \
+          ./frontend
+      displayName: "Rebuild Docker Images"
+
     - script: |
         docker images
-      displayName: "Verify Docker Images"
+      displayName: "Verify Docker Images"      
+
+
 
     - script: |
         trivy image \
@@ -441,7 +444,7 @@ stages:
 
     - script: |
 
-        mkdir reports
+        mkdir -p reports
 
         echo "# FlavorForge DevSecOps Report" > reports/BuildSummary.md
 
