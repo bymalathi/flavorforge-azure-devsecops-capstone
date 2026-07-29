@@ -1,5 +1,5 @@
 function getRecipes() {
-  console.log("➡️ Recipe Service reached");
+  console.log("Recipe Service reached");
 
   return [
     {
