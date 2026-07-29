@@ -261,12 +261,7 @@ stages:
 # Stage : Docker Build
 # ==========================================================
 
-- script: |
-    echo "Checking frontend files"
-    ls -la frontend
-    echo "Checking env file"
-    cat frontend/.env.docker
-  displayName: "Debug frontend env"
+
 
 
 
@@ -284,6 +279,14 @@ stages:
 
     - checkout: self
       fetchDepth: 0
+
+
+    - script: |
+        echo "Checking frontend files"
+        ls -la frontend
+        echo "Checking env file"
+        cat frontend/.env.docker
+      displayName: "Debug frontend env"
 
     - script: |
         mkdir -p reports/docker
