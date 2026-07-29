@@ -289,9 +289,10 @@ stages:
 
     - script: |
         docker build \
+          -f frontend/Dockerfile \
           -t flavorforge-frontend:$(Build.BuildId) \
           -t flavorforge-frontend:latest \
-          ./frontend
+          frontend
       displayName: "Build Frontend Docker Image"
 
     - script: |
