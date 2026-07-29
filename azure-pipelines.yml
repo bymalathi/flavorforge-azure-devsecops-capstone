@@ -166,6 +166,25 @@ stages:
 
         cliProjectName: 'FlavorForge'
 
+        extraProperties: |
+          sonar.sources=.
+          sonar.tests=backend/tests
+          sonar.javascript.lcov.reportPaths=backend/coverage/lcov.info
+
+    - task: UseNode@1
+      displayName: "Install Node.js"
+      inputs:
+        version: "22.x"
+
+    - script: |
+        cd backend
+        npm ci --ignore-scripts
+      displayName: "Install Backend Dependencies"
+
+    - script: |
+        cd backend
+        npm test
+      displayName: "Run Jest Tests with Coverage"
 
     - task: SonarCloudAnalyze@4
       displayName: "Run SonarQube Cloud Analysis"
