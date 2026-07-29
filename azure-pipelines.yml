@@ -6,7 +6,7 @@ pool:
 
 variables:
 
-  dockerRegistryServiceConnection: 'flavorforge-acr'
+  dockerRegistryServiceConnection: 'flavorforge-acr-connection'
   imageRepositoryBackend: 'flavorforge-backend'
   imageRepositoryFrontend: 'flavorforge-frontend'
 
