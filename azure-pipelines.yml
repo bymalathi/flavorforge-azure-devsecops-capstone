@@ -524,3 +524,52 @@ stages:
         targetPath: reports
 
         artifact: ai-devsecops-report               
+
+
+# ==========================================================
+# Stage : Deploy to Development
+# ==========================================================
+
+- stage: DeployDev
+  displayName: "Deploy to Development"
+
+  dependsOn:
+    - AIReports
+
+  condition: succeeded()
+
+  jobs:
+
+  - deployment: DeployToDev
+
+    displayName: "Deploy FlavorForge to Dev"
+
+    environment: "FlavorForge-Dev"
+
+    strategy:
+
+      runOnce:
+
+        deploy:
+
+          steps:
+
+          - checkout: self
+            fetchDepth: 0
+
+          - download: current
+
+          - script: |
+              echo "=================================="
+              echo "FlavorForge Release Simulation"
+              echo "Environment : Development"
+              echo "Build ID    : $(Build.BuildId)"
+              echo "Branch      : $(Build.SourceBranchName)"
+              echo "=================================="
+            displayName: "Display Deployment Information"
+
+          - script: |
+              echo "Simulating deployment..."
+              sleep 10
+              echo "Deployment completed successfully."
+            displayName: "Simulate Deployment"        
