@@ -4,7 +4,25 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
+variables:
+
+  dockerRegistryServiceConnection: 'flavorforge-acr-connection'
+  imageRepositoryBackend: 'flavorforge-backend'
+  imageRepositoryFrontend: 'flavorforge-frontend'
+
+  containerRegistry: 'flavorforgeacr2026ms.azurecr.io'
+
+  imageTag: '$(Build.BuildId)'
+
+  aksResourceGroup: 'flavorforge-rg'
+  aksClusterName: 'flavorforge-aks'
+
+
 stages:
+
+# ==========================
+# BUILD STAGE
+# ==========================
 
 - stage: Build
   displayName: "Build FlavorForge Application"
@@ -62,6 +80,11 @@ stages:
         cd frontend
         npm run build
       displayName: "Build React Application"
+
+
+# ==========================
+# TEST STAGE
+# ==========================
 
 - stage: Test
   displayName: "Test and Quality Validation"
@@ -776,4 +799,136 @@ stages:
 
             targetPath: reports
 
-            artifact: release-summary            
+            artifact: release-summary             
+
+
+# ==========================
+# PUSH TO ACR
+# ==========================
+
+
+- stage: Push
+
+  displayName: "Push Images To ACR"
+
+  dependsOn:
+    - DockerBuild
+    - TrivyScan
+
+  
+
+
+  jobs:
+
+
+  - job: PushImages
+    displayName: "Build and Push Docker Images"
+
+
+    steps:
+
+
+    - checkout: self
+      fetchDepth: 0
+
+
+    - task: Docker@2
+
+      displayName: "Build and Push Backend"
+
+      inputs:
+
+        command: buildAndPush
+
+        containerRegistry: $(dockerRegistryServiceConnection)
+
+        repository: $(imageRepositoryBackend)
+
+        dockerfile: backend/Dockerfile
+
+        tags: |
+          $(imageTag)
+
+
+
+    - task: Docker@2
+
+      displayName: "Build and Push Frontend"
+
+      inputs:
+
+        command: buildAndPush
+
+        containerRegistry: $(dockerRegistryServiceConnection)
+
+        repository: $(imageRepositoryFrontend)
+
+        dockerfile: frontend/Dockerfile
+
+        
+
+        tags: |
+          $(imageTag)
+
+
+
+# ==========================
+# DEPLOY AKS
+# ==========================
+
+
+- stage: Deploy
+
+  dependsOn: Push
+
+  displayName: "Deploy To AKS"
+
+
+  jobs:
+
+
+  - job: DeployAKS
+
+
+    steps:
+
+
+    - checkout: self
+      fetchDepth: 0
+
+
+    - task: AzureCLI@2
+
+      displayName: AKS Deployment
+
+      inputs:
+
+        azureSubscription: 'flavorforge-azure-service'
+
+        scriptType: bash
+
+        scriptLocation: inlineScript
+
+
+        inlineScript: |
+          az aks get-credentials \
+          --resource-group $(aksResourceGroup) \
+          --name $(aksClusterName) \
+          --overwrite-existing
+
+          kubectl -n flavorforge set image deployment/backend \
+          backend=flavorforgeacr2026ms.azurecr.io/flavorforge-backend:$(Build.BuildId)
+
+
+          kubectl -n flavorforge set image deployment/frontend \
+          frontend=flavorforgeacr2026ms.azurecr.io/flavorforge-frontend:$(Build.BuildId)
+
+          kubectl apply -k kubernetes/overlays/prod
+
+
+
+          kubectl rollout status deployment/backend -n flavorforge
+
+
+
+          kubectl rollout status deployment/frontend -n flavorforge          
