@@ -6,8 +6,8 @@
   "scripts": {
     "start": "node src/server.js",
     "dev": "nodemon src/server.js",
-    "test": "jest --coverage && npm run coverage:cobertura",
-    "coverage:cobertura": "cobertura-coverage-reporter"
+    "test": "jest --coverage",
+
   },
   "keywords": [
     "node",
