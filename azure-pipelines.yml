@@ -261,69 +261,117 @@ stages:
 # Stage : Docker Build
 # ==========================================================
 
-
-
-
-
 - stage: DockerBuild
+
   displayName: "Docker Image Build"
 
   dependsOn: CodeQuality
 
+
   jobs:
 
-  - job: BuildImages
-    displayName: "Build Backend & Frontend Images"
+
+  - job: BackendDockerBuild
+
+    displayName: "Build Backend Docker Image"
+
 
     steps:
+
 
     - checkout: self
       fetchDepth: 0
 
 
     - script: |
-        echo "Checking frontend files"
-        ls -la frontend
-        echo "Checking env file"
-        cat frontend/.env.docker
-      displayName: "Debug frontend env"
-
-    - script: |
         mkdir -p reports/docker
-      displayName: "Create Report Directory"
 
-    - script: |
         docker build \
           -t flavorforge-backend:$(Build.BuildId) \
           -t flavorforge-backend:latest \
           ./backend
+
       displayName: "Build Backend Docker Image"
 
+
+
     - script: |
+
+        docker save \
+          flavorforge-backend:$(Build.BuildId) \
+          -o reports/docker/backend-image.tar
+
+      displayName: "Export Backend Image"
+
+
+
+    - publish: reports/docker
+
+      artifact: backend-image
+
+      displayName: "Publish Backend Image"
+
+
+
+  - job: FrontendDockerBuild
+
+    displayName: "Build Frontend Docker Image"
+
+
+
+    steps:
+
+
+    - checkout: self
+      fetchDepth: 0
+
+
+
+    - script: |
+
+        echo "Checking frontend files"
+
+        ls -la frontend
+
+        cat frontend/.env.docker
+
+
+      displayName: "Verify Frontend Environment"
+
+
+
+    - script: |
+
+        mkdir -p reports/docker
+
+
         docker build \
           -f frontend/Dockerfile \
           -t flavorforge-frontend:$(Build.BuildId) \
           -t flavorforge-frontend:latest \
           frontend
+
+
       displayName: "Build Frontend Docker Image"
 
-    - script: |
-        docker images
-      displayName: "List Docker Images"
+
 
     - script: |
-        docker save \
-          flavorforge-backend:$(Build.BuildId) \
-          -o reports/docker/backend-image.tar
 
         docker save \
           flavorforge-frontend:$(Build.BuildId) \
           -o reports/docker/frontend-image.tar
-      displayName: "Export Docker Images"
+
+
+      displayName: "Export Frontend Image"
+
+
 
     - publish: reports/docker
-      artifact: docker-images
-      displayName: "Publish Docker Images"
+
+      artifact: frontend-image
+
+      displayName: "Publish Frontend Image"
 
 ################################################################################
 # Publish Build Artifacts
@@ -446,8 +494,6 @@ stages:
 
     displayName: "Docker Image Scan"
 
-    dependsOn: TrivyFilesystem
-
     steps:
 
     - checkout: self
@@ -539,18 +585,20 @@ stages:
 
   displayName: "Push Images To ACR"
 
-  dependsOn:
-    - DockerBuild
-    - TrivyScan
 
-  
+  dependsOn:
+
+    - DockerBuild
+
 
 
   jobs:
 
 
-  - job: PushImages
-    displayName: "Build and Push Docker Images"
+  - job: PushBackend
+
+    displayName: "Push Backend Image To ACR"
+
 
 
     steps:
@@ -560,9 +608,11 @@ stages:
       fetchDepth: 0
 
 
+
     - task: Docker@2
 
-      displayName: "Build and Push Backend"
+      displayName: "Build And Push Backend"
+
 
       inputs:
 
@@ -575,13 +625,30 @@ stages:
         dockerfile: backend/Dockerfile
 
         tags: |
+
           $(imageTag)
+
+
+
+
+  - job: PushFrontend
+
+    displayName: "Push Frontend Image To ACR"
+
+
+
+    steps:
+
+
+    - checkout: self
+      fetchDepth: 0
 
 
 
     - task: Docker@2
 
-      displayName: "Build and Push Frontend"
+      displayName: "Build And Push Frontend"
+
 
       inputs:
 
@@ -593,12 +660,9 @@ stages:
 
         dockerfile: frontend/Dockerfile
 
-        
-
         tags: |
+
           $(imageTag)
-
-
 
 # ==========================
 # DEPLOY AKS
@@ -945,4 +1009,3 @@ stages:
         targetPath: reports
 
         artifact: ai-devsecops-report               
-
