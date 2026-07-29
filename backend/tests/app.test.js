@@ -13,3 +13,22 @@ describe("Health API", () => {
     expect(response.body.timestamp).toBeDefined();
   });
 });
+
+describe("Recipe API", () => {
+  test("GET /api/recipes should return recipes", async () => {
+    const response = await request(app).get("/api/recipes");
+
+    expect(response.status).toBe(200);
+
+    expect(response.body.success).toBe(true);
+    expect(response.body.count).toBeGreaterThan(0);
+
+    expect(Array.isArray(response.body.data)).toBe(true);
+    expect(response.body.data.length).toBeGreaterThan(0);
+
+    expect(response.body.data[0]).toHaveProperty("id");
+    expect(response.body.data[0]).toHaveProperty("name");
+    expect(response.body.data[0]).toHaveProperty("category");
+    expect(response.body.data[0]).toHaveProperty("difficulty");
+  });
+});
