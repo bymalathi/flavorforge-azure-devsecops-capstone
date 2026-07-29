@@ -34,7 +34,7 @@ spec:
       containers:
         - name: frontend
 
-          image: flavorforgeacr2026ms.azurecr.io/flavorforge-frontend:1.9
+          image: flavorforgeacr2026ms.azurecr.io/flavorforge-frontend:1.8
 
           env:
             - name: BACKEND_HOST
