@@ -529,74 +529,137 @@ stages:
       artifact: trivy-image-reports
       displayName: "Publish Image Reports"
 
-################################################################################
-# AI DevSecOps Report
-################################################################################
 
-- stage: AIReports
+# ==========================
+# PUSH TO ACR
+# ==========================
 
-  displayName: "Generate DevSecOps Report"
+
+- stage: Push
+
+  displayName: "Push Images To ACR"
 
   dependsOn:
+    - DockerBuild
+    - TrivyScan
 
-      - CodeQuality
-      - TrivyScan
+  
+
 
   jobs:
 
-  - job: AIReport
 
-    displayName: "Generate Build Summary"
+  - job: PushImages
+    displayName: "Build and Push Docker Images"
+
 
     steps:
+
 
     - checkout: self
       fetchDepth: 0
 
-    - script: |
 
-        mkdir -p reports
+    - task: Docker@2
 
-        echo "# FlavorForge DevSecOps Report" > reports/BuildSummary.md
-
-        echo "" >> reports/BuildSummary.md
-
-        echo "Build ID: $(Build.BuildId)" >> reports/BuildSummary.md
-
-        echo "" >> reports/BuildSummary.md
-
-        echo "Pipeline Status: SUCCESS" >> reports/BuildSummary.md
-
-        echo "" >> reports/BuildSummary.md
-
-        echo "Completed Checks" >> reports/BuildSummary.md
-
-        echo "- Backend Build" >> reports/BuildSummary.md
-
-        echo "- Frontend Build" >> reports/BuildSummary.md
-
-        echo "- Backend Smoke Test" >> reports/BuildSummary.md
-
-        echo "- Dependency Audit" >> reports/BuildSummary.md
-
-        echo "- SonarQube Cloud Analysis" >> reports/BuildSummary.md
-
-        echo "- Docker Image Build" >> reports/BuildSummary.md
-
-        echo "- Trivy Filesystem Scan" >> reports/BuildSummary.md
-
-        echo "- Trivy Image Scan" >> reports/BuildSummary.md
-
-      displayName: "Generate Markdown Report"
-
-    - task: PublishPipelineArtifact@1
+      displayName: "Build and Push Backend"
 
       inputs:
 
-        targetPath: reports
+        command: buildAndPush
 
-        artifact: ai-devsecops-report               
+        containerRegistry: $(dockerRegistryServiceConnection)
 
+        repository: $(imageRepositoryBackend)
+
+        dockerfile: backend/Dockerfile
+
+        tags: |
+          $(imageTag)
+
+
+
+    - task: Docker@2
+
+      displayName: "Build and Push Frontend"
+
+      inputs:
+
+        command: buildAndPush
+
+        containerRegistry: $(dockerRegistryServiceConnection)
+
+        repository: $(imageRepositoryFrontend)
+
+        dockerfile: frontend/Dockerfile
+
+        
+
+        tags: |
+          $(imageTag)
+
+
+
+# ==========================
+# DEPLOY AKS
+# ==========================
+
+
+- stage: Deploy
+
+  dependsOn: Push
+
+  displayName: "Deploy To AKS"
+
+
+  jobs:
+
+
+  - job: DeployAKS
+
+
+    steps:
+
+
+    - checkout: self
+      fetchDepth: 0
+
+
+    - task: AzureCLI@2
+
+      displayName: "Deploy to AKS"
+
+      inputs:
+
+        connectedServiceNameARM: 'flavorforge-azure-sc'
+
+        scriptType: bash
+
+        scriptLocation: inlineScript
+
+
+        inlineScript: |
+          az aks get-credentials \
+          --resource-group $(aksResourceGroup) \
+          --name $(aksClusterName) \
+          --overwrite-existing
+
+          kubectl -n flavorforge set image deployment/backend \
+          backend=flavorforgeacr2026ms.azurecr.io/flavorforge-backend:$(Build.BuildId)
+
+
+          kubectl -n flavorforge set image deployment/frontend \
+          frontend=flavorforgeacr2026ms.azurecr.io/flavorforge-frontend:$(Build.BuildId)
+
+          kubectl apply -k kubernetes/overlays/prod
+
+
+
+          kubectl rollout status deployment/backend -n flavorforge
+
+
+
+          kubectl rollout status deployment/frontend -n flavorforge          
 
 # ==========================================================
 # Stage : Deploy to Development
@@ -815,133 +878,71 @@ stages:
             artifact: release-summary             
 
 
-# ==========================
-# PUSH TO ACR
-# ==========================
+################################################################################
+# AI DevSecOps Report
+################################################################################
 
+- stage: AIReports
 
-- stage: Push
-
-  displayName: "Push Images To ACR"
+  displayName: "Generate DevSecOps Report"
 
   dependsOn:
-    - DockerBuild
-    - TrivyScan
 
-  
-
+      - CodeQuality
+      - TrivyScan
 
   jobs:
 
+  - job: AIReport
 
-  - job: PushImages
-    displayName: "Build and Push Docker Images"
-
+    displayName: "Generate Build Summary"
 
     steps:
-
 
     - checkout: self
       fetchDepth: 0
 
+    - script: |
 
-    - task: Docker@2
+        mkdir -p reports
 
-      displayName: "Build and Push Backend"
+        echo "# FlavorForge DevSecOps Report" > reports/BuildSummary.md
 
-      inputs:
+        echo "" >> reports/BuildSummary.md
 
-        command: buildAndPush
+        echo "Build ID: $(Build.BuildId)" >> reports/BuildSummary.md
 
-        containerRegistry: $(dockerRegistryServiceConnection)
+        echo "" >> reports/BuildSummary.md
 
-        repository: $(imageRepositoryBackend)
+        echo "Pipeline Status: SUCCESS" >> reports/BuildSummary.md
 
-        dockerfile: backend/Dockerfile
+        echo "" >> reports/BuildSummary.md
 
-        tags: |
-          $(imageTag)
+        echo "Completed Checks" >> reports/BuildSummary.md
 
+        echo "- Backend Build" >> reports/BuildSummary.md
 
+        echo "- Frontend Build" >> reports/BuildSummary.md
 
-    - task: Docker@2
+        echo "- Backend Smoke Test" >> reports/BuildSummary.md
 
-      displayName: "Build and Push Frontend"
+        echo "- Dependency Audit" >> reports/BuildSummary.md
 
-      inputs:
+        echo "- SonarQube Cloud Analysis" >> reports/BuildSummary.md
 
-        command: buildAndPush
+        echo "- Docker Image Build" >> reports/BuildSummary.md
 
-        containerRegistry: $(dockerRegistryServiceConnection)
+        echo "- Trivy Filesystem Scan" >> reports/BuildSummary.md
 
-        repository: $(imageRepositoryFrontend)
+        echo "- Trivy Image Scan" >> reports/BuildSummary.md
 
-        dockerfile: frontend/Dockerfile
+      displayName: "Generate Markdown Report"
 
-        
-
-        tags: |
-          $(imageTag)
-
-
-
-# ==========================
-# DEPLOY AKS
-# ==========================
-
-
-- stage: Deploy
-
-  dependsOn: Push
-
-  displayName: "Deploy To AKS"
-
-
-  jobs:
-
-
-  - job: DeployAKS
-
-
-    steps:
-
-
-    - checkout: self
-      fetchDepth: 0
-
-
-    - task: AzureCLI@2
-
-      displayName: "Deploy to AKS"
+    - task: PublishPipelineArtifact@1
 
       inputs:
 
-        connectedServiceNameARM: 'flavorforge-azure-sc'
+        targetPath: reports
 
-        scriptType: bash
+        artifact: ai-devsecops-report               
 
-        scriptLocation: inlineScript
-
-
-        inlineScript: |
-          az aks get-credentials \
-          --resource-group $(aksResourceGroup) \
-          --name $(aksClusterName) \
-          --overwrite-existing
-
-          kubectl -n flavorforge set image deployment/backend \
-          backend=flavorforgeacr2026ms.azurecr.io/flavorforge-backend:$(Build.BuildId)
-
-
-          kubectl -n flavorforge set image deployment/frontend \
-          frontend=flavorforgeacr2026ms.azurecr.io/flavorforge-frontend:$(Build.BuildId)
-
-          kubectl apply -k kubernetes/overlays/prod
-
-
-
-          kubectl rollout status deployment/backend -n flavorforge
-
-
-
-          kubectl rollout status deployment/frontend -n flavorforge          
