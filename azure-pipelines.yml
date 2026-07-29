@@ -176,6 +176,7 @@ stages:
           sonar.sources=backend/src,frontend/src
           sonar.tests=backend/tests
           sonar.javascript.lcov.reportPaths=backend/coverage/lcov.info
+          sonar.sourceEncoding=UTF-8
 
     - task: UseNode@1
       displayName: "Install Node.js"
