@@ -1,23 +1,37 @@
 # 🍽️ FlavorForge Backend
 
-The **FlavorForge Backend** is an enterprise-style REST API built with **Node.js** and **Express.js**. It provides the core application services for the FlavorForge Azure DevSecOps Capstone Project and serves as the communication layer between the frontend application and future database services.
+The **FlavorForge Backend** is a RESTful API built using **Node.js** and **Express.js**. It serves as the backend service for the FlavorForge Azure DevSecOps Capstone Project by handling client requests, providing recipe data, exposing health monitoring endpoints, and supporting communication with the frontend application.
 
-The backend follows a layered architecture that separates routing, controllers, services, configuration, and business logic to improve maintainability, scalability, and testability.
-
-Although the current implementation uses in-memory data for demonstration purposes, the project structure has been designed to support future integration with databases, authentication services, containerization, Kubernetes deployment, and Azure DevOps CI/CD pipelines.
+The application follows a modular and layered architecture to improve maintainability, scalability, and code organization. The current implementation uses sample in-memory data and is structured to support future enhancements such as database integration, authentication, logging, and monitoring.
 
 ---
 
-# 🚀 Technology Stack
+# 🎯 Purpose
 
-| Technology        | Purpose                                     |
-| ----------------- | ------------------------------------------- |
-| Node.js           | JavaScript runtime                          |
-| Express.js        | REST API framework                          |
-| dotenv            | Environment variable management             |
-| JavaScript (ES6+) | Backend application logic                   |
-| REST API          | Communication between frontend and backend  |
-| Nodemon           | Automatic server restart during development |
+The backend is responsible for:
+
+- Exposing REST API endpoints
+- Processing client requests
+- Providing recipe data
+- Monitoring application health
+- Managing application configuration
+- Supporting frontend communication
+- Serving as the business logic layer of the FlavorForge application
+
+---
+
+# 🚀 Tech Stack
+
+| Technology | Purpose |
+|------------|---------|
+| Node.js | JavaScript runtime |
+| Express.js | REST API framework |
+| dotenv | Environment variable management |
+| JavaScript (ES6+) | Backend application logic |
+| REST API | Communication between frontend and backend |
+| Nodemon | Automatic server restart during development |
+| Jest | Unit testing |
+| Supertest | API endpoint testing |
 
 ---
 
@@ -26,68 +40,67 @@ Although the current implementation uses in-memory data for demonstration purpos
 ```text
 backend/
 │
-├── src/
+├── Dockerfile
+├── README.md
+├── jest.config.js
+├── package-lock.json
+├── package.json
+├── src
 │   ├── app.js
-│   │
-│   ├── config/
+│   ├── config
 │   │   └── app.config.js
-│   │
-│   ├── controllers/
+│   ├── controllers
 │   │   ├── health.controller.js
 │   │   └── recipe.controller.js
-│   │
-│   ├── services/
-│   │   ├── health.service.js
-│   │   └── recipe.service.js
-│   │
-│   ├── routes/
+│   ├── database
+│   ├── middleware
+│   ├── models
+│   ├── routes
 │   │   ├── health.routes.js
 │   │   └── recipe.routes.js
-│   │
-│   ├── middleware/
-│   ├── database/
-│   ├── models/
-│   ├── utils/
-│   │
-│   └── server.js
-│
-├── tests/
-│   ├── server-test.js
-│   └── test.js
-│
-├── package.json
-├── package-lock.json
-└── README.md
+│   ├── server.js
+│   ├── services
+│   │   ├── health.service.js
+│   │   └── recipe.service.js
+│   └── utils
+└── tests
+    ├── app.test.js
+    ├── controllers.test.js
+    └── services.test.js
 ```
+
+> **Note:** The `database`, `middleware`, `models`, and `utils` directories are intentionally included as placeholders to support future enhancements such as database integration, authentication, request validation, reusable utilities, and middleware components. This structure follows common enterprise backend organization practices.
 
 ---
 
 # ✨ Features
 
-The current backend implementation provides:
+The FlavorForge Backend provides a lightweight and modular REST API designed for frontend integration and future scalability.
 
-* RESTful API architecture
-* Express-based HTTP server
-* Health monitoring endpoint
-* Recipe API endpoint
-* Environment-based configuration
-* Modular routing
-* Layered Controller → Service architecture
-* Reusable configuration module
-* CORS support for frontend integration
-* Production-ready folder organization
+## Application Features
+
+- RESTful API architecture
+- Express-based HTTP server
+- Health monitoring endpoint
+- Recipe API endpoint
+- Environment-based configuration
+- Layered Controller → Service architecture
+- Modular project structure
+- JSON-based API responses
+- CORS support for frontend communication
+- Production-ready backend organization
 
 ---
 
 # 🏛️ Backend Architecture
 
-The backend follows a layered architecture that separates responsibilities into independent layers.
+The backend follows a layered architecture where each layer has a single responsibility.
 
 ```text
 Client Request
       │
       ▼
-Express Router
+Express Server
       │
       ▼
 Controller
@@ -102,146 +115,157 @@ Business Logic
 JSON Response
 ```
 
-Each layer has a single responsibility.
+### Controller Layer
 
-## Routes
+The controller layer is responsible for:
 
-Routes receive incoming HTTP requests and forward them to the appropriate controller.
+- Receiving client requests
+- Calling the appropriate service
+- Processing request data
+- Returning HTTP responses
 
-Current routes include:
+Current controller:
 
-* Health Routes
-* Recipe Routes
+- Health Controller
 
 ---
 
-## Controllers
+### Service Layer
 
-Controllers process incoming requests and coordinate application logic.
+The service layer contains the application's business logic.
 
 Responsibilities include:
 
-* Receiving client requests
-* Calling service methods
-* Returning HTTP responses
-* Managing response status codes
+- Processing application data
+- Preparing API responses
+- Keeping controllers lightweight
+- Supporting future database integration
 
-Current controllers:
+Current service:
 
-* Health Controller
-* Recipe Controller
-
----
-
-## Services
-
-Services contain the application's business logic.
-
-Responsibilities include:
-
-* Processing data
-* Returning business objects
-* Keeping controllers lightweight
-* Supporting future database integration
-
-Current services:
-
-* Health Service
-* Recipe Service
+- Health Service
 
 ---
 
-## Configuration
+### Configuration Layer
 
-The configuration layer centralizes application settings.
-
-Current configuration includes:
-
-* Application Name
-* Environment
-* Port
-* Version
-
-Future configuration may include:
-
-* Database connections
-* JWT secrets
-* Azure Key Vault integration
-* External API credentials
-
----
-
-# 🌐 REST API Endpoints
-
-## Health Endpoint
-
-| Method | Endpoint  | Description                   |
-| ------ | --------- | ----------------------------- |
-| GET    | `/api/health` | Returns backend health status |
-
-Example Response
-
-```json
-{
-  "status": "UP",
-  "application": "FlavorForge Backend",
-  "version": "1.0.0",
-  "timestamp": "2026-07-26T12:30:00.000Z"
-}
-```
-
----
-
-## Recipe Endpoint
-
-| Method | Endpoint   | Description                   |
-| ------ | ---------- | ----------------------------- |
-| GET    | `/api/recipes` | Returns the available recipes |
-
-The recipe endpoint currently returns sample in-memory data and is designed for future integration with a persistent database.
-
----
-
-# ⚙️ Environment Configuration
-
-The backend uses **dotenv** to load environment variables.
-
-Example:
-
-```env
-PORT=3000
-NODE_ENV=development
-APP_NAME=FlavorForge Backend
-APP_VERSION=1.0.0
-```
-
-Configuration is centralized in:
+Application configuration is centralized in:
 
 ```text
 src/config/app.config.js
 ```
 
-Keeping configuration outside the source code makes it easier to support different environments such as development, testing, staging, and production.
+Current configuration includes:
+
+- Application Name
+- Application Version
+- Environment
+- Port
+- Build Version
+
+This approach allows different configurations for Development, QA, and Production environments without changing the application source code.
+
+---
+
+# 🌐 REST API Endpoints
+
+The backend exposes REST APIs that are consumed by the React frontend.
+
+| Method | Endpoint       | Description                       |
+| ------ | -------------- | --------------------------------- |
+| GET    | `/api/health`  | Returns application health status |
+| GET    | `/api/recipes` | Returns available recipes         |
+
+---
+
+## Sample Health Response
+
+```json
+{
+  "status": "UP",
+  "application": "FlavorForge Backend",
+  "version": "1.3",
+  "environment": "development",
+  "timestamp": "2026-07-30T10:00:00.000Z"
+}
+```
+
+---
+
+## Sample Recipe Response
+
+```json
+[
+  {
+    "id": 1,
+    "name": "Paneer Butter Masala",
+    "category": "Indian"
+  }
+]
+```
+
+> **Note:** Recipe data is currently stored in memory and is intended for demonstration purposes. The project structure supports future integration with a persistent database.
+
+---
+
+# ⚙️ Environment Configuration
+
+The backend uses **dotenv** to load configuration values from environment variables.
+
+Create a `.env` file in the backend directory.
+
+```env
+PORT=3000
+NODE_ENV=development
+APP_NAME=FlavorForge Backend
+APP_VERSION=1.3
+BUILD_VERSION=1.3
+```
+
+The application configuration is loaded through:
+
+```text
+src/config/app.config.js
+```
+
+Using environment variables makes it easier to deploy the application across multiple environments while keeping configuration separate from the application code.
 
 ---
 
 # ▶️ Running the Application
 
+## Prerequisites
+
+Before running the backend, ensure the following software is installed:
+
+- Node.js (v18 or later)
+- npm
+- Git
+
+The frontend application can be started separately to consume the backend APIs.
+
+---
+
 ## Install Dependencies
 
+Navigate to the backend directory and install the required packages.
+
 ```bash
+cd backend
 npm install
 ```
 
 ---
 
-## Start Development Server
+## Start the Development Server
+
+Run the backend using Nodemon.
 
 ```bash
 npm run dev
 ```
 
-The backend starts on:
+The backend will be available at:
 
 ```text
 http://localhost:3000
@@ -249,7 +273,9 @@ http://localhost:3000
 
 ---
 
-## Start Production Server
+## Start the Production Server
+
+Run the application in production mode.
 
 ```bash
 npm start
@@ -257,127 +283,217 @@ npm start
 
 ---
 
+# 📜 Available Scripts
+
+| Command | Description |
+|----------|-------------|
+| `npm install` | Install project dependencies |
+| `npm run dev` | Start the development server using Nodemon |
+| `npm start` | Start the production server |
+| `npm test` | Execute backend unit tests |
+| `npm run test:coverage` | Generate code coverage report *(if configured)* |
+
+---
+
 # 🧪 Testing the API
 
-Verify that the backend is running.
+Verify that the backend is running successfully.
 
-Open a browser:
+### Browser
+
+Open the following URL:
 
 ```text
 http://localhost:3000/api/health
 ```
 
-Or use curl:
+---
+
+### Using cURL
 
 ```bash
 curl http://localhost:3000/api/health
 ```
 
+---
+
+### Expected Response
+
+```json
+{
+  "status": "UP",
+  "application": "FlavorForge Backend",
+  "version": "1.3",
+  "environment": "development"
+}
+```
+
 A successful response confirms that:
 
-* Express server is running
-* Routing is functioning correctly
-* Controller layer is working
-* Service layer is responding
-* JSON responses are being generated
+- Express server is running
+- Routing is working correctly
+- Controllers are responding
+- Services are executing successfully
+- JSON responses are returned correctly
+
+---
+
+# 🧹 Cleaning Local Artifacts
+
+Remove generated files to restore the project to a clean state.
+
+```bash
+rm -rf node_modules
+rm -rf coverage
+```
+
+Reinstall dependencies when required.
+
+```bash
+npm install
+```
+
+---
+
+# ✅ Code Quality
+
+The backend follows modular coding practices to improve readability, maintainability, and scalability.
+
+Current verification status:
+
+- ✅ REST APIs verified
+- ✅ Health endpoint tested
+- ✅ Recipe endpoint tested
+- ✅ Environment configuration validated
+- ✅ Modular Controller-Service architecture implemented
+
+---
+
+# 🧪 Testing
+
+The backend uses **Jest** and **Supertest** for automated testing.
+
+## Run Tests
+
+```bash
+npm test
+```
+
+The test suite generates a coverage report in the `coverage/` directory.
+
+Current tests verify:
+
+- Backend server startup
+- Health API endpoint
+- Recipe API endpoint
+- HTTP response status
+- JSON response format
 
 ---
 
 # 📦 Project Dependencies
 
-| Package | Purpose                         |
-| ------- | ------------------------------- |
-| express | REST API framework              |
-| dotenv  | Environment variable management |
-| nodemon | Development auto-restart        |
+## Production Dependencies
+
+| Package | Purpose |
+|---------|---------|
+| express | REST API framework |
+| cors | Cross-Origin Resource Sharing |
+| dotenv | Environment variable management |
+
+## Development Dependencies
+
+| Package | Purpose |
+|---------|---------|
+| nodemon | Automatic server restart during development |
+| jest | Unit testing framework |
+| supertest | HTTP endpoint testing |
+| jest-junit | JUnit test report generation |
 
 ---
 
-# 🛡️ Error Handling
+# 🔒 Security
 
-The backend architecture supports centralized error handling.
+The backend follows basic security practices suitable for development and production-ready expansion.
+
+Current implementation includes:
+
+- Environment variables managed with `.env`
+- CORS configuration for frontend communication
+- Centralized application configuration
+- Separation of application logic from configuration
 
 Future improvements may include:
 
-* Global exception middleware
-* Request validation
-* Custom error classes
-* Standardized HTTP error responses
-* Structured logging
+- Helmet.js
+- Rate limiting
+- JWT authentication
+- Input validation
+- Azure Key Vault integration
 
 ---
 
-# 🔐 Security Considerations
+# 🐳 Containerization
 
-Current security measures include:
+The backend includes a Dockerfile and is designed for containerized deployments.
 
-* CORS configuration for frontend communication
-* Environment variable management using dotenv
+Containerization enables:
 
-Future enhancements may include:
+- Consistent runtime environments
+- Easier deployment
+- Kubernetes compatibility
+- CI/CD automation
 
-* Helmet.js
-* Rate limiting
-* JWT Authentication
-* OAuth integration
-* Azure Key Vault
-* Secure HTTP headers
-* Input validation
+To build the Docker image:
 
----
+```bash
+docker build -t flavorforge-backend .
+```
 
-# 🐳 Planned DevOps Integration
+To run the container:
 
-The backend architecture has been designed to support containerized and cloud-native deployment.
-
-Future phases of the project include:
-
-* Docker containerization
-* Docker Compose
-* Azure Container Registry (ACR)
-* Azure Kubernetes Service (AKS)
-* Kubernetes Deployments
-* Services
-* ConfigMaps
-* Secrets
-* Horizontal Pod Autoscaler (HPA)
+```bash
+docker run -p 3000:3000 flavorforge-backend
+```
 
 ---
 
-# 🚀 CI/CD Readiness
+# ☸️ Kubernetes Deployment
 
-The project structure supports enterprise DevOps workflows.
+The backend is deployed to Azure Kubernetes Service (AKS) using Kubernetes manifests.
 
-Planned CI/CD pipeline stages include:
+Deployment resources include:
 
-* Source checkout
-* Dependency installation
-* Code quality analysis
-* Unit testing
-* Docker image build
-* Image vulnerability scanning
-* Container registry push
-* Kubernetes deployment
-* Automated rollout validation
+- Deployment
+- Service
+- ConfigMap
+- Secret
+- Horizontal Pod Autoscaler (HPA)
+- Ingress
+
+Environment-specific configurations are managed using **Kustomize overlays** for:
+
+- Development
+- QA
+- Production
 
 ---
 
-# 📈 Future Enhancements
+# 🚀 CI/CD Integration
 
-The backend will continue evolving with:
+The backend is integrated into an Azure DevSecOps pipeline.
 
-* Database integration
-* CRUD operations for recipes
-* Authentication and Authorization
-* Request validation
-* Swagger/OpenAPI documentation
-* Structured logging
-* Redis caching
-* Background jobs
-* Message queue integration
-* Prometheus monitoring
-* Grafana dashboards
-* Azure Application Insights
+Pipeline stages include:
+
+1. Source checkout
+2. Dependency installation
+3. Unit testing
+4. SonarCloud code quality analysis
+5. Docker image build
+6. Trivy vulnerability scan
+7. Push image to Azure Container Registry (ACR)
+8. Deploy to Azure Kubernetes Service (AKS)
+9. GitOps synchronization using Argo CD
 
 ---
 
@@ -385,17 +501,17 @@ The backend will continue evolving with:
 
 This backend demonstrates practical experience with:
 
-* Node.js
-* Express.js
-* REST API development
-* Layered backend architecture
-* Route organization
-* Controller-Service pattern
-* Environment configuration
-* Modular project structure
-* Enterprise backend organization
-* Production-ready application design
-* DevOps-ready backend development
+- Node.js
+- Express.js
+- REST API development
+- Layered application architecture
+- Controller-Service pattern
+- Environment configuration
+- API testing with Jest and Supertest
+- Docker containerization
+- Kubernetes deployments
+- Azure DevSecOps CI/CD pipelines
+- GitOps using Argo CD
 
 ---
 
@@ -405,4 +521,4 @@ This backend demonstrates practical experience with:
 
 FlavorForge Azure DevSecOps Capstone Project
 
-Built as part of a hands-on learning journey to develop modern backend engineering, Cloud, Docker, Kubernetes, Azure, DevSecOps, and CI/CD skills by creating a production-style REST API following enterprise software development practices.
+Built as part of the CBC DevSecOps Internship to demonstrate modern backend development, containerization, Kubernetes orchestration, Azure DevOps CI/CD, and GitOps deployment practices.

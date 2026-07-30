@@ -1,8 +1,21 @@
 # 🍽️ FlavorForge Frontend
 
-The **FlavorForge Frontend** is a modern React application built using **Vite**. It serves as the user interface for the FlavorForge Azure DevSecOps Capstone Project and communicates with the Express backend through REST APIs.
+The **FlavorForge Frontend** is a modern single-page application (SPA) built with **React** and **Vite**. It provides the user interface for the FlavorForge Azure DevSecOps Capstone Project and communicates with the backend REST API to display recipes, monitor application health, and deliver a responsive user experience.
 
-The project demonstrates enterprise frontend development practices including reusable components, responsive UI design, API integration, routing, error handling, and production-ready architecture.
+The application follows modern frontend development practices with reusable components, client-side routing, API integration, responsive layouts, and production-ready architecture.
+
+---
+
+# 🎯 Purpose
+
+The frontend is responsible for:
+
+- Providing an intuitive and responsive user interface
+- Displaying recipe information
+- Communicating with the backend REST API
+- Monitoring backend health status
+- Delivering a consistent user experience across devices
+- Serving as the presentation layer of the FlavorForge application
 
 ---
 
@@ -10,12 +23,12 @@ The project demonstrates enterprise frontend development practices including reu
 
 | Technology | Purpose |
 |------------|---------|
-| React | Component-based UI library |
-| Vite | Fast development server and production build tool |
+| React | Component-based UI development |
+| Vite | Development server and production build |
 | React Router DOM | Client-side routing |
 | JavaScript (ES6+) | Application logic |
-| CSS3 | Styling and responsive design |
-| Fetch API | Backend communication |
+| CSS3 | Styling and responsive layouts |
+| Fetch API | Backend API communication |
 
 ---
 
@@ -24,58 +37,108 @@ The project demonstrates enterprise frontend development practices including reu
 ```text
 frontend/
 │
-├── public/
-│
-├── src/
-│   ├── api/
-│   │   └── apiClient.js
-│   │
-│   ├── assets/
-│   │
-│   ├── components/
-│   │   ├── BackendStatus/
-│   │   ├── CategoryFilter/
-│   │   ├── EmptyState/
-│   │   ├── ErrorBoundary/
-│   │   ├── FeatureCard/
-│   │   ├── Features/
-│   │   ├── Footer/
-│   │   ├── Header/
-│   │   ├── Hero/
-│   │   ├── NotFound/
-│   │   ├── RecipeCard/
-│   │   ├── RecipeList/
-│   │   ├── SearchBar/
-│   │   └── ui/
-│   │       ├── Badge/
-│   │       ├── Button/
-│   │       ├── Card/
-│   │       └── Loading/
-│   │
-│   ├── layouts/
-│   │
-│   ├── pages/
-│   │
-│   ├── services/
-│   │
-│   ├── styles/
-│   │
-│   ├── App.jsx
-│   └── main.jsx
-│
-├── .env
+├── Dockerfile
+├── README.md
+├── eslint.config.js
+├── index.html
+├── nginx.conf.template
+├── package-lock.json
 ├── package.json
-├── vite.config.js
-└── README.md
+├── public
+│   ├── favicon.svg
+│   └── icons.svg
+├── src
+│   ├── App.jsx
+│   ├── api
+│   │   ├── apiClient.js
+│   │   └── apiClient.test.js
+│   ├── assets
+│   │   └── hero.png
+│   ├── components
+│   │   ├── BackendStatus
+│   │   │   ├── BackendStatus.css
+│   │   │   └── BackendStatus.jsx
+│   │   ├── CategoryFilter
+│   │   │   ├── CategoryFilter.css
+│   │   │   └── CategoryFilter.jsx
+│   │   ├── EmptyState
+│   │   │   ├── EmptyState.css
+│   │   │   └── EmptyState.jsx
+│   │   ├── ErrorBoundary
+│   │   │   ├── ErrorBoundary.css
+│   │   │   ├── ErrorBoundary.jsx
+│   │   │   └── ErrorBoundary.test.jsx
+│   │   ├── FeatureCard
+│   │   │   ├── FeatureCard.css
+│   │   │   └── FeatureCard.jsx
+│   │   ├── Features
+│   │   │   ├── Features.css
+│   │   │   └── Features.jsx
+│   │   ├── Footer
+│   │   │   └── Footer.jsx
+│   │   ├── Header
+│   │   │   ├── Header.css
+│   │   │   └── Header.jsx
+│   │   ├── Hero
+│   │   │   ├── Hero.css
+│   │   │   └── Hero.jsx
+│   │   ├── NotFound
+│   │   │   ├── NotFound.css
+│   │   │   └── NotFound.jsx
+│   │   ├── RecipeCard
+│   │   │   ├── RecipeCard.css
+│   │   │   └── RecipeCard.jsx
+│   │   ├── RecipeList
+│   │   │   ├── RecipeList.css
+│   │   │   └── RecipeList.jsx
+│   │   ├── SearchBar
+│   │   │   ├── SearchBar.css
+│   │   │   └── SearchBar.jsx
+│   │   └── ui
+│   │       ├── Badge
+│   │       │   ├── Badge.css
+│   │       │   └── Badge.jsx
+│   │       ├── Button
+│   │       │   ├── Button.css
+│   │       │   └── Button.jsx
+│   │       ├── Card
+│   │       │   ├── Card.css
+│   │       │   └── Card.jsx
+│   │       └── Loading
+│   │           ├── Loading.css
+│   │           └── Loading.jsx
+│   ├── config
+│   ├── hooks
+│   ├── layouts
+│   │   └── Layout.jsx
+│   ├── main.jsx
+│   ├── pages
+│   │   ├── AboutPage.jsx
+│   │   ├── ContactPage.jsx
+│   │   ├── HomePage.jsx
+│   │   ├── HomePage.test.jsx
+│   │   └── RecipesPage.jsx
+│   ├── services
+│   │   ├── healthService.js
+│   │   └── recipeService.js
+│   ├── styles
+│   │   ├── global.css
+│   │   └── variables.css
+│   ├── test
+│   │   └── setup.js
+│   └── utils
+└── vite.config.js
 ```
 
 ---
 
 # ✨ Features
 
+The FlavorForge Frontend provides a modern and responsive user experience with reusable React components and seamless backend integration.
+
 ## Application Features
 
-- Responsive modern UI
+- Responsive user interface
 - Hero landing section
 - Feature highlights
 - Recipe listing
@@ -85,24 +148,32 @@ frontend/
 - Loading indicators
 - Empty state handling
 - Error Boundary
-- 404 Page
-- Mobile navigation
+- Custom 404 page
+- Mobile-friendly navigation
 - Component-based architecture
+- API integration with backend
+- Unit testing using Vitest and React Testing Library
+- Docker-ready frontend
+- Nginx production configuration
 
 ---
 
-# 🧩 Reusable Components
+# 🧩 Component Architecture
 
-The project follows reusable component principles.
+The application is designed using reusable and modular React components to improve maintainability and scalability.
 
-### UI Components
+## UI Components
+
+These components provide reusable building blocks for the user interface.
 
 - Button
 - Card
 - Badge
 - Loading
 
-### Feature Components
+## Feature Components
+
+These components implement the core application functionality.
 
 - Hero
 - Features
@@ -122,30 +193,30 @@ The project follows reusable component principles.
 
 # 🌐 Routing
 
-The application uses React Router.
+Client-side routing is implemented using **React Router DOM**, allowing users to navigate between pages without full page reloads.
 
 | Route | Description |
 |--------|-------------|
-| / | Home page |
-| /recipes | Recipe listing |
-| /about | About FlavorForge |
-| /contact | Contact page |
-| * | Custom 404 page |
+| `/` | Home page |
+| `/recipes` | Displays available recipes |
+| `/about` | About FlavorForge |
+| `/contact` | Contact information |
+| `*` | Custom 404 page |
 
 ---
 
 # 🔗 Backend Integration
 
-The frontend communicates with the Express backend through REST APIs.
+The frontend communicates with the Express backend using REST APIs.
 
-Current endpoints:
+## Available API Endpoints
 
-| Endpoint | Purpose |
-|----------|---------|
-| GET /api/health | Backend health check |
-| GET /api/recipes | Retrieve recipe list |
+| Endpoint | Method | Purpose |
+|----------|--------|---------|
+| `/api/health` | GET | Check backend health status |
+| `/api/recipes` | GET | Retrieve available recipes |
 
-Environment variable:
+The backend base URL is configured using an environment variable.
 
 ```env
 VITE_API_BASE_URL=http://localhost:3000
@@ -155,51 +226,86 @@ VITE_API_BASE_URL=http://localhost:3000
 
 # ⚙️ Environment Configuration
 
-Create a `.env` file:
+Create a `.env` file in the frontend directory.
 
 ```env
 VITE_API_BASE_URL=http://localhost:3000
 ```
 
+> **Note:** Update the API URL according to the deployment environment (Development, QA, or Production).
+
 ---
 
 # ▶️ Running the Application
 
-## Install dependencies
+## Prerequisites
+
+Before running the application, ensure the following software is installed:
+
+- Node.js (v18 or later)
+- npm
+- Git
+
+The backend service should also be running to enable API communication.
+
+---
+
+## Install Dependencies
+
+Navigate to the frontend directory and install the required packages.
 
 ```bash
+cd frontend
 npm install
 ```
 
-## Start development server
+---
+
+## Start the Development Server
+
+Run the Vite development server.
 
 ```bash
 npm run dev
 ```
 
-Application:
+The application will be available at:
 
-```
+```text
 http://localhost:5173
 ```
 
-Backend must be running on:
+Ensure the backend API is running at:
 
-```
+```text
 http://localhost:3000
 ```
 
 ---
 
+# 📜 Available Scripts
+
+| Command | Description |
+|----------|-------------|
+| `npm install` | Install project dependencies |
+| `npm run dev` | Start the Vite development server |
+| `npm run build` | Create a production build |
+| `npm run preview` | Preview the production build locally |
+| `npm run lint` | Run ESLint to check code quality |
+
+---
+
 # 🏗️ Production Build
 
-Build the application:
+Generate an optimized production build.
 
 ```bash
 npm run build
 ```
 
-Preview the production build:
+The compiled application is generated in the `dist/` directory.
+
+To preview the production build locally:
 
 ```bash
 npm run preview
@@ -207,134 +313,193 @@ npm run preview
 
 ---
 
+# 🧹 Cleaning Local Artifacts
+
+Remove generated files to restore the project to a clean state.
+
+```bash
+rm -rf node_modules
+rm -rf dist
+rm -rf coverage
+```
+
+Reinstall project dependencies when required.
+
+```bash
+npm install
+```
+
+---
+
 # ✅ Code Quality
 
-Run ESLint:
+Run ESLint before committing changes:
 
 ```bash
 npm run lint
 ```
 
-Current project status:
+Run unit tests:
 
-- ESLint passing
-- Production build successful
-- Responsive layout verified
+```bash
+npm test
+```
+
+Build production assets:
+
+```bash
+npm run build
+```
+
+Current verification status:
+
+- ✅ ESLint checks passing
+- ✅ Production build successful
+- ✅ Responsive layout verified
+- ✅ Backend API connectivity verified
 
 ---
 
 # 🛡️ Error Handling
 
-The frontend includes:
+The frontend includes several mechanisms to improve reliability and user experience.
 
-- Error Boundary
-- Loading Component
-- Empty State
-- API error handling
+- Error Boundary for unexpected React errors
+- Loading indicators during API requests
+- Empty state component when no data is available
 - Backend health monitoring
+- API error handling with user-friendly messages
+- Custom 404 page for invalid routes
 
-These improve user experience and make the application more resilient.
+These features help ensure the application remains stable even when unexpected situations occur.
 
 ---
 
 # 🎨 Responsive Design
 
-The application is responsive for:
+The user interface is designed to work across multiple screen sizes.
+
+Supported devices include:
 
 - Desktop
+- Laptop
 - Tablet
 - Mobile
 
-Responsive techniques include:
+Responsive techniques used:
 
-- Flexbox
+- CSS Flexbox
 - CSS Grid
 - Media Queries
 - Reusable CSS variables
+- Responsive spacing and typography
 
 ---
 
-# 🏛️ Architecture
+# 🏛️ Frontend Architecture
 
 ```text
 Browser
-      │
-      ▼
+    │
+    ▼
 React Components
-      │
-      ▼
+    │
+    ▼
+Pages
+    │
+    ▼
 Services
-      │
-      ▼
+    │
+    ▼
 API Client
-      │
-      ▼
-Express Backend
+    │
+    ▼
+Express Backend API
 ```
 
----
-
-# 📦 Project Dependencies
-
-| Package | Purpose |
-|----------|---------|
-| react | UI library |
-| react-dom | React rendering |
-| react-router-dom | Client-side routing |
-| vite | Development server & production build |
-| eslint | Code quality |
-| @vitejs/plugin-react | React support for Vite |
+The application follows a layered architecture where UI components communicate with service modules, which interact with the backend through REST APIs.
 
 ---
 
-# 🔒 Dependency Security Note
+# 📦 Key Dependencies
+
+| Package                | Purpose             |
+| ---------------------- | ------------------- |
+| react                  | UI library          |
+| react-dom              | React rendering     |
+| react-router-dom       | Client-side routing |
+| vite                   | Build tool          |
+| @vitejs/plugin-react   | React support       |
+| vitest                 | Unit testing        |
+| @testing-library/react | Component testing   |
+| eslint                 | Code quality        |
+
+
+---
+
+# 🔒 Dependency Security
 
 During development, `npm audit` reported a high-severity advisory related to **react-router**.
 
 Assessment:
 
-- The advisory targets React Server Components (RSC).
-- FlavorForge is a client-side React SPA built with Vite.
+- The advisory applies to React Server Components (RSC).
+- FlavorForge is a client-side React Single Page Application (SPA).
 - React Server Components are not used.
 - No exploitable path exists in the current implementation.
 
 Decision:
 
-- Do not apply `npm audit fix --force`.
-- Re-evaluate dependency updates during CI/CD testing.
+- Do not use `npm audit fix --force`.
+- Review dependency updates during future maintenance and CI/CD validation.
 
 ---
 
-# 🚀 Future Enhancements
+# 🚀 Deployment
 
-The frontend will be extended with:
+The frontend is designed to support modern containerized deployments.
 
-- Docker multi-stage build
-- Nginx deployment
+Supported deployment platforms include:
+
+- Docker
+- Nginx
 - Docker Compose
 - Azure Container Registry (ACR)
 - Azure Kubernetes Service (AKS)
 - Azure DevOps CI/CD Pipeline
-- Kubernetes Ingress
-- Horizontal Pod Autoscaler
-- Monitoring with Prometheus & Grafana
+- GitOps deployment using ArgoCD
+
+Deployment instructions are documented in the repository-level documentation.
 
 ---
 
 # 📚 Learning Outcomes
 
-This frontend demonstrates practical experience with:
+This project demonstrates practical experience with:
 
-- React
-- Vite
+- React application development
+- Vite project setup
 - Component-based architecture
-- React Router
-- API integration
-- Responsive UI development
+- React Hooks
+- Client-side routing
+- REST API integration
+- Environment variable configuration
+- Responsive web design
 - Error handling
-- State management using Hooks
-- Enterprise folder organization
-- Production-ready frontend development
+- Production build optimization
+- Enterprise frontend project organization
+
+---
+
+# 📖 Related Documentation
+
+For additional information, refer to:
+
+- `../README.md` – Project overview
+- `../backend/README.md` – Backend service documentation
+- `../docker/README.md` – Docker setup
+- `../kubernetes/README.md` – Kubernetes deployment
+- `../argocd/README.md` – GitOps deployment
 
 ---
 
@@ -344,4 +509,4 @@ This frontend demonstrates practical experience with:
 
 FlavorForge Azure DevSecOps Capstone Project
 
-Built as part of a hands-on journey to learn modern Cloud, DevOps, Docker, Kubernetes, Azure, and CI/CD practices through a production-style application.
+This frontend is part of a production-style DevSecOps project demonstrating modern application development, containerization, Kubernetes orchestration, CI/CD automation, and GitOps deployment using Azure technologies.
