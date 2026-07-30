@@ -1266,21 +1266,17 @@ FlavorForge uses Kustomize to manage different deployment environments.
 
 Structure:
 
-```
+```mermaid
 
-Base Configuration
+flowchart TD
+    A[Base Configuration]
+    B[Environment Overlay]
+    D{Merge}
+    C[Final Deployment Manifest]
 
-```
-    +
-```
-
-Environment Overlay
-
-```
-    ↓
-```
-
-Final Deployment Manifest
+    A --> D
+    B --> D
+    D --> C
 
 ```
 
@@ -1314,25 +1310,19 @@ Benefits:
 
 ---
 
-# 🚀 GitOps with ArgoCD
+#  GitOps with ArgoCD
 
 Before implementing GitOps:
 
-```
+```mermaid
 
-Pipeline
+flowchart TD
+    A(Pipeline)
+    B(kubectl apply)
+    C(Kubernetes Cluster)
 
-```
-↓
-```
-
-kubectl apply
-
-```
-↓
-```
-
-Kubernetes Cluster
+    A --> B
+    B --> C
 
 ```
 
@@ -1342,33 +1332,19 @@ This creates a direct deployment dependency.
 
 After ArgoCD:
 
-```
+```mermaid
 
-Developer
+flowchart TD
+    A(Developer)
+    B(Git Repository)
+    C(ArgoCD)
+    D(AKS Cluster)
+    E(Application Running)
 
-```
-↓
-```
-
-Git Repository
-
-```
-↓
-```
-
-ArgoCD
-
-```
-↓
-```
-
-AKS Cluster
-
-```
-↓
-```
-
-Application Running
+    A --> B
+    B --> C
+    C --> D
+    D --> E
 
 ```
 
@@ -1380,47 +1356,25 @@ ArgoCD continuously monitors Git and ensures Kubernetes matches the declared des
 
 The FlavorForge GitOps workflow:
 
+```mermaid
+
+flowchart TD
+    A["1. Developer updates application code"]
+    B["2. Azure DevOps builds container image"]
+    C["3. Image pushed to ACR"]
+    D["4. Kubernetes configuration stored in Git"]
+    E["5. ArgoCD detects desired state"]
+    F["6. ArgoCD synchronizes AKS"]
+    G["7. Application becomes available"]
+
+    A --> B
+    B --> C
+    C --> D
+    D --> E
+    E --> F
+    F --> G
+
 ```
-
-1. Developer updates application code
-
-   ```
-        ↓
-   ```
-
-2. Azure DevOps builds container image
-
-   ```
-        ↓
-   ```
-
-3. Image pushed to ACR
-
-   ```
-        ↓
-   ```
-
-4. Kubernetes configuration stored in Git
-
-   ```
-        ↓
-   ```
-
-5. ArgoCD detects desired state
-
-   ```
-        ↓
-   ```
-
-6. ArgoCD synchronizes AKS
-
-   ```
-        ↓
-   ```
-
-7. Application becomes available
-
-````
 
 ---
 
@@ -1495,24 +1449,18 @@ FlavorForge integrates Azure Monitor capabilities to observe:
 
 Monitoring completes the lifecycle:
 
-```
-Develop
+```mermaid
+flowchart TD
+    A(Develop)
+    B(Deploy)
+    C(Operate)
+    D(Monitor)
+    E(Improve)
 
-   ↓
-
-Deploy
-
-   ↓
-
-Operate
-
-   ↓
-
-Monitor
-
-   ↓
-
-Improve
+    A --> B
+    B --> C
+    C --> D
+    D --> E
 ```
 
 ---
@@ -1669,46 +1617,36 @@ FlavorForge deployment follows a GitOps-based workflow.
 
 High-level process:
 
-```
-Developer
+```mermaid
+flowchart TD
+    A[Developer]
+    B[Push Code]
+    C[Azure DevOps Pipeline]
+    D[Build & Security Validation]
+    E[Docker Image]
+    F[Azure Container Registry]
+    G[ArgoCD Synchronization]
+    H[AKS Deployment]
 
-   ↓
-
-Push Code
-
-   ↓
-
-Azure DevOps Pipeline
-
-   ↓
-
-Build & Security Validation
-
-   ↓
-
-Docker Image
-
-   ↓
-
-Azure Container Registry
-
-   ↓
-
-ArgoCD Synchronization
-
-   ↓
-
-AKS Deployment
+    A --> B
+    B --> C
+    C --> D
+    D --> E
+    E --> F
+    F --> G
+    G --> H
 ```
 
 Detailed deployment instructions are maintained inside:
 
-```
-docs/
-├── implementation/
-├── pipeline/
-├── gitops/
-└── troubleshooting/
+```mermaid
+flowchart TD
+    A[docs]
+
+    A --> B[implementation]
+    A --> C[pipeline]
+    A --> D[gitops]
+    A --> E[troubleshooting]
 ```
 
 ---
@@ -1841,14 +1779,15 @@ FlavorForge includes automation scripts for lifecycle management.
 
 Available scripts:
 
-```
-scripts/
+```mermaid
+flowchart TD
+    A["📁 scripts"]
 
-├── setup.sh
-├── deploy.sh
-├── verify.sh
-├── clean.sh
-└── azure-manager.sh
+    A --> B["📄 setup.sh"]
+    A --> C["📄 deploy.sh"]
+    A --> D["📄 verify.sh"]
+    A --> E["📄 clean.sh"]
+    A --> F["📄 azure-manager.sh"]
 ```
 
 Cleanup example:
@@ -1870,22 +1809,17 @@ Cost management practices:
 
 Detailed engineering documentation is available under:
 
-```
-docs/
+```mermaid
+graph TD
+    A["📁 docs"]
 
-├── architecture/
-│
-├── implementation/
-│
-├── pipeline/
-│
-├── gitops/
-│
-├── troubleshooting/
-│
-├── screenshots/
-│
-└── presentation/
+    A --> B["📁 architecture"]
+    A --> C["📁 implementation"]
+    A --> D["📁 pipeline"]
+    A --> E["📁 gitops"]
+    A --> F["📁 troubleshooting"]
+    A --> G["📁 screenshots"]
+    A --> H["📁 presentation"]
 ```
 
 Documentation includes:
@@ -1935,22 +1869,17 @@ An AI-powered recipe assistant that can help users:
 
 Potential architecture:
 
+```mermaid
+flowchart TD
+    A(Frontend)
+    B(Backend API)
+    C(AI Service)
+    D(Model Integration)
+
+    A --> B
+    B --> C
+    C --> D
 ```
-Frontend
-
-   ↓
-
-Backend API
-
-   ↓
-
-AI Service
-
-   ↓
-
-Model Integration
-```
-
 ---
 
 ## 🧠 AIOps Style Reporting
@@ -2045,7 +1974,9 @@ This project is licensed under the MIT License.
 
 # 👩‍💻 Author
 
+## Malathi Shetty
+
 Built as part of an Azure DevSecOps learning journey and cloud engineering portfolio.
 
-```
+
 
