@@ -587,13 +587,14 @@ backend-hpa    Deployment/backend     CPU utilization
 ## Expected Result
 
 A successful verification should confirm:
-
+```text
 ✅ Kubernetes resources created successfully
 ✅ Pods are running
 ✅ Deployments are available
 ✅ Services are reachable
 ✅ HPA is configured
 ✅ Application is ready for users
+```
 
 ---
 
