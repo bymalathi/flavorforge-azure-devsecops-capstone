@@ -79,23 +79,20 @@ stages:
 
 
     - bash: |
+        echo "Waiting for ArgoCD Sync..."
 
-          echo "Waiting for ArgoCD Sync..."
+        kubectl wait \
+        --for=jsonpath='{.status.sync.status}'=Synced \
+        application/flavorforge \
+        -n argocd \
+        --timeout=180s
 
-          kubectl wait \
-          --for=jsonpath='{.status.sync.status}'=Synced \
-          application/flavorforge \
-          -n argocd \
-          --timeout=180s
+        echo "ArgoCD Application Status"
 
+        kubectl get applications -n argocd
 
-          echo "ArgoCD Application Status"
+        echo "Production Pods"
 
-          kubectl get applications -n argocd
+        kubectl get pods -n flavorforge
 
-
-          echo "Production Pods"
-
-          kubectl get pods -n flavorforge
-
-        displayName: "Verify ArgoCD Deployment"
+      displayName: "Verify ArgoCD Deployment"
