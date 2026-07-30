@@ -534,7 +534,7 @@ stages:
             addBaseImageData: false
 
         - task: Docker@2
-          displayName: "Push Backend Image"
+          displayName: "Push Backend Image To ACR (Successful Push Verification)"
 
           inputs:
             command: push
@@ -542,6 +542,14 @@ stages:
             repository: $(imageRepositoryBackend)
             tags: |
               $(imageTag)
+
+    - script: |
+        echo "====================================="
+        echo "ACR Push Completed"
+        echo "Repository: $(imageRepositoryBackend)"
+        echo "Tag: $(imageTag)"
+        echo "====================================="
+      displayName: "Verify Backend Push"
 
     - job: PushFrontend
       displayName: "Push Frontend Image To ACR"
@@ -574,6 +582,14 @@ stages:
             repository: $(imageRepositoryFrontend)
             tags: |
               $(imageTag)
+
+    - script: |
+        echo "====================================="
+        echo "ACR Push Completed"
+        echo "Repository: $(imageRepositoryBackend)"
+        echo "Tag: $(imageTag)"
+        echo "====================================="
+      displayName: "Verify Frontend Push"
 
 # ==========================
 # DEPLOY TO AKS
