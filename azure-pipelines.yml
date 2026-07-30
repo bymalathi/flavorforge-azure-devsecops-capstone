@@ -226,8 +226,8 @@ stages:
 
     - script: |
         cd frontend
-        npm ci
-        npm test
+        npm ci --ignore-scripts
+        npm run test
       displayName: "Run Frontend Tests with Coverage"
 
     - task: PublishTestResults@2
