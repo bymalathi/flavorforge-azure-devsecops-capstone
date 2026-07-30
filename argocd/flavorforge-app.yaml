@@ -14,22 +14,18 @@ spec:
     targetRevision: main
     path: kubernetes/overlays/prod
 
-
   destination:
     server: https://kubernetes.default.svc
     namespace: flavorforge
 
-  spec:
-    ignoreDifferences:
-    - group: apps
-      kind: Deployment
-      name: backend
-      jsonPointers:
-      - /spec/replicas
-
+  ignoreDifferences:
+  - group: apps
+    kind: Deployment
+    name: backend
+    jsonPointers:
+    - /spec/replicas
 
   syncPolicy:
-
     automated:
       prune: true
       selfHeal: true
