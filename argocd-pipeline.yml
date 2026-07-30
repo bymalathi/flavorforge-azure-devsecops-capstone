@@ -1,0 +1,178 @@
+trigger:
+- main
+
+
+pool:
+  vmImage: ubuntu-latest
+
+
+variables:
+
+  aksResourceGroup: flavorforge-rg
+  aksClusterName: flavorforge-aks
+
+  argocdNamespace: argocd
+
+  appName: flavorforge-prod
+
+
+stages:
+
+
+# =====================================
+# CONNECT TO AKS
+# =====================================
+
+- stage: ArgoCDDeploy
+
+  displayName: "ArgoCD GitOps Deployment"
+
+  jobs:
+
+  - job: DeployWithArgoCD
+
+    displayName: "Sync Application using ArgoCD"
+
+
+    steps:
+
+
+    - checkout: self
+
+
+
+    - task: AzureCLI@2
+
+      displayName: "Connect AKS"
+
+      inputs:
+
+        connectedServiceNameARM: flavorforge-azure-sc
+
+        scriptType: bash
+
+        scriptLocation: inlineScript
+
+
+        inlineScript: |
+
+          az aks get-credentials \
+          --resource-group $(aksResourceGroup) \
+          --name $(aksClusterName) \
+          --overwrite-existing
+
+
+
+          echo "AKS Connected"
+
+
+
+          kubectl get nodes
+
+
+
+# =====================================
+# INSTALL ARGO APP
+# =====================================
+
+
+    - script: |
+
+
+        echo "Creating ArgoCD Application"
+
+
+        cat <<EOF > argocd-application.yaml
+
+
+        apiVersion: argoproj.io/v1alpha1
+
+        kind: Application
+
+
+        metadata:
+
+          name: $(appName)
+
+          namespace: argocd
+
+
+
+        spec:
+
+
+          project: default
+
+
+          source:
+
+
+            repoURL: https://github.com/shettymalathib/flavorforge-azure-devsecops-capstone.git
+
+
+            targetRevision: main
+
+
+            path: kubernetes/overlays/prod
+
+
+
+          destination:
+
+
+            server: https://kubernetes.default.svc
+
+
+            namespace: flavorforge-prod
+
+
+
+          syncPolicy:
+
+
+            automated:
+
+
+              prune: true
+
+
+              selfHeal: true
+
+
+
+EOF
+
+
+
+        kubectl apply -f argocd-application.yaml
+
+
+
+      displayName: "Create ArgoCD Application"
+
+
+
+# =====================================
+# VERIFY
+# =====================================
+
+
+    - script: |
+
+
+        echo "Checking ArgoCD Application"
+
+
+        kubectl get applications -n argocd
+
+
+
+        echo "Checking Production Pods"
+
+
+
+        kubectl get pods -n flavorforge-prod
+
+
+
+      displayName: "Verify Deployment"
