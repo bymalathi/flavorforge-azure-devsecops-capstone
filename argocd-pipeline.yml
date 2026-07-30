@@ -3,83 +3,85 @@ trigger:
     include:
     - main
 
-
 pool:
   vmImage: ubuntu-latest
 
-
 variables:
-
   aksResourceGroup: flavorforge-rg
   aksClusterName: flavorforge-aks
 
 
-
 stages:
 
-
 - stage: ArgoCDDeploy
-
   displayName: "ArgoCD GitOps Deployment"
-
 
   jobs:
 
 
-  - job: Deploy
-
-    displayName: "Apply ArgoCD Application"
-
+  # Job 1 - Connect and Validate AKS
+  - job: AKSValidation
+    displayName: "Validate AKS Connection"
 
     steps:
 
-
     - checkout: self
 
-
-
     - task: AzureCLI@2
-
       displayName: "Connect to AKS"
 
-
       inputs:
-
         connectedServiceNameARM: flavorforge-azure-sc
-
         scriptType: bash
-
         scriptLocation: inlineScript
 
-
         inlineScript: |
-
 
           az aks get-credentials \
           --resource-group $(aksResourceGroup) \
           --name $(aksClusterName) \
           --overwrite-existing
 
-
           kubectl get nodes
 
 
+
+  # Job 2 - Deploy ArgoCD Application
+  - job: ArgoCDApplication
+    displayName: "Apply ArgoCD Application"
+
+    dependsOn: AKSValidation
+
+    steps:
+
+    - checkout: self
 
     - bash: |
 
         echo "Applying ArgoCD Application"
 
-
-        kubectl apply -f argocd/flavorforge-app.yaml
-
+        kubectl apply \
+        -f argocd/flavorforge-app.yaml
 
 
       displayName: "Create ArgoCD App"
 
 
 
+  # Job 3 - Verify Deployment
+  - job: VerifyDeployment
+
+    displayName: "Verify ArgoCD Sync"
+
+    dependsOn: ArgoCDApplication
+
+    steps:
+
+
     - bash: |
+
         echo "Waiting for ArgoCD Sync..."
+
 
         kubectl wait \
         --for=jsonpath='{.status.sync.status}'=Synced \
@@ -87,12 +89,15 @@ stages:
         -n argocd \
         --timeout=180s
 
-        echo "ArgoCD Application Status"
+
+        echo "ArgoCD Status"
 
         kubectl get applications -n argocd
+
 
         echo "Production Pods"
 
         kubectl get pods -n flavorforge
 
-      displayName: "Verify ArgoCD Deployment"
+
+      displayName: "Validate Production Deployment"
