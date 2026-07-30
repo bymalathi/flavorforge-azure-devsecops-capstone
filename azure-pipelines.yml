@@ -126,6 +126,14 @@ stages:
       inputs:
         version: "22.x"
 
+
+    - script: |
+        cd frontend
+        pwd
+        ls -la
+        cat package.json
+      displayName: "Debug Frontend Package"
+
     - script: |
         cd frontend
         npm ci --ignore-scripts
