@@ -506,7 +506,6 @@ stages:
 
 - stage: Push
   displayName: "Push Images To ACR"
-
   dependsOn:
     - DockerBuild
 
@@ -521,10 +520,10 @@ stages:
           fetchDepth: 0
 
         - task: Docker@2
-          displayName: "Build And Push Backend"
+          displayName: "Build Backend Image"
 
           inputs:
-            command: buildAndPush
+            command: build
             containerRegistry: $(dockerRegistryServiceConnection)
             repository: $(imageRepositoryBackend)
             dockerfile: backend/Dockerfile
@@ -533,6 +532,16 @@ stages:
 
             addPipelineData: false
             addBaseImageData: false
+
+        - task: Docker@2
+          displayName: "Push Backend Image"
+
+          inputs:
+            command: push
+            containerRegistry: $(dockerRegistryServiceConnection)
+            repository: $(imageRepositoryBackend)
+            tags: |
+              $(imageTag)
 
     - job: PushFrontend
       displayName: "Push Frontend Image To ACR"
@@ -543,10 +552,10 @@ stages:
           fetchDepth: 0
 
         - task: Docker@2
-          displayName: "Build And Push Frontend"
+          displayName: "Build Frontend Image"
 
           inputs:
-            command: buildAndPush
+            command: build
             containerRegistry: $(dockerRegistryServiceConnection)
             repository: $(imageRepositoryFrontend)
             dockerfile: frontend/Dockerfile
@@ -555,6 +564,16 @@ stages:
 
             addPipelineData: false
             addBaseImageData: false
+
+        - task: Docker@2
+          displayName: "Push Frontend Image"
+
+          inputs:
+            command: push
+            containerRegistry: $(dockerRegistryServiceConnection)
+            repository: $(imageRepositoryFrontend)
+            tags: |
+              $(imageTag)
 
 # ==========================
 # DEPLOY TO AKS
