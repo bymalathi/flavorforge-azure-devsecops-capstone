@@ -531,6 +531,9 @@ stages:
             tags: |
               $(imageTag)
 
+            addPipelineData: false
+            addBaseImageData: false
+
     - job: PushFrontend
       displayName: "Push Frontend Image To ACR"
 
@@ -549,6 +552,9 @@ stages:
             dockerfile: frontend/Dockerfile
             tags: |
               $(imageTag)
+
+            addPipelineData: false
+            addBaseImageData: false
 
 # ==========================
 # DEPLOY TO AKS
