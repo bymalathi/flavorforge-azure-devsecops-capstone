@@ -213,9 +213,10 @@ stages:
         cliProjectName: 'FlavorForge'
 
         extraProperties: |
-          sonar.sources=backend/src,frontend/src
-          sonar.tests=backend/tests,frontend/src/api
+          sonar.sources=backend/src,frontend/src,kubernetes
+          sonar.exclusions=**/*.test.js
           sonar.javascript.lcov.reportPaths=backend/coverage/lcov.info,frontend/coverage/lcov.info
+          sonar.sourceEncoding=UTF-8
 
     - task: UseNode@1
       displayName: "Install Node.js 22 LTS"
