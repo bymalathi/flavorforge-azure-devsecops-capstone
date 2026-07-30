@@ -704,26 +704,23 @@ stages:
 
         inlineScript: |
           az aks get-credentials \
-          --resource-group $(aksResourceGroup) \
-          --name $(aksClusterName) \
-          --overwrite-existing
-
-          kubectl -n flavorforge set image deployment/backend \
-          backend=flavorforgeacr2026ms.azurecr.io/flavorforge-backend:$(Build.BuildId)
-
-
-          kubectl -n flavorforge set image deployment/frontend \
-          frontend=flavorforgeacr2026ms.azurecr.io/flavorforge-frontend:$(Build.BuildId)
+            --resource-group $(aksResourceGroup) \
+            --name $(aksClusterName) \
+            --overwrite-existing
 
           kubectl apply -k kubernetes/overlays/prod
 
+          kubectl set image deployment/backend-prod \
+            backend=$(containerRegistry)/$(imageRepositoryBackend):$(imageTag) \
+            -n flavorforge-prod
 
+          kubectl set image deployment/frontend-prod \
+            frontend=$(containerRegistry)/$(imageRepositoryFrontend):$(imageTag) \
+            -n flavorforge-prod
 
-          kubectl rollout status deployment/backend -n flavorforge
+          kubectl rollout status deployment/backend-prod -n flavorforge-prod
 
-
-
-          kubectl rollout status deployment/frontend -n flavorforge          
+          kubectl rollout status deployment/frontend-prod -n flavorforge-prod         
 
 # ==========================================================
 # Stage : Deploy to Development
