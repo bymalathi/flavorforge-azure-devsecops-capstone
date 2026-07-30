@@ -2,7 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 
 metadata:
-  name: flavorforge-prod
+  name: flavorforge
   namespace: argocd
 
 spec:
@@ -17,7 +17,7 @@ spec:
 
   destination:
     server: https://kubernetes.default.svc
-    namespace: flavorforge-prod
+    namespace: flavorforge
 
 
   syncPolicy:

@@ -68,7 +68,7 @@ stages:
         echo "Applying ArgoCD Application"
 
 
-        kubectl apply -f argocd/application.yaml
+        kubectl apply -f argocd/flavorforge-app.yaml
 
 
 
@@ -78,14 +78,22 @@ stages:
 
     - bash: |
 
-        echo "ArgoCD Applications"
+          echo "Waiting for ArgoCD Sync..."
 
-        kubectl get applications -n argocd
+          kubectl wait \
+          --for=jsonpath='{.status.sync.status}'=Synced \
+          application/flavorforge \
+          -n argocd \
+          --timeout=180s
 
 
-        echo "Production Pods"
+          echo "ArgoCD Application Status"
 
-        kubectl get pods -n flavorforge-prod
+          kubectl get applications -n argocd
 
 
-      displayName: "Verify Deployment"
+          echo "Production Pods"
+
+          kubectl get pods -n flavorforge
+
+        displayName: "Verify ArgoCD Deployment"
