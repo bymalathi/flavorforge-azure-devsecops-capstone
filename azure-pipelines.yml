@@ -129,8 +129,16 @@ stages:
     - script: |
         cd frontend
         npm ci --ignore-scripts
-        npm run build
-      displayName: "Validate Frontend Production Build"
+        npm test
+      displayName: "Run Frontend Tests with Coverage"
+
+    - script: |
+        echo "Backend Coverage"
+        ls -R backend/coverage
+
+        echo "Frontend Coverage"
+        ls -R frontend/coverage
+      displayName: "Verify Backend and Frontend Coverage"
 
 # ==========================================================
 # SECURITY STAGE
@@ -198,9 +206,8 @@ stages:
 
         extraProperties: |
           sonar.sources=backend/src,frontend/src
-          sonar.tests=backend/tests
-          sonar.javascript.lcov.reportPaths=backend/coverage/lcov.info
-          sonar.sourceEncoding=UTF-8
+          sonar.tests=backend/tests,frontend/src/api
+          sonar.javascript.lcov.reportPaths=backend/coverage/lcov.info,frontend/coverage/lcov.info
 
     - task: UseNode@1
       displayName: "Install Node.js 22 LTS"
@@ -217,6 +224,12 @@ stages:
         npm test -- --coverage
       displayName: "Run Jest Tests with Coverage"
 
+    - script: |
+        cd frontend
+        npm ci
+        npm test
+      displayName: "Run Frontend Tests with Coverage"
+
     - task: PublishTestResults@2
       displayName: "Publish Test Results"
 
@@ -230,8 +243,16 @@ stages:
 
       inputs:
         codeCoverageTool: "Cobertura"
-        summaryFileLocation: "$(System.DefaultWorkingDirectory)/backend/coverage/cobertura-coverage.xml"
-        reportDirectory: "$(System.DefaultWorkingDirectory)/backend/coverage/lcov-report"
+        summaryFileLocation: "$(System.DefaultWorkingDirectory)/backend/coverage/lcov.info"
+        reportDirectory: "$(System.DefaultWorkingDirectory)/backend/coverage"
+
+    - task: PublishCodeCoverageResults@2
+      displayName: "Publish Frontend Coverage"
+
+      inputs:
+          codeCoverageTool: "Cobertura"
+          summaryFileLocation: "$(System.DefaultWorkingDirectory)/frontend/coverage/lcov.info"
+          reportDirectory: "$(System.DefaultWorkingDirectory)/frontend/coverage"
 
     - script: |
         echo "Coverage files:"
@@ -239,6 +260,14 @@ stages:
 
         echo "LCOV Preview:"
         head -20 backend/coverage/lcov.info
+      displayName: "Verify Coverage Reports"
+
+    - script: |
+        echo "Backend Coverage"
+        ls backend/coverage
+
+        echo "Frontend Coverage"
+        ls frontend/coverage
       displayName: "Verify Coverage Reports"
 
     - task: SonarCloudAnalyze@4
@@ -819,5 +848,4 @@ stages:
           inputs:
             targetPath: reports
             artifact: release-summary
-            
-                                
+
