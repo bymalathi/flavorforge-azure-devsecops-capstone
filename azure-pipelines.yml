@@ -506,6 +506,7 @@ stages:
 
 - stage: Push
   displayName: "Push Images To ACR"
+
   dependsOn:
     - DockerBuild
 
@@ -519,6 +520,7 @@ stages:
         - checkout: self
           fetchDepth: 0
 
+
         - task: Docker@2
           displayName: "Build Backend Image"
 
@@ -530,11 +532,9 @@ stages:
             tags: |
               $(imageTag)
 
-            addPipelineData: false
-            addBaseImageData: false
 
         - task: Docker@2
-          displayName: "Push Backend Image To ACR (Successful Push Verification)"
+          displayName: "Push Backend Image"
 
           inputs:
             command: push
@@ -543,13 +543,17 @@ stages:
             tags: |
               $(imageTag)
 
-    - script: |
-        echo "====================================="
-        echo "ACR Push Completed"
-        echo "Repository: $(imageRepositoryBackend)"
-        echo "Tag: $(imageTag)"
-        echo "====================================="
-      displayName: "Verify Backend Push"
+
+        - script: |
+            echo "====================================="
+            echo "Backend Image Push Completed"
+            echo "Registry: $(containerRegistry)"
+            echo "Repository: $(imageRepositoryBackend)"
+            echo "Tag: $(imageTag)"
+            echo "====================================="
+          displayName: "Verify Backend Push"
+
+
 
     - job: PushFrontend
       displayName: "Push Frontend Image To ACR"
@@ -558,6 +562,7 @@ stages:
 
         - checkout: self
           fetchDepth: 0
+
 
         - task: Docker@2
           displayName: "Build Frontend Image"
@@ -570,8 +575,7 @@ stages:
             tags: |
               $(imageTag)
 
-            addPipelineData: false
-            addBaseImageData: false
+
 
         - task: Docker@2
           displayName: "Push Frontend Image"
@@ -583,13 +587,15 @@ stages:
             tags: |
               $(imageTag)
 
-    - script: |
-        echo "====================================="
-        echo "ACR Push Completed"
-        echo "Repository: $(imageRepositoryBackend)"
-        echo "Tag: $(imageTag)"
-        echo "====================================="
-      displayName: "Verify Frontend Push"
+
+        - script: |
+            echo "====================================="
+            echo "Frontend Image Push Completed"
+            echo "Registry: $(containerRegistry)"
+            echo "Repository: $(imageRepositoryFrontend)"
+            echo "Tag: $(imageTag)"
+            echo "====================================="
+          displayName: "Verify Frontend Push"
 
 # ==========================
 # DEPLOY TO AKS
