@@ -1,320 +1,259 @@
 # 🔌 FlavorForge API Documentation
 
-## Overview
-
-The FlavorForge backend exposes REST APIs that provide application functionality to the frontend.
-
-The APIs are built using:
-
-- Node.js
-- Express.js
-- REST architecture
-- JSON for request and response payloads
+> **Purpose:** This document serves as the entry point for the FlavorForge API documentation. It provides a high-level overview of the API, explains how it fits within the application architecture, and guides developers to the appropriate documentation for implementation, security, health monitoring, and usage examples.
 
 ---
 
-# API Architecture
+# Table of Contents
 
-```text
-User
-   │
-   ▼
+1. Introduction
+2. Backend API Architecture
+3. API Design Principles
+4. Base URLs
+5. API Endpoint Overview
+6. Request Format
+7. API Conventions
+8. Content Negotiation
+9. Common Headers
+10. Response Format
+11. HTTP Status Codes
+12. Error Handling
+13. Input Validation
+14. API Versioning
+15. Reference Summary
+
+---
+
+# 1. Introduction
+
+Modern web applications are typically built using multiple components that communicate with one another. In FlavorForge, users interact with a React frontend, while the application logic is processed by a Node.js and Express.js backend.
+
+Communication between these components is achieved through **REST APIs**.
+
+The FlavorForge API provides a structured and secure interface that allows the frontend to request data, submit information, and receive responses from backend services. Rather than accessing backend resources directly, all interactions occur through well-defined HTTP endpoints.
+
+This documentation introduces the overall API architecture before guiding readers to detailed technical references.
+
+---
+
+# 2. Understanding APIs
+
+## What is an API?
+
+An **Application Programming Interface (API)** is a set of rules that enables two software systems to communicate with each other.
+
+Instead of directly accessing backend services or databases, applications exchange requests and responses through predefined endpoints.
+
+### Real-World Analogy
+
+Imagine ordering food at a restaurant.
+
+```
+Customer
+    │
+    ▼
+Waiter (API)
+    │
+    ▼
+Kitchen (Backend)
+    │
+    ▼
+Prepared Meal
+```
+
+You communicate with the waiter rather than entering the kitchen yourself.
+
+Similarly, the frontend communicates with the backend through the API, while the backend performs the requested work and returns the results.
+
+---
+
+# 3. Purpose of the FlavorForge API
+
+The FlavorForge API serves as the communication layer between the frontend application and backend services.
+
+Its primary responsibilities include:
+
+- Receiving requests from the frontend.
+- Processing application logic.
+- Returning structured JSON responses.
+- Providing standardized communication.
+- Supporting monitoring and operational verification.
+- Enabling future application expansion without changing frontend architecture.
+
+Without the API, the frontend would have no standardized mechanism to communicate with backend services.
+
+---
+
+# 4. API Architecture Overview
+
+FlavorForge follows a layered REST architecture.
+
+```
++----------------------+
+|    User Browser      |
++----------+-----------+
+           │
+           ▼
++----------------------+
+|   React Frontend     |
++----------+-----------+
+           │
+           │ HTTP Request
+           ▼
++----------------------+
+|  Express REST API    |
++----------+-----------+
+           │
+           ▼
++----------------------+
+| Business Services    |
++----------+-----------+
+           │
+           ▼
++----------------------+
+| Application Data     |
++----------------------+
+```
+
+### Mermaid Diagram
+
+```mermaid
+flowchart TD
+
+A[User]
+B[React Frontend]
+C[Express REST API]
+D[Business Services]
+E[Application Data]
+
+A --> B
+B --> C
+C --> D
+D --> E
+```
+
+---
+
+# 5. API Communication Flow
+
+Every user interaction follows a request-response lifecycle.
+
+Example:
+
+```
+User clicks "View Recipes"
+
+        │
+        ▼
+
 React Frontend
-   │
-   ▼
-REST API Requests
-   │
-   ▼
-Node.js Express Backend
-   │
-   ▼
-Application Services
-```
 
----
+        │
+        ▼
 
-# API Base Information
-
-| Item | Value |
-|------|-------|
-| Protocol | HTTP / HTTPS |
-| Architecture | REST API |
-| Backend Framework | Express.js |
-| Data Format | JSON |
-
----
-
-# Available APIs
-
-| API | Purpose |
-|-----|---------|
-| Health API | Verify application health and availability |
-| Recipe APIs | Perform recipe-related operations |
-| Future APIs | Additional application features |
-
----
-
-# Documentation Structure
-
-- `backend-api.md`
-- `health-check.md`
-- `authentication.md`
-- `api-examples.md`
-
-
----
-
-## `docs/api/backend-api.md`
-
-
-# 📡 Backend API Reference
-
-## Base URL
-
-### Development
-
-```text
-http://localhost:3000
-```
-
-### Production
-
-```text
-https://<application-url>
-```
-
----
-
-# Health Endpoint
-
-## GET /api/health
-
-Returns the current health status of the backend application.
-
-### Request
-
-```http
-GET /api/health
-```
-
-### Response
-
-**Status Code:** `200 OK`
-
-**Content-Type:** `application/json`
-
-```json
-{
-  "status": "UP",
-  "application": "FlavorForge Backend",
-  "version": "1.3"
-}
-```
-
----
-
-# Recipe Endpoints
-
-## GET /api/recipes
-
-Retrieves all available recipes.
-
-### Request
-
-```http
 GET /api/recipes
-```
 
-### Response
+        │
+        ▼
 
-**Status Code:** `200 OK`
+Express Backend
 
-**Content-Type:** `application/json`
+        │
+        ▼
 
-```json
-[
-  {
-    "id": 1,
-    "name": "Pasta"
-  }
-]
-```
-
-> **Note**
->
-> Document only the endpoints that are implemented.
-> Do not include APIs that do not currently exist.
-
-
----
-
-## `docs/api/health-check.md`
-
-
-# ❤️ Application Health Check
-
-## Purpose
-
-The health endpoint verifies that the backend application is running and able to serve requests.
-
-It is commonly used by:
-
-- Kubernetes Liveness Probes
-- Kubernetes Readiness Probes
-- Monitoring systems
-- Load balancers
-- Manual verification
-
----
-
-# Endpoint
-
-```http
-GET /api/health
-```
-
----
-
-# Successful Response
-
-**Status Code:** `200 OK`
-
-```json
-{
-  "status": "UP",
-  "application": "FlavorForge Backend",
-  "environment": "production"
-}
-```
-
----
-
-# Kubernetes Example
-
-### Liveness Probe
-
-```yaml
-livenessProbe:
-  httpGet:
-    path: /api/health
-    port: 3000
-```
-
-### Readiness Probe
-
-```yaml
-readinessProbe:
-  httpGet:
-    path: /api/health
-    port: 3000
-```
-
----
-
-# Verification
-
-Run the following command to verify application health:
-
-```bash
-curl -X GET http://localhost:3000/api/health
-```
-
-
----
-
-## `docs/api/authentication.md`
-
-
-# 🔐 API Authentication
-
-## Current Status
-
-Authentication and authorization are **not implemented** in the current version of FlavorForge.
-
-Currently, all APIs are publicly accessible for development purposes.
-
----
-
-# Future Design
-
-Future releases may include:
-
-- JWT Authentication
-- Role-Based Access Control (RBAC)
-- Secure API Authorization
-- Protected Routes
-
----
-
-# Authentication Flow
-
-```text
-User Login
-      │
-      ▼
-Authentication Service
-      │
-      ▼
-JWT Token Generated
-      │
-      ▼
-Client Sends JWT
-      │
-      ▼
-Protected API Access
-```
-
-
----
-
-## `docs/api/api-examples.md`
-
-
-# 📘 API Usage Examples
-
-## Health Verification
-
-```bash
-curl -X GET http://localhost:3000/api/health
-```
-
-Expected Response
-
-```json
-{
-  "status": "UP",
-  "application": "FlavorForge Backend",
-  "version": "1.3"
-}
-```
-
----
-
-## Frontend to Backend API Flow
-
-```text
-React Component
-      │
-      ▼
-Axios / Fetch API
-      │
-      ▼
-Express.js Backend
-      │
-      ▼
 Business Logic
-      │
-      ▼
+
+        │
+        ▼
+
 JSON Response
+
+        │
+        ▼
+
+React Updates UI
+```
+
+### Mermaid Sequence Diagram
+
+```mermaid
+sequenceDiagram
+
+participant User
+participant Frontend
+participant Backend
+participant Service
+
+User->>Frontend: Click View Recipes
+Frontend->>Backend: GET /api/recipes
+Backend->>Service: Process Request
+Service-->>Backend: Return Data
+Backend-->>Frontend: JSON Response
+Frontend-->>User: Display Recipes
 ```
 
 ---
 
-## Example JavaScript Request
+# 6. Technology Stack
 
-```javascript
-fetch("http://localhost:3000/api/health")
-  .then((response) => response.json())
-  .then((data) => console.log(data))
-  .catch((error) => console.error(error));
-```
+The API layer is implemented using the following technologies.
+
+| Component | Technology |
+|-----------|------------|
+| Runtime | Node.js |
+| Framework | Express.js |
+| API Style | REST |
+| Protocol | HTTP / HTTPS |
+| Data Format | JSON |
+| Container Platform | Docker |
+| Orchestration | Kubernetes (AKS) |
+
+---
+
+# 7. API Overview
+
+The current implementation exposes APIs that support application functionality and operational monitoring.
+
+| API Category | Purpose |
+|--------------|---------|
+| Health API | Verify backend availability |
+| Recipe APIs | Manage recipe-related operations |
+| Future APIs | Authentication, user management, favorites, search, and additional platform features |
+
+Detailed information about these APIs is provided in the corresponding documents within this directory.
+
+---
+
+# 8. Documentation Structure
+
+Each document within the `docs/api` directory focuses on a specific aspect of the backend.
+
+| Document | Description |
+|----------|-------------|
+| `README.md` | API overview and documentation guide |
+| `backend-api.md` | Complete API reference including endpoints, requests, responses, status codes, and versioning |
+| `authentication.md` | Current authentication status and future security architecture |
+| `health-check.md` | Health endpoint, Kubernetes probes, monitoring, and operational verification |
+| `api-examples.md` | Practical request and response examples for developers |
+
+---
+
+# 9. Getting Started
+
+A recommended reading order for new contributors is:
+
+1. Read this document to understand the API architecture.
+2. Review `backend-api.md` to learn the available endpoints.
+3. Read `authentication.md` to understand the security model.
+4. Review `health-check.md` to understand operational health verification.
+5. Explore `api-examples.md` for practical request and response examples.
+
+This progression provides a gradual learning path from high-level concepts to implementation details.
+
+---
+
+# 10. Summary
+
+The FlavorForge API provides a standardized communication layer between the frontend and backend components of the application.
+
+By adopting REST principles, JSON-based communication, and a modular documentation structure, the project remains maintainable, scalable, and easy for developers to understand. The remaining documents in this directory provide detailed guidance on API implementation, security, operational health, and practical usage.
