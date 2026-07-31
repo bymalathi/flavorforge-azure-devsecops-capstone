@@ -1545,9 +1545,11 @@ docker --version
 ### Evidence
 
 #### Node.js Installation 
- `screenshots/Backend/07-Node24-Installation.png` 
+ <img width="727" height="132" alt="image" src="https://github.com/user-attachments/assets/97a3efaa-9f8c-47bd-b6c3-25d529feb5ce" />
+
 #### npm Project Setup 
- `screenshots/Frontend/1. create and install npm.png` 
+ <img width="1056" height="887" alt="image" src="https://github.com/user-attachments/assets/aeea4b6d-190d-4eed-a453-5beedf9b8cd1" />
+
 
 ---
 
