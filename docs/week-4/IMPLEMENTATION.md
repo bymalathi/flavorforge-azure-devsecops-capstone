@@ -47,6 +47,9 @@ Source code changes are pushed to GitHub. Azure DevOps Pipeline automatically tr
 6. Deploy application to Azure Kubernetes Service
 7. Synchronize deployment state using Argo CD GitOps
 
+
+
+
 #### FlavorForge DevSecOps architecture diagram
 
 ```mermaid
