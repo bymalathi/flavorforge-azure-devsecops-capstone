@@ -43,4 +43,10 @@ kubectl get nodes
 
 The output confirmed that all required tools were installed successfully and that the AKS cluster was in the **Running** state with all Kubernetes nodes in the **Ready** state.
 
-> 📸 **Screenshot 2:** Terminal showing the version verification commands and `kubectl get nodes` output.
+<img width="817" height="448" alt="image" src="https://github.com/user-attachments/assets/e2db437e-b9b4-40cb-9727-93f7c2d9ec02" />
+
+<img width="717" height="332" alt="image" src="https://github.com/user-attachments/assets/ea6c01a6-745c-4b67-9dfd-6e0a1279648b" />
+
+
+
+
