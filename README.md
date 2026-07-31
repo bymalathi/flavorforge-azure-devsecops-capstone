@@ -1,4 +1,5 @@
 # 🍽️ FlavorForge
+
 ## From Recipe Ideas to a Production-Ready Cloud Platform
 
 ![React](https://img.shields.io/badge/Frontend-React-blue)
@@ -26,7 +27,7 @@ The idea was straightforward:
 
 Create a platform where users can explore recipes through a modern web experience.
 
-But the real engineering challenge was bigger:
+However, the real engineering challenge was much bigger:
 
 **How do we transform a simple application into a production-style cloud platform that can be built, secured, deployed, monitored, and operated using modern DevOps practices?**
 
@@ -34,10 +35,22 @@ This project represents that transformation journey.
 
 From the first Git commit to a running application on Azure Kubernetes Service (AKS), FlavorForge demonstrates how modern engineering teams deliver software:
 
-```
-
-Code → Quality → Security → Container → Cloud → Kubernetes → GitOps → Monitoring
-
+```text
+Code
+   ↓
+Quality
+   ↓
+Security
+   ↓
+Container
+   ↓
+Cloud
+   ↓
+Kubernetes
+   ↓
+GitOps
+   ↓
+Monitoring
 ```
 
 The application is the product.
@@ -80,21 +93,20 @@ FlavorForge addresses these challenges by implementing an enterprise-inspired De
 
 The project demonstrates:
 
-✅ Automated CI/CD delivery  
-✅ Containerized application deployment  
-✅ Security integrated into the development lifecycle  
-✅ Kubernetes orchestration  
-✅ GitOps-based continuous delivery  
-✅ Cloud monitoring and operational practices  
+- ✅ Automated CI/CD delivery
+- ✅ Containerized application deployment
+- ✅ Security integrated into the development lifecycle
+- ✅ Kubernetes orchestration
+- ✅ GitOps-based continuous delivery
+- ✅ Cloud monitoring and operational practices
 
 ---
 
 # 🧩 The Engineering Challenge
 
-A traditional application deployment flow may look like:
+A traditional application deployment flow may look like this:
 
 ```mermaid
-
 flowchart TD
     A[Developer Writes Code]
     B[Manual Build]
@@ -104,7 +116,6 @@ flowchart TD
     A --> B
     B --> C
     C --> D
-
 ```
 
 While this works for small projects, production systems require stronger engineering practices.
@@ -112,7 +123,6 @@ While this works for small projects, production systems require stronger enginee
 FlavorForge follows a modern approach:
 
 ```mermaid
-
 flowchart TD
     A[Developer]
     B[GitHub Repository]
@@ -132,7 +142,6 @@ flowchart TD
     F --> G
     G --> H
     H --> I
-
 ```
 
 Every stage adds reliability, security, and operational confidence.
@@ -148,7 +157,7 @@ FlavorForge focuses on connecting the complete engineering lifecycle.
 Instead of only deploying an application, this project demonstrates:
 
 | Engineering Practice | Implementation |
-|---|---|
+|----------------------|----------------|
 | Source Control | GitHub |
 | CI/CD Automation | Azure DevOps Pipelines |
 | Code Quality | SonarCloud |
@@ -171,7 +180,6 @@ The goal is:
 
 # 🔄 The FlavorForge Transformation Journey
 
-
 ```mermaid
 flowchart TD
     A["**Phase 1**<br/>Application Foundation<br/><br/>A full-stack recipe application was designed with frontend and backend services."]
@@ -192,6 +200,7 @@ flowchart TD
     D --> E
     E --> F
 ```
+
 ---
 
 # 🏗️ Architecture Foundation
@@ -200,10 +209,9 @@ FlavorForge follows a cloud-native architecture designed around modern DevOps pr
 
 The platform separates application development, delivery automation, deployment management, and operational monitoring into independent but connected layers.
 
-The complete journey looks like:
+The complete journey looks like this:
 
 ```mermaid
-
 flowchart TD
     A[Developer]
     B[GitHub Repository]
@@ -213,8 +221,8 @@ flowchart TD
     E[Trivy<br/>Security Scan]
 
     F[Docker Image Build]
-    G[Azure Container Registry-ACR]
-    H[Azure Kubernetes Service-AKS]
+    G[Azure Container Registry (ACR)]
+    H[Azure Kubernetes Service (AKS)]
     I[ArgoCD GitOps]
     J[Kubernetes Workloads]
     K[Azure Monitor]
@@ -233,12 +241,11 @@ flowchart TD
     H --> I
     I --> J
     J --> K
-
 ```
 
 ---
 
-# From Code Commit to Running Application
+# 🚀 From Code Commit to Running Application
 
 Every change follows a controlled delivery path.
 
@@ -246,10 +253,13 @@ Every change follows a controlled delivery path.
 
 Developers push application changes to GitHub.
 
-GitHub acts as the central collaboration platform and maintains application source code, Kubernetes manifests, and automation scripts.
+GitHub acts as the central collaboration platform and maintains:
+
+- Application source code
+- Kubernetes manifests
+- Automation scripts
 
 ```mermaid
-
 flowchart TD
     A[Developer]
     B[Git Push]
@@ -257,7 +267,6 @@ flowchart TD
 
     A --> B
     B --> C
-
 ```
 
 ---
@@ -276,7 +285,6 @@ The pipeline performs:
 - Image publishing
 
 ```mermaid
-
 flowchart TD
     A[Commit]
     B[Azure DevOps Pipeline]
@@ -287,7 +295,6 @@ flowchart TD
     B --> D[SonarCloud Analysis]
     B --> E[Trivy Security Scan]
     B --> F[Docker Image Push]
-
 ```
 
 ---
@@ -303,13 +310,11 @@ ACR provides:
 - Secure integration with AKS
 
 ```mermaid
-
 flowchart TD
     A(Docker Image)
     B(Azure Container Registry)
 
     A --> B
-
 ```
 
 ---
@@ -327,7 +332,6 @@ Kubernetes manages:
 - Rolling updates
 
 ```mermaid
-
 flowchart TD
     A(AKS Cluster)
 
@@ -336,7 +340,6 @@ flowchart TD
     A --> D(Services)
     A --> E(Configurations)
     A --> F(Autoscaling)
-
 ```
 
 ---
@@ -345,22 +348,19 @@ flowchart TD
 
 After introducing ArgoCD, deployment responsibility moves from traditional push-based deployment to GitOps-based delivery.
 
-Before GitOps:
+### Before GitOps
 
 ```mermaid
-
 flowchart TD
     A(Pipeline)
     B(Direct Kubernetes Deployment)
 
     A --> B
-
 ```
 
-After GitOps:
+### After GitOps
 
 ```mermaid
-
 flowchart LR
     subgraph CI Pipeline
         A[Pipeline]
@@ -372,12 +372,12 @@ flowchart LR
         C[Git Repository]
         D[ArgoCD]
         E[Kubernetes Cluster]
+
         C --> D
         D --> E
     end
 
     B --> C
-
 ```
 
 Git becomes the single source of truth for the desired application state.
@@ -387,8 +387,6 @@ Git becomes the single source of truth for the desired application state.
 # 🧱 Application Architecture
 
 FlavorForge follows a simple full-stack application architecture.
-
-
 
 ```mermaid
 flowchart TD
@@ -402,41 +400,38 @@ flowchart TD
     C --> D
 ```
 
-
 ---
 
 ## Frontend Layer
 
-Technology:
+### Technology
 
 - React
 - Vite
-- Nginx container
+- Nginx Container
 
-Responsibilities:
+### Responsibilities
 
 - User interface
 - Recipe presentation
 - API communication
 - Client-side interaction
 
-
 ---
 
 ## Backend Layer
 
-Technology:
+### Technology
 
 - Node.js
 - Express
 
-Responsibilities:
+### Responsibilities
 
 - REST API services
 - Business logic
 - Health endpoints
 - Application services
-
 
 ---
 
@@ -445,7 +440,6 @@ Responsibilities:
 FlavorForge implements security and automation throughout the software lifecycle.
 
 ```mermaid
-
 flowchart TD
     A(PLAN)
     B(CODE)
@@ -463,13 +457,12 @@ flowchart TD
     E --> F
     F --> G
     G --> H
-
 ```
 
-Mapping:
+### Lifecycle Mapping
 
 | Stage | Implementation |
-|---|---|
+|--------|----------------|
 | Plan | Architecture & Documentation |
 | Code | GitHub Repository |
 | Build | Azure DevOps Pipeline |
@@ -484,20 +477,20 @@ Mapping:
 # 🛠️ Technology Stack
 
 | Category | Technology | Purpose |
-|---|---|---|
-| Frontend | React | User interface |
-| Backend | Node.js + Express | API services |
-| Database | SQLite | Application data storage |
-| Source Control | GitHub | Code management |
-| CI/CD | Azure DevOps | Automated delivery pipeline |
-| Code Quality | SonarCloud | Static code analysis |
-| Security | Trivy | Container vulnerability scanning |
-| Containerization | Docker | Application packaging |
-| Registry | Azure Container Registry | Private image storage |
-| Cloud Platform | Azure | Infrastructure hosting |
-| Orchestration | AKS | Kubernetes management |
-| Deployment Strategy | ArgoCD | GitOps continuous delivery |
-| Monitoring | Azure Monitor | Application and cluster visibility |
+|----------|------------|---------|
+| Frontend | React | User Interface |
+| Backend | Node.js + Express | API Services |
+| Database | SQLite | Application Data Storage |
+| Source Control | GitHub | Code Management |
+| CI/CD | Azure DevOps | Automated Delivery Pipeline |
+| Code Quality | SonarCloud | Static Code Analysis |
+| Security | Trivy | Container Vulnerability Scanning |
+| Containerization | Docker | Application Packaging |
+| Registry | Azure Container Registry | Private Image Storage |
+| Cloud Platform | Azure | Infrastructure Hosting |
+| Orchestration | AKS | Kubernetes Management |
+| Deployment Strategy | ArgoCD | GitOps Continuous Delivery |
+| Monitoring | Azure Monitor | Application and Cluster Visibility |
 
 ---
 
@@ -505,8 +498,7 @@ Mapping:
 
 The repository is organized to separate application code, infrastructure, automation, and engineering documentation.
 
-```bash
-
+```text
 flavorforge-azure-devsecops-capstone
 │
 ├── frontend/              # React frontend application
@@ -535,7 +527,6 @@ flavorforge-azure-devsecops-capstone
 ├── argocd-pipeline.yml    # GitOps bootstrap pipeline
 │
 └── sonar-project.properties
-
 ```
 
 ---
@@ -543,7 +534,7 @@ flavorforge-azure-devsecops-capstone
 # 📌 Current Implementation Status
 
 | Component | Status |
-|---|---|
+|-----------|--------|
 | Frontend Application | ✅ Completed |
 | Backend API | ✅ Completed |
 | Docker Containers | ✅ Completed |
@@ -564,7 +555,7 @@ Building an application is only the beginning.
 
 In production environments, software delivery requires more than compiling code and deploying containers.
 
-A reliable engineering workflow must answer:
+A reliable engineering workflow must answer the following questions:
 
 - Is the code quality acceptable?
 - Are there security vulnerabilities?
@@ -583,7 +574,6 @@ The CI/CD pipeline is designed to automate the journey from source code to a dep
 The pipeline follows this flow:
 
 ```mermaid
-
 flowchart TD
     A(Developer Commit)
     B(Azure DevOps Trigger)
@@ -601,7 +591,6 @@ flowchart TD
     E --> F
     F --> G
     G --> H
-
 ```
 
 ---
@@ -612,13 +601,13 @@ flowchart TD
 
 The pipeline begins when changes are pushed to GitHub.
 
-Activities:
+### Activities
 
 - Checkout source code
 - Install dependencies
 - Validate project structure
 
-Purpose:
+### Purpose
 
 Ensure only valid changes continue through the delivery process.
 
@@ -628,14 +617,14 @@ Ensure only valid changes continue through the delivery process.
 
 The application is prepared for deployment.
 
-Activities:
+### Activities
 
 - Install frontend dependencies
 - Install backend dependencies
 - Execute validation steps
 - Generate build artifacts
 
-Purpose:
+### Purpose
 
 Detect application issues before packaging.
 
@@ -653,10 +642,9 @@ SonarCloud analyzes:
 - Security hotspots
 - Technical debt
 
-Pipeline principle:
+### Pipeline Principle
 
 ```mermaid
-
 flowchart TD
     A(Poor Quality Code)
     B(Quality Gate Failure)
@@ -664,7 +652,6 @@ flowchart TD
 
     A --> B
     B --> C
-
 ```
 
 This follows the DevSecOps practice of detecting issues early rather than after production deployment.
@@ -681,10 +668,9 @@ Trivy scans Docker images for:
 - Package vulnerabilities
 - Known security issues
 
-Flow:
+### Security Flow
 
 ```mermaid
-
 flowchart TD
     A(Application Code)
     B(Docker Image Created)
@@ -696,7 +682,6 @@ flowchart TD
     B --> C
     C --> D
     D --> E
-
 ```
 
 Security becomes part of the delivery pipeline instead of a separate manual activity.
@@ -714,10 +699,9 @@ Containerization provides:
 - Easier scaling
 - Improved application portability
 
-Architecture:
+### Container Architecture
 
 ```mermaid
-
 flowchart TD
     subgraph Frontend
         A[Frontend Container]
@@ -736,7 +720,6 @@ flowchart TD
         D --> E
         E --> F
     end
-
 ```
 
 ---
@@ -752,10 +735,9 @@ ACR provides:
 - Version management
 - Integration with Azure services
 
-Flow:
+### Image Publishing Flow
 
 ```mermaid
-
 flowchart TD
     A(Docker Build)
     B(Security Scan)
@@ -778,7 +760,6 @@ One important design decision in FlavorForge is separating application delivery 
 Azure DevOps handles:
 
 ```mermaid
-
 flowchart TD
     A(Code)
     B(Build)
@@ -790,7 +771,6 @@ flowchart TD
     B --> C
     C --> D
     D --> E
-
 ```
 
 ---
@@ -800,7 +780,6 @@ flowchart TD
 ArgoCD handles:
 
 ```mermaid
-
 flowchart TD
     A(Git Desired State)
     B(ArgoCD Synchronization)
@@ -810,23 +789,20 @@ flowchart TD
     B --> C
 ```
 
-
-
 This separation provides:
 
-✅ Clear ownership  
-✅ Safer deployments  
-✅ Better auditability  
-✅ Git-based deployment history  
+- ✅ Clear ownership
+- ✅ Safer deployments
+- ✅ Better auditability
+- ✅ Git-based deployment history
 
 ---
 
 # 🌱 GitOps Deployment Model
 
-Traditional deployment:
+### Traditional Deployment
 
 ```mermaid
-
 flowchart TD
     A(Pipeline)
     B(kubectl apply)
@@ -834,13 +810,11 @@ flowchart TD
 
     A --> B
     B --> C
-
 ```
 
-GitOps deployment:
+### GitOps Deployment
 
 ```mermaid
-
 flowchart TD
     A(Developer)
     B(Git Repository)
@@ -850,7 +824,6 @@ flowchart TD
     A --> B
     B --> C
     C --> D
-
 ```
 
 With GitOps:
@@ -866,13 +839,13 @@ With GitOps:
 
 Security was considered throughout the application lifecycle.
 
-| **Security Layer**   | **Implementation**                              |
-| -------------------- | ----------------------------------------------- |
-| Source Code Security | SonarCloud Analysis                             |
-| Container Security   | Trivy Scanning                                  |
-| Image Security       | Azure Container Registry (ACR) Private Registry |
-| Deployment Security  | Kubernetes Security Controls                    |
-| Operational Security | Azure Monitor                                   |
+| Security Layer | Implementation |
+|----------------|----------------|
+| Source Code Security | SonarCloud Analysis |
+| Container Security | Trivy Scanning |
+| Image Security | Azure Container Registry (ACR) Private Registry |
+| Deployment Security | Kubernetes Security Controls |
+| Operational Security | Azure Monitor |
 
 ```mermaid
 flowchart TD
@@ -887,10 +860,9 @@ flowchart TD
 
 # 📊 DevSecOps Maturity Journey
 
-FlavorForge evolved through multiple maturity levels:
+FlavorForge evolved through multiple maturity levels.
 
 ```mermaid
-
 flowchart TD
     A("Level 1<br/>Manual Development")
     B("Level 2<br/>Containerized Application")
@@ -902,15 +874,11 @@ flowchart TD
     B --> C
     C --> D
     D --> E
-
 ```
 
 The final implementation represents a production-inspired DevSecOps workflow.
 
-
-
 ---
-
 
 # ☁️ Cloud Deployment & GitOps Operations
 
@@ -922,7 +890,7 @@ FlavorForge uses Azure Kubernetes Service (AKS) as the production-style runtime 
 
 The deployment philosophy is:
 
-> Build once, deploy consistently, and allow Git to control the desired state.
+> **Build once, deploy consistently, and allow Git to control the desired state.**
 
 ---
 
@@ -932,12 +900,12 @@ FlavorForge is deployed using Microsoft Azure cloud services.
 
 The main Azure components are:
 
-| **Azure Service**              | **Purpose**                        |
-| ------------------------------ | ---------------------------------- |
-| Azure Resource Group           | Logical resource management        |
-| Azure Container Registry (ACR) | Private Docker image storage       |
-| Azure Kubernetes Service (AKS) | Kubernetes application platform    |
-| Azure Monitor                  | Application and cluster visibility |
+| Azure Service | Purpose |
+|--------------|---------|
+| Azure Resource Group | Logical resource management |
+| Azure Container Registry (ACR) | Private Docker image storage |
+| Azure Kubernetes Service (AKS) | Kubernetes application platform |
+| Azure Monitor | Application and cluster visibility |
 
 ```mermaid
 flowchart TD
@@ -952,10 +920,9 @@ flowchart TD
     B -->|Provides Images| C
 ```
 
-High-level flow:
+### High-Level Flow
 
 ```mermaid
-
 flowchart TD
     A(Application Code)
     B(Docker Image)
@@ -969,7 +936,6 @@ flowchart TD
     C --> D
     D --> E
     E --> F
-
 ```
 
 ---
@@ -995,10 +961,9 @@ The AKS cluster acts as the foundation for running cloud-native workloads.
 
 FlavorForge Kubernetes resources are organized using a structured manifest approach.
 
-Repository design:
+### Repository Design
 
 ```mermaid
-
 flowchart TD
     A["📁 kubernetes"]
 
@@ -1015,7 +980,6 @@ flowchart TD
     C --> C1["📁 dev"]
     C --> C2["📁 qa"]
     C --> C3["📁 prod"]
-
 ```
 
 This follows the Kubernetes principle of separating reusable configurations from environment-specific changes.
@@ -1024,7 +988,7 @@ This follows the Kubernetes principle of separating reusable configurations from
 
 # 🔧 Kubernetes Components
 
-FlavorForge uses multiple Kubernetes resources:
+FlavorForge uses multiple Kubernetes resources.
 
 ## Deployments
 
@@ -1033,7 +997,6 @@ Manage application replicas and rolling updates.
 Example:
 
 ```mermaid
-
 flowchart TD
     A[Frontend Deployment]
     B[Frontend Pods]
@@ -1042,7 +1005,6 @@ flowchart TD
 
     A --> B
     C --> D
-
 ```
 
 ---
@@ -1054,7 +1016,6 @@ Provide stable networking between components.
 Example:
 
 ```mermaid
-
 flowchart TD
     A[User Request]
     B[Frontend Service]
@@ -1066,7 +1027,6 @@ flowchart TD
     B --> C
     C -->|HTTP/API Request| D
     D --> E
-
 ```
 
 ---
@@ -1098,16 +1058,15 @@ Examples:
 
 FlavorForge includes Kubernetes autoscaling capability.
 
-Purpose:
+### Purpose
 
 - Handle increased traffic
 - Maintain application availability
 - Scale workloads automatically
 
-Concept:
+### Concept
 
-```
-
+```text
 Low Traffic
 
 Frontend Pods: 2
@@ -1115,7 +1074,6 @@ Frontend Pods: 2
 High Traffic
 
 Frontend Pods: 5
-
 ```
 
 ---
@@ -1124,10 +1082,9 @@ Frontend Pods: 5
 
 To make the application accessible externally, Kubernetes Ingress provides routing.
 
-Traffic flow:
+### Traffic Flow
 
 ```mermaid
-
 flowchart TD
     A[User]
     B[Ingress Controller]
@@ -1141,7 +1098,6 @@ flowchart TD
     C --> D
     D -->|HTTP/API Request| E
     E --> F
-
 ```
 
 Ingress provides:
@@ -1152,12 +1108,12 @@ Ingress provides:
 
 This is how it works:
 
-User accesses the application.
-Ingress Controller receives the external request.
-Frontend Service routes traffic to a frontend pod.
-Frontend Pods render the UI.
-When data is needed, the Frontend Pods send an HTTP/API request to the Backend Service.
-Backend Service load-balances the request to one of the Backend Pods.
+1. User accesses the application.
+2. Ingress Controller receives the external request.
+3. Frontend Service routes traffic to a frontend pod.
+4. Frontend Pods render the UI.
+5. When data is needed, the Frontend Pods send an HTTP/API request to the Backend Service.
+6. Backend Service load-balances the request to one of the Backend Pods.
 
 ---
 
@@ -1165,10 +1121,9 @@ Backend Service load-balances the request to one of the Backend Pods.
 
 FlavorForge uses Kustomize to manage different deployment environments.
 
-Structure:
+### Structure
 
 ```mermaid
-
 flowchart TD
     A[Base Configuration]
     B[Environment Overlay]
@@ -1178,49 +1133,47 @@ flowchart TD
     A --> D
     B --> D
     D --> C
-
 ```
 
-Example:
+### Example
 
-- Common Kubernetes configuration
+Common Kubernetes configuration:
+
 ```text
-
 base/
 ```
 
-- Development-specific settings
+Development-specific settings:
+
 ```text
 overlays/dev/
 ```
 
-- QA-specific settings
+QA-specific settings:
+
 ```text
 overlays/qa/
 ```
 
-- Production-specific settings
+Production-specific settings:
+
 ```text
 overlays/prod/
 ```
 
+### Benefits
 
-```
-
-Benefits:
-
-✅ No duplicate YAML files  
-✅ Environment consistency  
-✅ Easier configuration management  
+- ✅ No duplicate YAML files
+- ✅ Environment consistency
+- ✅ Easier configuration management
 
 ---
 
-#  GitOps with ArgoCD
+# 🚀 GitOps with ArgoCD
 
-Before implementing GitOps:
+## Before Implementing GitOps
 
 ```mermaid
-
 flowchart TD
     A(Pipeline)
     B(kubectl apply)
@@ -1228,17 +1181,15 @@ flowchart TD
 
     A --> B
     B --> C
-
 ```
 
 This creates a direct deployment dependency.
 
 ---
 
-After ArgoCD:
+## After Implementing ArgoCD
 
 ```mermaid
-
 flowchart TD
     A(Developer)
     B(Git Repository)
@@ -1250,7 +1201,6 @@ flowchart TD
     B --> C
     C --> D
     D --> E
-
 ```
 
 ArgoCD continuously monitors Git and ensures Kubernetes matches the declared desired state.
@@ -1262,7 +1212,6 @@ ArgoCD continuously monitors Git and ensures Kubernetes matches the declared des
 The FlavorForge GitOps workflow:
 
 ```mermaid
-
 flowchart TD
     A["1. Developer updates application code"]
     B["2. Azure DevOps builds container image"]
@@ -1278,7 +1227,6 @@ flowchart TD
     D --> E
     E --> F
     F --> G
-
 ```
 
 ---
@@ -1289,29 +1237,20 @@ After deployment, Kubernetes health can be verified using:
 
 ```bash
 # Check cluster resources
-
 kubectl get nodes
 
-
 # Check namespaces
-
 kubectl get namespaces
 
-
 # Check running workloads
-
 kubectl get pods -A
 
-
 # Check services
-
 kubectl get svc
 
-
 # Check deployments
-
 kubectl get deployments
-````
+```
 
 ---
 
@@ -1327,7 +1266,7 @@ argocd app get flavorforge-app
 
 Expected state:
 
-```
+```text
 Health: Healthy
 
 Sync Status: Synced
@@ -1335,9 +1274,9 @@ Sync Status: Synced
 
 This confirms:
 
-✅ Git desired state matches Kubernetes state
-✅ Application deployment is successful
-✅ GitOps workflow is active
+- ✅ Git desired state matches Kubernetes state
+- ✅ Application deployment is successful
+- ✅ GitOps workflow is active
 
 ---
 
@@ -1347,12 +1286,12 @@ Running applications require visibility.
 
 FlavorForge integrates Azure Monitor capabilities to observe:
 
-* Kubernetes cluster health
-* Application workloads
-* Container performance
-* Operational events
+- Kubernetes cluster health
+- Application workloads
+- Container performance
+- Operational events
 
-Monitoring completes the lifecycle:
+Monitoring completes the lifecycle.
 
 ```mermaid
 flowchart TD
@@ -1381,14 +1320,12 @@ With AKS + Kubernetes + ArgoCD, FlavorForge demonstrates:
 ✅ Git-controlled operations
 ✅ Production-inspired delivery practices
 ```
+
 The application is no longer just deployed.
 
 It is managed as a cloud-native platform.
 
-
-
 ---
-
 
 # 📘 Developer Handbook
 
@@ -1411,7 +1348,7 @@ Before running FlavorForge locally, install:
 - npm
 - Docker Desktop
 
-Verify installations:
+Verify the installations:
 
 ```bash
 git --version
@@ -1421,7 +1358,7 @@ node --version
 npm --version
 
 docker --version
-````
+```
 
 ---
 
@@ -1437,7 +1374,7 @@ cd flavorforge-azure-devsecops-capstone
 
 # 🎨 Run Frontend Application
 
-Navigate to frontend:
+Navigate to the frontend directory:
 
 ```bash
 cd frontend
@@ -1449,7 +1386,7 @@ Install dependencies:
 npm install
 ```
 
-Start application:
+Start the application:
 
 ```bash
 npm run dev
@@ -1461,7 +1398,7 @@ The frontend application will start locally.
 
 # ⚙️ Run Backend Application
 
-Navigate to backend:
+Navigate to the backend directory:
 
 ```bash
 cd backend
@@ -1473,13 +1410,13 @@ Install dependencies:
 npm install
 ```
 
-Start backend service:
+Start the backend service:
 
 ```bash
 npm run dev
 ```
 
-Backend health verification:
+Verify the backend health endpoint:
 
 ```bash
 curl http://localhost:3000/health
@@ -1499,7 +1436,7 @@ Expected response:
 
 Docker provides a consistent runtime environment.
 
-Build images:
+Build the images:
 
 ```bash
 docker build -t flavorforge-backend ./backend
@@ -1507,7 +1444,7 @@ docker build -t flavorforge-backend ./backend
 docker build -t flavorforge-frontend ./frontend
 ```
 
-Run containers:
+Run the containers:
 
 ```bash
 docker run flavorforge-backend
@@ -1521,7 +1458,7 @@ docker run flavorforge-frontend
 
 FlavorForge deployment follows a GitOps-based workflow.
 
-High-level process:
+### High-Level Deployment Process
 
 ```mermaid
 flowchart TD
@@ -1569,7 +1506,7 @@ kubectl get pods
 
 Expected:
 
-```
+```text
 Running
 ```
 
@@ -1583,8 +1520,8 @@ kubectl get services
 
 Verify:
 
-* Frontend service available
-* Backend service available
+- Frontend service is available
+- Backend service is available
 
 ---
 
@@ -1596,8 +1533,8 @@ kubectl get deployments
 
 Verify:
 
-* Desired replicas available
-* No failed deployments
+- Desired replicas are available
+- No failed deployments
 
 ---
 
@@ -1609,7 +1546,7 @@ argocd app get flavorforge-app
 
 Expected:
 
-```
+```text
 Health: Healthy
 
 Sync: Synced
@@ -1623,11 +1560,11 @@ Production systems require troubleshooting knowledge.
 
 Common issues and solutions are documented in:
 
-```
+```text
 docs/troubleshooting/
 ```
 
-Examples:
+---
 
 ## Pod Not Starting
 
@@ -1639,9 +1576,9 @@ kubectl describe pod <pod-name>
 
 Review:
 
-* Image errors
-* Configuration issues
-* Resource limitations
+- Image errors
+- Configuration issues
+- Resource limitations
 
 ---
 
@@ -1655,9 +1592,9 @@ kubectl describe pod <pod-name>
 
 Possible causes:
 
-* Incorrect image name
-* Registry authentication issue
-* Missing image tag
+- Incorrect image name
+- Registry authentication issue
+- Missing image tag
 
 ---
 
@@ -1671,19 +1608,19 @@ argocd app get flavorforge-app
 
 Review:
 
-* Git changes
-* Kubernetes manifest errors
-* Cluster connectivity
+- Git changes
+- Kubernetes manifest errors
+- Cluster connectivity
 
 ---
 
 # 🧹 Cleanup & Azure Cost Management
 
-Cloud resources continue consuming cost even when not actively used.
+Cloud resources continue consuming cost even when they are not actively used.
 
 FlavorForge includes automation scripts for lifecycle management.
 
-Available scripts:
+### Available Scripts
 
 ```mermaid
 flowchart TD
@@ -1702,12 +1639,12 @@ Cleanup example:
 ./scripts/clean.sh
 ```
 
-Cost management practices:
+### Cost Management Practices
 
-✅ Remove unused resources
-✅ Stop development environments
-✅ Monitor Azure spending
-✅ Use appropriate resource sizing
+- ✅ Remove unused resources
+- ✅ Stop development environments
+- ✅ Monitor Azure spending
+- ✅ Use appropriate resource sizing
 
 ---
 
@@ -1730,12 +1667,12 @@ graph TD
 
 Documentation includes:
 
-* Architecture decisions
-* Implementation steps
-* Pipeline explanation
-* GitOps workflow
-* Troubleshooting knowledge
-* Demo materials
+- Architecture decisions
+- Implementation steps
+- Pipeline explanation
+- GitOps workflow
+- Troubleshooting knowledge
+- Demo materials
 
 ---
 
@@ -1743,20 +1680,18 @@ Documentation includes:
 
 FlavorForge is designed to evolve beyond the current implementation.
 
-Future roadmap:
-
 ---
 
 ## 📊 Advanced Observability
 
-Planned additions:
+### Planned Additions
 
-* Prometheus
-* Grafana dashboards
-* Application metrics
-* Custom alerts
+- Prometheus
+- Grafana Dashboards
+- Application Metrics
+- Custom Alerts
 
-Goal:
+### Goal
 
 Move from monitoring infrastructure health to understanding application behavior.
 
@@ -1764,16 +1699,16 @@ Move from monitoring infrastructure health to understanding application behavior
 
 ## 🤖 AI Recipe Assistant
 
-Future enhancement:
+### Future Enhancement
 
 An AI-powered recipe assistant that can help users:
 
-* Discover recipes
-* Suggest ingredients
-* Generate meal ideas
-* Provide personalized recommendations
+- Discover recipes
+- Suggest ingredients
+- Generate meal ideas
+- Provide personalized recommendations
 
-Potential architecture:
+### Potential Architecture
 
 ```mermaid
 flowchart TD
@@ -1786,29 +1721,32 @@ flowchart TD
     B --> C
     C --> D
 ```
+
 ---
 
-## 🧠 AIOps Style Reporting
+## 🧠 AIOps-Style Reporting
 
-Future operational intelligence:
+Future operational intelligence includes:
 
-* Deployment trend analysis
-* Failure pattern detection
-* Resource optimization suggestions
-* Automated operational insights
+- Deployment trend analysis
+- Failure pattern detection
+- Resource optimization suggestions
+- Automated operational insights
 
 ---
 
 # 🎥 Demo Day Walkthrough
 
-A complete FlavorForge demonstration can be presented in this order:
+A complete FlavorForge demonstration can be presented in the following order.
+
+---
 
 ## 1. Application Experience
 
 Show:
 
-* Frontend application
-* Backend API health
+- Frontend application
+- Backend API health
 
 ---
 
@@ -1816,10 +1754,10 @@ Show:
 
 Explain:
 
-* Git commit trigger
-* Azure DevOps stages
-* Quality checks
-* Security scanning
+- Git commit trigger
+- Azure DevOps stages
+- Quality checks
+- Security scanning
 
 ---
 
@@ -1827,9 +1765,9 @@ Explain:
 
 Demonstrate:
 
-* Docker images
-* ACR repository
-* AKS workloads
+- Docker images
+- ACR repository
+- AKS workloads
 
 ---
 
@@ -1837,9 +1775,9 @@ Demonstrate:
 
 Show:
 
-* ArgoCD dashboard
-* Application sync
-* Kubernetes state
+- ArgoCD dashboard
+- Application synchronization
+- Kubernetes state
 
 ---
 
@@ -1847,10 +1785,10 @@ Show:
 
 Highlight:
 
-* Automation
-* Security
-* Documentation
-* Cloud-native design
+- Automation
+- Security
+- Documentation
+- Cloud-native design
 
 ---
 
@@ -1862,12 +1800,12 @@ The workflow analyzes the repository structure and automatically updates the pro
 
 <!-- AUTO_STATUS_START -->
 
-📌 Latest Automated generated project status:
-
-
+📌 **Latest Automatically Generated Project Status**
 
 # 📊 FlavorForge Automated Project Status
-Generated: 2026-07-31 04:31:52
+
+**Generated:** 2026-07-31 04:31:52
+
 | Component | Status |
 |-----------|--------|
 | Frontend Application | ✅ Detected |
@@ -1879,7 +1817,6 @@ Generated: 2026-07-31 04:31:52
 | Documentation | ✅ Detected |
 | SonarCloud Integration | ✅ Detected |
 | Trivy Security Scan | ❌ Not Found |
-
 
 <!-- AUTO_STATUS_END -->
 
@@ -1894,10 +1831,9 @@ The documentation generator verifies the presence of:
 - ✅ GitOps configuration
 - ✅ Documentation artifacts
 
-Workflow:
+### Documentation Generation Workflow
 
 ```mermaid
-
 flowchart TD
     A(Git Push)
     B(GitHub Actions)
@@ -1909,7 +1845,6 @@ flowchart TD
     B --> C
     C --> D
     D --> E
-
 ```
 
 ---
@@ -1918,23 +1853,23 @@ flowchart TD
 
 FlavorForge represents the transition from writing and testing software to understanding how modern applications are delivered and operated.
 
-Key engineering areas explored:
+Throughout this project, the following engineering domains were explored:
 
-* Cloud platforms
-* Containers
-* Kubernetes
-* CI/CD automation
-* DevSecOps practices
-* GitOps workflows
-* Production documentation
+- Cloud platforms
+- Containers
+- Kubernetes
+- CI/CD automation
+- DevSecOps practices
+- GitOps workflows
+- Production documentation
 
-The project demonstrates the mindset required to build reliable software delivery systems.
+The project demonstrates the mindset required to build reliable, secure, and production-ready software delivery systems.
 
 ---
 
 # 📄 License
 
-This project is licensed under the MIT License.
+This project is licensed under the **MIT License**.
 
 ---
 
@@ -1943,6 +1878,3 @@ This project is licensed under the MIT License.
 ## Malathi Shetty
 
 Built as part of an Azure DevSecOps learning journey and cloud engineering portfolio.
-
-
-
