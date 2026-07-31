@@ -3,7 +3,22 @@ from datetime import datetime
 
 
 ROOT = Path(".")
+def search_content(keyword):
+    for file in ROOT.rglob("*"):
+        if file.is_file():
+            try:
+                content = file.read_text(
+                    encoding="utf-8",
+                    errors="ignore"
+                )
 
+                if keyword.lower() in content.lower():
+                    return True
+
+            except Exception:
+                pass
+
+    return False
 
 def exists(path):
     return Path(path).exists()
@@ -18,7 +33,10 @@ components = {
     "ArgoCD GitOps": exists("argocd"),
     "Documentation": exists("docs"),
     "SonarCloud Integration": any(ROOT.rglob("*sonar*")),
-    "Trivy Security Scan": any(ROOT.rglob("*trivy*")),
+    "Trivy Security Scan": (
+    any(ROOT.rglob("*trivy*"))
+    or search_content("trivy")
+),
 }
 
 
