@@ -1,0 +1,42 @@
+name: Test Gemini AI Connection
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test-gemini:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Gemini SDK
+        run: |
+          pip install google-generativeai
+
+      - name: Test Gemini Connection
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          python - <<EOF
+          import os
+          import google.generativeai as genai
+
+          genai.configure(
+              api_key=os.environ["GEMINI_API_KEY"]
+          )
+
+          model = genai.GenerativeModel("gemini-1.5-flash")
+
+          response = model.generate_content(
+              "Say hello from FlavorForge AI documentation pipeline"
+          )
+
+          print(response.text)
+          EOF
