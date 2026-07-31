@@ -27,6 +27,7 @@ jobs:
       - name: Generate Project Documentation
         run: |
           python scripts/generate_project_report.py
+          python scripts/update_readme.py
 
       - name: Commit Generated Documentation
         run: |
