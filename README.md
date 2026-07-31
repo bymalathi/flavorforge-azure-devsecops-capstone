@@ -35,22 +35,24 @@ This project represents that transformation journey.
 
 From the first Git commit to a running application on Azure Kubernetes Service (AKS), FlavorForge demonstrates how modern engineering teams deliver software:
 
-```text
-Code
-   ↓
-Quality
-   ↓
-Security
-   ↓
-Container
-   ↓
-Cloud
-   ↓
-Kubernetes
-   ↓
-GitOps
-   ↓
-Monitoring
+```mermaid
+flowchart TD
+    A[Code]
+    B[Quality]
+    C[Security]
+    D[Container]
+    E[Cloud]
+    F[Kubernetes]
+    G[GitOps]
+    H[Monitoring]
+
+    A --> B
+    B --> C
+    C --> D
+    D --> E
+    E --> F
+    F --> G
+    G --> H
 ```
 
 The application is the product.
