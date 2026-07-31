@@ -18,7 +18,7 @@ jobs:
 
       - name: Install Gemini SDK
         run: |
-          pip install google-generativeai
+          pip install google-genai
 
       - name: Test Gemini Connection
         env:
@@ -26,16 +26,15 @@ jobs:
         run: |
           python - <<EOF
           import os
-          import google.generativeai as genai
+          from google import genai
 
-          genai.configure(
+          client = genai.Client(
               api_key=os.environ["GEMINI_API_KEY"]
           )
 
-          model = genai.GenerativeModel("gemini-1.5-flash")
-
-          response = model.generate_content(
-              "Say hello from FlavorForge AI documentation pipeline"
+          response = client.models.generate_content(
+              model="gemini-2.0-flash",
+              contents="Say hello from FlavorForge AI documentation pipeline"
           )
 
           print(response.text)
