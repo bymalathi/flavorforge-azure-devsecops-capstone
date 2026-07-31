@@ -564,7 +564,7 @@ The repository structure separates application development from infrastructure, 
 
 ---
 
----
+
 
 # 📊 Automated Project Status
 
@@ -1544,10 +1544,10 @@ docker --version
 
 ### Evidence
 
-| Description | Screenshot |
-|------------|------------|
-| Node.js Installation | `screenshots/Backend/07-Node24-Installation.png` |
-| npm Project Setup | `screenshots/Frontend/1. create and install npm.png` |
+#### Node.js Installation 
+ `screenshots/Backend/07-Node24-Installation.png` 
+#### npm Project Setup 
+ `screenshots/Frontend/1. create and install npm.png` 
 
 ---
 
@@ -1598,11 +1598,11 @@ The application will be available locally for development and testing.
 ### Evidence
 
 
-# Frontend Running 
+#### Frontend Running 
 <img width="2217" height="1227" alt="image" src="https://github.com/user-attachments/assets/34d91fdd-719e-4755-9fb4-51e1d2ba14da" />
 
 
-# Backend Running 
+#### Backend Running 
 <img width="836" height="517" alt="image" src="https://github.com/user-attachments/assets/b0d254bf-b2ba-4a7f-976c-17500865719d" />
 
 ---
@@ -1636,16 +1636,16 @@ docker compose up --build -d
 ### Evidence
 
 
-# Docker Build
+#### Docker Build
 <img width="1311" height="1220" alt="image" src="https://github.com/user-attachments/assets/cafc0657-7625-409b-b48b-b925b15e52ce" />
 
-# Docker Images 
+#### Docker Images 
 <img width="1462" height="185" alt="image" src="https://github.com/user-attachments/assets/683d3e26-5d0b-4126-b1f2-d2aa696a4b7e" />
 
-# Running Containers 
+#### Running Containers 
 <img width="1262" height="822" alt="image" src="https://github.com/user-attachments/assets/2c0afd7f-815f-487f-960c-1c2e62576500" />
 
-# Docker Compose 
+#### Docker Compose 
 <img width="1747" height="112" alt="image" src="https://github.com/user-attachments/assets/ec62cef1-b74d-4d28-aaad-4d2de917ceed" />
 
 ---
@@ -1696,13 +1696,13 @@ Sync Status : Synced
 
 ### Evidence
 
-# kubectl get all 
+#### kubectl get all 
 <img width="1025" height="467" alt="image" src="https://github.com/user-attachments/assets/667dfda7-b425-4ff3-87dd-27dac3c49dd4" />
 
-# Ingress 
+#### Ingress 
 <img width="1197" height="617" alt="image" src="https://github.com/user-attachments/assets/3868a8b1-adb3-4231-be36-9009b77b7db3" />
 
-# ArgoCD 
+#### ArgoCD 
 <img width="2560" height="2769" alt="image" src="https://github.com/user-attachments/assets/d24dcf5f-226e-41df-a071-06e2a725ceb1" />
 
 ---
@@ -1739,10 +1739,10 @@ The cleanup script can be executed using:
 
 ### Evidence
 
-# Resource Group 
+#### Resource Group 
 <img width="2560" height="1229" alt="image" src="https://github.com/user-attachments/assets/73470ec4-05b4-4007-af46-adae6271e4e1" />
 
-# Azure Resources 
+#### Azure Resources 
 <img width="2560" height="1229" alt="image" src="https://github.com/user-attachments/assets/5d38f2c5-355a-40b3-98c8-3c0b32a7d02b" />
 
 
