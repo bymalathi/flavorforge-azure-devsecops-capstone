@@ -39,9 +39,7 @@ The successful creation of the resource group confirms that Azure is ready to pr
 
 ---
 
-Great. Now continue with **Step 2**.
 
----
 
 # Step 2 — Register Azure Container Registry Resource Provider
 
@@ -71,23 +69,13 @@ Registered
 
 Azure services require their corresponding resource providers to be registered before they can be used. Registering the **Microsoft.ContainerRegistry** provider enables the creation and management of Azure Container Registry resources within the subscription. The registration status is verified before proceeding with ACR creation.
 
-> 📸 **Screenshot 4:** Azure CLI showing the `Microsoft.ContainerRegistry` provider registration status as **Registered**.
+>  Azure CLI showing the `Microsoft.ContainerRegistry` provider registration status as **Registered**.
+
+<img width="792" height="226" alt="image" src="https://github.com/user-attachments/assets/6c26beb8-80aa-4d10-bed7-df49df7c48e0" />
+
 
 ---
 
-### Use this screenshot
-
-From your `screenshots/Azure` folder, use:
-
-```
-03-containerregistry-provider-registered.png
-```
-
----
-
-Excellent. Now for **Step 3**.
-
----
 
 # Step 3 — Create Azure Container Registry (ACR)
 
@@ -123,23 +111,13 @@ az acr create \
 
 Azure Container Registry (ACR) serves as the private Docker image repository for the project. After the application images are built by the Azure DevOps pipeline, they are pushed to ACR before being deployed to Azure Kubernetes Service (AKS). Enabling the admin user simplifies authentication during development and testing.
 
-> 📸 **Screenshot 5:** Successful creation of the `flavorforgeacr2026ms` Azure Container Registry.
+
+<img width="1562" height="1257" alt="image" src="https://github.com/user-attachments/assets/f4961ebf-4051-4880-a202-ecfa240e4c14" />
+
 
 ---
 
-### Screenshot to use
 
-From your folder:
-
-```text
-screenshots/Azure/04-acr-created.png
-```
-
----
-
-Perfect. Next is **Step 4**.
-
----
 
 # Step 4 — Apply Tags to the Azure Resource Group
 
@@ -179,21 +157,11 @@ az tag create \
 
 Azure resource tags provide metadata that helps organize and manage cloud resources. In this project, tags were applied to identify the project name, deployment environment, and resource owner. Tagging resources is a DevOps best practice that simplifies resource management, governance, reporting, and cost tracking.
 
-> 📸 **Screenshot 6:** Azure CLI showing the successful creation of tags for the `flavorforge-rg` Resource Group.
+>  Azure CLI showing the successful creation of tags for the `flavorforge-rg` Resource Group.
 
----
+<img width="1320" height="487" alt="image" src="https://github.com/user-attachments/assets/d1bafd7d-58e5-4483-868a-d3319651c187" />
 
-### Screenshot to use
 
-Use:
-
-```text
-screenshots/Azure/05-tag create.png
-```
-
----
-
-Great. Continue with **Step 5**.
 
 ---
 
@@ -220,48 +188,13 @@ Login Succeeded
 
 Before Docker images can be pushed to Azure Container Registry, authentication is required. The `az acr login` command securely authenticates the local Docker client with the registry, allowing Azure DevOps and local development environments to store and retrieve container images.
 
-> 📸 **Screenshot 7:** Successful authentication with the `flavorforgeacr2026ms` Azure Container Registry.
+>  Successful authentication with the `flavorforgeacr2026ms` Azure Container Registry.
+
+<img width="937" height="47" alt="image" src="https://github.com/user-attachments/assets/eeda51a6-24d5-452e-89de-f811b9d5d238" />
+
 
 ---
 
-### Screenshot to use
-
-Use:
-
-```text id="zrmwum"
-screenshots/Azure/06-az acr login success.png
-```
-
----
-
-Before we continue, I want to correct the flow so your documentation stays accurate.
-
-For **Project 3 (Multi-Stage CI/CD)**, the implementation should follow the order you actually built the platform.
-
-You **created AKS before building and pushing the final images**. So don't jump to Docker yet.
-
-The correct sequence is:
-
-1. ✅ Resource Group
-2. ✅ Register Provider
-3. ✅ Create ACR
-4. ✅ Apply Tags
-5. ✅ ACR Login
-6. **Create AKS**
-7. Connect kubectl
-8. Attach ACR to AKS
-9. Build Docker Images
-10. Push Images to ACR
-11. Configure Azure DevOps
-12. Create Service Connections
-13. Configure Pipeline
-14. Run Pipeline
-15. Deploy to AKS
-16. Verify Deployment
-
-This tells the story much better.
-
----
 
 # Step 6 — Create Azure Kubernetes Service (AKS) Cluster
 
@@ -298,21 +231,14 @@ az aks create \
 
 Azure Kubernetes Service (AKS) provides a managed Kubernetes environment without requiring manual control plane management. A two-node cluster was created to host the frontend and backend workloads, enabling scalable, highly available application deployments.
 
-> 📸 **Screenshot 8:** Successful creation of the `flavorforge-aks` Kubernetes cluster.
+>  Successful creation of the `flavorforge-aks` Kubernetes cluster.
 
-### Screenshot to use
+<img width="1357" height="1266" alt="image" src="https://github.com/user-attachments/assets/594db48a-78a5-4088-b907-29466915f342" />
 
-Use:
-
-```text
-screenshots/Azure/10-az aks create.png
-```
 
 ---
 
-Perfect. Continue with **Step 7**.
 
----
 
 # Step 7 — Connect the Local Machine to the AKS Cluster
 
@@ -345,36 +271,13 @@ aks-nodepool1-xxxxxxxx-vmss000001   Ready    <none>   xxm   v1.35.6
 
 The `az aks get-credentials` command downloads the Kubernetes cluster credentials and merges them into the local kubeconfig file. This enables `kubectl` to manage the AKS cluster directly. Running `kubectl get nodes` verifies that the connection is successful and that all worker nodes are in the **Ready** state.
 
-> 📸 **Screenshot 9:** Successful connection to the AKS cluster showing all worker nodes in the **Ready** state.
+> Successful connection to the AKS cluster showing all worker nodes in the **Ready** state.
+
+<img width="867" height="250" alt="image" src="https://github.com/user-attachments/assets/53c6581a-4124-4e3d-bb1c-0d415a02b669" />
+
 
 ---
 
-### Screenshot to use
-
-Use:
-
-```text
-screenshots/Azure/11-Connect Local Machine to AKS.png
-```
-
----
-
-### Small suggestion
-
-Since your implementation is specifically **Project 3 – Multi-Stage CI/CD Pipeline**, after Steps 1–7 we'll shift focus from Azure infrastructure to:
-
-* Docker build
-* Push images to ACR
-* Azure DevOps Service Connections
-* Azure Pipelines (Build → Test → SonarCloud → Docker → ACR → Deploy)
-* AKS Deployment
-* Verification
-
-That keeps the document centered on the CI/CD pipeline rather than becoming a generic AKS deployment guide.
-
----
-
-Good. From here, we should move into the **pipeline story**, because that's the focus of **Project 3**.
 
 ---
 
@@ -404,62 +307,13 @@ Successfully tagged flavorforge-backend:1.0
 
 The backend application is containerized using Docker to provide a consistent runtime environment across development, testing, and production. The generated image is later pushed to Azure Container Registry (ACR), where it becomes available for deployment to Azure Kubernetes Service (AKS).
 
-> 📸 **Screenshot 10:** Successful backend Docker image build.
+>  Successful backend Docker image build.
+
+<img width="1106" height="841" alt="image" src="https://github.com/user-attachments/assets/f14938f7-cc95-46f7-9510-c12c1878f1c7" />
+
 
 ---
 
-### Screenshot to use
-
-Use:
-
-```text
-screenshots/Docker/6-backend-build-success.png
-```
-
----
-
-## **One important point before we continue**
-
-I've been reviewing your project structure and screenshots. Your project is much larger than a normal CBC Project 3.
-
-You have:
-
-* Azure infrastructure
-* Docker
-* Kubernetes
-* Azure DevOps
-* SonarCloud
-* Trivy
-* Argo CD
-* GitOps
-* HPA
-* Multiple environments (Dev/QA/Prod)
-
-If we document **everything** in a single `IMPLEMENTATION.md`, it will easily become **70–100 pages**, which is actually acceptable for an enterprise capstone but needs a clean structure.
-
-So instead of me giving you isolated steps one by one, from **Step 8 onward** I'd recommend we follow the actual enterprise workflow:
-
-1. Docker (backend → frontend)
-2. ACR (tag → push → verify)
-3. Kubernetes manifests
-4. Azure DevOps pipeline
-5. Service Connections
-6. Variable Groups
-7. SonarCloud
-8. Trivy
-9. Deploy to AKS
-10. Verify application
-11. GitOps (Argo CD)
-12. HPA
-13. Final validation
-
-That sequence matches both your project and the CBC evaluation criteria much better than treating Docker, Kubernetes, and the pipeline as unrelated sections.
-
-Yes. This is the point where we should stop following a generic template and start following **your actual FlavorForge implementation**.
-
-From everything we've built together over the past few weeks, here's the implementation flow I recommend. It tells the complete story and avoids repeating information from your other docs.
-
----
 
 # 4. Step-by-Step Implementation
 
@@ -485,21 +339,15 @@ From everything we've built together over the past few weeks, here's the impleme
 
 ### Step 8 – Build Backend Docker Image
 
-Screenshot
+<img width="1106" height="841" alt="image" src="https://github.com/user-attachments/assets/8c20f32a-ecd4-4f11-868a-d5721c90cc20" />
 
-```
-Docker/6-backend-build-success.png
-```
 
 ---
 
 ### Step 9 – Verify Backend Container
 
-Screenshot
+<img width="1642" height="295" alt="image" src="https://github.com/user-attachments/assets/cca70409-f17b-477d-ac38-2ef37b409273" />
 
-```
-Docker/7-backend-container-running.png
-```
 
 ---
 
@@ -507,21 +355,15 @@ Docker/7-backend-container-running.png
 
 Screenshot
 
-```
-Docker/11-flavorforge-frontend-v4.png
-```
+<img width="1740" height="1112" alt="image" src="https://github.com/user-attachments/assets/ddfc15e2-e842-4932-b80e-dacead5db68b" />
 
-(or whichever is your final image)
 
 ---
 
 ### Step 11 – Verify Docker Images
 
-Screenshot
+<img width="1685" height="327" alt="image" src="https://github.com/user-attachments/assets/323e68af-b676-496d-9ceb-124508f57992" />
 
-```
-Docker/13.1-Docker Images.png
-```
 
 ---
 
@@ -529,31 +371,22 @@ Docker/13.1-Docker Images.png
 
 ### Step 12 – Tag Backend Image
 
-Screenshot
+<img width="2212" height="467" alt="image" src="https://github.com/user-attachments/assets/85ae5421-f7d4-48d2-bc0b-72e7027d0d08" />
 
-```
-Azure/08-Tag the Images and verify in docker images.png
-```
 
 ---
 
 ### Step 13 – Push Images to Azure Container Registry
 
-Screenshot
+<img width="1273" height="1085" alt="image" src="https://github.com/user-attachments/assets/5ae97dc4-cbb0-4b3b-bde9-22db52477c26" />
 
-```
-Azure/09-Verify Images in ACR.png
-```
 
 ---
 
 ### Step 14 – Verify Images inside ACR
 
-Screenshot
+<img width="1908" height="958" alt="image" src="https://github.com/user-attachments/assets/95bcd221-ad38-488c-b2c0-dc184a452166" />
 
-```
-Azure/25-ACR-images.png
-```
 
 ---
 
@@ -561,74 +394,52 @@ Azure/25-ACR-images.png
 
 ### Step 15 – Create Azure DevOps Project
 
-Screenshot
+<img width="1732" height="936" alt="image" src="https://github.com/user-attachments/assets/5790a19a-9d7b-438f-a423-66ea9277037d" />
 
-```
-Pipeline/1-Azure DevOps Organizations.png
-```
 
 ---
 
 ### Step 16 – Configure Service Connections
 
-Screenshot
+<img width="2155" height="452" alt="image" src="https://github.com/user-attachments/assets/97b7091d-26cc-4260-a9aa-7ce48f19f8da" />
 
-```
-Pipeline/11-service connections.png
-```
 
 ---
 
 ### Step 17 – Configure Azure Pipeline
 
-Screenshot
+<img width="2557" height="1222" alt="image" src="https://github.com/user-attachments/assets/f1fbcbfd-d995-40e6-b606-4e20f5b200da" />
 
-```
-Pipeline/5-Click New Pipeline..png
-```
 
 ---
 
 ### Step 18 – Execute Multi-Stage Pipeline
 
-Screenshot
+<img width="2560" height="1229" alt="image" src="https://github.com/user-attachments/assets/d9f30a71-b8e2-4ac2-9fe9-183d5b8c3a69" />
+<img width="2560" height="1229" alt="image" src="https://github.com/user-attachments/assets/b1308add-c2a1-4967-afde-eae662d8c847" />
 
-```
-Enterprise Azure DevOps Release Simulation/
-14-Final Azure Pipeline.png
-```
 
 ---
 
 ### Step 19 – Execute Unit Tests
 
-Screenshot
+<img width="827" height="1045" alt="image" src="https://github.com/user-attachments/assets/edc0e431-35fd-400e-ba2f-e748b9d44942" />
 
-```
-Pipeline/7-test.png
-```
 
 ---
 
 ### Step 20 – SonarCloud Analysis
 
-Screenshot
+<img width="2560" height="1229" alt="image" src="https://github.com/user-attachments/assets/5a686dd3-5612-4b14-b4be-0bd825194c3d" />
 
-```
-Enterprise Azure DevOps Release Simulation/
-15-Extensions-sonarcloud.png
-```
 
 ---
 
 ### Step 21 – Publish Docker Images
 
-Screenshot
+<img width="1920" height="1304" alt="image" src="https://github.com/user-attachments/assets/db1378c5-6c91-4085-bf48-c0fb5551f64c" />
+<img width="1920" height="1304" alt="image" src="https://github.com/user-attachments/assets/4ea5f604-9a2b-4783-9fc6-58e4229f6f14" />
 
-```
-Enterprise Azure DevOps Release Simulation/
-13-ACR-flavorforge-backend.png
-```
 
 ---
 
@@ -636,47 +447,37 @@ Enterprise Azure DevOps Release Simulation/
 
 ### Step 22 – Deploy Kubernetes Manifests
 
-Screenshot
+<img width="965" height="52" alt="image" src="https://github.com/user-attachments/assets/4c07b94e-ffac-4a06-bb59-336bef34a3b3" />
+<img width="927" height="66" alt="image" src="https://github.com/user-attachments/assets/dcc47853-9227-4757-be50-64e5f02362cc" />
+<img width="922" height="65" alt="image" src="https://github.com/user-attachments/assets/e553e00f-c9f4-4e6a-877b-3c8cf5a2d37f" />
+<img width="2305" height="1132" alt="image" src="https://github.com/user-attachments/assets/3ca37155-9823-4621-be47-931302528333" />
 
-```
-Kubernetes/
-Deploy FlavorForge to AKS/
-```
 
 ---
 
 ### Step 23 – Verify Pods and Services
 
-Screenshot
+<img width="2560" height="1229" alt="image" src="https://github.com/user-attachments/assets/f918778b-8370-45d0-9427-20b68f18b60d" />
+<img width="2560" height="1229" alt="image" src="https://github.com/user-attachments/assets/830e9206-8eaf-4c36-8a66-7e1f7e76db04" />
+<img width="2262" height="991" alt="image" src="https://github.com/user-attachments/assets/ed10ab3d-ce35-4650-8a16-9b46c074b8be" />
+<img width="2272" height="845" alt="image" src="https://github.com/user-attachments/assets/a13a7fd4-a2da-45df-8c28-53c553102bf2" />
+<img width="2262" height="1157" alt="image" src="https://github.com/user-attachments/assets/b8006d13-42f7-40c3-a8ff-670583e6a736" />
+<img width="2236" height="1162" alt="image" src="https://github.com/user-attachments/assets/aaf77a20-b4a5-49ae-b054-a65022b8e956" />
 
-```
-Azure/
-15-AKS Workloads (Deployments & Pods).png
-```
 
 ---
 
 ### Step 24 – Configure NGINX Ingress
 
-Screenshot
+<img width="1197" height="617" alt="image" src="https://github.com/user-attachments/assets/49f594cd-37e1-472a-910f-62d039a3ba2f" />
 
-```
-Kubernetes/
-NGINX Ingress/
-3-ingress external address.png
-```
 
 ---
 
 ### Step 25 – Verify Application
 
-Screenshot
+<img width="2560" height="3392" alt="image" src="https://github.com/user-attachments/assets/c6f5e837-7686-4c80-b48f-4b25152ca55f" />
 
-```
-Kubernetes/
-NGINX Ingress/
-4-Frontend - http-4.157.77.48.png
-```
 
 ---
 
@@ -684,23 +485,14 @@ NGINX Ingress/
 
 ### Step 26 – Configure Argo CD
 
-Screenshot
+<img width="2560" height="2769" alt="image" src="https://github.com/user-attachments/assets/2087eece-33ba-487a-89de-4a0f987ac69a" />
 
-```
-argo-cd/
-4-flavorforge-Application-Details-Tree-Argo-CD.png
-```
 
 ---
 
 ### Step 27 – Verify GitOps Synchronization
 
-Screenshot
-
-```
-Enterprise Azure DevOps Release Simulation/
-17.2-argocd-pipeline.png
-```
+<img width="2560" height="1229" alt="image" src="https://github.com/user-attachments/assets/ba8a2abf-b74c-4d64-92a9-48353e949517" />
 
 ---
 
@@ -710,45 +502,26 @@ Enterprise Azure DevOps Release Simulation/
 
 Screenshot
 
-```
-Azure/
-22-Services & Ingress.png
-```
+<img width="2557" height="1122" alt="image" src="https://github.com/user-attachments/assets/677269ba-45e3-4c25-89ca-e7b9d8144671" />
+
 
 ---
 
 ### Step 29 – Verify Azure Resources
 
-Screenshot
+<img width="2560" height="1229" alt="image" src="https://github.com/user-attachments/assets/fa3f85bf-66f8-4cf6-b109-fe9df7ff0cf8" />
 
-```
-Azure/
-16-Kubernetes-center-Microsoft-Azure.png
-```
 
 ---
 
 ### Step 30 – Verify Production Application
 
-Screenshot
+<img width="2560" height="3392" alt="image" src="https://github.com/user-attachments/assets/2981e31e-24c7-4c84-87a9-85806000604e" />
+<img width="622" height="427" alt="image" src="https://github.com/user-attachments/assets/14e87a78-8648-4155-a899-a5e15b9917b6" />
 
-```
-Kubernetes/
-Frontend in the browser...
-Backend in the browser...
-```
 
 ---
 
-## Why I'm changing the approach here
-
-Earlier I was writing every step from scratch. Looking at your repository now, that would result in **30+ very long sections** and we'd still have to rearrange them later.
-
-Instead, this outline is **based on your actual project and your screenshots**. We can now go through **Step 8 → Step 30**, and I'll write each one in the same style as Steps 1–7. By the end, you'll have a polished `IMPLEMENTATION.md` that matches the CBC template and your real implementation, without having to rewrite sections later.
-
----
-
-Perfect. Now let's continue with the same format.
 
 ---
 
@@ -788,7 +561,7 @@ xxxxxxxxxxxx   flavorforge-backend:1.0   Up
 
 After building the Docker image, the backend container is started locally to verify that the application launches successfully. The `docker ps` command confirms that the container is running, while the health endpoint validates that the backend API is accessible before the image is published to Azure Container Registry.
 
-> 📸 **Screenshot 11:** Backend Docker container running successfully and responding to the health endpoint.
+>  Backend Docker container running successfully and responding to the health endpoint.
 
 ---
 
@@ -796,8 +569,10 @@ After building the Docker image, the backend container is started locally to ver
 
 Use these from your repository:
 
-* `screenshots/Docker/7-backend-container-running.png`
-* `screenshots/Docker/8-backend-health-success.png`
+<img width="1642" height="295" alt="image" src="https://github.com/user-attachments/assets/1df75c9a-4873-4421-9d1f-5e5334ac9e6e" />
+
+<img width="1127" height="312" alt="image" src="https://github.com/user-attachments/assets/1b07f673-3c66-43f8-a669-3fe13b588d60" />
+
 
 These two screenshots together provide evidence that:
 
@@ -806,14 +581,6 @@ These two screenshots together provide evidence that:
 
 ---
 
-**Small suggestion:** From Step 9 onward, it's perfectly acceptable to use **two screenshots** for a step if they demonstrate different parts of the same verification (for example, a running container and a successful API response). That still aligns with the CBC guidance of showing clear proof for each major step.
-
-
----
-
-Great. Now we'll move to the frontend.
-
----
 
 # Step 10 — Build the Frontend Docker Image
 
@@ -841,19 +608,11 @@ Successfully tagged flavorforge-frontend:1.0
 
 The frontend application is containerized using a multi-stage Docker build. During the build process, the React application is compiled into optimized static assets, which are then served using an NGINX web server. This approach produces a lightweight production-ready image suitable for deployment to Azure Kubernetes Service (AKS).
 
-> 📸 **Screenshot 12:** Successful build of the FlavorForge frontend Docker image.
+> Successful build of the FlavorForge frontend Docker image.
 
----
+<img width="1740" height="1112" alt="image" src="https://github.com/user-attachments/assets/93ba8949-dfa3-4991-8775-a5dcac51c10e" />
 
-### Screenshot to use
 
-Use:
-
-```text
-screenshots/Docker/11-flavorforge-frontend-v4.png
-```
-
-*(If your final image version is different, use the latest successful frontend build screenshot instead.)*
 
 ---
 
@@ -882,37 +641,10 @@ flavorforge-frontend     1.0      xxxxxxxxx      xxxMB
 
 The `docker images` command lists all locally available Docker images. Verifying both the backend and frontend images confirms that the containerization process completed successfully and that the images are ready to be tagged and pushed to Azure Container Registry.
 
-> 📸 **Screenshot 13:** Docker images showing the successfully built backend and frontend container images.
+>  Docker images showing the successfully built backend and frontend container images.
 
----
+<img width="1685" height="327" alt="image" src="https://github.com/user-attachments/assets/5a6215ca-1a6c-4805-87e4-950c5bfdc0d5" />
 
-### Screenshot to use
-
-Use:
-
-```text
-screenshots/Docker/13.1-Docker Images.png
-```
-
----
-
-## One observation
-
-Now that we're into Docker, the document is flowing very naturally:
-
-* ✅ Azure Infrastructure
-* ✅ Docker Containerization
-* ⏭ Azure Container Registry
-* ⏭ Azure DevOps Pipeline
-* ⏭ Kubernetes Deployment
-* ⏭ GitOps (Argo CD)
-* ⏭ Verification
-
-This is much closer to how an enterprise implementation document is expected to read, and it aligns well with your CBC capstone.
-
----
-
-Perfect. Continue the same format.
 
 ---
 
@@ -957,14 +689,14 @@ Azure DevOps uses service connections to securely communicate with Azure resourc
 
 ## Evidence
 
-Include the following screenshots:
+<img width="2546" height="1226" alt="image" src="https://github.com/user-attachments/assets/11c73397-5d8f-4317-8023-d708455678cc" />
+<img width="2555" height="1221" alt="image" src="https://github.com/user-attachments/assets/0403605e-e5b7-4e93-9b4f-58f3b4369146" />
+<img width="2556" height="1227" alt="image" src="https://github.com/user-attachments/assets/42568df7-dd4d-4ca0-9889-948d942ad026" />
+<img width="2560" height="1229" alt="image" src="https://github.com/user-attachments/assets/be3b3f52-d972-4cf2-8c91-1a0bf76f7cd0" />
+<img width="2155" height="452" alt="image" src="https://github.com/user-attachments/assets/864f998b-33cf-4fd4-ae3b-bac5266f1d5a" />
+<img width="1195" height="1041" alt="image" src="https://github.com/user-attachments/assets/eefcc617-532c-4e12-9c4a-b6f3c43011d8" />
+<img width="2560" height="1229" alt="image" src="https://github.com/user-attachments/assets/4b703f8e-672c-4587-80d6-f2c265089482" />
 
-1. `screenshots/Pipeline/2-service connection.png`
-2. `screenshots/Pipeline/3-Azure resource manager.png`
-3. `screenshots/Pipeline/4-New Azure service connection.png`
-4. `screenshots/Pipeline/4.1-New Azure service connection.png`
-5. `screenshots/Pipeline/11-service connections.png`
-6. `screenshots/Pipeline/12-acr & aks.png`
 
 ---
 
@@ -1152,8 +884,6 @@ Enterprise CI/CD pipelines require controlled deployments across multiple enviro
 
 ## Evidence
 
-Insert the following screenshots:
-
 <img src="../../screenshots/Enterprise Azure DevOps Release Simulation/1-Azure DevOps Environments.png" alt="Azure DevOps Environments" width="100%">
 
 <img src="../../screenshots/Enterprise Azure DevOps Release Simulation/1.2-Dev-QA-Prod-Azure DevOps Environments.png" alt="Development QA Production Environments" width="100%">
@@ -1209,7 +939,6 @@ Continuous code quality analysis helps identify issues early in the development 
 
 ## Evidence
 
-Insert the following screenshots:
 
 <img src="../../screenshots/Enterprise Azure DevOps Release Simulation/15-Extensions-sonarcloud.png" alt="SonarCloud Extension Installed" width="100%">
 
@@ -1267,8 +996,6 @@ Azure Kubernetes Service pulls application images directly from Azure Container 
 
 ## Evidence
 
-Insert the following screenshots:
-
 <img src="../../screenshots/Enterprise Azure DevOps Release Simulation/13-ACR-flavorforge-backend.png" alt="Backend Image in Azure Container Registry" width="100%">
 
 <img src="../../screenshots/Enterprise Azure DevOps Release Simulation/13.1-ACR-flavorforge-frontend.png" alt="Frontend Image in Azure Container Registry" width="100%">
@@ -1314,8 +1041,6 @@ Azure Kubernetes Service provides a scalable and highly available platform for r
 ---
 
 ## Evidence
-
-Insert the following screenshots:
 
 <img src="../../screenshots/Enterprise Azure DevOps Release Simulation/5-kubectl get svc -n flavorforge-de.png" alt="Development Services" width="100%">
 
@@ -1376,8 +1101,6 @@ GitOps provides a declarative deployment model where Git acts as the single sour
 
 ## Evidence
 
-Insert the following screenshots:
-
 <img src="../../screenshots/argo-cd/4-flavorforge-Application-Details-Tree-Argo-CD.png" alt="Argo CD Application" width="100%">
 
 <img src="../../screenshots/Enterprise Azure DevOps Release Simulation/17-argocd-pipeline.png" alt="Azure DevOps and Argo CD Integration" width="100%">
@@ -1429,8 +1152,6 @@ End-to-end validation confirms that every stage of the DevSecOps pipeline operat
 
 ## Evidence
 
-Insert the following screenshots:
-
 <img src="../../screenshots/Enterprise Azure DevOps Release Simulation/14-Final Azure Pipeline.png" alt="Final Azure DevOps Pipeline" width="100%">
 
 <img src="../../screenshots/Enterprise Azure DevOps Release Simulation/14.1-Test-Final Azure Pipeline.png" alt="Successful Test Stage" width="100%">
@@ -1469,15 +1190,6 @@ GitOps continuous delivery was implemented using Argo CD, enabling automatic syn
 The completed implementation demonstrates a production-style DevSecOps platform incorporating infrastructure automation, CI/CD, containerization, Kubernetes orchestration, cloud deployment, code quality analysis, security validation, and GitOps-based continuous delivery.
 
 The successful execution and validation of each implementation step confirm that the FlavorForge application meets the project objectives and follows industry-standard DevSecOps practices for building, securing, and deploying cloud-native applications.
-
-
-
-
-
-
-
-
-
 
 
 
