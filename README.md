@@ -10,16 +10,13 @@
 ![ArgoCD](https://img.shields.io/badge/GitOps-ArgoCD-orange)
 ![Security](https://img.shields.io/badge/Security-Trivy-red)
 ![CI/CD](https://img.shields.io/badge/Pipeline-Azure%20DevOps-blue)
-![Documentation Automation](https://github.com/shettymalathib/flavorforge-azure-devsecops-capstone/actions/workflows/documentation-generator.yml/badge.svg)
 ![License](https://img.shields.io/badge/License-MIT-green)
-
 ![Last Commit](https://img.shields.io/github/last-commit/shettymalathib/flavorforge-azure-devsecops-capstone)
-
 ![Repo Size](https://img.shields.io/github/repo-size/shettymalathib/flavorforge-azure-devsecops-capstone)
-
 ![AKS](https://img.shields.io/badge/Kubernetes-AKS-326CE5)
-
 ![Quality Gate](https://img.shields.io/badge/SonarCloud-Passed-brightgreen)
+![Documentation Automation](https://github.com/shettymalathib/flavorforge-azure-devsecops-capstone/actions/workflows/documentation-generator.yml/badge.svg)
+
 
 ---
 
