@@ -213,8 +213,8 @@ flowchart TD
     E[Trivy<br/>Security Scan]
 
     F[Docker Image Build]
-    G[Azure Container Registry (ACR)]
-    H[Azure Kubernetes Service (AKS)]
+    G[Azure Container Registry-ACR]
+    H[Azure Kubernetes Service-AKS]
     I[ArgoCD GitOps]
     J[Kubernetes Workloads]
     K[Azure Monitor]
@@ -505,7 +505,7 @@ Mapping:
 
 The repository is organized to separate application code, infrastructure, automation, and engineering documentation.
 
-```mermaid
+```bash
 
 flavorforge-azure-devsecops-capstone
 │
@@ -810,7 +810,7 @@ flowchart TD
     B --> C
 ```
 
----
+
 
 This separation provides:
 
@@ -907,7 +907,7 @@ flowchart TD
 
 The final implementation represents a production-inspired DevSecOps workflow.
 
-```
+
 
 ---
 
@@ -942,8 +942,8 @@ The main Azure components are:
 ```mermaid
 flowchart TD
     A[Azure Resource Group]
-    B[Azure Container Registry (ACR)]
-    C[Azure Kubernetes Service (AKS)]
+    B[Azure Container Registry]
+    C[Azure Kubernetes Service]
     D[Azure Monitor]
 
     A -->|Contains| B
@@ -1183,23 +1183,27 @@ flowchart TD
 
 Example:
 
-```
+- Common Kubernetes configuration
+```text
 
 base/
+```
 
-Common Kubernetes configuration
-
+- Development-specific settings
+```text
 overlays/dev/
+```
 
-Development-specific settings
-
+- QA-specific settings
+```text
 overlays/qa/
+```
 
-QA-specific settings
-
+- Production-specific settings
+```text
 overlays/prod/
+```
 
-Production-specific settings
 
 ```
 
@@ -1858,9 +1862,24 @@ The workflow analyzes the repository structure and automatically updates the pro
 
 <!-- AUTO_STATUS_START -->
 
-📌 Latest generated project status:
+📌 Latest Automated generated project status:
 
-➡️ [View Automated Project Status](docs/generated/PROJECT_STATUS.md)
+
+
+# 📊 FlavorForge Automated Project Status
+Generated: 2026-07-31 04:31:52
+| Component | Status |
+|-----------|--------|
+| Frontend Application | ✅ Detected |
+| Backend API | ✅ Detected |
+| Docker Containerization | ✅ Detected |
+| Azure DevOps Pipeline | ✅ Detected |
+| Kubernetes Deployment | ✅ Detected |
+| ArgoCD GitOps | ✅ Detected |
+| Documentation | ✅ Detected |
+| SonarCloud Integration | ✅ Detected |
+| Trivy Security Scan | ❌ Not Found |
+
 
 <!-- AUTO_STATUS_END -->
 
