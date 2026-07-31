@@ -171,40 +171,27 @@ The goal is:
 
 # 🔄 The FlavorForge Transformation Journey
 
-## Phase 1 — Application Foundation
 
-A full-stack recipe application was designed with frontend and backend services.
+```mermaid
+flowchart TD
+    A["**Phase 1**<br/>Application Foundation<br/><br/>A full-stack recipe application was designed with frontend and backend services."]
 
-↓
+    B["**Phase 2**<br/>Container Transformation<br/><br/>Application components were packaged into Docker containers to create portable deployment units."]
 
-## Phase 2 — Container Transformation
+    C["**Phase 3**<br/>Cloud Deployment<br/><br/>The application was deployed to Azure Kubernetes Service (AKS) using Kubernetes best practices."]
 
-Application components were packaged into Docker containers to create portable deployment units.
+    D["**Phase 4**<br/>DevSecOps Integration<br/><br/>Automated quality and security validation were introduced into the delivery pipeline."]
 
-↓
+    E["**Phase 5**<br/>GitOps Evolution<br/><br/>ArgoCD was introduced to manage Kubernetes deployments using Git as the source of truth."]
 
-## Phase 3 — Cloud Deployment
+    F["**Phase 6**<br/>Operational Excellence<br/><br/>Monitoring, documentation, troubleshooting guides, and automation completed the engineering lifecycle."]
 
-The application was deployed to Azure Kubernetes Service (AKS) using Kubernetes best practices.
-
-↓
-
-## Phase 4 — DevSecOps Integration
-
-Automated quality and security validation were introduced into the delivery pipeline.
-
-↓
-
-## Phase 5 — GitOps Evolution
-
-ArgoCD was introduced to manage Kubernetes deployments using Git as the source of truth.
-
-↓
-
-## Phase 6 — Operational Excellence
-
-Monitoring, documentation, troubleshooting guides, and automation completed the engineering lifecycle.
-
+    A --> B
+    B --> C
+    C --> D
+    D --> E
+    E --> F
+```
 ---
 
 # 🏗️ Architecture Foundation
