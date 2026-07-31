@@ -9,6 +9,7 @@
 ![ArgoCD](https://img.shields.io/badge/GitOps-ArgoCD-orange)
 ![Security](https://img.shields.io/badge/Security-Trivy-red)
 ![CI/CD](https://img.shields.io/badge/Pipeline-Azure%20DevOps-blue)
+![Documentation Automation](https://github.com/shettymalathib/flavorforge-azure-devsecops-capstone/actions/workflows/documentation-generator.yml/badge.svg)
 
 ---
 
@@ -92,18 +93,17 @@ The project demonstrates:
 
 A traditional application deployment flow may look like:
 
-```
+```mermaid
 
-Developer writes code
-|
-↓
-Manual build
-|
-↓
-Manual deployment
-|
-↓
-Application running
+flowchart TD
+    A[Developer Writes Code]
+    B[Manual Build]
+    C[Manual Deployment]
+    D[Application Running]
+
+    A --> B
+    B --> C
+    C --> D
 
 ```
 
@@ -111,33 +111,27 @@ While this works for small projects, production systems require stronger enginee
 
 FlavorForge follows a modern approach:
 
-```
+```mermaid
 
-Developer
-|
-↓
-GitHub Repository
-|
-↓
-Automated Pipeline
-|
-↓
-Quality Validation
-|
-↓
-Security Scanning
-|
-↓
-Container Image
-|
-↓
-Cloud Deployment
-|
-↓
-GitOps Management
-|
-↓
-Monitoring
+flowchart TD
+    A[Developer]
+    B[GitHub Repository]
+    C[Automated Pipeline]
+    D[Quality Validation]
+    E[Security Scanning]
+    F[Container Image]
+    G[Cloud Deployment]
+    H[GitOps Management]
+    I[Monitoring]
+
+    A --> B
+    B --> C
+    C --> D
+    D --> E
+    E --> F
+    F --> G
+    G --> H
+    H --> I
 
 ```
 
@@ -221,48 +215,43 @@ The platform separates application development, delivery automation, deployment 
 
 The complete journey looks like:
 
-```
+```mermaid
 
-Developer
-|
-| Code Commit
-↓
-GitHub Repository
-|
-↓
-Azure DevOps Multi-Stage Pipeline
-|
-|----------------------|
-|                      |
-↓                      ↓
-SonarCloud              Trivy
-Code Quality            Security Scan
-|                      |
-|----------------------|
-|
-↓
-Docker Image Build
-|
-↓
-Azure Container Registry (ACR)
-|
-↓
-Azure Kubernetes Service (AKS)
-|
-↓
-ArgoCD GitOps
-|
-↓
-Kubernetes Workloads
-|
-↓
-Azure Monitor
+flowchart TD
+    A[Developer]
+    B[GitHub Repository]
+    C[Azure DevOps Multi-Stage Pipeline]
+
+    D[SonarCloud<br/>Code Quality]
+    E[Trivy<br/>Security Scan]
+
+    F[Docker Image Build]
+    G[Azure Container Registry (ACR)]
+    H[Azure Kubernetes Service (AKS)]
+    I[ArgoCD GitOps]
+    J[Kubernetes Workloads]
+    K[Azure Monitor]
+
+    A -->|Code Commit| B
+    B --> C
+
+    C --> D
+    C --> E
+
+    D --> F
+    E --> F
+
+    F --> G
+    G --> H
+    H --> I
+    I --> J
+    J --> K
 
 ```
 
 ---
 
-# 🚀 From Code Commit to Running Application
+# From Code Commit to Running Application
 
 Every change follows a controlled delivery path.
 
@@ -272,13 +261,15 @@ Developers push application changes to GitHub.
 
 GitHub acts as the central collaboration platform and maintains application source code, Kubernetes manifests, and automation scripts.
 
-```
+```mermaid
 
-Developer
-↓
-Git Push
-↓
-GitHub Repository
+flowchart TD
+    A[Developer]
+    B[Git Push]
+    C[GitHub Repository]
+
+    A --> B
+    B --> C
 
 ```
 
@@ -297,20 +288,18 @@ The pipeline performs:
 - Docker image creation
 - Image publishing
 
-```
+```mermaid
 
-Commit
-|
-↓
-Azure DevOps Pipeline
-|
-├── Build
-|
-├── SonarCloud Analysis
-|
-├── Trivy Security Scan
-|
-└── Docker Image Push
+flowchart TD
+    A[Commit]
+    B[Azure DevOps Pipeline]
+
+    A --> B
+
+    B --> C[Build]
+    B --> D[SonarCloud Analysis]
+    B --> E[Trivy Security Scan]
+    B --> F[Docker Image Push]
 
 ```
 
@@ -326,12 +315,13 @@ ACR provides:
 - Version-controlled images
 - Secure integration with AKS
 
-```
+```mermaid
 
-Docker Image
-|
-↓
-Azure Container Registry
+flowchart TD
+    A(Docker Image)
+    B(Azure Container Registry)
+
+    A --> B
 
 ```
 
@@ -349,19 +339,16 @@ Kubernetes manages:
 - Service discovery
 - Rolling updates
 
-```
+```mermaid
 
-AKS Cluster
+flowchart TD
+    A(AKS Cluster)
 
-├── Frontend Pods
-|
-├── Backend Pods
-|
-├── Services
-|
-├── Configurations
-|
-└── Autoscaling
+    A --> B(Frontend Pods)
+    A --> C(Backend Pods)
+    A --> D(Services)
+    A --> E(Configurations)
+    A --> F(Autoscaling)
 
 ```
 
@@ -373,31 +360,36 @@ After introducing ArgoCD, deployment responsibility moves from traditional push-
 
 Before GitOps:
 
-```
+```mermaid
 
-Pipeline
-|
-↓
-Direct Kubernetes Deployment
+flowchart TD
+    A(Pipeline)
+    B(Direct Kubernetes Deployment)
+
+    A --> B
 
 ```
 
 After GitOps:
 
-```
+```mermaid
 
-Pipeline
-|
-↓
-Container Image Update
+flowchart LR
+    subgraph CI Pipeline
+        A[Pipeline]
+        B[Container Image Update]
+        A --> B
+    end
 
-Git Repository
-|
-↓
-ArgoCD
-|
-↓
-Kubernetes Cluster
+    subgraph GitOps
+        C[Git Repository]
+        D[ArgoCD]
+        E[Kubernetes Cluster]
+        C --> D
+        D --> E
+    end
+
+    B --> C
 
 ```
 
@@ -409,22 +401,20 @@ Git becomes the single source of truth for the desired application state.
 
 FlavorForge follows a simple full-stack application architecture.
 
+
+
+```mermaid
+flowchart TD
+    A[User]
+    B[React Frontend]
+    C[Node.js API Layer]
+    D[Application Data]
+
+    A --> B
+    B --> C
+    C --> D
 ```
 
-```
-             User
-              |
-              ↓
-      React Frontend
-              |
-              ↓
-      Node.js API Layer
-              |
-              ↓
-         Application Data
-```
-
-```
 
 ---
 
@@ -467,30 +457,25 @@ Responsibilities:
 
 FlavorForge implements security and automation throughout the software lifecycle.
 
-```
+```mermaid
 
-PLAN
-|
-↓
-CODE
-|
-↓
-BUILD
-|
-↓
-TEST
-|
-↓
-SECURE
-|
-↓
-PACKAGE
-|
-↓
-DEPLOY
-|
-↓
-OPERATE
+flowchart TD
+    A(PLAN)
+    B(CODE)
+    C(BUILD)
+    D(TEST)
+    E(SECURE)
+    F(PACKAGE)
+    G(DEPLOY)
+    H(OPERATE)
+
+    A --> B
+    B --> C
+    C --> D
+    D --> E
+    E --> F
+    F --> G
+    G --> H
 
 ```
 
@@ -533,7 +518,7 @@ Mapping:
 
 The repository is organized to separate application code, infrastructure, automation, and engineering documentation.
 
-```
+```mermaid
 
 flavorforge-azure-devsecops-capstone
 │
@@ -610,30 +595,25 @@ The CI/CD pipeline is designed to automate the journey from source code to a dep
 
 The pipeline follows this flow:
 
-```
+```mermaid
 
-Developer Commit
-|
-↓
-Azure DevOps Trigger
-|
-↓
-Build & Validation
-|
-↓
-Code Quality Analysis
-|
-↓
-Security Scanning
-|
-↓
-Docker Image Build
-|
-↓
-Push Image to ACR
-|
-↓
-GitOps Deployment Flow
+flowchart TD
+    A(Developer Commit)
+    B(Azure DevOps Trigger)
+    C(Build & Validation)
+    D(Code Quality Analysis)
+    E(Security Scanning)
+    F(Docker Image Build)
+    G(Push Image to ACR)
+    H(GitOps Deployment Flow)
+
+    A --> B
+    B --> C
+    C --> D
+    D --> E
+    E --> F
+    F --> G
+    G --> H
 
 ```
 
@@ -688,15 +668,15 @@ SonarCloud analyzes:
 
 Pipeline principle:
 
-```
+```mermaid
 
-Poor Quality Code
-|
-↓
-Quality Gate Failure
-|
-↓
-Deployment Blocked
+flowchart TD
+    A(Poor Quality Code)
+    B(Quality Gate Failure)
+    C(Deployment Blocked)
+
+    A --> B
+    B --> C
 
 ```
 
@@ -716,33 +696,19 @@ Trivy scans Docker images for:
 
 Flow:
 
-```
+```mermaid
 
-Application Code
+flowchart TD
+    A(Application Code)
+    B(Docker Image Created)
+    C(Trivy Security Scan)
+    D(Approved Image)
+    E(Azure Container Registry)
 
-```
-  ↓
-```
-
-Docker Image Created
-
-```
-  ↓
-```
-
-Trivy Security Scan
-
-```
-  ↓
-```
-
-Approved Image
-
-```
-  ↓
-```
-
-Azure Container Registry
+    A --> B
+    B --> C
+    C --> D
+    D --> E
 
 ```
 
@@ -763,21 +729,26 @@ Containerization provides:
 
 Architecture:
 
-```
+```mermaid
 
-Frontend Container
+flowchart TD
+    subgraph Frontend
+        A[Frontend Container]
+        B[React Application]
+        C[Nginx Runtime]
 
-React Application
-|
-↓
-Nginx Runtime
+        A --> B
+        B --> C
+    end
 
-Backend Container
+    subgraph Backend
+        D[Backend Container]
+        E[Node.js Application]
+        F[Express API]
 
-Node.js Application
-|
-↓
-Express API
+        D --> E
+        E --> F
+    end
 
 ```
 
@@ -796,28 +767,17 @@ ACR provides:
 
 Flow:
 
-```
+```mermaid
 
-Docker Build
+flowchart TD
+    A(Docker Build)
+    B(Security Scan)
+    C(Docker Push)
+    D(Azure Container Registry)
 
-```
-  ↓
-```
-
-Security Scan
-
-```
-  ↓
-```
-
-Docker Push
-
-```
-  ↓
-```
-
-Azure Container Registry
-
+    A --> B
+    B --> C
+    C --> D
 ```
 
 ---
@@ -830,21 +790,19 @@ One important design decision in FlavorForge is separating application delivery 
 
 Azure DevOps handles:
 
-```
+```mermaid
 
-Code
-|
-↓
-Build
-|
-↓
-Test
-|
-↓
-Security Scan
-|
-↓
-Container Image
+flowchart TD
+    A(Code)
+    B(Build)
+    C(Test)
+    D(Security Scan)
+    E(Container Image)
+
+    A --> B
+    B --> C
+    C --> D
+    D --> E
 
 ```
 
@@ -854,22 +812,15 @@ Container Image
 
 ArgoCD handles:
 
-```
+```mermaid
 
-Git Desired State
+flowchart TD
+    A(Git Desired State)
+    B(ArgoCD Synchronization)
+    C(Kubernetes Deployment)
 
-```
-    ↓
-```
-
-ArgoCD Synchronization
-
-```
-    ↓
-```
-
-Kubernetes Deployment
-
+    A --> B
+    B --> C
 ```
 
 ---
@@ -887,35 +838,31 @@ This separation provides:
 
 Traditional deployment:
 
-```
+```mermaid
 
-Pipeline
-|
-↓
-kubectl apply
-|
-↓
-Kubernetes
+flowchart TD
+    A(Pipeline)
+    B(kubectl apply)
+    C(Kubernetes)
+
+    A --> B
+    B --> C
 
 ```
 
 GitOps deployment:
 
-```
+```mermaid
 
-Developer
+flowchart TD
+    A(Developer)
+    B(Git Repository)
+    C(ArgoCD)
+    D(Kubernetes Cluster)
 
-↓
-
-Git Repository
-
-↓
-
-ArgoCD
-
-↓
-
-Kubernetes Cluster
+    A --> B
+    B --> C
+    C --> D
 
 ```
 
@@ -932,13 +879,22 @@ With GitOps:
 
 Security was considered throughout the application lifecycle.
 
-| Security Layer | Implementation |
-|---|---|
-| Source Code Security | SonarCloud Analysis |
-| Container Security | Trivy Scanning |
-| Image Security | ACR Private Registry |
-| Deployment Security | Kubernetes Controls |
-| Operational Security | Azure Monitoring |
+| **Security Layer**   | **Implementation**                              |
+| -------------------- | ----------------------------------------------- |
+| Source Code Security | SonarCloud Analysis                             |
+| Container Security   | Trivy Scanning                                  |
+| Image Security       | Azure Container Registry (ACR) Private Registry |
+| Deployment Security  | Kubernetes Security Controls                    |
+| Operational Security | Azure Monitor                                   |
+
+```mermaid
+flowchart TD
+    A[Source Code Security] --> B[SonarCloud Analysis]
+    C[Container Security] --> D[Trivy Scanning]
+    E[Image Security] --> F[ACR Private Registry]
+    G[Deployment Security] --> H[Kubernetes Security Controls]
+    I[Operational Security] --> J[Azure Monitor]
+```
 
 ---
 
@@ -946,38 +902,19 @@ Security was considered throughout the application lifecycle.
 
 FlavorForge evolved through multiple maturity levels:
 
-```
+```mermaid
 
-Level 1
-Manual Development
+flowchart TD
+    A("Level 1<br/>Manual Development")
+    B("Level 2<br/>Containerized Application")
+    C("Level 3<br/>Automated CI/CD")
+    D("Level 4<br/>Security Integrated Pipeline")
+    E("Level 5<br/>GitOps-Based Cloud Operations")
 
-```
-    ↓
-```
-
-Level 2
-Containerized Application
-
-```
-    ↓
-```
-
-Level 3
-Automated CI/CD
-
-```
-    ↓
-```
-
-Level 4
-Security Integrated Pipeline
-
-```
-    ↓
-```
-
-Level 5
-GitOps-Based Cloud Operations
+    A --> B
+    B --> C
+    C --> D
+    D --> E
 
 ```
 
@@ -1008,48 +945,43 @@ FlavorForge is deployed using Microsoft Azure cloud services.
 
 The main Azure components are:
 
-| Azure Service | Purpose |
-|---|---|
-| Azure Resource Group | Logical resource management |
-| Azure Container Registry (ACR) | Private Docker image storage |
-| Azure Kubernetes Service (AKS) | Kubernetes application platform |
-| Azure Monitor | Application and cluster visibility |
+| **Azure Service**              | **Purpose**                        |
+| ------------------------------ | ---------------------------------- |
+| Azure Resource Group           | Logical resource management        |
+| Azure Container Registry (ACR) | Private Docker image storage       |
+| Azure Kubernetes Service (AKS) | Kubernetes application platform    |
+| Azure Monitor                  | Application and cluster visibility |
+
+```mermaid
+flowchart TD
+    A[Azure Resource Group]
+    B[Azure Container Registry (ACR)]
+    C[Azure Kubernetes Service (AKS)]
+    D[Azure Monitor]
+
+    A -->|Contains| B
+    A -->|Contains| C
+    C -->|Sends Logs & Metrics| D
+    B -->|Provides Images| C
+```
 
 High-level flow:
 
-```
+```mermaid
 
-Application Code
+flowchart TD
+    A(Application Code)
+    B(Docker Image)
+    C(Azure Container Registry)
+    D(Azure Kubernetes Service)
+    E(Running Application)
+    F(Azure Monitor)
 
-```
-    ↓
-```
-
-Docker Image
-
-```
-    ↓
-```
-
-Azure Container Registry
-
-```
-    ↓
-```
-
-Azure Kubernetes Service
-
-```
-    ↓
-```
-
-Running Application
-
-```
-    ↓
-```
-
-Azure Monitor
+    A --> B
+    B --> C
+    C --> D
+    D --> E
+    E --> F
 
 ```
 
@@ -1078,26 +1010,24 @@ FlavorForge Kubernetes resources are organized using a structured manifest appro
 
 Repository design:
 
-```
+```mermaid
 
-kubernetes/
+flowchart TD
+    A["📁 kubernetes"]
 
-├── base/
-│
-│   ├── frontend/
-│   ├── backend/
-│   ├── services/
-│   ├── config/
-│   ├── autoscaling/
-│   └── ingress/
-│
-└── overlays/
+    A --> B["📁 base"]
+    A --> C["📁 overlays"]
 
-```
-├── dev/
-├── qa/
-└── prod/
-```
+    B --> B1["📁 frontend"]
+    B --> B2["📁 backend"]
+    B --> B3["📁 services"]
+    B --> B4["📁 config"]
+    B --> B5["📁 autoscaling"]
+    B --> B6["📁 ingress"]
+
+    C --> C1["📁 dev"]
+    C --> C2["📁 qa"]
+    C --> C3["📁 prod"]
 
 ```
 
@@ -1115,17 +1045,16 @@ Manage application replicas and rolling updates.
 
 Example:
 
-```
+```mermaid
 
-Frontend Deployment
-|
-↓
-Frontend Pods
+flowchart TD
+    A[Frontend Deployment]
+    B[Frontend Pods]
+    C[Backend Deployment]
+    D[Backend Pods]
 
-Backend Deployment
-|
-↓
-Backend Pods
+    A --> B
+    C --> D
 
 ```
 
@@ -1137,33 +1066,19 @@ Provide stable networking between components.
 
 Example:
 
-```
+```mermaid
 
-User Request
+flowchart TD
+    A[User Request]
+    B[Frontend Service]
+    C[Frontend Pods]
+    D[Backend Service]
+    E[Backend Pods]
 
-```
- ↓
-```
-
-Frontend Service
-
-```
- ↓
-```
-
-Frontend Pods
-
-```
- ↓
-```
-
-Backend Service
-
-```
- ↓
-```
-
-Backend Pods
+    A --> B
+    B --> C
+    C -->|HTTP/API Request| D
+    D --> E
 
 ```
 
@@ -1224,31 +1139,21 @@ To make the application accessible externally, Kubernetes Ingress provides routi
 
 Traffic flow:
 
-```
+```mermaid
 
-User
+flowchart TD
+    A[User]
+    B[Ingress Controller]
+    C[Frontend Service]
+    D[Frontend Pods]
+    E[Backend Service]
+    F[Backend Pods]
 
-↓
-
-Ingress Controller
-
-↓
-
-Frontend Service
-
-↓
-
-Frontend Pods
-
-Backend API Requests
-
-↓
-
-Backend Service
-
-↓
-
-Backend Pods
+    A --> B
+    B --> C
+    C --> D
+    D -->|HTTP/API Request| E
+    E --> F
 
 ```
 
@@ -1257,6 +1162,15 @@ Ingress provides:
 - Centralized routing
 - External access management
 - Cleaner service exposure
+
+This is how it works:
+
+User accesses the application.
+Ingress Controller receives the external request.
+Frontend Service routes traffic to a frontend pod.
+Frontend Pods render the UI.
+When data is needed, the Frontend Pods send an HTTP/API request to the Backend Service.
+Backend Service load-balances the request to one of the Backend Pods.
 
 ---
 
@@ -1469,17 +1383,18 @@ flowchart TD
 
 With AKS + Kubernetes + ArgoCD, FlavorForge demonstrates:
 
+```text
 ✅ Cloud-native deployment
 ✅ Container orchestration
 ✅ Environment management
 ✅ Git-controlled operations
 ✅ Production-inspired delivery practices
-
+```
 The application is no longer just deployed.
 
 It is managed as a cloud-native platform.
 
-```
+
 
 ---
 
@@ -1945,6 +1860,51 @@ Highlight:
 * Security
 * Documentation
 * Cloud-native design
+
+---
+
+# 📊 Automated Project Status
+
+FlavorForge includes an automated documentation generator powered by GitHub Actions.
+
+The workflow analyzes the repository structure and automatically updates the project implementation status.
+
+<!-- AUTO_STATUS_START -->
+
+📌 Latest generated project status:
+
+➡️ [View Automated Project Status](docs/generated/PROJECT_STATUS.md)
+
+<!-- AUTO_STATUS_END -->
+
+The documentation generator verifies the presence of:
+
+- ✅ Frontend application
+- ✅ Backend API
+- ✅ Docker containerization
+- ✅ Kubernetes deployment
+- ✅ Azure DevOps pipeline
+- ✅ Security scanning
+- ✅ GitOps configuration
+- ✅ Documentation artifacts
+
+Workflow:
+
+```mermaid
+
+flowchart TD
+    A(Git Push)
+    B(GitHub Actions)
+    C(Repository Scanner)
+    D(Generate Markdown Report)
+    E(Update Project Status)
+
+    A --> B
+    B --> C
+    C --> D
+    D --> E
+
+```
 
 ---
 
