@@ -1,5 +1,8 @@
 name: Automated Documentation Generator
 
+permissions:
+  contents: write
+  
 on:
   workflow_dispatch:
   push:
