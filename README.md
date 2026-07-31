@@ -223,8 +223,8 @@ flowchart TD
     E[Trivy<br/>Security Scan]
 
     F[Docker Image Build]
-    G[Azure Container Registry (ACR)]
-    H[Azure Kubernetes Service (AKS)]
+    G[Azure Container Registry]
+    H[Azure Kubernetes Service]
     I[ArgoCD GitOps]
     J[Kubernetes Workloads]
     K[Azure Monitor]
