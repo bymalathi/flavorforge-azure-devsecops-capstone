@@ -170,7 +170,7 @@ This project demonstrates modern cloud-native software engineering practices, in
 
 ---
 
-## Project Repository
+
 
 ## Project Repository
 
