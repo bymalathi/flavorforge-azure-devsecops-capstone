@@ -36,7 +36,7 @@ The real engineering challenge was to transform a basic full-stack application i
 This capstone demonstrates that complete transformation—from the first Git commit to a fully deployed application running on **Azure Kubernetes Service (AKS)**.
 
 ```mermaid
-flowchart TD
+graph TD
     A[Code]
     B[Quality]
     C[Security]
