@@ -8,6 +8,31 @@ The entire workflow is implemented using Azure DevOps Multi-Stage YAML Pipelines
 
 ---
 
+
+# 📋 Prerequisites
+
+This document assumes that the Azure DevSecOps environment has already been configured.
+
+Before following this pipeline reference, ensure the following have already been completed:
+
+- Azure DevOps project created
+- GitHub repository connected to Azure DevOps
+- Azure Resource Manager Service Connection configured
+- Azure Container Registry (ACR) Service Connection configured
+- SonarCloud Service Connection configured
+- Variable Groups created
+- Azure DevOps Environments configured
+- Environment approvals configured
+- Multi-stage `azure-pipelines.yml` committed to the repository
+
+> **Note**
+>
+> This document explains **how the Azure DevOps CI/CD pipeline works** after it has been configured.
+>
+> If you want to recreate the Azure DevOps configuration from scratch, refer to **`azure-devops-setup.md`**.
+
+---
+
 # 🎯 Objectives
 
 The pipeline is designed to automate:
@@ -122,6 +147,54 @@ Stages
 The Azure DevOps pipeline is implemented as a multi-stage YAML pipeline.
 
 Each stage has a specific responsibility and creates a controlled path from source code to production deployment.
+
+---
+
+# 🔄 Pipeline Stages
+
+The Azure DevOps pipeline is implemented as a multi-stage YAML pipeline.
+
+Each stage has a specific responsibility and creates a controlled path from source code to production deployment.
+
+---
+
+
+## Pipeline Flow Summary
+
+The pipeline executes the following stages in sequence.
+
+```text
+Checkout Source Code
+        │
+        ▼
+Install Dependencies
+        │
+        ▼
+Run Unit Tests
+        │
+        ▼
+SonarCloud Analysis
+        │
+        ▼
+Security Scanning
+        │
+        ▼
+Build Docker Images
+        │
+        ▼
+Push Images to Azure Container Registry
+        │
+        ▼
+Deploy to Azure Kubernetes Service
+        │
+        ▼
+Synchronize using Argo CD
+        │
+        ▼
+Verify Application Deployment
+```
+
+Each stage depends on the successful completion of the previous stage, ensuring that only validated and secure application versions are deployed.
 
 ---
 
@@ -779,7 +852,26 @@ This Azure DevOps implementation demonstrates practical experience with:
 - GitOps practices using Argo CD
 - Production deployment workflows
 
+
 ---
+
+# 📖 Related Documentation
+
+The following documents provide additional information about the FlavorForge Azure DevSecOps implementation.
+
+| Document | Description |
+|----------|-------------|
+| `azure-devops-setup.md` | Step-by-step Azure DevOps configuration guide |
+| `../implementation/README.md` | Complete implementation documentation |
+| `../verification/` | Verification and validation reports |
+| `../troubleshooting/` | Troubleshooting guides |
+| `../../README.md` | Project overview and quick start guide |
+
+For readers who want to recreate the Azure DevOps environment from scratch, begin with **`azure-devops-setup.md`**. Once the configuration is complete, return to this document to understand the complete CI/CD pipeline architecture and execution flow.
+
+---
+
+
 
 # 👩‍💻 Author
 
