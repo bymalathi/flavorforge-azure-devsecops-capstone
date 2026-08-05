@@ -831,6 +831,22 @@ docs/screenshots/
 └── argocd-application.png
 ```
 
+<img width="2560" height="1229" alt="image" src="https://github.com/user-attachments/assets/33a7d656-2357-40a7-8a06-e9d9966cd236" />
+<img width="2560" height="1229" alt="image" src="https://github.com/user-attachments/assets/830bf40d-3597-45f5-9c88-c7a2e29c1f82" />
+<img width="2560" height="1229" alt="image" src="https://github.com/user-attachments/assets/81d3fadb-3815-47a6-b6f8-31e5a7298810" />
+
+<img width="1908" height="958" alt="image" src="https://github.com/user-attachments/assets/f44677be-0916-46a3-912e-e9be31436db3" />
+<img width="2557" height="947" alt="image" src="https://github.com/user-attachments/assets/b0f5cc07-868c-4d0d-aedf-f459c9481a8e" />
+<img width="2560" height="1229" alt="image" src="https://github.com/user-attachments/assets/e001e8dd-b176-4f63-8772-c74747002712" />
+<img width="2560" height="1229" alt="image" src="https://github.com/user-attachments/assets/e96e4ad0-401d-4d40-979f-00f66f248932" />
+<img width="2560" height="1229" alt="image" src="https://github.com/user-attachments/assets/acb8bd16-bafe-4873-9964-b8af4a6e32cc" />
+
+<img width="2560" height="2147" alt="image" src="https://github.com/user-attachments/assets/00926c43-0ff5-40f4-b157-c90916edbd70" />
+
+<img width="2560" height="1229" alt="image" src="https://github.com/user-attachments/assets/7f382809-e4ef-4399-86a0-fb3e05a6e371" />
+<img width="2560" height="2769" alt="image" src="https://github.com/user-attachments/assets/71c7c29e-6f1c-42f2-a285-42f60ece71fd" />
+
+
 These screenshots provide visual proof of successful CI/CD implementation.
 
 ---
@@ -859,18 +875,21 @@ This Azure DevOps implementation demonstrates practical experience with:
 
 The following documents provide additional information about the FlavorForge Azure DevSecOps implementation.
 
-| Document | Description |
-|----------|-------------|
-| `azure-devops-setup.md` | Step-by-step Azure DevOps configuration guide |
-| `../implementation/README.md` | Complete implementation documentation |
-| `../verification/` | Verification and validation reports |
-| `../troubleshooting/` | Troubleshooting guides |
-| `../../README.md` | Project overview and quick start guide |
+# 📖 Related Documentation
 
-For readers who want to recreate the Azure DevOps environment from scratch, begin with **`azure-devops-setup.md`**. Once the configuration is complete, return to this document to understand the complete CI/CD pipeline architecture and execution flow.
+The following documents provide additional information about the FlavorForge Azure DevSecOps implementation.
+
+| Document | Description | Link |
+|----------|-------------|------|
+| `azure-devops-setup-guide.md` | Step-by-step guide to configure Azure DevOps | https://github.com/bymalathi/flavorforge-azure-devsecops-capstone/blob/main/docs/pipeline/azure-devops-setup-guide.md |
+| `README.md` (Implementation) | Complete implementation documentation | https://github.com/bymalathi/flavorforge-azure-devsecops-capstone/blob/main/docs/implementation/README.md |
+| `Project Documentation` | Project overview, objectives, and verification reports | https://github.com/bymalathi/flavorforge-azure-devsecops-capstone/tree/main/docs/project |
+| `README.md` (Troubleshooting) | Troubleshooting guides and common issues | https://github.com/bymalathi/flavorforge-azure-devsecops-capstone/blob/main/docs/troubleshooting/README.md |
+| `README.md` (Project Root) | Project overview, architecture, and quick start guide | https://github.com/bymalathi/flavorforge-azure-devsecops-capstone/blob/main/README.md |
+
+For readers who want to recreate the Azure DevOps environment from scratch, begin with **`azure-devops-setup-guide.md`**. Once the Azure DevOps environment has been configured, return to this document to understand the complete CI/CD pipeline architecture and execution flow.
 
 ---
-
 
 
 # 👩‍💻 Author
