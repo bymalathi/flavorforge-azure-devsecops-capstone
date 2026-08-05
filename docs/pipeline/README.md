@@ -16,7 +16,7 @@ This separation makes it easier for developers to recreate the project while als
 # Documentation Guide
 
 | Document | Purpose | Link |
-|----------|---------|-------------------|------|
+|----------|---------|------|
 | `azure-devops-setup-guide.md` | Step-by-step Azure DevOps configuration guide | https://github.com/bymalathi/flavorforge-azure-devsecops-capstone/blob/main/docs/pipeline/azure-devops-setup-guide.md |
 | `azure-devops-pipeline.md` | Detailed explanation of the CI/CD pipeline and each stage | https://github.com/bymalathi/flavorforge-azure-devsecops-capstone/blob/main/docs/pipeline/azure-devops-pipeline.md |
 
