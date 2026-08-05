@@ -29,7 +29,7 @@ Before following this pipeline reference, ensure the following have already been
 >
 > This document explains **how the Azure DevOps CI/CD pipeline works** after it has been configured.
 >
-> If you want to recreate the Azure DevOps configuration from scratch, refer to **`azure-devops-setup.md`**.
+> If you want to recreate the Azure DevOps configuration from scratch, refer to **`[azure-devops-setup-guide.md](https://github.com/bymalathi/flavorforge-azure-devsecops-capstone/blob/main/docs/pipeline/azure-devops-setup-guide.md)`**.
 
 ---
 
