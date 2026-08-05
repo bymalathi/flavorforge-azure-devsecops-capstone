@@ -812,18 +812,6 @@ Planned improvements:
 
 # 📸 Pipeline Evidence
 
-Recommended screenshots:
-
-```
-docs/screenshots/
-
-├── azure-pipeline-success.png
-├── sonarcloud-quality-gate.png
-├── trivy-scan-result.png
-├── acr-images.png
-├── aks-deployment.png
-└── argocd-application.png
-```
 
 <img width="2560" height="1229" alt="image" src="https://github.com/user-attachments/assets/33a7d656-2357-40a7-8a06-e9d9966cd236" />
 <img width="2560" height="1229" alt="image" src="https://github.com/user-attachments/assets/830bf40d-3597-45f5-9c88-c7a2e29c1f82" />
@@ -864,10 +852,6 @@ This Azure DevOps implementation demonstrates practical experience with:
 
 
 ---
-
-# 📖 Related Documentation
-
-The following documents provide additional information about the FlavorForge Azure DevSecOps implementation.
 
 # 📖 Related Documentation
 
