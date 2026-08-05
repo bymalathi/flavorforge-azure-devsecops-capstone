@@ -150,13 +150,7 @@ Each stage has a specific responsibility and creates a controlled path from sour
 
 ---
 
-# 🔄 Pipeline Stages
 
-The Azure DevOps pipeline is implemented as a multi-stage YAML pipeline.
-
-Each stage has a specific responsibility and creates a controlled path from source code to production deployment.
-
----
 
 
 ## Pipeline Flow Summary
