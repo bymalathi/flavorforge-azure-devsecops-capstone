@@ -141,19 +141,22 @@ This implementation guide is organized into the following sections.
 
 The following screenshots provide evidence that the required Azure resources and Azure DevOps environment are available before pipeline configuration begins.
 
-| Screenshot                                                                  | Description                      |
-| --------------------------------------------------------------------------- | -------------------------------- |
-| `../../screenshots/Pipeline/1-Azure DevOps Organizations.png`               | Azure DevOps organization        |
-| `../../screenshots/Enterprise Azure DevOps Release Simulation/Project.png`  | Azure DevOps project             |
-| `../../screenshots/Azure/flavorforge-rg-Microsoft-Azure-Resource Group.png` | Azure Resource Group             |
-| `../../screenshots/Azure/04-acr-created.png`                                | Azure Container Registry         |
-| `../../screenshots/Azure/27-aks-cluster-running.png`                        | Azure Kubernetes Service cluster |
+### Azure DevOps organization
+<img width="1732" height="936" alt="image" src="https://github.com/user-attachments/assets/99024449-71d2-401f-bb2c-1a114bb00c0d" />
 
----
+### Azure DevOps project 
+<img width="1536" height="1024" alt="image" src="https://github.com/user-attachments/assets/f5702519-2006-418c-b808-10eb293a878f" />
 
-### Review Notes
+### Azure Resource Group 
+<img width="2560" height="1229" alt="image" src="https://github.com/user-attachments/assets/c0501c6b-e80e-4d35-abfb-1a805298a066" />
 
-This section intentionally **does not** explain how to create the Azure DevOps project or Azure resources. It establishes the context, scope, prerequisites, and references that readers need before starting the implementation. The next section will begin the actual hands-on setup with **Section 2 – Create Azure DevOps Project**.
+
+### Azure Container Registry  
+<img width="1562" height="1257" alt="image" src="https://github.com/user-attachments/assets/92fd3725-5900-453a-82cf-7e0f3fd730c1" />
+
+### Azure Kubernetes Service cluster
+<img width="665" height="182" alt="image" src="https://github.com/user-attachments/assets/a46d864d-d9fb-41e7-8909-b90735e4ef7c" />
+
 
 ---
 
@@ -278,14 +281,11 @@ Refresh the browser and retry. If the issue persists, verify that the Azure DevO
 
 Use the following screenshots from the repository to validate this step.
 
-| Screenshot                                                                 | Description                      |
-| -------------------------------------------------------------------------- | -------------------------------- |
-| `../../screenshots/Pipeline/1-Azure DevOps Organizations.png`              | Azure DevOps organization        |
-| `../../screenshots/Enterprise Azure DevOps Release Simulation/Project.png` | FlavorForge Azure DevOps project |
-
 **Figure 2.1** – Azure DevOps organization.
+<img width="1732" height="936" alt="image" src="https://github.com/user-attachments/assets/ae4627d1-ce10-46be-ad75-e5467ad7238d" />
 
 **Figure 2.2** – FlavorForge project successfully created within the Azure DevOps organization.
+<img width="2560" height="1229" alt="image" src="https://github.com/user-attachments/assets/02549b73-24d1-48f6-8aa3-b60f9644c208" />
 
 ---
 
@@ -474,18 +474,15 @@ Ensure that `azure-pipelines.yml` is committed to the default branch and located
 
 Use the following screenshots from the repository:
 
-| Screenshot                                                    | Description                                 |
-| ------------------------------------------------------------- | ------------------------------------------- |
-| `../../screenshots/Pipeline/5-Click New Pipeline..png`        | Creating a new Azure Pipeline               |
-| `../../screenshots/Pipeline/6-Pipelines-Run.png`              | Initial pipeline execution                  |
-| `../../screenshots/Pipeline/8-Pipelines-Run-Pass.png`         | Successful pipeline run                     |
-| `../../screenshots/Pipeline/9-Advance-Pipelines-Run-Pass.png` | Pipeline summary after successful execution |
-
-**Figure 3.1** – Creating a new pipeline.
+**Figure 3.1** – Creating a new Azure pipeline.
+<img width="2557" height="1222" alt="image" src="https://github.com/user-attachments/assets/c0eda7a3-3185-4aee-bc2d-7123e895af33" />
 
 **Figure 3.2** – Azure DevOps executing the pipeline.
+<img width="2560" height="1277" alt="image" src="https://github.com/user-attachments/assets/01e80c06-8df9-4b9d-846b-50fef13cf823" />
+<img width="3085" height="1229" alt="image" src="https://github.com/user-attachments/assets/42efc992-c410-42f7-95d9-9b8b7d88205d" />
 
 **Figure 3.3** – Successful pipeline execution.
+<img width="4365" height="1229" alt="image" src="https://github.com/user-attachments/assets/b6e69d29-2169-4e13-b42f-91d5791cac8f" />
 
 ---
 
@@ -624,17 +621,15 @@ Delete the incomplete connection and recreate it using the correct authenticatio
 
 Use the following screenshots from the repository.
 
-| Screenshot                                                      | Description                                      |
-| --------------------------------------------------------------- | ------------------------------------------------ |
-| `../../screenshots/Pipeline/3-Azure resource manager.png`       | Select Azure Resource Manager Service Connection |
-| `../../screenshots/Pipeline/4-New Azure service connection.png` | Create Azure Resource Manager Service Connection |
-| `../../screenshots/Pipeline/11-service connections.png`         | Azure DevOps Service Connections                 |
-
 **Figure 4.1** – Selecting the Azure Resource Manager Service Connection.
+<img width="2555" height="1221" alt="image" src="https://github.com/user-attachments/assets/db836bd8-b68f-41fd-a711-505db6fb409e" />
 
 **Figure 4.2** – Configuring the Azure Resource Manager Service Connection.
+<img width="2556" height="1227" alt="image" src="https://github.com/user-attachments/assets/4fd68944-a1d1-4ada-9fe9-fbfc20fdfb08" />
+<img width="2560" height="1229" alt="image" src="https://github.com/user-attachments/assets/56600536-af20-4ee6-9f25-b46746f8dd60" />
 
 **Figure 4.3** – Service Connection successfully created.
+<img width="2155" height="452" alt="image" src="https://github.com/user-attachments/assets/ecaa2be0-e41b-4fa0-8bc1-6c6cb8ec797d" />
 
 ---
 
@@ -731,15 +726,13 @@ Verify that:
 
 Use the following screenshots from the repository.
 
-| Screenshot                                              | Description                                           |
-| ------------------------------------------------------- | ----------------------------------------------------- |
-| `../../screenshots/Pipeline/10-ACR-dockerhub.png`       | Creating the Docker Registry / ACR Service Connection |
-| `../../screenshots/Pipeline/11-service connections.png` | ACR Service Connection listed in Azure DevOps         |
-| `../../screenshots/Pipeline/12-acr & aks.png`           | ACR and AKS Service Connections configured            |
 
 **Figure 4.4** – Creating the Azure Container Registry Service Connection.
+<img width="2581" height="1234" alt="image" src="https://github.com/user-attachments/assets/fd79a01e-ba13-48f3-91b0-af0804f3ce6e" />
 
 **Figure 4.5** – Azure Container Registry Service Connection successfully configured.
+<img width="2155" height="452" alt="image" src="https://github.com/user-attachments/assets/d2dfe9eb-072a-4772-94ff-40a560b8030b" />
+<img width="1195" height="1041" alt="image" src="https://github.com/user-attachments/assets/0f57085c-9d5f-4cc0-8373-92911215b0e3" />
 
 ---
 
@@ -822,15 +815,14 @@ Verify that:
 
 Use the following screenshots from the repository.
 
-| Screenshot                                                                                  | Description                                   |
-| ------------------------------------------------------------------------------------------- | --------------------------------------------- |
-| `../../screenshots/Enterprise Azure DevOps Release Simulation/15-Extensions-sonarcloud.png` | SonarCloud extension installed                |
-| `../../screenshots/Pipeline/11-service connections.png`                                     | SonarCloud Service Connection available       |
-| `../../screenshots/Enterprise Azure DevOps Release Simulation/16-code coverage.png`         | SonarCloud analysis and code coverage results |
-
 **Figure 4.6** – SonarCloud extension configured.
+<img width="2560" height="1229" alt="image" src="https://github.com/user-attachments/assets/3592ff2e-7b04-4da6-8446-edd2fe938110" />
 
 **Figure 4.7** – SonarCloud analysis completed successfully.
+<img width="2155" height="452" alt="image" src="https://github.com/user-attachments/assets/16fbfa3c-5617-40c3-8279-ad773a88342f" />
+
+<img width="2560" height="1229" alt="image" src="https://github.com/user-attachments/assets/1f69f6cf-5c1d-4d87-878d-8e08d134ff52" />
+
 
 ---
 
@@ -1001,17 +993,14 @@ Confirm the variable is defined correctly and that the pipeline has permission t
 
 Use the following screenshots from the repository.
 
-| Screenshot                                                                          | Description               |
-| ----------------------------------------------------------------------------------- | ------------------------- |
-| `../../screenshots/Enterprise Azure DevOps Release Simulation/2-Library.png`        | Azure DevOps Library      |
-| `../../screenshots/Enterprise Azure DevOps Release Simulation/2-qa_variables.png`   | QA Variable Group         |
-| `../../screenshots/Enterprise Azure DevOps Release Simulation/2-prod_variables.png` | Production Variable Group |
-
 **Figure 5.1** – Azure DevOps Library.
+<img width="2557" height="817" alt="image" src="https://github.com/user-attachments/assets/6e7281ba-848f-426b-ae97-d8472a25bf32" />
 
 **Figure 5.2** – QA Variable Group configuration.
+<img width="2557" height="845" alt="image" src="https://github.com/user-attachments/assets/48d4566f-6cd5-4eaf-9d90-ab459aec212f" />
 
 **Figure 5.3** – Production Variable Group configuration.
+<img width="2546" height="967" alt="image" src="https://github.com/user-attachments/assets/5ce4dc54-d674-48bf-b16b-ad805b7dc034" />
 
 ---
 
@@ -1171,20 +1160,18 @@ Verify you are viewing the correct Azure DevOps project.
 
 Use the following screenshots from the repository.
 
-| Screenshot                                                                                                   | Description                                  |
-| ------------------------------------------------------------------------------------------------------------ | -------------------------------------------- |
-| `../../screenshots/Enterprise Azure DevOps Release Simulation/1-Azure DevOps Environments.png`               | Azure DevOps Environments                    |
-| `../../screenshots/Enterprise Azure DevOps Release Simulation/1.1-Dev-Azure DevOps Environments.png`         | Development Environment                      |
-| `../../screenshots/Enterprise Azure DevOps Release Simulation/1.2-Dev-QA-Prod-Azure DevOps Environments.png` | Development, QA, and Production Environments |
-| `../../screenshots/Enterprise Azure DevOps Release Simulation/10-All environments.png`                       | Environment deployment overview              |
 
 **Figure 6.1** – Azure DevOps Environments dashboard.
+<img width="2557" height="1222" alt="image" src="https://github.com/user-attachments/assets/01f60b73-dec9-4c2f-80db-95850dc4c8a8" />
 
 **Figure 6.2** – Development Environment.
+<img width="607" height="1191" alt="image" src="https://github.com/user-attachments/assets/69aa9354-5045-47c4-a170-74d493d1f232" />
 
 **Figure 6.3** – Development, QA, and Production Environments.
+<img width="2555" height="695" alt="image" src="https://github.com/user-attachments/assets/42a10ac6-5d2f-469a-b73c-82feeed0e2b1" />
 
 **Figure 6.4** – Deployment history across all environments.
+<img width="1090" height="1085" alt="image" src="https://github.com/user-attachments/assets/65f5fe8e-b558-4f94-9f93-0c799cda9063" />
 
 ---
 
@@ -1351,22 +1338,22 @@ Review the environment security settings and grant deployment permission to the 
 
 Use the following screenshots from the repository.
 
-| Screenshot                                                                            | Description                        |
-| ------------------------------------------------------------------------------------- | ---------------------------------- |
-| `../../screenshots/Enterprise Azure DevOps Release Simulation/3-Approvals.png`        | Environment approval configuration |
-| `../../screenshots/Enterprise Azure DevOps Release Simulation/3.1-Approvals.png`      | Approval settings                  |
-| `../../screenshots/Enterprise Azure DevOps Release Simulation/4-Approvals-qa.png`     | QA approval                        |
-| `../../screenshots/Enterprise Azure DevOps Release Simulation/4.1-Approvals-prod.png` | Production approval                |
-| `../../screenshots/Enterprise Azure DevOps Release Simulation/3.2-permissions.png`    | Environment permissions            |
-| `../../screenshots/Enterprise Azure DevOps Release Simulation/3.2-QA-permissions.png` | QA environment permissions         |
-
 **Figure 7.1** – Approval configuration.
+<img width="2552" height="1232" alt="image" src="https://github.com/user-attachments/assets/bc7fba8b-f9bf-47d1-ab83-2095366ed40d" />
+<img width="2532" height="1092" alt="image" src="https://github.com/user-attachments/assets/aef7fbe7-2ddf-460e-a938-45e139230776" />
 
 **Figure 7.2** – QA approval gate.
+<img width="2547" height="1207" alt="image" src="https://github.com/user-attachments/assets/d51df190-78ea-41ec-8626-1d6f22e9dd15" />
+<img width="2551" height="1207" alt="image" src="https://github.com/user-attachments/assets/74955a0d-1592-4d55-b8e4-fa90c6f14daf" />
 
 **Figure 7.3** – Production approval gate.
+<img width="2536" height="1225" alt="image" src="https://github.com/user-attachments/assets/9f63ff9a-63ee-464f-8105-e5fc10a448d4" />
+<img width="2547" height="1226" alt="image" src="https://github.com/user-attachments/assets/26ece4be-af8a-4445-903a-68cfae573a22" />
 
 **Figure 7.4** – Environment permissions.
+<img width="2557" height="1180" alt="image" src="https://github.com/user-attachments/assets/1fddfdbc-b524-4498-a970-f98e0e66006a" />
+<img width="2552" height="1100" alt="image" src="https://github.com/user-attachments/assets/f384b26b-0246-4969-80e3-4741c0a78101" />
+
 
 ---
 
@@ -1573,25 +1560,24 @@ Check the deployment logs for Service Connection, Kubernetes, or container image
 
 Use the following screenshots from the repository.
 
-| Screenshot                                                                                                    | Description                 |
-| ------------------------------------------------------------------------------------------------------------- | --------------------------- |
-| `../../screenshots/Pipeline/5-Click New Pipeline..png`                                                        | Create a new Azure Pipeline |
-| `../../screenshots/Pipeline/6-Pipelines-Run.png`                                                              | Initial pipeline execution  |
-| `../../screenshots/Pipeline/8-Pipelines-Run-Pass.png`                                                         | Successful pipeline run     |
-| `../../screenshots/Pipeline/9-Advance-Pipelines-Run-Pass.png`                                                 | Pipeline summary            |
-| `../../screenshots/Enterprise Azure DevOps Release Simulation/14-Final Azure Pipeline.png`                    | Final multi-stage pipeline  |
-| `../../screenshots/Enterprise Azure DevOps Release Simulation/14.1-Test-Final Azure Pipeline.png`             | Test stage                  |
-| `../../screenshots/Enterprise Azure DevOps Release Simulation/14.2-Dev-Environment-Final Azure Pipeline.png`  | Development deployment      |
-| `../../screenshots/Enterprise Azure DevOps Release Simulation/14.2-QA-Environment-Final Azure Pipeline.png`   | QA deployment               |
-| `../../screenshots/Enterprise Azure DevOps Release Simulation/14.2-Prod-Environment-Final Azure Pipeline.png` | Production deployment       |
-
 **Figure 8.1** – Creating the Azure DevOps Pipeline.
+<img width="2557" height="1222" alt="image" src="https://github.com/user-attachments/assets/0be28b75-b681-4012-bba2-d30833ab3a20" />
 
 **Figure 8.2** – Initial pipeline execution.
+<img width="2560" height="1277" alt="image" src="https://github.com/user-attachments/assets/df01a302-390f-4507-b048-5abac79afd6a" />
 
 **Figure 8.3** – Successful pipeline execution.
+<img width="3085" height="1229" alt="image" src="https://github.com/user-attachments/assets/0ef0e68a-9f94-4e95-a2d7-14faeb4e24a5" />
 
 **Figure 8.4** – Multi-stage pipeline execution across Dev, QA, and Prod environments.
+<img width="2560" height="1229" alt="image" src="https://github.com/user-attachments/assets/04fbf862-7127-48a3-8cad-39ebfa5b3ad8" />
+<img width="2560" height="1229" alt="image" src="https://github.com/user-attachments/assets/05ee78a0-fe3f-401c-8f12-8580a1af0f02" />
+<img width="2560" height="2147" alt="image" src="https://github.com/user-attachments/assets/4be29f4b-a8ee-4280-bc62-2dd75080becc" />
+<img width="2560" height="1229" alt="image" src="https://github.com/user-attachments/assets/6488a4c0-a530-48aa-a50c-0f2f4ad6b35d" />
+<img width="2560" height="1347" alt="image" src="https://github.com/user-attachments/assets/62c7baf7-4688-4b9b-8e0f-95d4bf801a53" />
+<img width="2560" height="1427" alt="image" src="https://github.com/user-attachments/assets/d6a67703-33cb-4d62-b8cf-cffb40037fbf" />
+
+
 
 ---
 
@@ -1822,24 +1808,20 @@ Verify that:
 
 Use the following screenshots from the repository.
 
-| Screenshot                                                                                 | Description                                  |
-| ------------------------------------------------------------------------------------------ | -------------------------------------------- |
-| `../../screenshots/Pipeline/8-Pipelines-Run-Pass.png`                                      | Successful pipeline execution                |
-| `../../screenshots/Enterprise Azure DevOps Release Simulation/14-Final Azure Pipeline.png` | Final pipeline                               |
-| `../../screenshots/Enterprise Azure DevOps Release Simulation/16-code coverage.png`        | SonarCloud code coverage                     |
-| `../../screenshots/Azure/25-ACR-images.png`                                                | Images published to Azure Container Registry |
-| `../../screenshots/Azure/15-AKS Workloads (Deployments & Pods).png`                        | AKS workloads                                |
-| `../../screenshots/Enterprise Azure DevOps Release Simulation/10-All environments.png`     | Environment deployment history               |
-
 **Figure 9.1** – Successful Azure DevOps pipeline execution.
+<img width="2560" height="1229" alt="image" src="https://github.com/user-attachments/assets/aa31ab06-1247-4c46-b421-6e4b604371a5" />
 
 **Figure 9.2** – SonarCloud quality analysis.
+<img width="2560" height="1229" alt="image" src="https://github.com/user-attachments/assets/310cb976-a47f-4b2f-ba41-17c202d47eb4" />
 
 **Figure 9.3** – Docker images available in Azure Container Registry.
+<img width="1908" height="958" alt="image" src="https://github.com/user-attachments/assets/fffa219f-1b97-4ebd-97be-0deabc109904" />
 
 **Figure 9.4** – Successful AKS deployment.
+<img width="2560" height="1229" alt="image" src="https://github.com/user-attachments/assets/e8cbedc5-a44c-4632-9782-60cec3cd0a15" />
 
 **Figure 9.5** – Deployment history across all environments.
+<img width="1090" height="1085" alt="image" src="https://github.com/user-attachments/assets/0e1725e2-d71c-4483-82a9-af1ea6b83d6b" />
 
 ---
 
@@ -1867,20 +1849,23 @@ Additional project documentation is available for readers who want a deeper unde
 
 ---
 
-## 10.2 Related Documentation
+# 📖 Related Documentation
 
-| Document                                                                     | Description                                                                                                                         |
-| ---------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
-| `../../README.md`                                                            | Project overview and quick start guide                                                                                              |
-| `../implementation/README.md`                                                | Complete project implementation documentation                                                                                       |
-| `azure-devops-pipeline.md`                                                   | Detailed explanation of the multi-stage Azure DevOps pipeline, including Build, Test, Security, Docker, ACR, AKS, and GitOps stages |
-| `../troubleshooting/03-pipeline-issues.md`                                   | Azure DevOps pipeline troubleshooting and common issues                                                                             |
-| `../cleanup/README.md`                                                       | Azure resource cleanup and cost management                                                                                          |
-| `../../argocd/README.md`                                                     | Argo CD installation and GitOps configuration                                                                                       |
-| `../../kubernetes/README.md`                                                 | Kubernetes manifests and deployment structure                                                                                       |
-| `../../docker/README.md`                                                     | Docker build process and containerization                                                                                           |
-| `../project/04-verification-and-validation-report/07-CI-CD-Verification.md`  | CI/CD verification report                                                                                                           |
-| `../project/04-verification-and-validation-report/12-GitOps-Verification.md` | GitOps verification report                                                                                                          |
+The following documents provide additional information about the FlavorForge Azure DevSecOps implementation.
+
+| Document | Description | Link |
+|----------|-------------|------|
+| `README.md` (Project Root) | Project overview, architecture, and quick start guide | https://github.com/bymalathi/flavorforge-azure-devsecops-capstone/blob/main/README.md |
+| `azure-devops-setup-guide.md` | Step-by-step guide to configure Azure DevOps and recreate the CI/CD environment | https://github.com/bymalathi/flavorforge-azure-devsecops-capstone/blob/main/docs/pipeline/azure-devops-setup-guide.md |
+| `README.md` (Implementation) | Complete project implementation documentation | https://github.com/bymalathi/flavorforge-azure-devsecops-capstone/blob/main/docs/implementation/README.md |
+| `03-pipeline-issues.md` | Azure DevOps pipeline troubleshooting and common issues | https://github.com/bymalathi/flavorforge-azure-devsecops-capstone/blob/main/docs/troubleshooting/03-pipeline-issues.md |
+| `README.md` (Kubernetes) | Kubernetes manifests, Kustomize overlays, and deployment structure | https://github.com/bymalathi/flavorforge-azure-devsecops-capstone/blob/main/kubernetes/README.md |
+| `README.md` (Argo CD) | Argo CD installation, GitOps configuration, and synchronization | https://github.com/bymalathi/flavorforge-azure-devsecops-capstone/blob/main/argocd/README.md |
+| `README.md` (Docker) | Docker containerization and image build process | https://github.com/bymalathi/flavorforge-azure-devsecops-capstone/blob/main/docker/README.md |
+| `07-CI-CD-Verification.md` | CI/CD verification and validation report | https://github.com/bymalathi/flavorforge-azure-devsecops-capstone/blob/main/docs/project/04-verification-and-validation-report/07-CI-CD-Verification.md |
+| `12-GitOps-Verification.md` | GitOps verification and deployment validation report | https://github.com/bymalathi/flavorforge-azure-devsecops-capstone/blob/main/docs/project/04-verification-and-validation-report/12-GitOps-Verification.md |
+
+For readers who want to recreate the Azure DevOps environment from scratch, begin with **`azure-devops-setup-guide.md`**. After completing the Azure DevOps configuration, continue with **`azure-devops-pipeline.md`** to understand how the multi-stage CI/CD pipeline builds, tests, secures, and deploys the FlavorForge application to Azure Kubernetes Service (AKS) using GitOps with Argo CD.
 
 ---
 
