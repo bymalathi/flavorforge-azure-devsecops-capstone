@@ -15,10 +15,10 @@ This separation makes it easier for developers to recreate the project while als
 
 # Documentation Guide
 
-| Document | Purpose | Intended Audience |
-|----------|---------|-------------------|
-| `azure-devops-setup.md` | Step-by-step Azure DevOps configuration guide | Developers recreating the CI/CD setup |
-| `azure-devops-pipeline.md` | Detailed explanation of the CI/CD pipeline and each stage | Reviewers, interviewers, students, and developers |
+| Document | Purpose | Link |
+|----------|---------|-------------------|------|
+| `azure-devops-setup-guide.md` | Step-by-step Azure DevOps configuration guide | https://github.com/bymalathi/flavorforge-azure-devsecops-capstone/blob/main/docs/pipeline/azure-devops-setup-guide.md |
+| `azure-devops-pipeline.md` | Detailed explanation of the CI/CD pipeline and each stage | https://github.com/bymalathi/flavorforge-azure-devsecops-capstone/blob/main/docs/pipeline/azure-devops-pipeline.md |
 
 ---
 
@@ -63,16 +63,17 @@ azure-devops-pipeline.md
 
 ---
 
+
 # Related Documentation
 
 Additional project documentation is available in the following locations.
 
-| Document | Description |
-|----------|-------------|
-| `../implementation/` | Complete project implementation guide |
-| `../verification/` | Verification and validation reports |
-| `../troubleshooting/` | Project troubleshooting guides |
-| `../../README.md` | Project overview and quick start guide |
+| Document | Description | Link |
+|----------|-------------|------|
+| `../implementation/README.md` | Complete project implementation guide | https://github.com/bymalathi/flavorforge-azure-devsecops-capstone/blob/main/docs/implementation/README.md |
+| `../project/` | Project documentation, verification, and validation reports | https://github.com/bymalathi/flavorforge-azure-devsecops-capstone/tree/main/docs/project |
+| `../troubleshooting/README.md` | Project troubleshooting guides | https://github.com/bymalathi/flavorforge-azure-devsecops-capstone/blob/main/docs/troubleshooting/README.md |
+| `../../README.md` | Project overview and quick start guide | https://github.com/bymalathi/flavorforge-azure-devsecops-capstone/blob/main/README.md |
 
 ---
 
