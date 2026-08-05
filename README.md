@@ -35,25 +35,8 @@ The real engineering challenge was to transform a basic full-stack application i
 
 This capstone demonstrates that complete transformation—from the first Git commit to a fully deployed application running on **Azure Kubernetes Service (AKS)**.
 
-```mermaid
-flowchart LR
-    A[Code]
-    B[Quality]
-    C[Security]
-    D[Container]
-    E[Cloud]
-    F[Kubernetes]
-    G[GitOps]
-    H[Monitoring]
+<img width="1690" height="153" alt="image" src="https://github.com/user-attachments/assets/4124c654-005b-41c4-9d2c-f3901d514e84" />
 
-    A --> B
-    B --> C
-    C --> D
-    D --> E
-    E --> F
-    F --> G
-    G --> H
-```
 
 The application is the product.
 
@@ -123,17 +106,8 @@ Traditional application deployments often rely on manual processes where buildin
 
 A typical manual deployment workflow looks like this:
 
-```mermaid
-flowchart TD
-    A[Developer Writes Code]
-    B[Manual Build]
-    C[Manual Deployment]
-    D[Application Running]
+<img width="406" height="507" alt="image" src="https://github.com/user-attachments/assets/e35b41ef-2a31-44a7-a94c-2b04ca6fa1f2" />
 
-    A --> B
-    B --> C
-    C --> D
-```
 
 Such deployments introduce several operational challenges:
 
@@ -148,31 +122,8 @@ FlavorForge addresses these challenges by implementing an enterprise-inspired De
 
 The modern delivery workflow is illustrated below:
 
-```mermaid
-flowchart TD
-    A[Developer]
-    B[GitHub Repository]
-    C[Azure DevOps Pipeline]
-    D[Code Quality Validation]
-    E[Security Scanning]
-    F[Docker Image Build]
-    G[Azure Container Registry]
-    H[Azure Kubernetes Service]
-    I[ArgoCD GitOps]
-    J[Running Application]
-    K[Azure Monitor]
+<img width="402" height="971" alt="image" src="https://github.com/user-attachments/assets/07320734-35d3-44f8-a1cc-e64cdb23cfff" />
 
-    A --> B
-    B --> C
-    C --> D
-    D --> E
-    E --> F
-    F --> G
-    G --> H
-    H --> I
-    I --> J
-    J --> K
-```
 
 Each stage introduces an additional layer of automation, quality assurance, security, operational consistency, and deployment reliability.
 
@@ -188,26 +139,8 @@ Each stage introduces an additional layer of automation, quality assurance, secu
 
 FlavorForge was developed incrementally, with each phase introducing a new layer of engineering capability. Rather than focusing only on application development, the project evolved into a complete DevSecOps platform that demonstrates modern software delivery practices.
 
-```mermaid
-flowchart TD
-    A["**Phase 1**<br/>Application Foundation<br/><br/>Developed a full-stack recipe-sharing application with React frontend and Node.js backend."]
+<img width="2227" height="906" alt="image" src="https://github.com/user-attachments/assets/c0b34578-e86d-45aa-ab44-246cbdd0d568" />
 
-    B["**Phase 2**<br/>Containerization<br/><br/>Packaged the application into Docker containers for consistent builds and deployments."]
-
-    C["**Phase 3**<br/>Cloud Deployment<br/><br/>Provisioned Azure infrastructure and deployed the application to Azure Kubernetes Service (AKS)."]
-
-    D["**Phase 4**<br/>DevSecOps Integration<br/><br/>Implemented Azure DevOps pipelines with automated build, validation, code quality analysis, and security scanning."]
-
-    E["**Phase 5**<br/>GitOps Adoption<br/><br/>Integrated ArgoCD to synchronize Kubernetes workloads directly from the Git repository."]
-
-    F["**Phase 6**<br/>Operational Excellence<br/><br/>Completed the platform with monitoring, troubleshooting guides, documentation, automation scripts, and demonstration assets."]
-
-    A --> B
-    B --> C
-    C --> D
-    D --> E
-    E --> F
-```
 
 This phased approach reflects how enterprise engineering teams gradually evolve an application into a secure, automated, cloud-native platform capable of supporting continuous delivery and operational excellence.
 
@@ -221,37 +154,8 @@ This layered design improves maintainability, scalability, security, and deploym
 
 The overall architecture is illustrated below.
 
-```mermaid
-flowchart TD
-    A[Developer]
-    B[GitHub Repository]
-    C[Azure DevOps Multi-Stage Pipeline]
+<img width="428" height="956" alt="image" src="https://github.com/user-attachments/assets/6ddb62fd-565c-48ea-a6ca-8811cbbf330e" />
 
-    D[SonarCloud<br/>Code Quality]
-    E[Trivy<br/>Security Scan]
-
-    F[Docker Image Build]
-    G[Azure Container Registry]
-    H[Azure Kubernetes Service]
-    I[ArgoCD GitOps]
-    J[Kubernetes Workloads]
-    K[Azure Monitor]
-
-    A -->|Code Commit| B
-    B --> C
-
-    C --> D
-    C --> E
-
-    D --> F
-    E --> F
-
-    F --> G
-    G --> H
-    H --> I
-    I --> J
-    J --> K
-```
 
 Each layer has a clearly defined responsibility within the software delivery lifecycle.
 
@@ -281,33 +185,8 @@ Instead of relying on manual deployment activities, each stage is automated to i
 
 The complete delivery workflow is shown below.
 
-```mermaid
-flowchart TD
-    A[Developer]
-    B[GitHub Repository]
-    C[Azure DevOps Pipeline]
-    D[Build & Validation]
-    E[SonarCloud Analysis]
-    F[Trivy Security Scan]
-    G[Docker Image Build]
-    H[Azure Container Registry]
-    I[ArgoCD GitOps]
-    J[Azure Kubernetes Service]
-    K[Running Application]
-    L[Azure Monitor]
+<img width="281" height="927" alt="image" src="https://github.com/user-attachments/assets/a4fc3199-a01f-445b-b0b8-93fed1e0b65c" />
 
-    A --> B
-    B --> C
-    C --> D
-    D --> E
-    E --> F
-    F --> G
-    G --> H
-    H --> I
-    I --> J
-    J --> K
-    K --> L
-```
 
 The delivery lifecycle consists of the following stages:
 
@@ -366,19 +245,8 @@ This separation improves maintainability, scalability, testing, and deployment w
 
 The overall application architecture is shown below.
 
-```mermaid
-flowchart TD
-    A[User]
-    B[React Frontend]
-    C[Node.js & Express API]
-    D[Recipe Services]
-    E[Application Data]
+<img width="407" height="615" alt="image" src="https://github.com/user-attachments/assets/ea2eaa16-d3c6-4b3b-a29a-32ca77c3f20e" />
 
-    A --> B
-    B --> C
-    C --> D
-    D --> E
-```
 
 ---
 
@@ -450,27 +318,8 @@ Rather than treating security and operations as separate activities, every stage
 
 The lifecycle implemented in this project is illustrated below.
 
-```mermaid
-flowchart TD
-    A(PLAN)
-    B(CODE)
-    C(BUILD)
-    D(TEST)
-    E(SECURE)
-    F(PACKAGE)
-    G(DEPLOY)
-    H(OPERATE)
-    I(MONITOR)
+<img width="190" height="907" alt="image" src="https://github.com/user-attachments/assets/74837dcb-6f6d-440f-ba3d-80014fbf46a0" />
 
-    A --> B
-    B --> C
-    C --> D
-    D --> E
-    E --> F
-    F --> G
-    G --> H
-    H --> I
-```
 
 Each phase has a clearly defined responsibility.
 
@@ -619,21 +468,8 @@ The GitHub Actions workflow automatically validates the presence of key project 
 
 ## 🔄 Documentation Automation Workflow
 
-```mermaid
-flowchart TD
-    A[Developer Pushes Code]
-    B[GitHub Actions Workflow]
-    C[Repository Structure Scanner]
-    D[Detect Project Components]
-    E[Generate Status Report]
-    F[Update README Automatically]
+<img width="505" height="815" alt="image" src="https://github.com/user-attachments/assets/b543c692-e4c6-4c98-9a4f-a7f8f921d0e7" />
 
-    A --> B
-    B --> C
-    C --> D
-    D --> E
-    E --> F
-```
 
 This automation helps keep the project documentation synchronized with the implementation, reducing manual maintenance while providing an accurate overview of the platform's current capabilities.
 
@@ -686,25 +522,8 @@ Each pipeline execution performs validation, quality analysis, security scanning
 
 The workflow is illustrated below.
 
-```mermaid
-flowchart TD
-    A(Developer Commit)
-    B(Azure DevOps Trigger)
-    C(Build & Validation)
-    D(Code Quality Analysis)
-    E(Security Scanning)
-    F(Docker Image Build)
-    G(Push Image to Azure Container Registry)
-    H(GitOps Deployment)
+<img width="355" height="1036" alt="image" src="https://github.com/user-attachments/assets/c2cb8cd8-ef06-47e4-afc4-407ba42958e4" />
 
-    A --> B
-    B --> C
-    C --> D
-    D --> E
-    E --> F
-    F --> G
-    G --> H
-```
 
 The automated pipeline provides:
 
@@ -808,22 +627,8 @@ The implementation follows containerization best practices, including multi-stag
 
 ### Container Architecture
 
-```mermaid
-flowchart TD
-    subgraph Frontend
-        A[React Application]
-        B[Nginx Container]
+<img width="1386" height="191" alt="image" src="https://github.com/user-attachments/assets/7d562211-e3cc-44a7-8336-bce09a4a8586" />
 
-        A --> B
-    end
-
-    subgraph Backend
-        C[Node.js Application]
-        D[Express API]
-
-        C --> D
-    end
-```
 
 ### Key Benefits
 
@@ -850,19 +655,8 @@ Azure Container Registry provides secure image storage, version management, and 
 
 ### Image Publishing Workflow
 
-```mermaid
-flowchart TD
-    A[Application Source]
-    B[Docker Build]
-    C[Container Validation]
-    D[Push to Azure Container Registry]
-    E[Container Images Available for Deployment]
+<img width="467" height="676" alt="image" src="https://github.com/user-attachments/assets/144f9e74-a0e8-4bc2-b419-b364f10493f7" />
 
-    A --> B
-    B --> C
-    C --> D
-    D --> E
-```
 
 ### Azure Container Registry Responsibilities
 
@@ -896,21 +690,8 @@ Azure DevOps is responsible for:
 - Building Docker images
 - Publishing images to Azure Container Registry
 
-```mermaid
-flowchart TD
-    A[Source Code]
-    B[Build]
-    C[Quality Analysis]
-    D[Security Scan]
-    E[Docker Image]
-    F[Azure Container Registry]
+<img width="432" height="755" alt="image" src="https://github.com/user-attachments/assets/205bb4eb-8f3a-4854-9445-74f974151fd5" />
 
-    A --> B
-    B --> C
-    C --> D
-    D --> E
-    E --> F
-```
 
 ---
 
@@ -918,15 +699,8 @@ flowchart TD
 
 ArgoCD continuously monitors the Git repository and synchronizes Kubernetes resources with the desired application state.
 
-```mermaid
-flowchart TD
-    A[Git Repository]
-    B[ArgoCD]
-    C[Azure Kubernetes Service]
+<img width="397" height="352" alt="image" src="https://github.com/user-attachments/assets/0c9e69b6-ff0e-477c-9d82-89c9e497b627" />
 
-    A --> B
-    B --> C
-```
 
 ### Benefits of This Architecture
 
@@ -952,31 +726,15 @@ Instead of deploying directly from the CI pipeline, Kubernetes continuously reco
 
 ## Traditional Deployment
 
-```mermaid
-flowchart TD
-    A[CI Pipeline]
-    B[kubectl apply]
-    C[Kubernetes Cluster]
+<img width="345" height="372" alt="image" src="https://github.com/user-attachments/assets/71fb101f-dc79-457c-bf19-0f0d456068af" />
 
-    A --> B
-    B --> C
-```
 
 ---
 
 ## GitOps Deployment
 
-```mermaid
-flowchart TD
-    A[Developer]
-    B[Git Repository]
-    C[ArgoCD]
-    D[Azure Kubernetes Service]
+<img width="393" height="487" alt="image" src="https://github.com/user-attachments/assets/cfb610d1-0982-4b2e-ad2c-142a58a954c3" />
 
-    A --> B
-    B --> C
-    C --> D
-```
 
 The GitOps approach provides:
 
@@ -1006,25 +764,8 @@ The security implementation consists of multiple complementary layers.
 | Operational Monitoring | Azure Monitor |
 | GitOps | ArgoCD Desired State Management |
 
-```mermaid
-flowchart TD
-    A[Source Code]
-    B[SonarCloud]
-    C[Docker Build]
-    D[Trivy Scan]
-    E[Azure Container Registry]
-    F[Azure Kubernetes Service]
-    G[ArgoCD]
-    H[Azure Monitor]
+<img width="482" height="1021" alt="image" src="https://github.com/user-attachments/assets/055ab686-26a5-4c56-aaf5-2360b4f75287" />
 
-    A --> B
-    B --> C
-    C --> D
-    D --> E
-    E --> G
-    G --> F
-    F --> H
-```
 
 By validating application quality and container security before deployment, FlavorForge follows a proactive DevSecOps approach that minimizes deployment risk and improves operational reliability.
 
@@ -1040,19 +781,8 @@ By validating application quality and container security before deployment, Flav
 
 FlavorForge evolved through multiple implementation phases, with each phase introducing additional engineering capabilities.
 
-```mermaid
-flowchart TD
-    A["Level 1<br/>Application Development"]
-    B["Level 2<br/>Containerization"]
-    C["Level 3<br/>Automated CI/CD"]
-    D["Level 4<br/>Integrated DevSecOps"]
-    E["Level 5<br/>GitOps & Cloud Operations"]
+<img width="410" height="763" alt="image" src="https://github.com/user-attachments/assets/eb2fb573-0a37-4e2b-997e-772622e51828" />
 
-    A --> B
-    B --> C
-    C --> D
-    D --> E
-```
 
 The project demonstrates the progression from a standalone application to a production-inspired cloud-native DevSecOps platform.
 
@@ -1079,18 +809,8 @@ The primary Azure services used in this project are:
 | Azure Kubernetes Service | Hosts Kubernetes workloads |
 | Azure Monitor | Collects logs, metrics, and operational insights |
 
-```mermaid
-flowchart TD
-    A[Azure Resource Group]
-    B[Azure Container Registry]
-    C[Azure Kubernetes Service]
-    D[Azure Monitor]
+<img width="465" height="487" alt="image" src="https://github.com/user-attachments/assets/93e23153-cfe5-489a-b507-d49e611c6e15" />
 
-    A --> B
-    A --> C
-    C --> D
-    B --> C
-```
 
 #### Evidence
 
@@ -1131,24 +851,8 @@ This approach separates common Kubernetes manifests from environment-specific cu
 
 The repository organization is illustrated below.
 
-```mermaid
-flowchart TD
-    A["📁 kubernetes"]
+<img width="1923" height="347" alt="image" src="https://github.com/user-attachments/assets/dbe015c2-543d-4bf0-8dfb-5f1e06f99656" />
 
-    A --> B["📁 base"]
-    A --> C["📁 overlays"]
-
-    B --> B1["📁 frontend"]
-    B --> B2["📁 backend"]
-    B --> B3["📁 services"]
-    B --> B4["📁 config"]
-    B --> B5["📁 autoscaling"]
-    B --> B6["📁 ingress"]
-
-    C --> C1["📁 dev"]
-    C --> C2["📁 qa"]
-    C --> C3["📁 prod"]
-```
 
 This structure promotes configuration reuse while allowing each deployment environment to maintain its own customized settings.
 
@@ -1174,15 +878,8 @@ Responsibilities include:
 - Performing rolling updates
 - Recovering failed Pods automatically
 
-```mermaid
-flowchart TD
-    A[Deployment]
-    B[ReplicaSet]
-    C[Pods]
+<img width="258" height="376" alt="image" src="https://github.com/user-attachments/assets/a8b284e0-9a75-49a6-ba99-3b3f096ab7bc" />
 
-    A --> B
-    B --> C
-```
 
 #### Evidence
 
@@ -1198,19 +895,8 @@ Kubernetes Services provide stable networking between frontend and backend workl
 
 They enable service discovery while abstracting Pod IP addresses.
 
-```mermaid
-flowchart TD
-    A[Client]
-    B[Frontend Service]
-    C[Frontend Pods]
-    D[Backend Service]
-    E[Backend Pods]
+<img width="341" height="630" alt="image" src="https://github.com/user-attachments/assets/893dfe1e-9b71-4f61-8fe1-f63b8cc76e73" />
 
-    A --> B
-    B --> C
-    C --> D
-    D --> E
-```
 
 #### Evidence
 
@@ -1267,16 +953,8 @@ Benefits include:
 - Better resource utilization
 - Enhanced fault tolerance
 
-```mermaid
-flowchart TD
-    A[Low Traffic]
-    B[2 Pods]
-    C[High Traffic]
-    D[5 Pods]
+<img width="482" height="227" alt="image" src="https://github.com/user-attachments/assets/e213a194-de05-4c98-9a95-6dfe639c49b7" />
 
-    A --> B
-    C --> D
-```
 
 #### Evidence
 
@@ -1294,21 +972,8 @@ Instead of exposing every service individually, Ingress centralizes traffic mana
 
 The request flow is illustrated below.
 
-```mermaid
-flowchart TD
-    A[User]
-    B[Ingress Controller]
-    C[Frontend Service]
-    D[Frontend Pods]
-    E[Backend Service]
-    F[Backend Pods]
+<img width="343" height="777" alt="image" src="https://github.com/user-attachments/assets/acb9af6b-dca3-40c7-9a63-50cc7dd2d339" />
 
-    A --> B
-    B --> C
-    C --> D
-    D -->|HTTP/API Request| E
-    E --> F
-```
 
 Ingress provides the following benefits:
 
@@ -1332,17 +997,8 @@ FlavorForge uses **Kustomize** to manage multiple deployment environments while 
 
 Common resources are stored in the **base** directory, while environment-specific customizations are maintained as overlays.
 
-```mermaid
-flowchart TD
-    A[Base Configuration]
-    B[Environment Overlay]
-    C{Kustomize Merge}
-    D[Final Kubernetes Manifest]
+<img width="647" height="528" alt="image" src="https://github.com/user-attachments/assets/67199aad-4ad0-47eb-b64a-88bcc322c7e3" />
 
-    A --> C
-    B --> C
-    C --> D
-```
 
 Environment organization:
 
@@ -1377,31 +1033,15 @@ Instead of applying manifests directly from the CI pipeline, ArgoCD continuously
 
 ## Traditional Deployment
 
-```mermaid
-flowchart TD
-    A[CI Pipeline]
-    B[kubectl apply]
-    C[Kubernetes Cluster]
+<img width="352" height="356" alt="image" src="https://github.com/user-attachments/assets/18b2af9e-c863-40b6-b304-e66c572e8f3d" />
 
-    A --> B
-    B --> C
-```
 
 ---
 
 ## GitOps Deployment
 
-```mermaid
-flowchart TD
-    A[Developer]
-    B[Git Repository]
-    C[ArgoCD]
-    D[Azure Kubernetes Service]
+<img width="457" height="497" alt="image" src="https://github.com/user-attachments/assets/3acaa746-9581-46da-8e5b-d45ed2ea8c3b" />
 
-    A --> B
-    B --> C
-    C --> D
-```
 
 The GitOps approach provides:
 
@@ -1424,27 +1064,8 @@ The GitOps approach provides:
 
 The deployment workflow implemented in FlavorForge follows a fully automated GitOps model.
 
-```mermaid
-flowchart TD
-    A["Developer Commit"]
-    B["Azure DevOps Pipeline"]
-    C["Docker Image Build"]
-    D["Push Image to Azure Container Registry"]
-    E["Update Kubernetes Manifests"]
-    F["Git Repository"]
-    G["ArgoCD Synchronization"]
-    H["Azure Kubernetes Service"]
-    I["Running Application"]
+<img width="427" height="1077" alt="image" src="https://github.com/user-attachments/assets/1c4cd177-946b-4e78-bf31-08f0a41c7dd4" />
 
-    A --> B
-    B --> C
-    C --> D
-    D --> E
-    E --> F
-    F --> G
-    G --> H
-    H --> I
-```
 
 This workflow separates application delivery from deployment management while ensuring every Kubernetes change remains version-controlled and auditable.
 
@@ -1458,25 +1079,8 @@ FlavorForge incorporates monitoring and operational visibility to help engineers
 
 The monitoring strategy combines Kubernetes health information with Azure platform monitoring.
 
-```mermaid
-flowchart TD
-    A[Azure Kubernetes Service]
-    B[Pods]
-    C[Services]
-    D[Ingress]
-    E[Azure Monitor]
-    F[Operations Dashboard]
+<img width="635" height="508" alt="image" src="https://github.com/user-attachments/assets/24a4ceb2-981b-4abc-983b-20cf5bbc8814" />
 
-    A --> B
-    A --> C
-    A --> D
-
-    B --> E
-    C --> E
-    D --> E
-
-    E --> F
-```
 
 Operational monitoring provides visibility into:
 
@@ -1918,8 +1522,8 @@ Senior Software Test Engineer transitioning into DevSecOps and Cloud Engineering
 
 ### Connect
 
-- GitHub: [shettymalathib](https://github.com/shettymalathib)
-- LinkedIn: [Malathi Shetty](https://www.linkedin.com/in/shettymalathib/)
+- GitHub: [bymalathi](https://github.com/bymalathi)
+- LinkedIn: [Malathi Shetty](https://www.linkedin.com/in/bymalathi/)
 
 ---
 
