@@ -177,3 +177,25 @@ This project demonstrates modern cloud-native software engineering practices, in
 FlavorForge is an end-to-end Azure DevSecOps capstone project demonstrating how a modern cloud-native application can be designed, containerized, secured, continuously integrated, deployed to Kubernetes, and managed using GitOps principles.
 
 The documentation captures not only the implementation details but also the architectural decisions, operational procedures, verification activities, and troubleshooting guidance required to support a production-oriented software delivery lifecycle.
+
+---
+
+# 📚 FlavorForge Documentation
+
+Welcome to the FlavorForge documentation.
+
+## Project Documentation
+
+| Document | Description |
+|----------|-------------|
+| [Implementation Guide](implementation/README.md) | End-to-end implementation |
+| [Pipeline Documentation](pipeline/README.md) | Azure DevOps CI/CD |
+| [Architecture](architecture/) | System architecture |
+| [API Documentation](api/README.md) | Backend APIs |
+| [Troubleshooting](troubleshooting/README.md) | Common issues |
+| [Cleanup Guide](cleanup/README.md) | Azure cleanup |
+| [Verification Reports](project/04-verification-and-validation-report/) | Project verification |
+| [Presentation Guide](presentation/) | Demo preparation and presentation |
+| [Week 4 Submission](week-4/) | Internship deliverables |
+| [ADR](adr/) | Architecture Decision Records |
+| [Build Journey](BUILD-JOURNEY/BUILD-JOURNEY.md) | Complete build log |

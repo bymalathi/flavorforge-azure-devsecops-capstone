@@ -182,13 +182,25 @@ The following documents provide detailed guidance for specific problem areas.
 
 | Document | Description |
 |----------|-------------|
-| 01-application-issues.md | Application and API issues |
-| 02-docker-issues.md | Docker build and container issues |
-| 03-pipeline-issues.md | Azure DevOps pipeline failures |
-| 04-security-quality-issues.md | SonarCloud and Trivy findings |
-| 05-kubernetes-issues.md | AKS and Kubernetes troubleshooting |
-| 06-argocd-gitops-issues.md | GitOps synchronization issues |
-| 07-azure-cloud-issues.md | Azure infrastructure problems |
+| [Application Issues](01-application-issues.md) | Application and API issues |
+| [Docker Issues](02-docker-issues.md) | Docker build and container issues |
+| [Pipeline Issues](03-pipeline-issues.md) | Azure DevOps pipeline failures |
+| [Security & Quality Issues](04-security-quality-issues.md) | SonarCloud and Trivy findings |
+| [Kubernetes Issues](05-kubernetes-issues.md) | AKS and Kubernetes troubleshooting |
+| [Argo CD & GitOps Issues](06-argocd-gitops-issues.md) | GitOps synchronization issues |
+| [Azure Cloud Issues](07-azure-cloud-issues.md) | Azure infrastructure problems |
+
+---
+
+
+## Related Documentation
+
+| Document | Description |
+|----------|-------------|
+| [Implementation Guide](../implementation/README.md) | Complete implementation guide |
+| [Pipeline Documentation](../pipeline/README.md) | Azure DevOps CI/CD |
+| [Cleanup Guide](../cleanup/README.md) | Resource cleanup and cost management |
+| [Project Documentation](../README.md) | Documentation home |
 
 ---
 

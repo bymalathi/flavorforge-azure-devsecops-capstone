@@ -857,13 +857,18 @@ This Azure DevOps implementation demonstrates practical experience with:
 
 The following documents provide additional information about the FlavorForge Azure DevSecOps implementation.
 
-| Document | Description | Link |
-|----------|-------------|------|
-| `azure-devops-setup-guide.md` | Step-by-step guide to configure Azure DevOps | https://github.com/bymalathi/flavorforge-azure-devsecops-capstone/blob/main/docs/pipeline/azure-devops-setup-guide.md |
-| `README.md` (Implementation) | Complete implementation documentation | https://github.com/bymalathi/flavorforge-azure-devsecops-capstone/blob/main/docs/implementation/README.md |
-| `Project Documentation` | Project overview, objectives, and verification reports | https://github.com/bymalathi/flavorforge-azure-devsecops-capstone/tree/main/docs/project |
-| `README.md` (Troubleshooting) | Troubleshooting guides and common issues | https://github.com/bymalathi/flavorforge-azure-devsecops-capstone/blob/main/docs/troubleshooting/README.md |
-| `README.md` (Project Root) | Project overview, architecture, and quick start guide | https://github.com/bymalathi/flavorforge-azure-devsecops-capstone/blob/main/README.md |
+## Related Documentation
+
+| Document | Description |
+|----------|-------------|
+| [Azure DevOps Setup Guide](azure-devops-setup-guide.md) | Step-by-step Azure DevOps configuration |
+| [Implementation Guide](../implementation/README.md) | Complete implementation documentation |
+| [Project Documentation](../project/) | Project overview and verification reports |
+| [Pipeline Troubleshooting](../troubleshooting/03-pipeline-issues.md) | Common Azure DevOps pipeline issues |
+| [Troubleshooting Index](../troubleshooting/README.md) | Complete troubleshooting guide |
+| [Cleanup Guide](../cleanup/README.md) | Azure cleanup and cost management |
+| [CI/CD Verification Report](../project/04-verification-and-validation-report/07-CI-CD-Verification.md) | CI/CD verification results |
+| [Project README](../../README.md) | Project overview and quick start guide |
 
 For readers who want to recreate the Azure DevOps environment from scratch, begin with **`azure-devops-setup-guide.md`**. Once the Azure DevOps environment has been configured, return to this document to understand the complete CI/CD pipeline architecture and execution flow.
 

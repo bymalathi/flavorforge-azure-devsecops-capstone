@@ -258,16 +258,16 @@ By following this implementation guide from start to finish, a reader should be 
 
 ---
 
-# 📖 Related Documentation
+## Related Documentation
 
-* `README.md` — Project overview
-* `docs/architecture/` — Architecture diagrams
-* `docs/diagrams/` — Workflow diagrams
-* `docs/screenshots/` — Project screenshots
-* `docs/troubleshooting/` — Common issues and resolutions
-* `docs/presentation/` — Demo Day presentation
-* `backend/README.md` — Backend documentation
-* `frontend/README.md` — Frontend documentation
-* `docker/README.md` — Docker documentation
-* `kubernetes/README.md` — Kubernetes documentation
-
+| Document | Description |
+|----------|-------------|
+| [Project README](../../README.md) | Project overview, architecture, and quick start guide |
+| [Architecture Documentation](../architecture/) | System and cloud architecture documentation |
+| [Architecture Diagrams](../diagrams/) | Architecture and workflow diagrams |
+| [Troubleshooting Guide](../troubleshooting/README.md) | Common issues and resolutions |
+| [Presentation Guide](../presentation/) | Demo day presentation materials |
+| [Backend Documentation](../../backend/README.md) | Backend implementation details |
+| [Frontend Documentation](../../frontend/README.md) | Frontend implementation details |
+| [Docker Documentation](../../docker/README.md) | Docker build and containerization |
+| [Kubernetes Documentation](../../kubernetes/README.md) | Kubernetes deployment and manifests |

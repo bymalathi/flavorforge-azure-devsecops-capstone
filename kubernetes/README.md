@@ -615,13 +615,16 @@ This Kubernetes implementation demonstrates practical experience with:
 
 ---
 
-# 🔗 Related Documentation
+## Related Documentation
 
-- `../frontend/README.md` – React frontend
-- `../backend/README.md` – Express backend
-- `../docker/README.md` – Docker containerization
-- `../argocd/README.md` – GitOps deployment with Argo CD
-- `../README.md` – Project overview
+| Document | Description |
+|----------|-------------|
+| [Project README](../README.md) | Project overview |
+| [Pipeline Documentation](../docs/pipeline/README.md) | Azure DevOps CI/CD pipeline |
+| [Argo CD Documentation](../argocd/README.md) | GitOps deployment |
+| [Implementation Guide](../docs/implementation/README.md) | Complete implementation guide |
+| [Verification Reports](../docs/project/04-verification-and-validation-report/) | Project verification documents |
+| [Troubleshooting Guide](../docs/troubleshooting/README.md) | Kubernetes and deployment troubleshooting |
 
 ---
 

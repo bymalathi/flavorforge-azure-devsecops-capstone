@@ -1498,6 +1498,31 @@ The project demonstrates how modern software engineering combines development, s
 
 ---
 
+# 📚 Documentation
+
+The complete project documentation is organized by topic for easier navigation.
+
+| Documentation | Description |
+|---------------|-------------|
+| 📖 [Documentation Home](docs/README.md) | Central documentation index |
+| 🏗️ [Implementation Guide](docs/implementation/README.md) | Complete implementation walkthrough |
+| 🚀 [Azure DevOps Pipeline](docs/pipeline/README.md) | Azure DevOps setup and CI/CD pipeline documentation |
+| ☸️ [Kubernetes](kubernetes/README.md) | Kubernetes manifests, Kustomize overlays, and deployment |
+| 🔄 [Argo CD GitOps](argocd/README.md) | GitOps deployment and synchronization |
+| 🐳 [Docker](docker/README.md) | Docker build and containerization |
+| 🌐 [Backend](backend/README.md) | Backend application documentation |
+| 🎨 [Frontend](frontend/README.md) | Frontend application documentation |
+| 🛠️ [Scripts](scripts/README.md) | Automation and helper scripts |
+| 📊 [Verification Reports](docs/project/04-verification-and-validation-report/) | Project verification documents |
+| 🔍 [Troubleshooting](docs/troubleshooting/README.md) | Common issues and solutions |
+| 🧹 [Cleanup Guide](docs/cleanup/README.md) | Azure cleanup and cost management |
+| 📖 [API Documentation](docs/api/README.md) | Backend API reference |
+| 🏛️ [Architecture](docs/architecture/) | Architecture documentation |
+| 📑 [Architecture Decisions (ADR)](docs/adr/) | Design decision records |
+| 📝 [Build Journey](docs/BUILD-JOURNEY/BUILD-JOURNEY.md) | Complete project development journey |
+
+---
+
 # 📄 License
 
 This project is licensed under the **MIT License**.

@@ -491,15 +491,15 @@ This project demonstrates practical experience with:
 
 ---
 
-# 📖 Related Documentation
+## Related Documentation
 
-For additional information, refer to:
-
-- `../README.md` – Project overview
-- `../backend/README.md` – Backend service documentation
-- `../docker/README.md` – Docker setup
-- `../kubernetes/README.md` – Kubernetes deployment
-- `../argocd/README.md` – GitOps deployment
+| Document | Description |
+|----------|-------------|
+| [Project README](../README.md) | Project overview |
+| [Implementation Guide](../docs/implementation/README.md) | Frontend implementation |
+| [Pipeline Documentation](../docs/pipeline/README.md) | Azure DevOps pipeline |
+| [Docker Documentation](../docker/README.md) | Docker containerization |
+| [Troubleshooting Guide](../docs/troubleshooting/README.md) | Frontend troubleshooting |
 
 ---
 

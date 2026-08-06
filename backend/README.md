@@ -497,6 +497,19 @@ Pipeline stages include:
 
 ---
 
+## Related Documentation
+
+| Document | Description |
+|----------|-------------|
+| [Project README](../README.md) | Project overview |
+| [Implementation Guide](../docs/implementation/README.md) | Backend implementation |
+| [API Documentation](../docs/api/backend-api.md) | Backend API reference |
+| [Pipeline Documentation](../docs/pipeline/README.md) | Azure DevOps pipeline |
+| [Troubleshooting Guide](../docs/troubleshooting/README.md) | Backend troubleshooting |
+
+
+---
+
 # 📚 Learning Outcomes
 
 This backend demonstrates practical experience with:
