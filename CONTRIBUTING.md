@@ -1,25 +1,24 @@
-# Contributing
+# Contributing to FlavorForge
 
-Thank you for your interest in FlavorForge.
+Thank you for your interest in contributing to FlavorForge.
 
-## Getting Started
+This document provides guidelines for contributing code, documentation, improvements, and fixes while maintaining project quality and consistency.
 
-1. Fork the repository
-2. Create a feature branch
-3. Commit your changes
-4. Push your branch
-5. Create a Pull Request
+---
 
-## Coding Standards
+# Getting Started
 
-- Follow project coding conventions.
-- Write meaningful commit messages.
-- Update documentation when necessary.
-- Test changes before submitting.
+Before contributing, ensure you have the required tools installed:
 
-## Reporting Issues
+- Git
+- Node.js
+- npm
+- Docker
+- Kubernetes tools (for deployment-related changes)
 
-Please create an issue describing:
-- Problem
-- Expected behavior
-- Steps to reproduce
+Clone the repository:
+
+```bash
+git clone https://github.com/shettymalathib/flavorforge-azure-devsecops-capstone.git
+
+cd flavorforge-azure-devsecops-capstone
