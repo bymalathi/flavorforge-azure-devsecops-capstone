@@ -2,44 +2,47 @@
 
 ## Overview
 
-FlavorForge follows DevSecOps security practices throughout the software delivery lifecycle.
+FlavorForge follows DevSecOps principles by integrating security practices throughout the software delivery lifecycle.
 
-Security is integrated into source control, CI/CD pipelines, container management, Kubernetes deployment, and cloud operations.
+Security validation is performed during development, CI/CD execution, container packaging, deployment, and runtime operations.
 
 ---
 
 # Supported Versions
 
-This repository is maintained for learning and demonstration purposes.
+This repository is maintained as a learning and demonstration project.
 
-The latest main branch represents the supported version.
+The latest main branch represents the current supported implementation.
+
+| Version | Supported |
+|---------|-----------|
+| Main Branch | ✅ |
+| Older commits | ❌ |
 
 ---
 
 # Reporting a Vulnerability
 
-If you discover a security vulnerability:
+If you discover a security issue within this project:
 
-- Do not create a public issue.
-- Report it privately to the repository owner.
-
-Please include:
-
-- Description of the issue
-- Steps to reproduce
-- Potential impact
-- Suggested remediation
+1. Do not expose sensitive details publicly.
+2. Report the issue privately through repository contact channels.
+3. Provide details about:
+   - Vulnerability description
+   - Steps to reproduce
+   - Potential impact
+   - Suggested remediation (if available)
 
 ---
 
 # Security Practices Implemented
 
-FlavorForge demonstrates the following security controls:
+FlavorForge demonstrates the following security practices:
 
 ## Source Code Security
 
 - SonarCloud static code analysis
-- Code quality gate validation
+- Code quality validation
 - Security hotspot detection
 
 ## Container Security
@@ -54,30 +57,34 @@ FlavorForge demonstrates the following security controls:
 - Kubernetes Secrets for sensitive configuration
 - ConfigMaps for non-sensitive configuration
 - Namespace-based resource isolation
-- Secure workload deployment practices
+- Declarative infrastructure management
 
 ## Cloud Security
 
-- Azure managed identity integration
+- Azure Managed Identity integration
 - Azure Container Registry private image storage
-- AKS-based workload isolation
+- Azure Kubernetes Service security controls
 
 ## CI/CD Security
 
-- Automated security validation
+- Automated security scanning
 - Controlled deployment workflow
-- GitOps-based deployment using ArgoCD
+- Pipeline-based validation before release
+
+## GitOps Security
+
+- ArgoCD declarative deployment model
+- Git repository as single source of truth
+- Kubernetes desired-state synchronization
 
 ---
 
 # Secret Management
 
-Sensitive values should never be committed directly into Git repositories.
+Sensitive information should never be committed directly into Git.
 
-For production environments, secrets should be managed using:
+Example:
 
-- Azure Key Vault
-- Kubernetes External Secrets
-- Azure Workload Identity
-
-The repository contains example placeholders only for demonstration purposes.
+```yaml
+JWT_SECRET: "replace-with-your-secret"
+DATABASE_PASSWORD: "replace-with-your-db-password"
