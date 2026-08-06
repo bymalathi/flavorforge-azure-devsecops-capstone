@@ -3,4 +3,4 @@ kind: Kustomization
 
 resources:
   - backend-configmap.yaml
-  - secret.yaml
+  - secret-template.yaml

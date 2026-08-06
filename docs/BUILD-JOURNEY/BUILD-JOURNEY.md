@@ -5272,7 +5272,7 @@ kubectl get configmap \
 File:
 
 ```text
-kubernetes/base/config/secret.yaml
+kubernetes/base/config/secret-template.yaml
 ```
 
 Purpose:
@@ -5283,7 +5283,7 @@ Apply:
 
 ```bash
 kubectl apply \
--f kubernetes/base/config/secret.yaml
+-f kubernetes/base/config/secret-template.yaml
 ```
 
 Verify:

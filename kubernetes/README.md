@@ -36,7 +36,7 @@ kubernetes/
 │   │
 │   ├── config/
 │   │   ├── backend-configmap.yaml
-│   │   ├── secret.yaml
+│   │   ├── secret-template.yaml
 │   │   └── kustomization.yaml
 │   │
 │   ├── frontend/
@@ -255,7 +255,7 @@ Examples include:
 Resource:
 
 ```text
-base/config/secret.yaml
+base/config/secret-template.yaml
 ```
 
 Verify:

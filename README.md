@@ -926,7 +926,9 @@ Examples include:
 
 ## Secrets
 
-Sensitive values are stored securely using Kubernetes Secrets instead of embedding them inside application code or container images.
+Sensitive values are managed using Kubernetes Secrets instead of embedding them inside application code or container images.
+
+For this demonstration project, only placeholder values are stored in Git. Production environments should integrate external secret management solutions such as Azure Key Vault.
 
 Examples include:
 
@@ -1520,6 +1522,14 @@ The complete project documentation is organized by topic for easier navigation.
 | 🏛️ [Architecture](docs/architecture/) | Architecture documentation |
 | 📑 [Architecture Decisions (ADR)](docs/adr/) | Design decision records |
 | 📝 [Build Journey](docs/BUILD-JOURNEY/BUILD-JOURNEY.md) | Complete project development journey |
+
+---
+
+# 🔐 Security
+
+Security practices, vulnerability reporting, and secret management guidelines are documented in:
+
+[SECURITY.md](SECURITY.md)
 
 ---
 
