@@ -1,45 +1,108 @@
+# Contributor Covenant Code of Conduct
+
+## Our Pledge
+
+We pledge to make participation in the FlavorForge project a welcoming, respectful, and inclusive experience for everyone.
+
+We are committed to creating a professional environment where contributors can collaborate, share knowledge, provide feedback, and improve the project together.
+
+---
+
+## Expected Behavior
+
+Contributors are expected to:
+
+- Communicate respectfully and professionally
+- Provide constructive feedback
+- Respect different perspectives and technical approaches
+- Follow project guidelines and engineering best practices
+- Maintain professionalism in discussions, issues, and pull requests
+
+---
+
+## Unacceptable Behavior
+
+Examples of unacceptable behavior include:
+
+- Harassment or discrimination
+- Personal attacks or offensive language
+- Sharing private information without permission
+- Deliberate disruption of project activities
+- Any behavior that creates an unsafe environment
+
+---
+
 ## Reporting an Issue
 
-If you experience or witness behavior that violates this Code of Conduct, please report it by opening a confidential issue in this repository or by contacting the repository maintainer directly.
+If you experience or witness behavior that violates this Code of Conduct, please report it through a private communication channel with the repository maintainer.
 
-All reports will be reviewed promptly and fairly. Every effort will be made to respect the privacy and confidentiality of the reporter.
+All reports will be reviewed promptly and fairly. Every effort will be made to respect the privacy and confidentiality of everyone involved.
 
-Instances of abusive, harassing, or otherwise unacceptable behavior will be investigated and addressed appropriately. Retaliation against anyone who reports a concern in good faith will not be tolerated.
+Instances of abusive, harassing, or otherwise unacceptable behavior will be investigated and addressed appropriately.
 
-Community Moderators take reports of violations seriously and will make every effort to respond in a timely manner. They will investigate all reports of code of conduct violations while respecting the privacy of everyone involved.
+Retaliation against anyone reporting a concern in good faith will not be tolerated.
+
+---
 
 ## Addressing and Repairing Harm
 
-If an investigation by the Community Moderators finds that this Code of Conduct has been violated, the following enforcement ladder may be used to determine the appropriate response based on the severity and impact of the incident.
+If a violation is confirmed, project maintainers may apply appropriate actions based on severity and impact.
 
 ### 1. Warning
 
-**Event:** A first-time or minor violation.
+**Event:**  
+First-time or minor violation.
 
-**Consequence:** A private written warning from the Community Moderators.
+**Consequence:**  
+A private written warning.
 
-**Repair:** The individual may be asked to acknowledge the issue, apologize if appropriate, and commit to following this Code of Conduct.
+**Repair:**  
+The individual may be asked to acknowledge the issue and commit to following this Code of Conduct.
+
+---
 
 ### 2. Temporary Restrictions
 
-**Event:** Repeated violations or a more serious first violation.
+**Event:**  
+Repeated violations or serious first violations.
 
-**Consequence:** Temporary restrictions on participation in community discussions, issues, pull requests, or other project activities.
+**Consequence:**  
+Temporary restriction from project discussions, issues, pull requests, or other activities.
 
-**Repair:** The individual should demonstrate understanding of the issue and comply with any conditions before normal participation resumes.
+---
 
 ### 3. Temporary Suspension
 
-**Event:** Continued violations after previous enforcement actions or a serious breach of the Code of Conduct.
+**Event:**  
+Continued violations or serious breaches.
 
-**Consequence:** Temporary suspension from participating in the project and its community spaces.
+**Consequence:**  
+Temporary suspension from project participation.
 
-**Repair:** Reinstatement may occur after the suspension period if the individual agrees to follow this Code of Conduct.
+---
 
 ### 4. Permanent Ban
 
-**Event:** Repeated or severe violations that jeopardize the safety or integrity of the community.
+**Event:**  
+Repeated or severe violations affecting community safety or project integrity.
 
-**Consequence:** Permanent removal from participation in all project spaces.
+**Consequence:**  
+Permanent removal from project participation.
 
-This enforcement process serves as a guideline. Project maintainers may use their discretion to take appropriate action while prioritizing the safety, well-being, and integrity of the community.
+---
+
+## Scope
+
+This Code of Conduct applies to all project spaces, including:
+
+- GitHub repository
+- Issues
+- Pull requests
+- Documentation contributions
+- Project discussions
+
+---
+
+## Acknowledgement
+
+By contributing to FlavorForge, contributors agree to follow this Code of Conduct and support a respectful, professional, and collaborative engineering environment.
