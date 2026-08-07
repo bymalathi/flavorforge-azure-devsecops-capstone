@@ -48,7 +48,6 @@ The format is inspired by **Keep a Changelog**, and this project follows semanti
 ## Future
 
 Planned improvements include:
-
 - Blue-Green deployments
 - Canary releases
 - Azure Key Vault integration
