@@ -1500,6 +1500,65 @@ The project demonstrates how modern software engineering combines development, s
 
 ---
 
+# 📚 Documentation Index
+
+The FlavorForge documentation is organized to support the complete journey from local development to cloud deployment, GitOps operations, verification, troubleshooting, and project demonstration.
+
+## 🚀 Getting Started
+
+| #  | Documentation                                         | Purpose                                                    |
+| -- | ----------------------------------------------------- | ---------------------------------------------------------- |
+| 01 | [Documentation Home](docs/README.md)                  | Central index for all project documentation                |
+| 02 | [Implementation Guide](docs/implementation/README.md) | Complete implementation walkthrough                        |
+| 03 | [Build Journey](docs/BUILD-JOURNEY/BUILD-JOURNEY.md)  | Development journey from application to DevSecOps platform |
+
+## 🏗️ Application & Containerization
+
+| #  | Documentation                  | Purpose                                         |
+| -- | ------------------------------ | ----------------------------------------------- |
+| 04 | [Frontend](frontend/README.md) | React frontend architecture and development     |
+| 05 | [Backend](backend/README.md)   | Node.js and Express API documentation           |
+| 06 | [Docker](docker/README.md)     | Dockerfiles, image builds, and containerization |
+
+## ☁️ Azure & CI/CD
+
+| #  | Documentation                                    | Purpose                                             |
+| -- | ------------------------------------------------ | --------------------------------------------------- |
+| 07 | [Azure DevOps Pipeline](docs/pipeline/README.md) | CI/CD pipeline stages, configuration, and execution |
+| 08 | [Kubernetes](kubernetes/README.md)               | Kubernetes manifests and Kustomize environments     |
+| 09 | [Argo CD GitOps](argocd/README.md)               | GitOps deployment and synchronization               |
+| 10 | [Azure Architecture](docs/architecture/)         | Cloud and application architecture documentation    |
+
+## 🔍 Verification & Operations
+
+| #  | Documentation                                                               | Purpose                                             |
+| -- | --------------------------------------------------------------------------- | --------------------------------------------------- |
+| 11 | [Verification Reports](docs/project/04-verification-and-validation-report/) | Deployment and implementation verification evidence |
+| 12 | [API Documentation](docs/api/README.md)                                     | Backend API reference and health endpoints          |
+| 13 | [Troubleshooting Guide](docs/troubleshooting/README.md)                     | Common problems and resolution procedures           |
+| 14 | [Cleanup & Cost Management](docs/cleanup/README.md)                         | Azure resource cleanup and cost-control guidance    |
+
+## 🏛️ Engineering Governance
+
+| #  | Documentation                              | Purpose                                               |
+| -- | ------------------------------------------ | ----------------------------------------------------- |
+| 15 | [Architecture Decision Records](docs/adr/) | Important architectural decisions and their rationale |
+| 16 | [Security Policy](SECURITY.md)             | Security practices and vulnerability reporting        |
+| 17 | [License](LICENSE)                         | MIT License                                           |
+
+## 🎬 Demo & Presentation
+
+| #  | Documentation        | Purpose                                               |
+| -- | -------------------- | ----------------------------------------------------- |
+| 18 | Demo Day Guide       | End-to-end project demonstration flow                 |
+| 19 | Presentation Guide   | Presentation structure and speaker guidance           |
+| 20 | Demo Startup Runbook | Steps required before starting the live demonstration |
+
+> **Recommended reading order:**
+> **Documentation Home → Implementation Guide → Build Journey → Pipeline → Kubernetes → Argo CD → Verification → Troubleshooting → Demo Guide**
+
+---
+
 # 📚 Documentation
 
 The complete project documentation is organized by topic for easier navigation.
