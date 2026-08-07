@@ -21,6 +21,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          persist-credentials: true
 
       - name: Setup Python
         uses: actions/setup-python@v5
@@ -32,10 +33,19 @@ jobs:
           python scripts/generate_project_report.py
           python scripts/update_readme.py
 
-      - name: Commit Generated Documentation
+      - name: Commit and Push Documentation
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          # Get the latest changes from main
+          git fetch origin
+          git checkout main
+          git reset --hard origin/main
+
+          # Regenerate documentation after syncing
+          python scripts/generate_project_report.py
+          python scripts/update_readme.py
 
           git add .
 
@@ -46,6 +56,4 @@ jobs:
 
           git commit -m "docs: update generated documentation"
 
-          git pull --rebase origin main
-
-          git push origin HEAD:main
+          git push origin main
