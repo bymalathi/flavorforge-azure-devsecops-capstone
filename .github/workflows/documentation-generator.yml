@@ -4,13 +4,13 @@ permissions:
   contents: write
 
 on:
-  workflow_dispatch:
   push:
     branches:
       - main
 
 jobs:
   generate-documentation:
+    if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
 
     permissions:
@@ -40,8 +40,12 @@ jobs:
           git add .
 
           if git diff --cached --quiet; then
-            echo "No documentation changes detected."
-          else
-            git commit -m "docs: update generated documentation"
-            git push
+            echo "No documentation changes."
+            exit 0
           fi
+
+          git commit -m "docs: update generated documentation"
+
+          git pull --rebase origin main
+
+          git push origin HEAD:main
