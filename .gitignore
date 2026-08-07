@@ -19,7 +19,7 @@ coverage/
 !.env.example
 *.secret.yaml
 secret.yaml
-secret-template.yaml
+
 
 # ===========================
 # Logs
