@@ -38,12 +38,9 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          # Get the latest changes from main
           git fetch origin
-          git checkout main
           git reset --hard origin/main
 
-          # Regenerate documentation after syncing
           python scripts/generate_project_report.py
           python scripts/update_readme.py
 
@@ -56,4 +53,4 @@ jobs:
 
           git commit -m "docs: update generated documentation"
 
-          git push origin main
+          git push origin HEAD:main
