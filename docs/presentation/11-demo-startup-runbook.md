@@ -428,6 +428,6 @@ It includes:
 - Opening Azure DevOps, Azure Container Registry, SonarCloud, and Azure Portal
 
 🎥 **Demo Video:**  
-`<Paste your YouTube or Google Drive link here>`
+https://github.com/bymalathi/flavorforge-azure-devsecops-capstone/blob/main/screenshots/demo-recreated.mp4
 
 This video demonstrates the complete startup checklist and environment verification for the FlavorForge Azure DevSecOps project.
