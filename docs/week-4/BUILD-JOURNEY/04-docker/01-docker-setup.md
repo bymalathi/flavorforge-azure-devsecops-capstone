@@ -2,57 +2,54 @@
 
 ## Objective
 
-This document explains how Docker was introduced into the FlavorForge project.
+In the previous section, we verified that the FlavorForge application works.
 
-The purpose of this step is to:
+Now we are going to introduce Docker.
 
-* understand why Docker is used
-* verify Docker installation
-* understand the Docker architecture used by FlavorForge
-* identify the frontend and backend containerization approach
-* prepare the project for creating the frontend and backend Dockerfiles
-* verify that Docker is available before building images
-
-This document does **not** build the application images yet.
-
-Image creation is covered in:
+We will do this slowly:
 
 ```text
-02-frontend-dockerfile.md
-03-backend-dockerfile.md
-04-build-images.md
-```
-
----
-
-# 1. What Is Docker?
-
-Docker is used to package an application together with the environment required to run it.
-
-Instead of running the application directly on the developer's machine, FlavorForge packages the application into Docker images.
-
-The basic relationship is:
-
-```text
-Application Source Code
-        |
-        v
-Dockerfile
-        |
-        v
+Application
+     |
+     v
+Docker
+     |
+     v
 Docker Image
-        |
-        v
+     |
+     v
 Docker Container
 ```
 
-For FlavorForge, both the frontend and backend are containerized.
+At this step, **we are not building the FlavorForge images yet**.
+
+First we will:
+
+1. Open the FlavorForge project.
+2. Check that Docker is installed.
+3. Check that Docker is running.
+4. Check that Docker can list images.
+5. Check that Docker can list containers.
+6. Understand how FlavorForge frontend and backend will be containerized.
+7. Prepare for the next Dockerfile steps.
+
+The actual Docker image creation comes later.
 
 ---
 
-# 2. Why Docker Is Used in FlavorForge
+# 1. Before Starting
 
-FlavorForge contains two application components:
+We already have the FlavorForge application:
+
+```text
+flavorforge-azure-devsecops-capstone/
+│
+├── frontend/
+│
+└── backend/
+```
+
+The application contains two separate parts:
 
 ```text
 Frontend
@@ -66,42 +63,572 @@ Backend
 Node.js + Express
 ```
 
-Docker provides a consistent way to package and run both components.
+We are going to create separate containers for them.
 
-The overall architecture is:
+The final idea will be:
 
 ```text
-                 FlavorForge
+Frontend
+   |
+   v
+Frontend Docker Image
+   |
+   v
+Frontend Container
 
-        +-----------------------+
-        |       Frontend        |
-        |    React + Vite       |
-        +-----------+-----------+
-                    |
-                    |
-                    v
-        +-----------------------+
-        |        Backend        |
-        |    Node.js + Express  |
-        +-----------------------+
+
+Backend
+   |
+   v
+Backend Docker Image
+   |
+   v
+Backend Container
 ```
 
-Each component is packaged separately.
+---
+
+# 2. Open WSL
+
+Open your WSL terminal.
+
+We will use WSL for the Docker commands in this Build Journey.
+
+First check where you are:
+
+```bash
+pwd
+```
+
+You can now see your current directory.
+
+---
+
+# 3. Go to the FlavorForge Project
+
+Run:
+
+```bash
+cd ~/flavorforge-azure-devsecops-capstone
+```
+
+Now check your location:
+
+```bash
+pwd
+```
+
+You should see something similar to:
 
 ```text
-Frontend Source
+/home/YOUR_USERNAME/flavorforge-azure-devsecops-capstone
+```
+
+Your username will be different.
+
+The important part is:
+
+```text
+flavorforge-azure-devsecops-capstone
+```
+
+---
+
+# 4. Check the Project
+
+Run:
+
+```bash
+ls
+```
+
+You should be able to see the main project folders.
+
+The two application folders we care about right now are:
+
+```text
+frontend
+backend
+```
+
+Check the frontend:
+
+```bash
+ls frontend
+```
+
+Then check the backend:
+
+```bash
+ls backend
+```
+
+At this point we are only confirming that the application source code is still present.
+
+---
+
+# 5. What Are We Going to Do With Docker?
+
+Before using commands, understand the basic idea.
+
+Currently:
+
+```text
+Your Computer
+     |
+     +---- React Frontend
+     |
+     +---- Node.js Backend
+```
+
+After Dockerization:
+
+```text
+Your Computer
+     |
+     +---- Docker
+             |
+             +---- Frontend Container
+             |
+             +---- Backend Container
+```
+
+Docker gives each application component a consistent runtime environment.
+
+---
+
+# 6. What Is a Docker Image?
+
+A Docker image is the packaged version of an application.
+
+Think of it like a template.
+
+```text
+Docker Image
       |
       v
-Frontend Dockerfile
-      |
-      v
+Docker Container
+```
+
+For FlavorForge, we will eventually have:
+
+```text
+Frontend Image
+Backend Image
+```
+
+These images can then be pushed to Azure Container Registry.
+
+---
+
+# 7. What Is a Docker Container?
+
+A container is a running instance of a Docker image.
+
+For example:
+
+```text
 Frontend Docker Image
-      |
-      v
+        |
+        | docker run
+        v
 Frontend Container
 ```
 
 and:
+
+```text
+Backend Docker Image
+        |
+        | docker run
+        v
+Backend Container
+```
+
+So remember:
+
+```text
+Image = packaged application
+
+Container = running application
+```
+
+---
+
+# 8. What Is a Dockerfile?
+
+A Dockerfile tells Docker how to create an image.
+
+The basic flow is:
+
+```text
+Dockerfile
+     |
+     | docker build
+     v
+Docker Image
+```
+
+The Dockerfile can tell Docker:
+
+* which base image to use
+* where the application should live
+* how dependencies should be installed
+* how the application should be built
+* which port the application uses
+* how the application should start
+
+FlavorForge uses separate Dockerfiles for the frontend and backend.
+
+---
+
+# 9. Check Docker Installation
+
+Now let's actually check Docker.
+
+Run:
+
+```bash
+docker --version
+```
+
+You should get a response similar to:
+
+```text
+Docker version ...
+```
+
+The exact version depends on the Docker version installed on your machine.
+
+If you get a version, Docker is installed.
+
+---
+
+# 10. What If Docker Is Not Found?
+
+If you see something like:
+
+```text
+docker: command not found
+```
+
+stop here.
+
+Do not continue with Docker image creation.
+
+Docker must first be installed and available from WSL.
+
+Once Docker is available, run again:
+
+```bash
+docker --version
+```
+
+---
+
+# 11. Check Whether Docker Engine Is Running
+
+Installing Docker is not enough.
+
+The Docker engine must also be running.
+
+Run:
+
+```bash
+docker info
+```
+
+This command asks Docker for information about the Docker environment.
+
+If Docker is working correctly, you will see information about:
+
+```text
+Containers
+Images
+Server Version
+Storage
+Runtime
+and other Docker information
+```
+
+The exact output will depend on your Docker installation.
+
+---
+
+# 12. Why Do We Run `docker info`?
+
+There are two things we need:
+
+```text
+Docker CLI
+     +
+Docker Engine
+```
+
+Think of it like this:
+
+```text
+Your Command
+     |
+     v
+Docker CLI
+     |
+     v
+Docker Engine
+     |
+     v
+Containers / Images
+```
+
+`docker --version` mainly verifies that the Docker command is available.
+
+`docker info` verifies that the Docker CLI can communicate with the Docker engine.
+
+---
+
+# 13. Check Running Containers
+
+Now run:
+
+```bash
+docker ps
+```
+
+This displays currently running containers.
+
+You may see something like:
+
+```text
+CONTAINER ID   IMAGE   COMMAND   CREATED   STATUS   PORTS   NAMES
+```
+
+You may also see no containers.
+
+For example:
+
+```text
+CONTAINER ID   IMAGE   COMMAND   CREATED   STATUS   PORTS   NAMES
+```
+
+with no rows underneath.
+
+That is completely fine.
+
+It simply means:
+
+```text
+Docker is running
+but
+no containers are currently running
+```
+
+---
+
+# 14. Check All Containers
+
+Now run:
+
+```bash
+docker ps -a
+```
+
+This shows:
+
+```text
+Running containers
++
+Stopped containers
+```
+
+At this stage, FlavorForge containers may not exist yet.
+
+That is expected.
+
+We will create them later.
+
+---
+
+# 15. Check Docker Images
+
+Run:
+
+```bash
+docker images
+```
+
+This displays the Docker images available locally.
+
+At this stage, you may not see FlavorForge images.
+
+That is also expected.
+
+We have not built them yet.
+
+Later we will create images such as:
+
+```text
+FlavorForge Frontend Image
+FlavorForge Backend Image
+```
+
+---
+
+# 16. Understand the Current Situation
+
+At this point our situation should look like:
+
+```text
+FlavorForge Source Code
+          |
+          v
+     frontend/
+     backend/
+          |
+          |
+          v
+       Docker
+          |
+          v
+Docker is installed
+Docker is running
+```
+
+We have **not built an image yet**.
+
+That is intentional.
+
+---
+
+# 17. FlavorForge Docker Architecture
+
+FlavorForge has two application components.
+
+### Frontend
+
+```text
+React + Vite
+```
+
+### Backend
+
+```text
+Node.js + Express
+```
+
+We will create one Docker image for each.
+
+```text
+React + Vite
+     |
+     v
+Frontend Dockerfile
+     |
+     v
+Frontend Image
+```
+
+and:
+
+```text
+Node.js + Express
+     |
+     v
+Backend Dockerfile
+     |
+     v
+Backend Image
+```
+
+---
+
+# 18. Why Two Images?
+
+We could theoretically put everything into one container.
+
+But FlavorForge is designed as two separate application components.
+
+Keeping them separate gives us:
+
+```text
+Frontend
+   |
+   +---- Build independently
+   |
+   +---- Deploy independently
+   |
+   +---- Scale independently
+
+
+Backend
+   |
+   +---- Build independently
+   |
+   +---- Deploy independently
+   |
+   +---- Scale independently
+```
+
+This design becomes especially useful later in Kubernetes.
+
+---
+
+# 19. Frontend Docker Architecture
+
+The frontend is a React/Vite application.
+
+The production frontend is built first and then served using Nginx.
+
+The Docker flow is:
+
+```text
+React Source Code
+       |
+       v
+Node.js Build Stage
+       |
+       | npm install
+       |
+       | npm run build
+       |
+       v
+Production Build Files
+       |
+       v
+Nginx
+       |
+       v
+Frontend Container
+```
+
+The frontend Dockerfile uses:
+
+```text
+node:22-alpine
+```
+
+as the build stage.
+
+The final runtime uses:
+
+```text
+nginx:1.29-alpine
+```
+
+This is called a **multi-stage Docker build**.
+
+We will build this Dockerfile in the next document.
+
+---
+
+# 20. Backend Docker Architecture
+
+The backend is:
+
+```text
+Node.js + Express
+```
+
+Its Docker flow is:
 
 ```text
 Backend Source
@@ -116,466 +643,40 @@ Backend Docker Image
 Backend Container
 ```
 
----
-
-# 3. Docker Image vs Docker Container
-
-These two terms are important.
-
-## Docker Image
-
-A Docker image is the packaged application artifact.
-
-For example:
-
-```text
-flavorforge-frontend
-flavorforge-backend
-```
-
-The image contains the application and the runtime environment required to start it.
-
----
-
-## Docker Container
-
-A container is a running instance of an image.
-
-The relationship is:
-
-```text
-Docker Image
-     |
-     | docker run
-     v
-Docker Container
-```
-
-One image can be used to create multiple containers.
-
----
-
-# 4. Dockerfile
-
-A `Dockerfile` contains the instructions Docker uses to build an image.
-
-For example:
-
-```text
-Dockerfile
-    |
-    | instructions
-    v
-Docker Image
-```
-
-A Dockerfile can define:
-
-* base image
-* working directory
-* dependency installation
-* source-code copying
-* build commands
-* exposed port
-* startup command
-
-FlavorForge uses separate Dockerfiles for the frontend and backend.
-
----
-
-# 5. FlavorForge Docker Structure
-
-The Docker-related project structure is organized around the two application components.
-
-Conceptually:
-
-```text
-flavorforge-azure-devsecops-capstone/
-│
-├── frontend/
-│   ├── source code
-│   ├── package.json
-│   └── Dockerfile
-│
-├── backend/
-│   ├── source code
-│   ├── package.json
-│   └── Dockerfile
-│
-└── docker/
-    └── Docker-related project resources
-```
-
-The exact files present in the repository should always be verified against the actual project rather than assumed from this overview.
-
----
-
-# 6. Docker Installation
-
-Docker must be available on the development machine before images can be built.
-
-From the WSL terminal, verify Docker:
-
-```bash
-docker --version
-```
-
-A successful installation returns a Docker version.
-
-For example:
-
-```text
-Docker version <version>
-```
-
-The exact version depends on the installed Docker release.
-
----
-
-# 7. Verify Docker Is Running
-
-Run:
-
-```bash
-docker info
-```
-
-This checks whether the Docker client can communicate with the Docker engine.
-
-If Docker is running correctly, Docker returns information about the environment.
-
-If Docker is not running, the command may return an error indicating that the Docker daemon cannot be reached.
-
----
-
-# 8. Verify Docker With a Simple Command
-
-Run:
-
-```bash
-docker ps
-```
-
-This lists currently running containers.
-
-If no containers are running, it is valid for the result to be empty.
-
-For example:
-
-```text
-CONTAINER ID   IMAGE   COMMAND   CREATED   STATUS   PORTS   NAMES
-```
-
-An empty list does **not** mean Docker is broken.
-
-It simply means there are currently no running containers.
-
----
-
-# 9. Understand Docker Client and Docker Engine
-
-Docker commands are executed through the Docker CLI.
-
-Conceptually:
-
-```text
-Docker Command
-     |
-     v
-Docker CLI
-     |
-     v
-Docker Engine
-     |
-     v
-Images / Containers
-```
-
-For example:
-
-```bash
-docker ps
-```
-
-asks Docker to return information about running containers.
-
-Similarly:
-
-```bash
-docker images
-```
-
-asks Docker to list locally available images.
-
----
-
-# 10. Verify Docker Images
-
-Run:
-
-```bash
-docker images
-```
-
-At this stage, the FlavorForge images may not exist yet.
-
-That is expected because the images will be built in later steps.
-
-After the image-building step, we expect to see FlavorForge images among the local images.
-
-The image-building procedure is documented in:
-
-```text
-04-build-images.md
-```
-
----
-
-# 11. Verify Docker Containers
-
-Run:
-
-```bash
-docker ps -a
-```
-
-This displays both running and stopped containers.
-
-At the initial setup stage, FlavorForge containers may not exist yet.
-
-They will be created and tested in:
-
-```text
-05-run-containers.md
-```
-
----
-
-# 12. FlavorForge Containerization Flow
-
-The complete Docker workflow is:
-
-```text
-React + Vite Frontend
-        |
-        v
-frontend/Dockerfile
-        |
-        v
-Frontend Docker Image
-        |
-        v
-Frontend Container
-```
-
-and:
-
-```text
-Node.js + Express Backend
-        |
-        v
-backend/Dockerfile
-        |
-        v
-Backend Docker Image
-        |
-        v
-Backend Container
-```
-
----
-
-# 13. Frontend Docker Architecture
-
-FlavorForge uses a multi-stage Docker build for the frontend.
-
-The conceptual flow is:
-
-```text
-React Source Code
-       |
-       v
-Node.js Build Stage
-       |
-       | npm install
-       | npm build
-       v
-Production Build
-       |
-       v
-Nginx Runtime Stage
-       |
-       v
-Frontend Container
-```
-
-The frontend Dockerfile uses:
-
-```text
-node:22-alpine
-```
-
-for the build stage.
-
-The final runtime uses:
-
-```text
-nginx:1.29-alpine
-```
-
-This separates the build environment from the lightweight runtime environment.
-
-The exact Dockerfile is documented in:
-
-```text
-02-frontend-dockerfile.md
-```
-
----
-
-# 14. Backend Docker Architecture
-
-The backend is a Node.js + Express application.
-
-Its containerization flow is:
-
-```text
-Node.js + Express Source
-        |
-        v
-Backend Dockerfile
-        |
-        v
-Node.js Docker Image
-        |
-        v
-Backend Container
-```
-
-The backend exposes the API used by the frontend.
-
-The backend also provides the health endpoint:
+The backend provides the API:
 
 ```text
 /api/health
 ```
 
-The exact backend Dockerfile and build process are documented in:
-
-```text
-03-backend-dockerfile.md
-```
+The backend will later run inside its own container.
 
 ---
 
-# 15. Frontend and Backend Are Separate Images
+# 21. Frontend → Backend Inside Docker
 
-FlavorForge does not package the frontend and backend into one application container.
+This is an important concept.
 
-Instead:
+When applications run locally, we might have:
 
 ```text
 Frontend
-   |
-   v
-Frontend Image
-```
-
-and:
-
-```text
+localhost:5173
+      |
+      v
 Backend
-   |
-   v
-Backend Image
+localhost:3000
 ```
 
-This separation is important because the two components have different responsibilities.
+Inside Docker, the containers communicate using Docker networking.
 
-### Frontend
-
-Responsible for:
-
-```text
-User Interface
-React
-Vite
-Nginx runtime
-```
-
-### Backend
-
-Responsible for:
-
-```text
-API
-Node.js
-Express
-Application logic
-```
-
----
-
-# 16. Frontend API Configuration
-
-The frontend needs to know where the backend API is available.
-
-The Docker-specific frontend configuration uses:
-
-```text
-.env.docker
-```
-
-with:
+The FlavorForge Docker frontend configuration uses:
 
 ```text
 VITE_API_BASE_URL=http://backend:3000
 ```
 
-The important part is:
-
-```text
-backend
-```
-
-This represents the backend container/service name when the containers are connected through an appropriate Docker network.
-
-The frontend does not need to use:
-
-```text
-localhost
-```
-
-to communicate with another container.
-
----
-
-# 17. Why `localhost` Is Important
-
-Inside a container:
-
-```text
-localhost
-```
-
-refers to that same container.
-
-Therefore:
-
-```text
-Frontend Container
-localhost
-```
-
-does **not** automatically mean:
-
-```text
-Backend Container
-```
-
-Instead, container-to-container communication can use the backend's Docker network name.
-
-For example:
+So the communication becomes:
 
 ```text
 Frontend Container
@@ -583,53 +684,166 @@ Frontend Container
        | http://backend:3000
        v
 Backend Container
+       |
+       v
+Express API
 ```
-
-This is an important Docker networking concept.
 
 ---
 
-# 18. Docker Build Context
+# 22. Why Not `localhost:3000`?
 
-When building an image, Docker needs access to the files referenced by the Dockerfile.
+This is one of the most important beginner Docker concepts.
 
-The directory supplied to:
+Inside a container:
+
+```text
+localhost
+```
+
+means:
+
+```text
+this container
+```
+
+It does **not** automatically mean another container.
+
+Therefore:
+
+```text
+Frontend Container
+       |
+       | localhost:3000
+       X
+       |
+       v
+Backend Container
+```
+
+is not the correct way to address the backend container.
+
+Instead, Docker networking allows the frontend to use the backend's service/container name:
+
+```text
+http://backend:3000
+```
+
+So:
+
+```text
+Frontend Container
+       |
+       | backend:3000
+       v
+Backend Container
+```
+
+---
+
+# 23. What Is `backend`?
+
+In:
+
+```text
+http://backend:3000
+```
+
+the parts mean:
+
+```text
+backend
+   |
+   +---- Docker network hostname
+
+3000
+   |
+   +---- Backend application port
+```
+
+The backend container/service can therefore be reached through the Docker network using the name:
+
+```text
+backend
+```
+
+The exact networking setup will be used when we run the containers.
+
+---
+
+# 24. Check Docker Networking Later
+
+We do not need to create the final Docker network during this setup document.
+
+That will happen as part of the container-running/testing stage.
+
+For now, remember:
+
+```text
+Container
+    |
+    v
+Docker Network
+    |
+    +---- frontend
+    |
+    +---- backend
+```
+
+The containers can communicate using the appropriate Docker network names.
+
+---
+
+# 25. Docker Build Context
+
+When we eventually run:
 
 ```bash
 docker build
 ```
 
-is called the **build context**.
+Docker needs to know which files it is allowed to use during the build.
 
-Conceptually:
+That collection of files is called the:
 
 ```text
 Build Context
-     |
-     v
-Dockerfile + required files
-     |
-     v
+```
+
+Think of it as:
+
+```text
+Build Context
+      |
+      +---- Dockerfile
+      |
+      +---- package.json
+      |
+      +---- source code
+      |
+      +---- other required files
+      |
+      v
 Docker Image
 ```
 
-The build context should contain the application files required by that Dockerfile.
+The correct build context is important because Docker can only access files available within that context.
 
-This becomes important when we build the frontend and backend images.
+We will specify the correct build context in the actual image-building steps.
 
 ---
 
-# 19. Docker Ignore Files
+# 26. `.dockerignore`
 
-Docker supports:
+Docker can use a file named:
 
 ```text
 .dockerignore
 ```
 
-This file prevents unnecessary files from being sent into the Docker build context.
+This prevents unnecessary files from being sent into the Docker build context.
 
-Examples of files that commonly should not be included are:
+Common examples include:
 
 ```text
 node_modules/
@@ -638,364 +852,283 @@ logs/
 temporary files
 ```
 
-The actual FlavorForge `.dockerignore` configuration should be verified from the repository.
+For FlavorForge, always use the `.dockerignore` configuration that exists in the actual repository.
 
-Do not create or modify ignore rules simply based on this generic example.
-
----
-
-# 20. Docker Image Naming
-
-Docker images need names and may also use tags.
-
-Conceptually:
-
-```text
-image-name:tag
-```
-
-For example:
-
-```text
-flavorforge-frontend:v1
-```
-
-and:
-
-```text
-flavorforge-backend:v1
-```
-
-Tags identify a particular image version.
-
-During the actual FlavorForge implementation, image tags were also used when publishing images to Azure Container Registry.
+Do not blindly add files just because they are commonly ignored in other projects.
 
 ---
 
-# 21. Local Docker vs Azure Container Registry
+# 27. Local Docker Images vs ACR
 
-There are two different locations for Docker images.
+There are two stages.
 
-### Local Docker
+### Stage 1 — Local
 
-Images are stored on the developer's machine.
+The image exists on our computer:
 
 ```text
-Developer Computer
-       |
-       v
-Docker Engine
-       |
-       v
-Local Docker Images
+Dockerfile
+    |
+    v
+docker build
+    |
+    v
+Local Docker Image
 ```
 
-### Azure Container Registry
+### Stage 2 — Azure Container Registry
 
-Images are stored remotely in Azure Container Registry.
+Later:
 
 ```text
+Local Docker Image
+       |
+       | docker push
+       v
+Azure Container Registry
+```
+
+ACR is the remote image registry used by FlavorForge.
+
+---
+
+# 28. Docker's Place in the Complete Build Journey
+
+The complete architecture eventually becomes:
+
+```text
+Application Source
+       |
+       v
+Dockerfile
+       |
+       v
 Docker Image
-      |
-      | docker push
-      v
+       |
+       v
 Azure Container Registry
+       |
+       v
+AKS
+       |
+       v
+Kubernetes
 ```
 
-The local build and ACR publishing are separate steps.
+Later, Azure DevOps automates these steps.
 
----
-
-# 22. Docker's Role in the Overall FlavorForge Architecture
-
-Docker sits between application development and Kubernetes deployment.
-
-The overall flow is:
+The pipeline will eventually perform a flow similar to:
 
 ```text
-Application Source Code
-          |
-          v
-       Docker
-          |
-          v
-    Docker Image
-          |
-          v
-Azure Container Registry
-          |
-          v
-        AKS
-          |
-          v
-     Kubernetes
-```
-
-Later, Azure DevOps automates much of this process.
-
----
-
-# 23. Docker in the CI/CD Pipeline
-
-The final FlavorForge pipeline includes Docker-related stages.
-
-The high-level flow is:
-
-```text
-GitHub
-   |
-   v
-Azure DevOps
-   |
-   v
-Build Application
-   |
-   v
-Run Tests
-   |
-   v
-Build Docker Images
-   |
-   v
-Scan Images
-   |
-   v
-Push Images to ACR
-   |
-   v
+Build
+  |
+  v
+Test
+  |
+  v
+Security
+  |
+  v
+Code Quality
+  |
+  v
+Docker Build
+  |
+  v
+Trivy Scan
+  |
+  v
+Push to ACR
+  |
+  v
 Deploy to AKS
 ```
 
-Docker therefore becomes the packaging layer between application code and Kubernetes.
+---
+
+# 29. Final Docker Setup Verification
+
+Now run these commands one by one.
+
+### Command 1 — Docker version
+
+```bash
+docker --version
+```
+
+Confirm that Docker returns a version.
 
 ---
 
-# 24. Verify the Project Before Creating Dockerfiles
+### Command 2 — Docker engine
 
-Before continuing, verify that the application directories exist.
+```bash
+docker info
+```
 
-From the project root:
+Confirm that Docker returns engine information.
+
+---
+
+### Command 3 — Running containers
+
+```bash
+docker ps
+```
+
+An empty result is okay.
+
+---
+
+### Command 4 — All containers
+
+```bash
+docker ps -a
+```
+
+At this stage there may be no FlavorForge containers.
+
+That is okay.
+
+---
+
+### Command 5 — Local images
+
+```bash
+docker images
+```
+
+At this stage there may be no FlavorForge images.
+
+That is okay.
+
+---
+
+# 30. Verify the Application Folders One More Time
+
+Return to the project root:
+
+```bash
+cd ~/flavorforge-azure-devsecops-capstone
+```
+
+Run:
 
 ```bash
 ls
 ```
 
-You should be able to identify the application directories, including:
+Confirm that:
 
 ```text
 frontend
 backend
 ```
 
-You can also check:
+are present.
 
-```bash
-ls frontend
-```
-
-and:
-
-```bash
-ls backend
-```
-
-The exact contents depend on the current repository version.
+This confirms that our Docker setup is still connected to the correct FlavorForge application.
 
 ---
 
-# 25. Do Not Build Images Yet
+# 31. What We Have Completed
 
-At this stage, the purpose is only to verify Docker and understand the containerization structure.
-
-Do not run the final FlavorForge image build commands yet.
-
-The next documents will perform those steps in order:
+We have now verified:
 
 ```text
-02-frontend-dockerfile.md
-```
-
-then:
-
-```text
-03-backend-dockerfile.md
-```
-
-then:
-
-```text
-04-build-images.md
-```
-
----
-
-# 26. Docker Setup Verification
-
-Run the following commands:
-
-```bash
-docker --version
-```
-
-```bash
-docker info
-```
-
-```bash
-docker ps
-```
-
-```bash
-docker images
-```
-
-```bash
-docker ps -a
-```
-
-These verify:
-
-```text
+FlavorForge Source Code
+        |
+        v
+Frontend exists
+        |
+        v
+Backend exists
+        |
+        v
 Docker installed
-       |
-       v
-Docker engine available
-       |
-       v
+        |
+        v
+Docker Engine running
+        |
+        v
 Docker CLI working
-       |
-       v
-Images can be listed
-       |
-       v
-Containers can be listed
+        |
+        v
+Ready for Dockerfiles
 ```
+
+We have **not built any FlavorForge Docker image yet**.
+
+That comes next.
 
 ---
 
-# 27. Troubleshooting
+# 32. Final Beginner Checklist
 
-## Problem: `docker: command not found`
+Before moving forward, confirm:
 
-Docker is not available from the current environment.
-
-Verify the Docker installation and WSL/Docker integration before continuing.
-
----
-
-## Problem: Cannot connect to Docker daemon
-
-If:
-
-```bash
-docker info
-```
-
-returns an error indicating that Docker cannot connect to the daemon, Docker Engine may not be running or the WSL integration may not be available.
-
-Start/check the Docker environment and run:
-
-```bash
-docker info
-```
-
-again.
+* [ ] WSL terminal is working.
+* [ ] FlavorForge repository is accessible.
+* [ ] `frontend/` exists.
+* [ ] `backend/` exists.
+* [ ] `docker --version` works.
+* [ ] `docker info` works.
+* [ ] `docker ps` works.
+* [ ] `docker ps -a` works.
+* [ ] `docker images` works.
+* [ ] Docker Engine is running.
+* [ ] We understand image vs container.
+* [ ] We understand Dockerfile.
+* [ ] We understand why frontend and backend use separate images.
+* [ ] We understand why the frontend uses `backend:3000` inside Docker.
+* [ ] We are ready to create the frontend Dockerfile.
 
 ---
 
-## Problem: `docker ps` shows no containers
+# 33. What Happens Next?
 
-This is not necessarily an error.
-
-Run:
-
-```bash
-docker ps -a
-```
-
-If there are no containers, the Docker environment is simply not running any containers yet.
-
-Containers will be created in the later Docker steps.
-
----
-
-## Problem: No FlavorForge images appear
-
-At this stage this is expected.
-
-Images are created later using the Dockerfiles.
-
-Continue with:
+Now we move from:
 
 ```text
-02-frontend-dockerfile.md
+Docker Setup
 ```
 
----
+to actually creating the first Dockerfile.
 
-# 28. Reviewer Explanation
-
-### "Why did you use Docker?"
-
-> "I used Docker to package the FlavorForge frontend and backend into reproducible container images. This separates the application runtime from the host environment and provides consistent artifacts that can later be stored in Azure Container Registry and deployed to AKS."
-
-### "Did you create one Docker image or two?"
-
-> "I created separate images for the frontend and backend because they are separate application components with different runtime responsibilities."
-
-### "What is the difference between an image and a container?"
-
-> "A Docker image is the packaged application artifact. A container is a running instance created from that image."
-
-### "Why is the frontend using Nginx?"
-
-> "The React application is built into static production files. Nginx is used as the lightweight production web server for serving those files."
-
-### "How does the frontend communicate with the backend?"
-
-> "The Docker-specific frontend configuration uses the backend service name and port rather than treating localhost as the backend container."
-
-### "Where do the images go after Docker builds them?"
-
-> "Initially they exist locally in the Docker engine. Later they are tagged and pushed to Azure Container Registry, which is the remote image registry used by the AKS deployment."
-
----
-
-# 29. Expected Result
-
-At the end of this step:
-
-```text
-Docker installed
-        |
-        v
-Docker Engine available
-        |
-        v
-Docker CLI verified
-        |
-        v
-FlavorForge frontend identified
-        |
-        v
-FlavorForge backend identified
-        |
-        v
-Ready to create Dockerfiles
-```
-
-The application source code has **not** been changed by this setup verification.
-
-The Docker image build happens in the following steps.
-
----
-
-# 30. Next Step
-
-Continue with:
+The next document is:
 
 ```text
 docs/BUILD-JOURNEY/04-docker/02-frontend-dockerfile.md
 ```
 
-That document will explain exactly how the FlavorForge React/Vite frontend was containerized, including the multi-stage build and Nginx runtime.
+There we will do it step by step:
+
+```text
+1. Go to frontend
+        |
+        v
+2. Create/check Dockerfile
+        |
+        v
+3. Understand every line
+        |
+        v
+4. Understand node:22-alpine
+        |
+        v
+5. Install dependencies
+        |
+        v
+6. Build React application
+        |
+        v
+7. Copy build into Nginx
+        |
+        v
+8. Expose frontend port
+        |
+        v
+9. Understand the final image
+```
+
+Only after that will we build the actual frontend Docker image.

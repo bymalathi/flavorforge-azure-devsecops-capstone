@@ -1,8 +1,10 @@
 # Step 1.1 — Windows, WSL and VS Code Setup
 
-## Objective
+## What we wanted to do
 
-Prepare a Linux development environment for the FlavorForge project using:
+Before starting FlavorForge development, we needed a Linux-based development environment on Windows.
+
+The development environment used:
 
 * Windows
 * WSL 2
@@ -10,68 +12,92 @@ Prepare a Linux development environment for the FlavorForge project using:
 * Visual Studio Code
 * VS Code WSL integration
 
-All FlavorForge development and command-line instructions in this BUILD-JOURNEY are performed from the Ubuntu WSL terminal inside VS Code.
+The goal was to run the FlavorForge command-line tools from an Ubuntu WSL terminal instead of directly from Windows.
+
+This provided a consistent Linux environment for tools such as Docker, Kubernetes, Azure CLI, and project automation.
 
 ---
 
-# 1. Check Whether WSL Is Already Installed
+# Step 1 — Check whether WSL was installed
 
-Open **Windows PowerShell** or **Windows Terminal**.
+We first checked whether WSL was already available on the Windows machine.
 
-Run:
+### Command
+
+Run from **Windows PowerShell** or **Windows Terminal**:
 
 ```powershell
 wsl --status
 ```
 
-You can also run:
+We could also check the installed Linux distributions:
 
 ```powershell
 wsl --list --verbose
 ```
 
-## If WSL is already installed
+### What the command did
 
-Look for an installed Linux distribution such as:
+```powershell
+wsl --status
+```
+
+displayed the current WSL configuration.
+
+```powershell
+wsl --list --verbose
+```
+
+listed the installed Linux distributions and showed which WSL version they were using.
+
+An example of the expected output was:
 
 ```text
 NAME      STATE      VERSION
 Ubuntu    Running    2
 ```
 
-If Ubuntu is listed with:
+The important value was:
 
 ```text
 VERSION 2
 ```
 
-WSL 2 is already available.
-
-### Action
-
-Continue to the Ubuntu verification section.
+This confirmed that Ubuntu was running using WSL 2.
 
 ---
 
-# 2. If WSL Is NOT Installed
+# Step 2 — Install WSL if required
 
-Open **PowerShell as Administrator**.
+If WSL was not installed, we used an administrator PowerShell window.
 
-Run:
+### Command
 
 ```powershell
 wsl --install
 ```
 
-This installs WSL and the default Linux distribution supported by the Windows installation.
+### What the command did
 
-Restart Windows if requested.
+This enabled WSL and installed the default Linux distribution supported by the Windows installation.
 
-After restarting, open Ubuntu from the Start menu.
+If Windows requested a restart, the machine was restarted before continuing.
+
+After restarting, Ubuntu could be opened from the Windows Start menu.
+
+### Important
+
+This installation step was only required if WSL was not already available.
+
+If WSL 2 and Ubuntu were already installed, we continued with verification instead of reinstalling them.
 
 ---
 
-# 3. Verify WSL
+# Step 3 — Verify WSL 2
+
+After installation, we verified the Linux distribution and WSL version.
+
+### Command
 
 Run from PowerShell:
 
@@ -79,184 +105,326 @@ Run from PowerShell:
 wsl --list --verbose
 ```
 
-Expected example:
+### Expected result
 
 ```text
 NAME      STATE      VERSION
 Ubuntu    Running    2
 ```
 
-The exact distribution name may vary.
+The exact Ubuntu state may vary depending on whether the distribution is currently running.
 
-The important value is:
+The important part was:
 
 ```text
 VERSION 2
 ```
 
+### What this confirmed
+
+We had:
+
+```text
+Windows
+   ↓
+WSL 2
+   ↓
+Ubuntu
+```
+
+This became the Linux environment used for the FlavorForge project.
+
 ---
 
-# 4. Open Ubuntu
+# Step 4 — Open Ubuntu
 
-Open the Ubuntu application from Windows Start.
+We opened the Ubuntu application from the Windows Start menu.
 
-The first launch may ask you to create:
+On the first launch, Ubuntu could request:
 
 * Linux username
 * Linux password
 
-These credentials are for the WSL Linux environment.
+These credentials belong to the local WSL Linux environment.
 
-Do not publish the password.
+### Security note
+
+The Linux password was not included in project documentation or screenshots.
 
 ---
 
-# 5. Verify Ubuntu
+# Step 5 — Verify the Ubuntu environment
 
-Inside the Ubuntu terminal run:
+Once inside Ubuntu, we verified which Linux distribution was being used.
+
+### Command
 
 ```bash
 cat /etc/os-release | grep PRETTY_NAME
 ```
 
-Expected:
+### Expected result
 
 ```text
 PRETTY_NAME="Ubuntu 24.04.4 LTS"
 ```
 
-The exact Ubuntu version may differ for a future installation.
+The exact Ubuntu version may change with future installations.
+
+### What the command did
+
+`/etc/os-release` contains information about the Linux operating system.
+
+The `grep PRETTY_NAME` part displayed only the human-readable operating-system name.
+
+This confirmed that our command-line environment was Ubuntu.
 
 ---
 
-# 6. Install VS Code
+# Step 6 — Install Visual Studio Code
 
-If Visual Studio Code is already installed:
+The next requirement was Visual Studio Code.
 
-Open VS Code and continue.
+If VS Code was already installed, we continued to the WSL integration step.
 
-If VS Code is not installed:
+If it was not installed, it was installed using the normal Windows installation process.
 
-1. Download Visual Studio Code from the official Microsoft website.
-2. Install it using the normal Windows installer.
-3. Open Visual Studio Code.
+The purpose of VS Code was to provide:
+
+* project editing
+* integrated terminal
+* Git integration
+* WSL development support
 
 ---
 
-# 7. Install the VS Code WSL Extension
+# Step 7 — Install the VS Code WSL extension
 
-Inside VS Code:
-
-1. Open **Extensions**.
-2. Search for:
+Inside Visual Studio Code, we opened the Extensions panel and searched for:
 
 ```text
 WSL
 ```
 
-3. Install the Microsoft **WSL** extension.
+We installed the Microsoft WSL extension.
 
-The extension allows VS Code to work directly with files and terminals inside the Linux WSL environment.
+### What it did
+
+The extension allowed VS Code to work directly with files and terminals inside the WSL Linux environment.
+
+This meant that the project could be opened from Ubuntu while still using the Windows VS Code application.
 
 ---
 
-# 8. Open the Project Through WSL
+# Step 8 — Open the FlavorForge repository through WSL
 
-Open the Ubuntu terminal.
+We opened the Ubuntu terminal and navigated to the FlavorForge repository.
 
-Navigate to the project:
+### Command
 
 ```bash
 cd ~/flavorforge-azure-devsecops-capstone
 ```
 
-Then run:
+### What the command did
+
+`cd` changed the current directory to the FlavorForge project directory.
+
+The repository was therefore available from the WSL filesystem environment.
+
+---
+
+# Step 9 — Open the project in VS Code
+
+From the FlavorForge project directory, we opened VS Code.
+
+### Command
 
 ```bash
 code .
 ```
 
-VS Code should open the project using the WSL environment.
+### What the command did
 
-Check the bottom-left corner of VS Code.
+The `.` represents the current directory.
 
-It should indicate that VS Code is connected to WSL.
+Therefore:
+
+```bash
+code .
+```
+
+opened the current FlavorForge repository in Visual Studio Code.
+
+VS Code was connected to the WSL environment instead of treating the project as a normal Windows-only project.
 
 ---
 
-# 9. Verify the Terminal
+# Step 10 — Verify the project directory
 
-Inside VS Code:
+After opening the project, we opened the VS Code integrated terminal.
 
-1. Open **Terminal → New Terminal**.
-2. Confirm the terminal is an Ubuntu/WSL terminal.
-3. Run:
+The terminal was expected to be an Ubuntu/WSL terminal.
+
+### Command
 
 ```bash
 pwd
 ```
 
-Expected:
+### Expected result
 
 ```text
 /home/<username>/flavorforge-azure-devsecops-capstone
 ```
 
-The username will be different for another person.
+The `<username>` value depends on the local Linux user.
+
+### What this confirmed
+
+The terminal was operating inside the FlavorForge repository:
+
+```text
+Ubuntu / WSL
+      ↓
+FlavorForge repository
+      ↓
+VS Code
+```
+
+This became the command-line environment used throughout the BUILD-JOURNEY.
 
 ---
 
-# 10. Important Environment Rule
+# Step 11 — Confirm the working environment
 
-All FlavorForge command-line instructions in this BUILD-JOURNEY should be executed from the **VS Code WSL Ubuntu terminal**, unless a step explicitly says to use:
+At this point the development environment consisted of:
 
-* Windows PowerShell
-* Azure Portal
-* Azure DevOps
-* GitHub
-* SonarCloud
-* another web interface
+```text
+Windows
+   │
+   ▼
+WSL 2
+   │
+   ▼
+Ubuntu
+   │
+   ▼
+FlavorForge repository
+   │
+   ▼
+VS Code + WSL integration
+```
 
-Do not assume that a Windows PowerShell command and a WSL command are interchangeable.
-
----
-
-# Screenshot if you are documenting
-
-Capture:
-
-1. VS Code showing the FlavorForge project.
-2. WSL terminal showing the project directory.
-3. WSL/Ubuntu environment.
-
-Before publishing the screenshot, make sure no:
-
-* password
-* token
-* private key
-* secret
-* connection string
-
-is visible.
-
+This environment was then used for the subsequent FlavorForge implementation steps.
 
 ---
 
-# Verification Checklist
+# Commands used in this setup
 
-* [ ] WSL installed
-* [ ] WSL 2 verified
-* [ ] Ubuntu installed
-* [ ] Ubuntu terminal working
-* [ ] VS Code installed
-* [ ] VS Code WSL extension installed
-* [ ] Project opened through WSL
-* [ ] VS Code terminal verified
+The main commands introduced during this setup were:
+
+### Windows / PowerShell
+
+```powershell
+wsl --status
+```
+
+```powershell
+wsl --list --verbose
+```
+
+If WSL was not installed:
+
+```powershell
+wsl --install
+```
+
+### Ubuntu / WSL
+
+```bash
+cat /etc/os-release | grep PRETTY_NAME
+```
+
+```bash
+cd ~/flavorforge-azure-devsecops-capstone
+```
+
+```bash
+code .
+```
+
+```bash
+pwd
+```
+
+---
+
+# Verification
+
+The environment was considered ready when the following checks were successful:
+
+```text
+✓ WSL available
+✓ WSL 2 available
+✓ Ubuntu available
+✓ Ubuntu terminal working
+✓ VS Code installed
+✓ VS Code WSL integration available
+✓ FlavorForge repository accessible from WSL
+✓ VS Code opened the repository through WSL
+✓ VS Code integrated terminal working from the repository
+```
+
+---
+
+# Screenshot Evidence
+
+When documenting this setup, screenshots should show the actual environment without exposing credentials or secrets.
+
+Useful evidence includes:
+
+* VS Code with the FlavorForge repository open
+* Ubuntu/WSL terminal
+* FlavorForge repository path
+* WSL environment information
+
+Before committing screenshots to GitHub, verify that they do not contain:
+
+* passwords
+* access tokens
+* private keys
+* connection strings
+* other credentials
+
+---
+
+# What we achieved
+
+We prepared the development environment required to build FlavorForge.
+
+The final setup was:
+
+```text
+Windows
+   ↓
+WSL 2
+   ↓
+Ubuntu
+   ↓
+VS Code WSL Integration
+   ↓
+FlavorForge Repository
+```
+
+From this point onward, the FlavorForge command-line work could be performed from the Ubuntu WSL terminal inside VS Code.
+
+This environment was then used for the subsequent Git, application, Docker, Azure, and Kubernetes implementation steps.
 
 ---
 
 # Reviewer Question
 
-### Why did you use WSL?
+## Why did we use WSL?
 
-WSL provides a Linux environment directly inside Windows. I used it so the FlavorForge command-line development environment is consistent with the Linux-based tooling used for Docker, Kubernetes, Azure CLI, Helm and project automation.
+We used WSL because it provides a Linux environment directly inside Windows. This gave us a consistent Linux command-line environment for FlavorForge tools such as Docker, Kubernetes, Azure CLI, and project automation while continuing to use Windows and VS Code for development.

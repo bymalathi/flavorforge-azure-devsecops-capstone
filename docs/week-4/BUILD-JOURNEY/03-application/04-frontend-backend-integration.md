@@ -2,9 +2,9 @@
 
 ## Objective
 
-This document explains how the FlavorForge backend API was implemented and how the frontend communicates with it.
+In this step, we will connect the FlavorForge frontend and backend through an API.
 
-The API is provided by:
+The backend is built using:
 
 ```text
 Node.js
@@ -12,315 +12,449 @@ Node.js
 Express
 ```
 
-The main API endpoint used for application and deployment verification is:
+The frontend is built using:
 
 ```text
-/api/health
+React
++
+Vite
 ```
 
-The overall communication flow is:
+The main API endpoint we will use to verify the backend is:
 
 ```text
-User
-  |
-  v
+GET /api/health
+```
+
+The final communication flow is:
+
+```text
+Browser
+   |
+   v
 React Frontend
-  |
-  | HTTP API Request
-  v
+   |
+   | HTTP Request
+   v
 Node.js + Express Backend
-  |
-  | /api/health
-  v
+   |
+   | GET /api/health
+   v
 API Response
-  |
-  v
+   |
+   v
 React Frontend
 ```
 
+We will build and verify this step before moving to Docker.
+
 ---
 
-# 1. What Is an API?
+# 1. Understand What We Are Building
 
-An API allows one application component to communicate with another.
+Before running commands, understand the basic idea.
 
-In FlavorForge:
+FlavorForge has two separate applications:
+
+```text
+flavorforge-azure-devsecops-capstone/
+│
+├── frontend/
+│
+└── backend/
+```
+
+The frontend is responsible for the user interface.
+
+The backend is responsible for the API.
+
+So:
+
+```text
+Frontend
+React + Vite
+    |
+    | HTTP request
+    v
+Backend
+Node.js + Express
+```
+
+The frontend does not directly execute backend code.
+
+It communicates with the backend through HTTP.
+
+---
+
+# 2. Understand the API
+
+An API is a way for two application components to communicate.
+
+For example, the frontend can send:
+
+```text
+GET /api/health
+```
+
+to the backend.
+
+The backend receives the request and sends a response.
+
+The flow is:
 
 ```text
 Frontend
    |
-   | HTTP request
+   | GET /api/health
    v
-Backend API
+Backend
    |
-   | HTTP response
+   | JSON response
    v
 Frontend
 ```
 
-The React frontend does not directly execute backend code.
-
-Instead, it sends HTTP requests to the Node.js/Express backend.
+For FlavorForge, we use the health API as one of our basic verification points.
 
 ---
 
-# 2. Why FlavorForge Uses an API
+# 3. Go to the Backend Directory
 
-The frontend and backend are separate application components.
+Open your WSL terminal.
+
+First go to the FlavorForge project:
+
+```bash
+cd ~/flavorforge-azure-devsecops-capstone
+```
+
+Check that you are inside the project:
+
+```bash
+pwd
+```
+
+Then check the project contents:
+
+```bash
+ls
+```
+
+You should see directories similar to:
 
 ```text
-frontend/
-    |
-    | React + Vite
-    |
-    v
-User Interface
+frontend
+backend
+docker
+kubernetes
+docs
+```
 
+Now enter the backend:
 
+```bash
+cd backend
+```
+
+Verify:
+
+```bash
+pwd
+```
+
+You should now be inside:
+
+```text
+flavorforge-azure-devsecops-capstone/backend
+```
+
+From this point onward, backend commands should normally be run from this directory unless specifically mentioned otherwise.
+
+---
+
+# 4. Check the Backend Files
+
+Run:
+
+```bash
+ls
+```
+
+You should see the backend project files.
+
+You can also check the source directory:
+
+```bash
+ls src
+```
+
+And the test directory:
+
+```bash
+ls tests
+```
+
+The important structure is:
+
+```text
 backend/
-    |
-    | Node.js + Express
-    |
-    v
-API
+│
+├── src/
+│
+├── tests/
+│
+├── package.json
+└── ...
 ```
 
-This separation allows the two components to be:
+Do not create duplicate files if they already exist.
 
-* developed independently
-* tested independently
-* built independently
-* containerized independently
-* deployed independently
-
-This becomes especially useful when the application is deployed to Kubernetes.
+The existing project files are the source of truth.
 
 ---
 
-# 3. Backend API Technology
+# 5. Check Node.js
 
-The API is implemented using:
+Before running the backend, make sure Node.js is available.
 
-```text
-Node.js
-Express
+Run:
+
+```bash
+node --version
 ```
 
-Node.js provides the runtime.
+The FlavorForge project uses the Node.js 22.x line in its application/build setup.
 
-Express provides the HTTP server and routing functionality.
+You should see a Node.js version similar to:
 
-The simplified architecture is:
+```text
+v22.x.x
+```
+
+The exact patch version may be different.
+
+The important point is that the project uses the Node.js 22.x line.
+
+---
+
+# 6. Check npm
+
+Now check npm:
+
+```bash
+npm --version
+```
+
+npm is the package manager used to install the backend dependencies.
+
+The basic relationship is:
+
+```text
+package.json
+     |
+     v
+    npm
+     |
+     v
+Node.js application
+```
+
+---
+
+# 7. Understand `package.json`
+
+The backend has:
+
+```text
+backend/package.json
+```
+
+This file contains the backend project configuration.
+
+It defines things such as:
+
+```text
+Project information
+Dependencies
+Development dependencies
+Scripts
+```
+
+You can inspect it with:
+
+```bash
+cat package.json
+```
+
+If the file is long, you can also open it in your editor.
+
+The important thing to understand is:
+
+```text
+package.json
+      |
+      +---- dependencies
+      |
+      +---- scripts
+      |
+      v
+     npm
+      |
+      v
+Backend application
+```
+
+Do not manually install random packages just because they are commonly used in Node.js projects.
+
+Use the project's existing `package.json`.
+
+---
+
+# 8. Install Backend Dependencies
+
+Make sure you are inside:
+
+```text
+backend/
+```
+
+Then run:
+
+```bash
+npm install
+```
+
+npm reads:
+
+```text
+package.json
+```
+
+and installs the dependencies required by the backend.
+
+After installation, a directory such as:
+
+```text
+node_modules/
+```
+
+will be created.
+
+The structure will look approximately like:
+
+```text
+backend/
+│
+├── node_modules/
+├── src/
+├── tests/
+├── package.json
+└── package-lock.json
+```
+
+`node_modules` is generated by npm.
+
+It should not be committed to Git.
+
+---
+
+# 9. Check the Available Backend Commands
+
+Before starting the backend, let's see which commands the project provides.
+
+Run:
+
+```bash
+npm run
+```
+
+This displays the scripts defined in:
+
+```text
+package.json
+```
+
+You may see commands for things such as:
+
+```text
+start
+dev
+test
+```
+
+Use the scripts that are actually present in the project.
+
+This is better than guessing the command.
+
+---
+
+# 10. Understand the Express Backend
+
+The backend uses Express.
+
+The basic architecture is:
 
 ```text
 Node.js
    |
    v
-Express Application
+Express
    |
-   +---- API Routes
+   v
+HTTP Server
+   |
+   +---- Routes
    |
    +---- Middleware
    |
-   v
-HTTP Response
+   +---- API
 ```
 
-The actual implementation is maintained under:
+The backend source code is maintained under:
 
 ```text
 backend/src/
 ```
 
+This is where the Express application and API implementation live.
+
 ---
 
-# 4. API Endpoint
+# 11. Understand the Health API
 
-FlavorForge provides a health endpoint:
+The main API endpoint used for verification is:
 
 ```text
 GET /api/health
 ```
 
-The complete local URL is:
+When running locally, the complete URL is:
 
 ```text
 http://localhost:3000/api/health
 ```
 
-The endpoint is used to determine whether the backend is running and responding.
-
----
-
-# 5. HTTP Method
-
-The health endpoint uses:
-
-```text
-GET
-```
-
-Therefore the request is:
-
-```text
-GET /api/health
-```
-
-The purpose of the request is to retrieve the current health/status information from the backend.
-
----
-
-# 6. API Request Flow
-
-When the health endpoint is called:
+The request flow is:
 
 ```text
 Client
-  |
-  | GET /api/health
-  v
-Express Server
-  |
-  v
+   |
+   | GET /api/health
+   v
+Express
+   |
+   v
 Health Route
-  |
-  v
+   |
+   v
 JSON Response
 ```
 
-The client can be:
-
-* a browser
-* curl
-* the React frontend
-* a Kubernetes verification command
-* an API testing tool
+This gives us a simple way to check whether the backend is alive.
 
 ---
 
-# 7. Local API Verification
-
-After starting the backend, test the endpoint using:
-
-```bash
-curl http://localhost:3000/api/health
-```
-
-A successful response confirms that:
-
-```text
-Backend process
-       |
-       v
-Express server
-       |
-       v
-/api/health
-       |
-       v
-HTTP response
-```
-
-is working.
-
-The exact response fields may change as the application evolves.
-
----
-
-# 8. API Response
-
-The FlavorForge backend health response can include application information such as:
-
-```text
-version
-environment
-health/status information
-```
-
-In the deployed FlavorForge environment, the API health response was used to verify information including:
-
-```text
-version/build
-environment
-```
-
-For example, the deployed application was verified with application version information around:
-
-```text
-1.3
-```
-
-and the production environment.
-
-The exact response should always be taken from the running application rather than hard-coded into this documentation.
-
----
-
-# 9. Why Version Information Is Useful
-
-The application version/build information helps identify which version of the application is actually running.
-
-For example:
-
-```text
-Frontend
-    |
-    v
-Backend
-    |
-    v
-/api/health
-    |
-    v
-version/build information
-```
-
-This becomes useful when troubleshooting a deployment.
-
-If a user reports:
-
-> "I am seeing an old version."
-
-the health endpoint can help determine which backend version is actually running.
-
----
-
-# 10. Environment Information
-
-The backend health response can also expose the configured application environment.
-
-For the deployed production configuration, the backend used:
-
-```text
-NODE_ENV=production
-```
-
-This allows the running API to be associated with its deployment environment.
-
-The general idea is:
-
-```text
-Development
-    |
-    v
-API
-
-QA
-    |
-    v
-API
-
-Production
-    |
-    v
-API
-```
-
-The deployment configuration determines the environment-specific values.
-
----
-
-# 11. Backend Port
+# 12. Understand Port 3000
 
 The backend uses:
 
@@ -328,13 +462,29 @@ The backend uses:
 PORT=3000
 ```
 
-Therefore, during local execution, the API is accessed through:
+Therefore, when the backend is running locally, we access it through:
 
 ```text
 http://localhost:3000
 ```
 
-and the health endpoint becomes:
+The health endpoint becomes:
+
+```text
+http://localhost:3000/api/health
+```
+
+Remember:
+
+```text
+localhost
++
+3000
++
+/api/health
+```
+
+together form:
 
 ```text
 http://localhost:3000/api/health
@@ -342,104 +492,528 @@ http://localhost:3000/api/health
 
 ---
 
-# 12. Frontend → Backend Communication
+# 13. Start the Backend
 
-The frontend communicates with the backend using HTTP.
+Now we are ready to start the backend.
 
-The simplified flow is:
+First check the available scripts again if required:
 
-```text
-React Application
-       |
-       | HTTP request
-       v
-Backend API
-       |
-       | HTTP response
-       v
-React Application
+```bash
+npm run
 ```
 
-The frontend needs to know the backend API base URL.
+Then use the appropriate application start script defined in `package.json`.
 
-This is why the frontend uses an API configuration value rather than assuming that the backend always runs on the same host.
+For example, if the project provides a `start` script:
+
+```bash
+npm start
+```
+
+If the project provides a development script:
+
+```bash
+npm run dev
+```
+
+Use the script provided by the actual FlavorForge `package.json`.
+
+When the backend starts successfully, the terminal should show that the application is listening on its configured port.
+
+The expected port is:
+
+```text
+3000
+```
+
+Keep this terminal running.
 
 ---
 
-# 13. API Base URL
+# 14. Open a Second Terminal
 
-The FlavorForge frontend uses:
+Do not stop the backend.
 
-```text
-VITE_API_BASE_URL
+Leave the first terminal running.
+
+Open another WSL terminal.
+
+Go back to the backend directory:
+
+```bash
+cd ~/flavorforge-azure-devsecops-capstone/backend
 ```
 
-for the API base URL configuration.
+Now we can test the running API from the second terminal.
 
-For Docker-based frontend configuration, the project used:
-
-```text
-VITE_API_BASE_URL=http://backend:3000
-```
-
-The important concept is:
+This is important because:
 
 ```text
-VITE_API_BASE_URL
-        |
-        v
-Backend API
-```
+Terminal 1
+    |
+    v
+Backend running
 
-The value can change depending on where the application is running.
+
+Terminal 2
+    |
+    v
+API testing
+```
 
 ---
 
-# 14. Why the API URL Is Configurable
+# 15. Test `/api/health`
 
-The frontend may run in different environments.
+From the second terminal, run:
+
+```bash
+curl http://localhost:3000/api/health
+```
+
+The request goes to:
+
+```text
+localhost
+   |
+   v
+Port 3000
+   |
+   v
+Express
+   |
+   v
+/api/health
+```
+
+If everything is working, the backend should return a successful response.
+
+The exact JSON response may contain application health, version, build or environment information depending on the current implementation.
+
+---
+
+# 16. Check the HTTP Response
+
+For a little more information, run:
+
+```bash
+curl -i http://localhost:3000/api/health
+```
+
+The `-i` option displays the HTTP response headers as well as the response body.
+
+You should see a successful HTTP response.
+
+Conceptually:
+
+```text
+HTTP Request
+     |
+     v
+GET /api/health
+     |
+     v
+Express
+     |
+     v
+2xx Success
+     |
+     v
+JSON Response
+```
+
+This confirms that the API is responding over HTTP.
+
+---
+
+# 17. Understand the Health Response
+
+The health endpoint can provide information useful for deployment verification.
+
+For example, the deployed FlavorForge backend was configured with values such as:
+
+```text
+APP_VERSION=1.3
+BUILD_VERSION=1.3
+NODE_ENV=production
+PORT=3000
+```
+
+The health response can therefore help identify information about the running application.
+
+The important idea is:
+
+```text
+/api/health
+      |
+      +---- Is the backend responding?
+      |
+      +---- Which version is running?
+      |
+      +---- Which environment is running?
+```
+
+The exact response should be checked from the running application.
+
+---
+
+# 18. Why Version Information Is Useful
+
+Suppose a new application version is deployed.
+
+You expect:
+
+```text
+Version 1.3
+```
+
+but the application appears to behave like an older version.
+
+The health API can help you check what backend version is actually running.
 
 For example:
 
 ```text
-Local Development
-        |
-        v
-Local Backend
-
-
-Docker
-        |
-        v
-Backend Container
-
-
-Kubernetes
-        |
-        v
-Backend Service
+curl /api/health
+       |
+       v
+Backend response
+       |
+       v
+Version / Build information
 ```
 
-The backend address is therefore not necessarily identical in every environment.
-
-Using a configuration value allows the frontend build/deployment configuration to determine the appropriate backend location.
+This is useful during deployment troubleshooting.
 
 ---
 
-# 15. Docker Network Example
+# 19. Understand the Frontend API URL
 
-When the frontend and backend run as Docker containers on the same Docker network, the backend can be addressed by its container/service name.
+Now let's connect this with the frontend.
 
-The FlavorForge Docker configuration used:
+The frontend needs to know:
 
 ```text
-http://backend:3000
+Where is my backend?
 ```
 
-for:
+FlavorForge uses:
 
 ```text
 VITE_API_BASE_URL
+```
+
+for this purpose.
+
+The frontend can then construct API requests using the configured backend address.
+
+Conceptually:
+
+```text
+VITE_API_BASE_URL
+        |
+        v
+Backend API
+        |
+        v
+/api/health
+```
+
+---
+
+# 20. Local Frontend and Backend
+
+During local development, the applications are separate.
+
+The typical arrangement is:
+
+```text
+Frontend
+http://localhost:5173
+        |
+        | HTTP API request
+        v
+Backend
+http://localhost:3000
+```
+
+So:
+
+```text
+Frontend
+   |
+   | http://localhost:3000
+   v
+Backend
+```
+
+The frontend and backend therefore run on different ports.
+
+---
+
+# 21. Understand CORS
+
+There is one more important concept: CORS.
+
+CORS means:
+
+```text
+Cross-Origin Resource Sharing
+```
+
+The browser considers these different origins:
+
+```text
+http://localhost:5173
+```
+
+and:
+
+```text
+http://localhost:3000
+```
+
+because the ports are different.
+
+Therefore, the backend must allow the frontend origin through its CORS configuration.
+
+The relationship is:
+
+```text
+React Frontend
+http://localhost:5173
+        |
+        | Browser request
+        v
+CORS Check
+        |
+        v
+Express Backend
+http://localhost:3000
+```
+
+---
+
+# 22. Local CORS Configuration
+
+For local development, the frontend origin used by FlavorForge is:
+
+```text
+http://localhost:5173
+```
+
+The backend CORS configuration needs to allow the appropriate frontend origin.
+
+This allows the browser to make API requests from:
+
+```text
+http://localhost:5173
+```
+
+to:
+
+```text
+http://localhost:3000
+```
+
+---
+
+# 23. Test the Backend Before Connecting the Frontend
+
+Before troubleshooting frontend API communication, verify the backend independently.
+
+Run:
+
+```bash
+curl http://localhost:3000/api/health
+```
+
+If the API responds successfully:
+
+```text
+Backend is working
+```
+
+If it does not respond:
+
+```text
+Fix backend first
+```
+
+This is a very useful troubleshooting principle:
+
+```text
+Backend verification
+        |
+        v
+Frontend verification
+```
+
+Do not try to debug both components at the same time.
+
+---
+
+# 24. Run Backend Tests
+
+Now verify the backend using its automated tests.
+
+From:
+
+```text
+backend/
+```
+
+run:
+
+```bash
+npm test
+```
+
+The project uses Jest for backend testing.
+
+The flow is:
+
+```text
+Backend Source
+      |
+      v
+Jest
+      |
+      v
+Tests
+      |
+      v
+Pass / Fail
+```
+
+A successful test run gives additional confidence that the backend implementation is working.
+
+---
+
+# 25. Understand the Difference Between API Test and Unit Tests
+
+There are two different checks here.
+
+### API check
+
+```bash
+curl http://localhost:3000/api/health
+```
+
+This checks whether the running application responds to an HTTP request.
+
+### Automated tests
+
+```bash
+npm test
+```
+
+These execute the project's Jest test suite.
+
+So:
+
+```text
+curl
+  |
+  v
+Running API
+```
+
+while:
+
+```text
+npm test
+  |
+  v
+Automated Tests
+```
+
+Both are useful, but they test different things.
+
+---
+
+# 26. API Configuration
+
+The backend uses environment-specific configuration.
+
+Important configuration values include:
+
+```text
+PORT
+NODE_ENV
+CORS_ORIGIN
+APP_VERSION
+BUILD_VERSION
+```
+
+For the deployed FlavorForge configuration, values included:
+
+```text
+PORT=3000
+NODE_ENV=production
+APP_VERSION=1.3
+BUILD_VERSION=1.3
+```
+
+The values can change depending on the environment.
+
+For example:
+
+```text
+Development
+     |
+     v
+Development configuration
+
+
+QA
+     |
+     v
+QA configuration
+
+
+Production
+     |
+     v
+Production configuration
+```
+
+---
+
+# 27. Keep Code and Configuration Separate
+
+The backend source code is stored under:
+
+```text
+backend/src/
+```
+
+The package configuration is:
+
+```text
+backend/package.json
+```
+
+Deployment configuration is handled separately through the deployment configuration.
+
+Later, Kubernetes configuration is maintained under:
+
+```text
+kubernetes/
+```
+
+This separation allows the same application image to be used across environments while changing configuration appropriately.
+
+---
+
+# 28. Docker API Communication
+
+When we later containerize the application, the communication changes slightly.
+
+The frontend Docker configuration uses:
+
+```text
+VITE_API_BASE_URL=http://backend:3000
 ```
 
 The flow becomes:
@@ -452,26 +1026,78 @@ Frontend Container
 Backend Container
        |
        v
-Express API
+Express
+       |
+       v
+/api/health
 ```
 
-The name:
+Here:
 
 ```text
 backend
 ```
 
-is resolved through the container networking configuration.
+is the backend container/service hostname within the Docker networking setup.
 
 ---
 
-# 16. Kubernetes API Communication
+# 29. Why We Do Not Use `localhost` Between Containers
 
-In Kubernetes, the communication model changes.
+This is an important beginner concept.
 
-Instead of relying on a local Docker container name, the frontend communicates through the Kubernetes networking/service configuration.
+Inside a container:
 
-The general architecture is:
+```text
+localhost
+```
+
+means:
+
+```text
+this same container
+```
+
+It does not automatically mean another container.
+
+Therefore:
+
+```text
+Frontend Container
+       |
+       | localhost:3000
+       X
+```
+
+does not mean:
+
+```text
+Backend Container
+```
+
+Instead, when the containers are connected through the appropriate Docker network, we use:
+
+```text
+backend:3000
+```
+
+So:
+
+```text
+Frontend Container
+       |
+       | backend:3000
+       v
+Backend Container
+```
+
+---
+
+# 30. Kubernetes Communication
+
+When the application later moves to Kubernetes, Kubernetes Services provide stable networking between workloads.
+
+The general flow becomes:
 
 ```text
 Frontend Pod
@@ -486,209 +1112,71 @@ Backend Pod
 Express API
 ```
 
-The Kubernetes service provides a stable way for other workloads to reach the backend pods.
+The Kubernetes Service acts as the stable networking endpoint for the backend.
 
-The exact Kubernetes service configuration is documented later in the Kubernetes section of the BUILD-JOURNEY.
-
----
-
-# 17. CORS
-
-Because the frontend and backend can run on different origins, the backend uses CORS configuration.
-
-CORS stands for:
-
-```text
-Cross-Origin Resource Sharing
-```
-
-The simplified flow is:
-
-```text
-Browser
-   |
-   | Request from frontend origin
-   v
-Backend
-   |
-   | CORS check
-   v
-Allow / Reject
-```
-
-The backend configuration therefore needs to know which frontend origin is allowed.
+The exact Service configuration is explained later in the Kubernetes section.
 
 ---
 
-# 18. Local CORS Configuration
+# 31. API Through the Deployed Application
 
-During local development, the frontend may run on:
-
-```text
-http://localhost:5173
-```
-
-The backend therefore needs to allow the appropriate frontend origin when local development is being used.
-
-The original FlavorForge frontend configuration used:
-
-```text
-http://localhost:5173
-```
-
-as the local frontend origin.
-
----
-
-# 19. Deployed CORS Configuration
-
-The deployed backend configuration uses an environment-specific:
-
-```text
-CORS_ORIGIN
-```
-
-value.
-
-This allows the same backend application image to be deployed with different environment configuration.
-
-Conceptually:
-
-```text
-Backend Image
-      |
-      +---- Dev configuration
-      |
-      +---- QA configuration
-      |
-      +---- Production configuration
-```
-
-The application image does not need to be rebuilt simply because the allowed frontend origin changes.
-
----
-
-# 20. API and Configuration Separation
-
-FlavorForge separates:
-
-```text
-Application Code
-```
-
-from:
-
-```text
-Environment Configuration
-```
-
-Application code:
-
-```text
-backend/src/
-```
-
-Configuration:
-
-```text
-environment variables
-Kubernetes ConfigMaps
-Kubernetes Secrets where required
-```
-
-This is important for a DevSecOps implementation because environment-specific values should not be unnecessarily hard-coded into the application.
-
----
-
-# 21. Health API and Kubernetes
-
-The `/api/health` endpoint becomes particularly important after containerization.
-
-A Kubernetes deployment can expose the backend through:
-
-```text
-Backend Pod
-    |
-    v
-Backend Service
-    |
-    v
-/api/health
-```
-
-The endpoint can then be used to verify that the deployed backend is responding.
-
-The Kubernetes configuration later adds deployment-level health mechanisms where appropriate.
-
----
-
-# 22. Health API Through the Deployed Application
-
-Once the application is exposed through the deployed routing configuration, the API can also be reached through the application entry point.
+After deployment, the application can be accessed through the Kubernetes routing configuration.
 
 The general flow is:
 
 ```text
-Browser / curl
-      |
-      v
+User
+ |
+ v
 Ingress
-      |
-      v
-Backend Service
-      |
-      v
-Backend Pod
-      |
-      v
-/api/health
+ |
+ +--------------------+
+ |                    |
+ v                    v
+Frontend Service   Backend Service
+                       |
+                       v
+                  Backend Pod
+                       |
+                       v
+                  /api/health
 ```
 
-This allows the same API endpoint to be used for local and deployed verification, while the actual URL changes according to the environment.
+The exact routing configuration is documented later.
 
 ---
 
-# 23. API Testing
+# 32. Test API at Different Stages
 
-The API should be tested at multiple levels.
+The same basic health endpoint can be used at different stages.
 
-### Local API test
+### Stage 1 — Local
 
 ```bash
 curl http://localhost:3000/api/health
 ```
 
-### Backend automated tests
+### Stage 2 — Docker
 
-```bash
-npm test
-```
+Verify the backend through the Docker network/container setup.
 
-### Deployed API test
+### Stage 3 — Kubernetes
 
-Use the appropriate deployed application/API URL and verify that:
+Verify the backend through the Kubernetes Service or application ingress.
 
-```text
-HTTP request
-      |
-      v
-Backend
-      |
-      v
-Successful response
-```
+### Stage 4 — Production
 
-This provides progressively stronger verification.
+Verify the deployed API through the application entry point.
+
+This gives us a consistent verification point throughout the project.
 
 ---
 
-# 24. API Testing in the CI/CD Pipeline
+# 33. API in the CI/CD Pipeline
 
-The backend tests are integrated into the Azure DevOps pipeline.
+The backend tests are also used by the Azure DevOps pipeline.
 
-The pipeline flow includes testing before later delivery stages.
-
-Conceptually:
+The overall pipeline flow is:
 
 ```text
 GitHub
@@ -703,7 +1191,10 @@ Build
 Test
    |
    v
-Security / Quality
+Security
+   |
+   v
+Code Quality
    |
    v
 Docker Build
@@ -712,231 +1203,279 @@ Docker Build
 Deployment
 ```
 
-The purpose is to catch application problems before the application is promoted through the deployment process.
+The tests help catch application problems before the application moves further through the delivery pipeline.
 
 ---
 
-# 25. API and SonarCloud
+# 34. API and SonarCloud
 
-The backend source is also included in the project's code-quality analysis.
+The backend source participates in the project's SonarCloud analysis.
 
-The configured SonarCloud source paths include:
-
-```text
-backend/src
-```
-
-and the backend test path includes:
+The important backend areas are:
 
 ```text
-backend/tests
+backend/src/
+backend/tests/
 ```
 
-This means the backend implementation participates in the project's code-quality and test-analysis process.
-
----
-
-# 26. API and Test Coverage
-
-The backend tests contribute to the project's test coverage reporting.
-
-Coverage values may change as the test suite and source code change.
-
-Therefore, this documentation does not treat one historical coverage percentage as a permanent application property.
-
-The important implementation flow is:
+The general flow is:
 
 ```text
 Backend Source
       |
       v
-Backend Tests
+Tests
       |
       v
-Coverage Data
+Coverage
       |
       v
-SonarCloud / CI Quality Analysis
+SonarCloud
 ```
+
+Coverage values can change when the application or tests change.
+
+Therefore, coverage should be treated as a build result rather than a permanent property of the project.
 
 ---
 
-# 27. API Verification Commands
+# 35. Useful Commands
 
-The following commands are useful during development.
+Here is the basic sequence to remember.
 
-### Check backend directory
+### Step 1 — Go to the project
 
 ```bash
-cd ~/flavorforge-azure-devsecops-capstone/backend
+cd ~/flavorforge-azure-devsecops-capstone
 ```
 
-### Check available scripts
+### Step 2 — Enter backend
+
+```bash
+cd backend
+```
+
+### Step 3 — Check Node.js
+
+```bash
+node --version
+```
+
+### Step 4 — Check npm
+
+```bash
+npm --version
+```
+
+### Step 5 — Install dependencies
+
+```bash
+npm install
+```
+
+### Step 6 — See available commands
 
 ```bash
 npm run
 ```
 
-### Run backend tests
+### Step 7 — Start the backend
+
+Use the appropriate start/development script shown by:
 
 ```bash
-npm test
+npm run
 ```
 
-### Check local health endpoint
+### Step 8 — Test the API
+
+From another terminal:
 
 ```bash
 curl http://localhost:3000/api/health
 ```
 
-### Check HTTP headers
+### Step 9 — Test with headers
 
 ```bash
 curl -i http://localhost:3000/api/health
 ```
 
-The `-i` option displays the HTTP response headers along with the response body.
+### Step 10 — Run automated tests
 
----
-
-# 28. Understanding HTTP Status
-
-For a successful health request, the backend should return a successful HTTP response.
-
-Conceptually:
-
-```text
-HTTP Request
-     |
-     v
-GET /api/health
-     |
-     v
-Backend
-     |
-     v
-2xx Success
+```bash
+npm test
 ```
 
-If the endpoint returns an error, investigate the backend logs and application configuration before changing the deployment.
-
 ---
 
-# 29. Common API Problems
+# 36. Beginner Troubleshooting
 
-## Problem 1 — `Connection refused`
+## Problem 1 — Backend does not start
 
-Example:
+First check:
 
-```text
-curl: (7) Failed to connect
+```bash
+node --version
 ```
 
-Possible causes include:
+Then:
 
-* backend is not running
-* backend is listening on a different port
-* application startup failed
-* incorrect URL
+```bash
+npm --version
+```
 
-First check the backend process and configured port.
+Then make sure dependencies are installed:
+
+```bash
+npm install
+```
+
+Then check the available scripts:
+
+```bash
+npm run
+```
+
+Finally, start the backend using the appropriate project script.
 
 ---
 
-## Problem 2 — CORS error in browser
+## Problem 2 — Port 3000 is already being used
 
-Possible causes:
+Check the process using port 3000:
 
-* frontend origin is not allowed
-* incorrect `CORS_ORIGIN`
-* frontend is using a different URL than expected
-* backend configuration was not updated for the environment
+```bash
+sudo lsof -i :3000
+```
+
+Look at the result before stopping anything.
+
+Do not blindly kill an unknown process.
+
+---
+
+## Problem 3 — Health API does not respond
+
+Run:
+
+```bash
+curl -i http://localhost:3000/api/health
+```
+
+If it fails, check:
+
+```text
+Is the backend running?
+        |
+        v
+Is it using port 3000?
+        |
+        v
+Did the application show a startup error?
+        |
+        v
+Is /api/health implemented?
+```
+
+---
+
+## Problem 4 — Browser shows a CORS error
 
 Check:
 
 ```text
-Frontend Origin
-        |
-        v
+Frontend URL
+     |
+     v
 CORS_ORIGIN
-        |
-        v
+     |
+     v
 Backend
 ```
 
----
-
-## Problem 3 — Frontend cannot reach `backend:3000`
-
-Remember that:
+For local development, verify the frontend origin:
 
 ```text
-backend
+http://localhost:5173
 ```
 
-is useful in the appropriate container networking context.
+is allowed by the backend configuration.
 
-It is not automatically a valid hostname from every location.
+Do not disable CORS globally just to make the error disappear.
+
+---
+
+## Problem 5 — `backend:3000` does not work
+
+Remember:
+
+```text
+backend:3000
+```
+
+is intended for the appropriate Docker/container networking environment.
+
+It is not necessarily reachable directly from your Windows browser or WSL host.
 
 For example:
 
 ```text
-Browser on developer computer
-        X
-        |
-        | cannot necessarily resolve
-        |
+Browser
+   |
+   X
 backend:3000
 ```
 
-whereas:
+may fail.
+
+But:
 
 ```text
 Frontend Container
-        |
-        v
+   |
+   v
 backend:3000
-        |
-        v
+   |
+   v
 Backend Container
 ```
 
-can work when the containers share the appropriate Docker network.
+can work when the containers share the correct Docker network.
 
 ---
 
-# 30. API Security
+# 37. Security
 
-The API implementation must not expose credentials.
+Never place secrets inside the API source code.
 
-Do not return sensitive information from:
+Do not expose:
+
+```text
+Passwords
+API keys
+Access tokens
+Azure credentials
+Private keys
+Database passwords
+Secret connection strings
+```
+
+through:
 
 ```text
 /api/health
 ```
 
-or other API endpoints.
+or any other endpoint.
 
-Do not place:
-
-```text
-Passwords
-PATs
-Azure credentials
-Private keys
-Database credentials
-Connection strings containing secrets
-```
-
-into API responses.
-
-Health information should contain only the information necessary for application/deployment verification.
+The health endpoint should expose only useful application/deployment information.
 
 ---
 
-# 31. API Architecture Summary
+# 38. Complete API Flow
 
-The FlavorForge API architecture can be represented as:
+At the application level:
 
 ```text
                     FlavorForge
@@ -947,99 +1486,53 @@ The FlavorForge API architecture can be represented as:
       Frontend                       Backend
    React + Vite                 Node.js + Express
           |                             |
-          | HTTP API                    |
-          +------------->---------------+
-                         |
-                         v
-                  /api/health
-                         |
-                         v
-                    API Response
+          | HTTP Request                |
+          +---------------------------->|
+                                        |
+                                        v
+                                GET /api/health
+                                        |
+                                        v
+                                  JSON Response
+                                        |
+          <-----------------------------+
+          |
+          v
+      React Frontend
 ```
 
 ---
 
-# 32. Local Application Flow
+# 39. Local Verification Flow
 
-The local application flow is:
+Before moving to Docker, verify everything locally:
 
 ```text
-Browser
-   |
-   v
-React Frontend
-   |
-   | API request
-   v
-localhost:3000
-   |
-   v
-Express
-   |
-   v
-/api/health
-   |
-   v
-JSON Response
+1. Start backend
+       |
+       v
+2. Backend listens on port 3000
+       |
+       v
+3. Call /api/health
+       |
+       v
+4. Receive successful response
+       |
+       v
+5. Run npm test
+       |
+       v
+6. Tests pass
 ```
+
+Once this works, the backend API foundation is ready for the next stage.
 
 ---
 
-# 33. Docker Application Flow
+# 40. What We Have Completed
 
-After containerization:
-
-```text
-Browser
-   |
-   v
-Frontend Container
-   |
-   | http://backend:3000
-   v
-Backend Container
-   |
-   v
-Express
-   |
-   v
-/api/health
-```
-
----
-
-# 34. Kubernetes Application Flow
-
-After Kubernetes deployment:
-
-```text
-User
- |
- v
-Frontend
- |
- v
-Backend Service
- |
- v
-Backend Pod
- |
- v
-Express
- |
- v
-/api/health
-```
-
-The Kubernetes section will explain the exact Services, Deployments, ConfigMaps and routing configuration.
-
----
-
-# 35. What We Have Implemented
-
-The API implementation provides the application communication foundation.
-
-The important implementation points are:
+At this point, we have established:
 
 ```text
 Node.js
@@ -1048,72 +1541,100 @@ Node.js
 Express
    |
    v
-API route
+Backend API
+   |
+   +---- GET /api/health
+   |
+   +---- CORS configuration
+   |
+   +---- Environment configuration
+   |
+   +---- Jest tests
    |
    v
-GET /api/health
+Local API Verification
 ```
 
-The frontend communicates with the backend through a configurable API base URL.
+The frontend has:
 
-The backend uses CORS configuration to control allowed frontend origins.
+```text
+VITE_API_BASE_URL
+```
 
-The backend can be verified locally and later through Docker and Kubernetes deployments.
+to identify the backend API location.
 
----
+The Docker environment later uses:
 
-# 36. Verification Checklist
+```text
+http://backend:3000
+```
 
-Before continuing, verify:
-
-* [ ] Backend uses Node.js.
-* [ ] Backend uses Express.
-* [ ] Backend source is under `backend/src/`.
-* [ ] Backend tests are under `backend/tests/`.
-* [ ] Backend uses port `3000` according to the project configuration.
-* [ ] `/api/health` exists.
-* [ ] `/api/health` can be tested locally.
-* [ ] Frontend uses an API base URL configuration.
-* [ ] Docker configuration uses the appropriate backend address.
-* [ ] CORS is configured for the appropriate frontend origin.
-* [ ] Backend tests are available.
-* [ ] Backend participates in CI testing.
-* [ ] Backend source participates in SonarCloud analysis.
-* [ ] No credentials are exposed through API responses.
+for frontend-to-backend communication.
 
 ---
 
-# 37. Reviewer Explanation
+# 41. Final Verification Checklist
+
+Before continuing, verify each item:
+
+* [ ] Backend directory exists.
+* [ ] `backend/package.json` exists.
+* [ ] Node.js is available.
+* [ ] npm is available.
+* [ ] Backend dependencies are installed.
+* [ ] Express backend starts successfully.
+* [ ] Backend listens on port `3000`.
+* [ ] `GET /api/health` works.
+* [ ] `curl http://localhost:3000/api/health` returns a response.
+* [ ] Backend Jest tests run successfully.
+* [ ] Frontend has an API base URL configuration.
+* [ ] Local frontend origin is considered in CORS configuration.
+* [ ] Docker communication uses the appropriate backend hostname.
+* [ ] No secrets are exposed through the API.
+
+---
+
+# 42. Reviewer Explanation
 
 ### "What API did you implement?"
 
-> "The FlavorForge backend is a Node.js and Express API. One of the key endpoints is `GET /api/health`, which I use to verify that the backend is running and responding."
+> "The FlavorForge backend is a Node.js and Express API. One of the main endpoints is `GET /api/health`, which I use to verify that the backend is running and responding."
 
-### "How does your frontend communicate with the backend?"
+### "How did you verify the API?"
 
-> "The React frontend communicates with the Node.js Express backend through HTTP requests. The backend API base URL is configurable so the application can use the appropriate backend address in different environments."
+> "I started the backend locally on port 3000 and called `/api/health` using curl. I also ran the backend Jest test suite."
 
-### "Why do you use CORS?"
+### "How does the frontend communicate with the backend?"
 
-> "The frontend and backend can run on different origins, so the backend uses CORS configuration to control which frontend origin is allowed to make browser-based requests."
+> "The React frontend communicates with the Node.js Express backend through HTTP requests. The backend URL is provided through the `VITE_API_BASE_URL` configuration."
 
 ### "Why is the API URL configurable?"
 
-> "The frontend and backend addresses can change between local development, Docker and Kubernetes. Keeping the API base URL configurable avoids hard-coding one environment's address into the application."
+> "Because the frontend and backend addresses change depending on the environment. Local development, Docker and Kubernetes use different networking arrangements, so I don't hard-code one environment's address."
 
-### "How do you verify the API?"
+### "Why do you use `backend:3000` in Docker?"
 
-> "Locally, I call `GET /api/health` using curl and also run the backend Jest tests. After deployment, the same health endpoint can be used to verify the deployed backend."
+> "The frontend and backend run as separate containers. Within the Docker network, the frontend can reach the backend using its container or service hostname, `backend`, on port 3000."
 
-### "Why is the health endpoint useful in DevOps?"
+### "Why can't you use localhost between the containers?"
 
-> "It provides a simple application-level verification point. I can use it during local development, container testing and Kubernetes deployment verification to confirm that the backend is actually responding."
+> "Because localhost inside a container refers to that container itself. The backend is running in a different container, so the frontend needs to use the backend's network hostname."
+
+### "Why do you need CORS?"
+
+> "The browser sees the frontend and backend as different origins when they use different ports or hosts. CORS allows the backend to control which frontend origin is permitted to make browser requests."
+
+### "Why is `/api/health` useful in DevOps?"
+
+> "It gives me a simple application-level verification point. I can use it during local development, Docker testing and Kubernetes deployment verification to confirm that the backend is actually responding."
 
 ---
 
-# 38. Next Step
+# 43. Next Step
 
-The API implementation is now documented.
+The frontend, backend and API communication foundation is now documented.
+
+The next step is to verify the application through automated testing before moving into Docker.
 
 Continue with:
 
@@ -1121,4 +1642,4 @@ Continue with:
 docs/BUILD-JOURNEY/03-application/05-application-testing.md
 ```
 
-That document will cover how the FlavorForge application was tested before moving into the containerization and deployment stages.
+That document will explain how the FlavorForge application was tested before containerization.

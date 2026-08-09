@@ -2,22 +2,22 @@
 
 ## Objective
 
-This document explains how Git authenticates with GitHub when pushing and pulling the FlavorForge project.
+This document explains how Git authenticates with GitHub when working with the FlavorForge repository.
 
-There are two supported methods:
+There are two supported authentication methods:
 
 1. **HTTPS + Personal Access Token (PAT)**
 2. **SSH key authentication**
 
-A person only needs to configure **one** of these methods.
+A person only needs to configure **one** method.
 
-The documentation explains both so that a new user can choose the method they understand and prefer.
+The existing FlavorForge repository uses **HTTPS**. SSH is documented as an alternative for someone setting up the project from scratch.
 
 ---
 
 # 1. Why Is Authentication Needed?
 
-Git needs permission to communicate with the GitHub repository.
+When Git communicates with GitHub, GitHub needs to verify that the user has permission to access the repository.
 
 For example:
 
@@ -25,20 +25,72 @@ For example:
 Local Computer
       |
       | git push
-      |
       v
 GitHub
 ```
 
-GitHub must know:
+Authentication answers:
 
-> "Is this person allowed to push to this repository?"
+> "Who is making this Git request, and are they allowed to access the repository?"
 
-Authentication provides that proof.
+Without valid authentication, GitHub can reject operations such as:
+
+```bash
+git push
+git pull
+git fetch
+```
 
 ---
 
-# 2. Two Authentication Methods
+# 2. Authentication vs Remote — Important Difference
+
+Authentication and the Git remote are **not the same thing**.
+
+### Authentication
+
+Authentication answers:
+
+> "How does GitHub verify me?"
+
+Examples:
+
+```text
+Personal Access Token
+SSH key
+```
+
+### Remote
+
+The remote answers:
+
+> "Which GitHub repository should Git communicate with?"
+
+Example:
+
+```text
+origin
+```
+
+pointing to:
+
+```text
+https://github.com/YOUR_GITHUB_USERNAME/flavorforge-azure-devsecops-capstone.git
+```
+
+or:
+
+```text
+git@github.com:YOUR_GITHUB_USERNAME/flavorforge-azure-devsecops-capstone.git
+```
+
+This distinction is important because you can change the authentication method without changing the repository itself.
+
+---
+
+# 3. Choose One Authentication Method
+
+There are two supported approaches.
 
 ## Option A — HTTPS + Personal Access Token
 
@@ -46,22 +98,16 @@ Authentication provides that proof.
 Local Git
     |
     | HTTPS
-    | username + Personal Access Token
+    | Personal Access Token
     v
 GitHub
 ```
 
-This method uses the repository HTTPS URL.
-
-Example:
+Example repository URL:
 
 ```text
 https://github.com/YOUR_GITHUB_USERNAME/flavorforge-azure-devsecops-capstone.git
 ```
-
-When Git needs authentication, a Personal Access Token can be used instead of a GitHub account password.
-
----
 
 ## Option B — SSH
 
@@ -74,150 +120,165 @@ Local Git
 GitHub
 ```
 
-With SSH, the computer generates a key pair:
+Example repository URL:
 
 ```text
-Private Key
-    +
-Public Key
+git@github.com:YOUR_GITHUB_USERNAME/flavorforge-azure-devsecops-capstone.git
 ```
 
-The public key is added to GitHub.
+### Which one should I choose?
 
-The private key stays on the computer.
+Both are valid.
 
-GitHub uses the public key to verify that the computer is authorized.
+For this project:
 
----
+```text
+Existing FlavorForge setup
+→ HTTPS
+```
 
-# 3. Which Method Should I Choose?
-
-Both methods are valid.
-
-For this documentation:
+For a new user:
 
 ```text
 HTTPS + PAT
 ```
 
-is easier to understand for a beginner who is already familiar with HTTPS.
+is usually straightforward to understand.
 
-SSH is useful when:
+SSH is also a common choice for developers who frequently use Git from Linux or WSL.
 
-* the user prefers SSH
-* the user works with Git frequently
-* the user wants key-based authentication
-* the user does not want to repeatedly enter credentials
-
-Choose **one**.
-
-Do not configure both unless there is a specific reason.
+> **Choose one method. Do not configure both unless you have a specific reason.**
 
 ---
 
-# 4. IMPORTANT — PAT Security
+# 4. Before Starting
 
-A Personal Access Token is a credential.
+Make sure:
 
-Treat it like a password.
+* GitHub account exists.
+* GitHub email has been verified.
+* FlavorForge GitHub repository has already been created.
+* WSL Ubuntu is available.
+* Git is installed.
+
+Check Git:
+
+```bash
+git --version
+```
+
+Expected:
+
+```text
+git version <version>
+```
+
+Authentication is configured from the WSL terminal.
+
+---
+
+# OPTION A — HTTPS + PERSONAL ACCESS TOKEN
+
+# 5. What Is a Personal Access Token?
+
+A Personal Access Token (PAT) is a credential that can be used to authenticate Git operations over HTTPS.
+
+Conceptually:
+
+```text
+Git
+ |
+ | HTTPS
+ |
+ | Username + PAT
+ v
+GitHub
+```
+
+The PAT is used instead of the normal GitHub account password for Git HTTPS authentication.
+
+Treat the PAT like a password.
+
+---
+
+# 6. PAT Security Rules
+
+A PAT must never be committed or published.
 
 Never put a PAT into:
 
 ```text
-GitHub README
-Markdown documentation
-Git commit
-Screenshot
-Screen recording
-Video
-Chat message
-Public repository
-Source code
+README.md
+documentation
+Git commits
+source code
+pipeline YAML
+screenshots
+screen recordings
+videos
+chat messages
+public notes
 ```
 
-Never publish:
+Never publish token values such as:
 
 ```text
 ghp_...
 github_pat_...
 ```
 
-or any other GitHub token value.
+If a PAT is accidentally exposed:
 
-If a token is accidentally exposed, revoke it immediately from GitHub and create a new one.
+1. Revoke the token.
+2. Create a replacement token.
+3. Update any system that was using the old token.
+4. Check whether the exposed token appeared in Git history or other public locations.
 
----
-
-# 5. OPTION A — HTTPS + PAT
-
-## 5.1 Check the GitHub Repository URL
-
-Open the FlavorForge repository on GitHub.
-
-Select:
-
-**Code**
-
-Then select:
-
-**HTTPS**
-
-You will see a URL similar to:
-
-```text
-https://github.com/YOUR_GITHUB_USERNAME/flavorforge-azure-devsecops-capstone.git
-```
-
-Copy the URL if required.
-
-Do not change it yet.
+Simply deleting a token from the latest file does not necessarily remove it from Git history.
 
 ---
 
-# 6. Create a Personal Access Token
+# 7. Create a Personal Access Token
 
 Sign in to GitHub.
 
 Open:
 
-**Profile picture → Settings**
+```text
+Profile picture
+→ Settings
+→ Developer settings
+→ Personal access tokens
+```
 
-Then find:
+GitHub provides different token types, including:
 
-**Developer settings**
+```text
+Fine-grained personal access tokens
+Personal access tokens (classic)
+```
 
-Then:
+For new setups, prefer a **fine-grained token** when it supports the required workflow because it can be restricted to specific repositories and permissions.
 
-**Personal access tokens**
-
-GitHub currently provides token options such as:
-
-* Fine-grained personal access tokens
-* Personal access tokens (classic)
-
-For this beginner documentation, the important point is:
-
-> Use the least-privileged token that supports the Git operations required by the project.
-
-If your organization's or GitHub setup specifically requires a classic token, use the classic-token procedure below.
+Use a classic token only when it is specifically required by your environment or workflow.
 
 ---
 
-# 7. PAT — Classic Token Procedure
+# 8. Create a Fine-Grained PAT
 
-If you use:
+If using a fine-grained token, select the option to create a new fine-grained token.
 
-**Personal access tokens (classic)**
+GitHub will ask for settings such as:
 
-select:
+```text
+Token name
+Expiration
+Resource owner
+Repository access
+Permissions
+```
 
-**Generate new token → Generate new token (classic)**
-
-GitHub may ask for:
-
-### Note
-
-Enter a descriptive name.
+Use a descriptive token name.
 
 Example:
 
@@ -225,104 +286,150 @@ Example:
 FlavorForge Git HTTPS
 ```
 
-This is only a label to help identify the token.
+---
+
+# 9. Choose the Token Expiration
+
+Select an appropriate expiration period.
+
+A limited lifetime is preferable to an unnecessarily long-lived credential.
+
+For a temporary project or learning exercise, use a reasonable expiration period.
+
+When the token expires, create a new token rather than extending access unnecessarily.
 
 ---
 
-# 8. PAT Expiration
+# 10. Restrict Repository Access
 
-GitHub asks for an expiration period.
+When GitHub asks which repositories the token can access, avoid granting access to every repository unless it is actually required.
 
-Choose an expiration that follows your security requirements.
+For the FlavorForge project, select only:
 
-A short-lived token is safer than a token that never expires.
+```text
+flavorforge-azure-devsecops-capstone
+```
 
-For a temporary project/recreation exercise, use a reasonable limited expiration period.
+when the GitHub interface provides repository-specific access.
 
-Do not choose an unnecessarily long lifetime just for convenience.
+This follows the principle:
+
+> Give a credential only the access required for its task.
 
 ---
 
-# 9. PAT Permissions
+# 11. Configure Repository Permissions
 
-Do **NOT** select every permission.
+For a normal Git workflow, the token needs enough repository access to perform the operations required by the project.
 
-A common beginner mistake is:
-
-> "Select everything because I don't know what is needed."
-
-Do not do that.
-
-For a normal Git repository workflow, the token should only have the repository access required to:
+Typical operations are:
 
 ```text
 clone
-pull
 fetch
+pull
 push
 ```
 
-For a **classic PAT**, the commonly required repository permission is:
+For a fine-grained token, configure the minimum repository permissions necessary for reading and writing repository contents.
 
-```text
-repo
-```
+GitHub's permission names and UI can change, so follow the permissions currently displayed by GitHub.
 
-However, if the repository is public and your workflow only needs limited access, do not automatically grant broad permissions without checking the current GitHub requirements.
-
-For a **fine-grained PAT**, configure:
-
-* Repository access → only the required repository
-* Repository permissions → minimum permissions required for Git operations
-
-For a normal push workflow, this generally means repository contents access sufficient for reading and writing repository contents.
-
-The exact GitHub UI and permission names may change, so follow the current GitHub screen.
+Do not grant unrelated administrative permissions simply because they are available.
 
 ---
 
-# 10. Generate the PAT
+# 12. Create the Token
 
-After selecting the required permissions:
+Review the settings.
 
-Select:
+Then select:
 
 **Generate token**
 
-GitHub will display the token.
+GitHub may display the token only once.
 
-### VERY IMPORTANT
+If so, copy it securely at this point.
 
-Copy the token immediately if GitHub tells you that it will only be shown once.
-
-Store it securely.
-
-Do NOT put it into:
-
-```text
-docs/
-README.md
-screenshots/
-videos/
-GitHub repository
-```
-
-Do not send it to another person through chat.
+Do not put the token into the project.
 
 ---
 
-# 11. What Does the PAT Replace?
+# 13. What Happens When Git Asks for a Password?
 
-GitHub no longer accepts the normal GitHub account password for Git HTTPS authentication.
-
-When Git asks for:
+When Git uses an HTTPS remote, it may ask:
 
 ```text
 Username:
+```
+
+Enter:
+
+```text
+YOUR_GITHUB_USERNAME
+```
+
+If Git asks:
+
+```text
 Password:
 ```
 
-use:
+enter the:
+
+```text
+PERSONAL_ACCESS_TOKEN
+```
+
+Do **not** enter the normal GitHub account password.
+
+The PAT is the credential used for Git HTTPS authentication.
+
+---
+
+# 14. Verify the HTTPS Remote
+
+From the WSL terminal, go to the FlavorForge project:
+
+```bash
+cd ~/flavorforge-azure-devsecops-capstone
+```
+
+Check the remote:
+
+```bash
+git remote -v
+```
+
+For the existing FlavorForge repository, the expected remote is:
+
+```text
+origin  https://github.com/shettymalathib/flavorforge-azure-devsecops-capstone.git (fetch)
+origin  https://github.com/shettymalathib/flavorforge-azure-devsecops-capstone.git (push)
+```
+
+For a new user, it will look like:
+
+```text
+origin  https://github.com/YOUR_GITHUB_USERNAME/flavorforge-azure-devsecops-capstone.git (fetch)
+origin  https://github.com/YOUR_GITHUB_USERNAME/flavorforge-azure-devsecops-capstone.git (push)
+```
+
+If the remote is already correct, do not add it again.
+
+---
+
+# 15. Test HTTPS Authentication
+
+Once the remote is correct, authentication can be tested with a Git operation.
+
+For example:
+
+```bash
+git fetch origin
+```
+
+If Git asks for credentials:
 
 ```text
 Username:
@@ -336,72 +443,91 @@ Password:
 YOUR_PERSONAL_ACCESS_TOKEN
 ```
 
-The PAT is entered where Git asks for the password.
-
-The GitHub account password itself should NOT be entered.
+A successful fetch indicates that Git can authenticate and communicate with the repository.
 
 ---
 
-# 12. Test HTTPS Authentication
+# OPTION B — SSH AUTHENTICATION
 
-From the WSL terminal in the FlavorForge project:
+# 16. What Is SSH Authentication?
 
-```bash
-git remote -v
-```
+SSH authentication uses a cryptographic key pair instead of a PAT.
 
-You should see something similar to:
+The key pair contains:
 
 ```text
-origin  https://github.com/YOUR_GITHUB_USERNAME/flavorforge-azure-devsecops-capstone.git (fetch)
-origin  https://github.com/YOUR_GITHUB_USERNAME/flavorforge-azure-devsecops-capstone.git (push)
-```
-
-If the remote is already correct, do not add another remote.
-
----
-
-# 13. OPTION B — SSH Authentication
-
-SSH uses a key pair instead of a PAT.
-
-The key pair is:
-
-```text
-Private Key
+Private key
 +
-Public Key
+Public key
 ```
+
+The relationship is:
+
+```text
+Local Computer
+      |
+      | Private key
+      v
+SSH authentication
+      |
+      v
+GitHub
+      |
+      | Public key registered with GitHub
+      v
+Repository
+```
+
+The private key stays on the local computer.
+
+The public key is added to GitHub.
+
+---
+
+# 17. SSH Security Rules
 
 ### Private key
 
-The private key stays on your computer.
+Example:
 
-Never upload it to GitHub.
+```text
+~/.ssh/id_ed25519
+```
 
-Never commit it to Git.
+This must remain private.
 
-Never share it.
+Never:
+
+* upload it to GitHub
+* commit it to Git
+* put it in documentation
+* include it in screenshots
+* include it in videos
+* send it to another person
 
 ### Public key
 
-The public key can be added to GitHub.
+Example:
 
-GitHub uses it to recognize your computer.
+```text
+~/.ssh/id_ed25519.pub
+```
+
+This is the key that is added to GitHub.
+
+Only the public key should be copied into GitHub.
 
 ---
 
-# 14. Check Whether an SSH Key Already Exists
+# 18. Check Whether an SSH Key Already Exists
 
-Open the WSL terminal.
-
-Run:
+From WSL, run:
 
 ```bash
 ls -al ~/.ssh
 ```
 
-Look for files such as:
+Look for keys such as:
 
 ```text
 id_ed25519
@@ -415,19 +541,29 @@ id_rsa
 id_rsa.pub
 ```
 
-If you already have a suitable SSH key, do not create another one unnecessarily.
+If you already have an appropriate SSH key, you may be able to use it.
+
+Do not create additional keys unnecessarily.
+
+You can also check specifically for public keys:
+
+```bash
+ls -al ~/.ssh/*.pub
+```
 
 ---
 
-# 15. Install SSH Tools If Missing
+# 19. Check Whether SSH Is Installed
 
-Check:
+Run:
 
 ```bash
 ssh -V
 ```
 
-If SSH is missing, install the OpenSSH client:
+If SSH is installed, you should see version information.
+
+If it is missing, install the OpenSSH client:
 
 ```bash
 sudo apt update
@@ -439,7 +575,7 @@ Then:
 sudo apt install openssh-client -y
 ```
 
-Verify:
+Verify again:
 
 ```bash
 ssh -V
@@ -447,9 +583,9 @@ ssh -V
 
 ---
 
-# 16. Generate an SSH Key
+# 20. Generate an SSH Key
 
-If you do not already have an SSH key, use:
+If you do not already have an appropriate SSH key, generate an Ed25519 key:
 
 ```bash
 ssh-keygen -t ed25519 -C "YOUR_GITHUB_EMAIL"
@@ -461,7 +597,7 @@ Replace:
 YOUR_GITHUB_EMAIL
 ```
 
-with the email address associated with your GitHub account.
+with the email associated with your GitHub account.
 
 When prompted:
 
@@ -471,50 +607,60 @@ Enter file in which to save the key:
 
 Press:
 
-**Enter**
-
-to use the default location.
-
-When prompted for a passphrase, a passphrase is recommended.
-
-You will then have files similar to:
-
 ```text
-~/.ssh/id_ed25519
-~/.ssh/id_ed25519.pub
+Enter
 ```
 
----
+to accept the default location.
 
-# 17. Understand the Two Files
+When prompted for a passphrase, using a passphrase is recommended.
 
-You should now have:
+The generated files will normally be:
 
 ```text
 ~/.ssh/id_ed25519
 ```
 
-This is the:
-
-**PRIVATE KEY**
-
-Never share it.
-
-And:
+and:
 
 ```text
 ~/.ssh/id_ed25519.pub
 ```
 
-This is the:
+---
 
-**PUBLIC KEY**
+# 21. Verify the SSH Key Files
 
-The public key is the one that can be added to GitHub.
+Run:
+
+```bash
+ls -al ~/.ssh
+```
+
+You should see:
+
+```text
+id_ed25519
+id_ed25519.pub
+```
+
+Remember:
+
+```text
+id_ed25519
+```
+
+is the private key.
+
+```text
+id_ed25519.pub
+```
+
+is the public key.
 
 ---
 
-# 18. Start the SSH Agent
+# 22. Start the SSH Agent
 
 Run:
 
@@ -528,11 +674,11 @@ You should see output similar to:
 Agent pid 1234
 ```
 
-The number may be different.
+The process ID will be different on different systems.
 
 ---
 
-# 19. Add the Private Key to the SSH Agent
+# 23. Add the Private Key to the SSH Agent
 
 Run:
 
@@ -540,13 +686,15 @@ Run:
 ssh-add ~/.ssh/id_ed25519
 ```
 
-If your key uses a passphrase, you may be asked to enter it.
+If you configured a passphrase, SSH may ask you to enter it.
 
 The private key remains on your computer.
 
+The SSH agent simply makes the key available for authentication.
+
 ---
 
-# 20. Display the Public Key
+# 24. Copy the Public Key
 
 Run:
 
@@ -554,37 +702,25 @@ Run:
 cat ~/.ssh/id_ed25519.pub
 ```
 
-You will see a single line beginning approximately with:
+The output will look similar to:
 
 ```text
-ssh-ed25519
+ssh-ed25519 AAAA... YOUR_GITHUB_EMAIL
 ```
 
-Copy the entire public-key line.
+Copy the entire line.
 
-### Security warning
+Do **not** run or copy:
 
-The `.pub` file is the public key.
-
-The file without `.pub` is the private key.
-
-Never copy:
-
-```text
-~/.ssh/id_ed25519
+```bash
+cat ~/.ssh/id_ed25519
 ```
 
-into GitHub.
-
-Only copy:
-
-```text
-~/.ssh/id_ed25519.pub
-```
+That would display the private key.
 
 ---
 
-# 21. Add the SSH Public Key to GitHub
+# 25. Add the Public Key to GitHub
 
 In GitHub:
 
@@ -592,7 +728,7 @@ In GitHub:
 2. Select **Settings**.
 3. Select **SSH and GPG keys**.
 4. Select **New SSH key**.
-5. Enter a title.
+5. Enter a descriptive title.
 
 Example:
 
@@ -600,25 +736,23 @@ Example:
 FlavorForge WSL
 ```
 
-For **Key type**, select the appropriate authentication option shown by GitHub.
-
-Paste the contents of:
+6. Select the appropriate key type shown by GitHub.
+7. Paste the contents of:
 
 ```bash
 cat ~/.ssh/id_ed25519.pub
 ```
 
 into the key field.
-
-Select:
+8. Select:
 
 **Add SSH key**
 
-GitHub may ask you to confirm your password or another authentication factor.
+GitHub may request additional authentication before allowing the key to be added.
 
 ---
 
-# 22. Test the SSH Connection
+# 26. Test the SSH Connection
 
 From WSL, run:
 
@@ -626,33 +760,31 @@ From WSL, run:
 ssh -T git@github.com
 ```
 
-The first time, SSH may ask:
+The first connection may display a message asking whether you trust GitHub's host key.
 
-```text
-Are you sure you want to continue connecting (yes/no/[fingerprint])?
-```
+Verify that the host is GitHub.
 
-Verify that the host is GitHub and then enter:
+Then enter:
 
 ```text
 yes
 ```
 
-A successful authentication message should indicate that GitHub recognizes your account.
+A successful authentication response indicates that GitHub recognizes the SSH key.
 
-GitHub does not provide an interactive shell, so a message saying that shell access is not provided can still indicate that authentication succeeded.
+GitHub does not provide an interactive shell through this connection, so a message explaining that shell access is not provided can still mean that SSH authentication succeeded.
 
 ---
 
-# 23. Change the Git Remote to SSH
+# 27. Configure the Git Remote for SSH
 
-If you choose SSH, the GitHub remote should look like:
+If you choose SSH, the remote should use the SSH format:
 
 ```text
 git@github.com:YOUR_GITHUB_USERNAME/flavorforge-azure-devsecops-capstone.git
 ```
 
-To change the existing remote:
+If `origin` already exists, change it with:
 
 ```bash
 git remote set-url origin git@github.com:YOUR_GITHUB_USERNAME/flavorforge-azure-devsecops-capstone.git
@@ -681,131 +813,69 @@ origin  git@github.com:YOUR_GITHUB_USERNAME/flavorforge-azure-devsecops-capstone
 
 ---
 
-# 24. HTTPS vs SSH
+# 28. Test the SSH Git Connection
 
-| Feature                   | HTTPS + PAT             | SSH               |
-| ------------------------- | ----------------------- | ----------------- |
-| Protocol                  | HTTPS                   | SSH               |
-| Credential                | PAT                     | SSH key           |
-| GitHub password used      | No                      | No                |
-| Private key required      | No                      | Yes               |
-| Easy for beginners        | Yes                     | Moderate          |
-| Good for frequent Git use | Yes                     | Yes               |
-| Token expiration          | Yes, depending on token | SSH key lifecycle |
-| Secret must be protected  | PAT                     | Private key       |
+Once the SSH remote is configured, run:
 
-Both methods are valid.
+```bash
+git fetch origin
+```
+
+If the command completes successfully, Git can communicate with the GitHub repository using SSH.
 
 ---
 
-# 25. Which Method Does FlavorForge Use?
+# 29. HTTPS vs SSH
 
-The existing FlavorForge repository currently uses an HTTPS remote:
+| Feature                   | HTTPS + PAT           | SSH                       |
+| ------------------------- | --------------------- | ------------------------- |
+| Protocol                  | HTTPS                 | SSH                       |
+| Authentication            | Personal Access Token | SSH key pair              |
+| GitHub password used      | No                    | No                        |
+| Private key required      | No                    | Yes                       |
+| PAT required              | Yes                   | No                        |
+| Beginner friendly         | Yes                   | Moderate                  |
+| Good for frequent Git use | Yes                   | Yes                       |
+| Credential expiration     | Depends on PAT        | Depends on key management |
+| Main security requirement | Protect PAT           | Protect private key       |
 
-```text
-https://github.com/shettymalathib/flavorforge-azure-devsecops-capstone.git
-```
+Both methods are valid.
 
-This means the current local repository is configured for:
+The important point is to protect whichever credential you choose.
+
+---
+
+# 30. Which Authentication Does FlavorForge Use?
+
+The existing FlavorForge repository uses:
 
 ```text
 HTTPS
 ```
 
-The documentation supports SSH as an alternative for someone recreating the project.
+The current remote is:
 
-Do not change the existing FlavorForge remote just for documentation purposes.
+```text
+https://github.com/shettymalathib/flavorforge-azure-devsecops-capstone.git
+```
+
+Therefore, the existing FlavorForge setup should **not** be changed merely because this document also explains SSH.
+
+SSH is included as an alternative for someone recreating the project.
 
 ---
 
-# 26. Important Difference: Authentication vs Remote
+# 31. Do Not Add `origin` Again
 
-These are two different things.
+Authentication does not mean that a new remote needs to be created.
 
-### Authentication
-
-Answers:
-
-> "Who are you and are you allowed to access GitHub?"
-
-Examples:
-
-```text
-PAT
-SSH key
-```
-
-### Remote
-
-Answers:
-
-> "Which GitHub repository should Git communicate with?"
-
-Example:
-
-```text
-origin
-```
-
-pointing to:
-
-```text
-https://github.com/YOUR_GITHUB_USERNAME/flavorforge-azure-devsecops-capstone.git
-```
-
-or:
-
-```text
-git@github.com:YOUR_GITHUB_USERNAME/flavorforge-azure-devsecops-capstone.git
-```
-
----
-
-# 27. Common Errors
-
-## Error: Authentication failed
-
-For HTTPS:
-
-Check:
-
-* GitHub username
-* PAT validity
-* PAT expiration
-* Repository permissions
-* Repository URL
-
-Do not use your normal GitHub password as the Git HTTPS password.
-
----
-
-## Error: Permission denied (publickey)
-
-For SSH:
-
-Check:
-
-```bash
-ssh -T git@github.com
-```
-
-Then check:
-
-```bash
-ssh-add -l
-```
-
-Also verify that the public key was added to the correct GitHub account.
-
----
-
-## Error: remote origin already exists
-
-Run:
+Always check:
 
 ```bash
 git remote -v
 ```
+
+If `origin` already exists and points to the correct repository, leave it unchanged.
 
 Do not run:
 
@@ -815,7 +885,7 @@ git remote add origin ...
 
 again.
 
-If the remote is incorrect, use:
+If the remote is wrong, use:
 
 ```bash
 git remote set-url origin <correct-url>
@@ -823,7 +893,9 @@ git remote set-url origin <correct-url>
 
 ---
 
-## Error: Repository not found
+# 32. Common Problems
+
+## Problem 1 — HTTPS Authentication Failed
 
 Check:
 
@@ -831,63 +903,188 @@ Check:
 git remote -v
 ```
 
-Make sure:
+Then verify:
 
-* GitHub username is correct
-* Repository name is correct
-* Authentication account has access
-* Repository exists
+* GitHub username
+* PAT validity
+* PAT expiration
+* repository access
+* token permissions
+* repository URL
 
----
-
-# 28. Security Checklist
-
-Before continuing:
-
-* [ ] Only one authentication method selected
-* [ ] PAT is not stored in project files
-* [ ] PAT is not committed to Git
-* [ ] PAT is not included in screenshots
-* [ ] PAT is not included in videos
-* [ ] PAT is not included in documentation
-* [ ] SSH private key remains on the computer
-* [ ] SSH private key is never uploaded to GitHub
-* [ ] Only the SSH public key is added to GitHub
-* [ ] Repository URL contains no credentials
+Do not use your normal GitHub account password as the Git HTTPS password.
 
 ---
 
-# 29. What to Say in the Presentation
+## Problem 2 — Permission Denied (publickey)
 
-### "How does Git authenticate with GitHub?"
+This is normally an SSH authentication problem.
 
-> "I use GitHub authentication through HTTPS with a Personal Access Token, or SSH key authentication as an alternative. The token or private key is never stored in the repository."
+Run:
 
-### "Why don't you use your GitHub password?"
+```bash
+ssh -T git@github.com
+```
 
-> "GitHub does not use the normal account password for Git HTTPS operations. A Personal Access Token is used instead."
+Then:
 
-### "What is the difference between PAT and SSH?"
+```bash
+ssh-add -l
+```
 
-> "PAT authenticates Git HTTPS operations using a token. SSH uses a cryptographic key pair. In both cases, the credential must be protected."
+If the key is not listed, add it:
 
-### "Where is your SSH private key?"
+```bash
+ssh-add ~/.ssh/id_ed25519
+```
+
+Also verify that the corresponding public key was added to the correct GitHub account.
+
+---
+
+## Problem 3 — `remote origin already exists`
+
+Run:
+
+```bash
+git remote -v
+```
+
+If the remote is correct, do nothing.
+
+If it is incorrect:
+
+```bash
+git remote set-url origin <correct-url>
+```
+
+---
+
+## Problem 4 — Repository Not Found
+
+Check:
+
+```bash
+git remote -v
+```
+
+Verify:
+
+* GitHub username
+* repository name
+* repository owner
+* repository URL
+* authentication account
+* repository permissions
+
+---
+
+## Problem 5 — SSH Key Already Exists
+
+Do not automatically create another key.
+
+First inspect:
+
+```bash
+ls -al ~/.ssh
+```
+
+If an existing Ed25519 key is available, it may be reused.
+
+---
+
+# 33. Security Checklist
+
+Before continuing, verify:
+
+* [ ] One authentication method has been selected.
+* [ ] PAT is not stored in project files.
+* [ ] PAT is not committed to Git.
+* [ ] PAT is not included in documentation.
+* [ ] PAT is not included in screenshots or videos.
+* [ ] SSH private key remains on the local computer.
+* [ ] SSH private key has never been uploaded to GitHub.
+* [ ] Only the SSH public key was added to GitHub.
+* [ ] Repository URL contains no credentials.
+* [ ] Only required repository permissions were granted.
+
+---
+
+# 34. Verification Commands
+
+Regardless of the authentication method, these commands are useful.
+
+### Check Git
+
+```bash
+git --version
+```
+
+### Check the remote
+
+```bash
+git remote -v
+```
+
+### Check the current branch
+
+```bash
+git branch --show-current
+```
+
+### Check repository status
+
+```bash
+git status
+```
+
+### Test communication with GitHub
+
+```bash
+git fetch origin
+```
+
+For SSH specifically:
+
+```bash
+ssh -T git@github.com
+```
+
+---
+
+# 35. Reviewer Questions
+
+## "How does Git authenticate with GitHub?"
+
+> "Git can authenticate with GitHub using HTTPS with a Personal Access Token or using SSH key authentication. The existing FlavorForge repository uses HTTPS."
+
+## "Why don't you use your GitHub password?"
+
+> "GitHub does not use the normal account password for Git HTTPS authentication. A Personal Access Token is used instead."
+
+## "What is the difference between PAT and SSH?"
+
+> "A PAT authenticates Git HTTPS operations using a token. SSH uses a cryptographic key pair. Both provide authenticated access to the GitHub repository."
+
+## "Where is your SSH private key?"
 
 > "It remains on my local machine and is never committed or uploaded to GitHub."
 
-### "Which authentication method are you using?"
+## "What is the difference between authentication and a Git remote?"
 
-For the existing FlavorForge setup:
+> "Authentication determines how GitHub verifies my identity. The remote determines which GitHub repository Git communicates with."
 
-> "The existing FlavorForge repository uses HTTPS. The remote is configured using the GitHub HTTPS repository URL."
+## "Which authentication method does FlavorForge currently use?"
+
+> "The existing FlavorForge repository uses HTTPS. Its Git remote points to the GitHub HTTPS repository URL."
 
 ---
 
-# 30. Next Step
+# 36. Next Step
 
-Authentication is now understood.
+Authentication has now been configured and tested.
 
-The next document explains how to connect the local FlavorForge Git repository to the GitHub repository safely.
+The next document explains how to connect the **existing local FlavorForge Git repository** to the GitHub repository safely.
 
 Continue with:
 

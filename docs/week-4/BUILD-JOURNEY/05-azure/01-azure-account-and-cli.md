@@ -4,7 +4,7 @@
 
 Before creating the Azure infrastructure for FlavorForge, the Azure account and command-line environment needed to be configured and verified.
 
-The Azure CLI was used to interact with Azure resources from the local development environment.
+The **Azure CLI** was used to interact with Azure resources from the local development environment.
 
 The Azure setup was the starting point for the cloud deployment journey:
 
@@ -22,21 +22,24 @@ ACR / AKS
 
 For FlavorForge, the Azure resources were created in the **East US** region.
 
+This document focuses on the initial Azure account and CLI setup. Commands related to Resource Groups, ACR, and AKS are referenced later only to show how the Azure CLI fits into the complete workflow.
+
 ---
 
 # 2. Azure CLI
 
-The Azure CLI provides command-line access to Azure services.
+The **Azure CLI** provides command-line access to Microsoft Azure services.
 
-The CLI was used during the FlavorForge implementation to:
+During the FlavorForge implementation, Azure CLI was used to:
 
 * Authenticate with Azure
-* Verify the active Azure account
+* Verify the active Azure subscription
 * List Azure resources
-* Work with the Azure Resource Group
+* Create and manage the FlavorForge Resource Group
 * Work with Azure Container Registry
 * Work with Azure Kubernetes Service
-* Connect the local environment to AKS
+* Retrieve AKS credentials
+* Connect the local environment to the Kubernetes cluster
 
 The general workflow was:
 
@@ -60,13 +63,15 @@ The Azure CLI login command is:
 az login
 ```
 
-This opens the Azure authentication flow and authenticates the local CLI session with the Azure account.
+This starts the Azure authentication flow and authenticates the local CLI session with the Azure account.
 
-The FlavorForge project contains evidence of Azure CLI authentication:
+The login step established the authenticated Azure CLI session that was subsequently used to create and manage the FlavorForge infrastructure.
 
-![Azure CLI authentication](/screenshots/azure/01-azure-cli-authenticated.png)
+The command was:
 
-This screenshot provides evidence that the Azure CLI authentication step was completed successfully.
+```bash
+az login
+```
 
 ---
 
@@ -80,19 +85,19 @@ az account show
 
 This command displays information about the currently selected Azure subscription and account context.
 
-FlavorForge also contains evidence of this verification in the Azure DevOps documentation screenshots:
+The purpose of this verification was to ensure that subsequent Azure CLI commands were executed against the intended Azure subscription.
 
+The command was:
 
-![az account show](/screenshots/enterprise-azure-devops-release-simulation/19-az-account-show.png)
-
-
-The purpose of this verification was to make sure subsequent Azure CLI commands were executed against the intended Azure subscription.
+```bash
+az account show
+```
 
 ---
 
 # 5. List Available Azure Subscriptions
 
-The available Azure subscriptions can be viewed using:
+Available Azure subscriptions can be viewed using:
 
 ```bash
 az account list --output table
@@ -107,9 +112,35 @@ The table format makes it easier to identify:
 
 The active subscription should be confirmed before creating or modifying Azure resources.
 
+The command was:
+
+```bash
+az account list --output table
+```
+
 ---
 
-# 6. Azure Region
+# 6. Azure CLI Version Verification
+
+The Azure CLI installation can be verified using:
+
+```bash
+az version
+```
+
+or:
+
+```bash
+az --version
+```
+
+This confirms that the Azure CLI is installed and available in the local environment.
+
+The Azure CLI version was also captured as part of the implementation evidence.
+
+---
+
+# 7. Azure Region
 
 The FlavorForge Azure resources were created in:
 
@@ -117,33 +148,35 @@ The FlavorForge Azure resources were created in:
 East US
 ```
 
-The main cloud resources used by FlavorForge were associated with the following environment:
+The main Azure environment was structured around the FlavorForge Resource Group:
 
 ```text
-Azure
-  │
-  └── East US
-       │
-       └── flavorforge-rg
-            ├── Azure Container Registry
-            └── Azure Kubernetes Service
+Azure Subscription
+       ↓
+East US
+       ↓
+flavorforge-rg
+       ├── Azure Container Registry
+       └── Azure Kubernetes Service
 ```
 
-The Azure portal information for the AKS resource identifies the cluster region as **East US**.
+The region is an Azure resource configuration and is not something that needs to be specified when running `az login`.
+
+It becomes relevant when individual Azure resources are created.
 
 ---
 
-# 7. FlavorForge Azure Resource Group
+# 8. FlavorForge Resource Group
 
-The main FlavorForge Azure resource group is:
+The main FlavorForge Azure Resource Group is:
 
 ```text
 flavorforge-rg
 ```
 
-The resource group acts as the logical container for the Azure resources used by the project.
+The Resource Group acts as the logical container for the Azure resources used by the project.
 
-The architecture is:
+The resulting structure is:
 
 ```text
 Azure Subscription
@@ -151,56 +184,96 @@ Azure Subscription
         ▼
 flavorforge-rg
         │
-        ├── flavorforge-aks
+        ├── flavorforgeacr2026ms
         │
-        └── flavorforgeacr2026ms
+        └── flavorforge-aks
 ```
 
-The Resource Group was created in the Azure stage that follows this document.
+The Resource Group itself is created in the next document:
 
-This document only establishes the Azure CLI/account context required to work with it.
+```text
+02 — Resource Group
+```
+
+Therefore, this document only establishes the Azure CLI and account context required before creating it.
 
 ---
 
-# 8. Verify Resource Groups
+# 9. Verify Resource Groups
 
-Azure Resource Groups can be listed using:
+Once Resource Groups exist, Azure CLI can list them using:
 
 ```bash
 az group list --output table
 ```
 
-This provides a quick way to confirm that the expected resource group exists.
-
-For FlavorForge, the expected resource group is:
+For FlavorForge, the expected Resource Group is:
 
 ```text
 flavorforge-rg
 ```
 
+### Later-stage reference
+
+This command belongs to the Resource Group verification stage rather than the initial Azure login step.
+
+It is included here only because it is useful for understanding how Azure CLI was used throughout the project.
+
 ---
 
-# 9. Verify AKS Resources
+# 10. Azure CLI and Azure Resources
 
-Azure Kubernetes Service resources can be listed using:
+Once authenticated, the same Azure CLI session can be used to work with different Azure services.
+
+The FlavorForge workflow eventually included:
+
+```text
+Azure CLI
+     │
+     ├── Resource Group
+     │
+     ├── Azure Container Registry
+     │
+     └── Azure Kubernetes Service
+```
+
+Each service has its own Azure CLI command group.
+
+For example:
+
+```text
+az group
+az acr
+az aks
+```
+
+This means Azure CLI is the interface used to manage Azure resources; it is not itself an Azure resource.
+
+---
+
+# 11. AKS Commands — Later-Stage Reference
+
+The following commands were used later in the FlavorForge Kubernetes workflow.
+
+They are **not part of the initial Azure account setup**.
+
+They are included here only to show how the Azure CLI eventually connected the local environment to AKS.
+
+### List AKS clusters
 
 ```bash
 az aks list --output table
 ```
 
-For FlavorForge, the AKS cluster created later in the Azure journey is:
+For FlavorForge, the AKS cluster was:
 
 ```text
 flavorforge-aks
 ```
 
-This command is also useful during later demo preparation to check the current AKS state.
+### Obtain AKS credentials
 
----
-
-# 10. Azure CLI and AKS Credentials
-
-Once the AKS cluster exists, the local machine can obtain Kubernetes credentials using:
+After the AKS cluster was created, credentials were retrieved using:
 
 ```bash
 az aks get-credentials \
@@ -209,9 +282,9 @@ az aks get-credentials \
   --overwrite-existing
 ```
 
-This connects the local `kubectl` configuration to the FlavorForge AKS cluster.
+This updates the local Kubernetes configuration so that `kubectl` can communicate with the AKS cluster.
 
-The resulting workflow is:
+The later-stage workflow was:
 
 ```text
 Azure CLI
@@ -220,18 +293,20 @@ Azure AKS
      ↓
 AKS Credentials
      ↓
+Local kubeconfig
+     ↓
 kubectl
      ↓
 Kubernetes Cluster
 ```
 
-This command belongs to the later AKS connection stage, but it is important to understand its relationship with Azure CLI.
+Again, these commands belong to the later AKS stage.
 
 ---
 
-# 11. Verify the Kubernetes Connection
+# 12. Verify the Kubernetes Connection — Later Stage
 
-After obtaining the AKS credentials, the Kubernetes connection can be verified with:
+After AKS credentials were configured, the Kubernetes connection could be verified using:
 
 ```bash
 kubectl get nodes
@@ -239,23 +314,31 @@ kubectl get nodes
 
 A successful response confirms that the local machine can communicate with the AKS cluster.
 
-This is a later-stage verification because the AKS cluster must exist before this command can succeed.
+This command cannot be used during the initial Azure CLI setup because the AKS cluster must already exist.
 
-The FlavorForge project contains Kubernetes/Azure evidence for this connection, including:
+The correct sequence is:
 
-![](/screenshots/azure/11-connect-local-machine-to-aks.png)
+```text
+Azure CLI Setup
+      ↓
+Resource Group
+      ↓
+ACR
+      ↓
+AKS
+      ↓
+AKS Credentials
+      ↓
+kubectl get nodes
+```
 
-and:
-
-
-![](/screenshots/azure/28-kubectl-get-nodes.png)
-
+Therefore, `kubectl get nodes` is documented here only as a later-stage reference.
 
 ---
 
-# 12. Azure CLI in the FlavorForge Workflow
+# 13. Azure CLI in the FlavorForge Workflow
 
-The Azure CLI became the command-line interface between the local development environment and Azure.
+Azure CLI became the command-line interface between the local development environment and Azure.
 
 The overall relationship was:
 
@@ -283,74 +366,43 @@ Azure Subscription
  Container Images
 ```
 
-This infrastructure was then used by the later CI/CD and GitOps stages.
+This infrastructure was later used by the CI/CD and GitOps stages.
 
 ---
 
-# 13. Azure CLI Verification Evidence
+# 14. Azure CLI Commands Used Throughout the Project
 
-The repository contains Azure CLI and AKS verification screenshots captured during the implementation.
+The following commands are relevant to different stages of the FlavorForge Azure workflow.
 
-### Azure CLI authentication
-
-![Azure CLI authenticated](/screenshots/azure/01-azure-cli-authenticated.png)
-
-### Azure account verification
-
-![Azure account verification](/screenshots/enterprise-azure-devops-release-simulation/19-az%20account%20show.png)
-
-### Azure version / CLI environment
-
-![Azure CLI version](/screenshots/azure/29-azure-version.png)
-
-### AKS connection
-
-![Connect local machine to AKS](/screenshots/azure/11-connect-local-machine-to-aks.png)
-
-### Kubernetes node verification
-
-![Kubernetes nodes](/screenshots/azure/28-kubectl-get-nodes.png)
-
-These screenshots provide supporting evidence that the Azure CLI environment was configured and subsequently used to authenticate with Azure, connect to the AKS cluster, and verify the Kubernetes nodes.
-
-
----
-
-# 14. Azure CLI Commands Used in the Project
-
-The key Azure CLI commands relevant to the FlavorForge workflow are:
-
-### Login
+### Initial Azure setup
 
 ```bash
 az login
 ```
 
-### Verify active account
-
 ```bash
 az account show
 ```
-
-### List subscriptions
 
 ```bash
 az account list --output table
 ```
 
-### List resource groups
+```bash
+az version
+```
+
+### Resource Group — later stage
 
 ```bash
 az group list --output table
 ```
 
-### List AKS clusters
+### AKS — later stage
 
 ```bash
 az aks list --output table
 ```
-
-### Connect local machine to AKS
 
 ```bash
 az aks get-credentials \
@@ -359,29 +411,37 @@ az aks get-credentials \
   --overwrite-existing
 ```
 
-The commands were used at different points in the overall Azure/Kubernetes workflow.
+### Kubernetes verification — later stage
+
+```bash
+kubectl get nodes
+```
+
+The commands are intentionally separated by stage so that the initial Azure setup is not confused with the later infrastructure and Kubernetes configuration.
 
 ---
 
 # 15. Important Learning
 
-A key distinction is:
+Several Azure concepts should be kept separate.
+
+### Azure CLI
 
 ```text
 Azure CLI
     ↓
-Command-line tool
+Command-line management tool
 ```
 
-while:
+### Azure Subscription
 
 ```text
 Azure Subscription
     ↓
-Billing / resource ownership boundary
+Resource ownership / billing boundary
 ```
 
-and:
+### Resource Group
 
 ```text
 Resource Group
@@ -389,15 +449,7 @@ Resource Group
 Logical container for related Azure resources
 ```
 
-and:
-
-```text
-AKS
-    ↓
-Managed Kubernetes service
-```
-
-and:
+### Azure Container Registry
 
 ```text
 ACR
@@ -405,7 +457,15 @@ ACR
 Container image registry
 ```
 
-These components work together but serve different purposes.
+### Azure Kubernetes Service
+
+```text
+AKS
+    ↓
+Managed Kubernetes service
+```
+
+These components work together but have different purposes.
 
 For FlavorForge:
 
@@ -423,9 +483,9 @@ flavorforge-rg
 
 # 16. Verification Result
 
-The Azure CLI environment was established as the command-line interface for the FlavorForge Azure implementation.
+The initial Azure CLI environment was established as the command-line interface for the FlavorForge Azure implementation.
 
-The verified starting point was:
+The starting point was:
 
 ```text
 Local Machine
@@ -435,11 +495,11 @@ Azure CLI
 Authenticated Azure Account
       ↓
 Azure Subscription
-      ↓
-FlavorForge Azure Infrastructure
 ```
 
-The Azure resources used by the project were:
+The Azure infrastructure was then created in subsequent stages.
+
+The main FlavorForge Azure resources were:
 
 ```text
 Resource Group:
@@ -455,11 +515,13 @@ Azure Kubernetes Service:
 flavorforge-aks
 ```
 
+The Resource Group, ACR, and AKS resources are documented in their respective BUILD-JOURNEY documents.
+
 ---
 
 # 17. Azure Stage Progress
 
-The Azure BUILD-JOURNEY now follows:
+The Azure BUILD-JOURNEY follows this sequence:
 
 ```text
 01 — Azure Account and CLI
@@ -475,10 +537,54 @@ The Azure BUILD-JOURNEY now follows:
 06 — Azure Verification
 ```
 
+The current document completed:
+
+```text
+01 — Azure Account and CLI
+```
+
 The next document is:
 
 ```text
-docs/week-4/BUILD-JOURNEY/05-azure/02-resource-group.md
+docs/BUILD-JOURNEY/05-azure/02-resource-group.md
 ```
 
 That document will explain how the FlavorForge Azure Resource Group was created and verified.
+
+---
+
+# 18. Result
+
+The initial Azure setup established the foundation for the FlavorForge cloud deployment:
+
+```text
+Local Machine
+      ↓
+Azure CLI
+      ↓
+Azure Authentication
+      ↓
+Azure Subscription
+      ↓
+FlavorForge Azure Infrastructure
+```
+
+At this point, the environment was ready to proceed to the next Azure stage:
+
+```text
+Resource Group
+```
+
+The important distinction is:
+
+```text
+01 — Azure Account and CLI
+        ↓
+Authentication and CLI preparation
+
+02 — Resource Group
+        ↓
+Azure infrastructure creation
+```
+
+This keeps the BUILD-JOURNEY chronological and prevents later AKS commands from being incorrectly presented as part of the initial Azure setup.

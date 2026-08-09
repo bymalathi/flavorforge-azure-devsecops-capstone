@@ -10,15 +10,18 @@ A person following this guide should be able to:
 2. Create a GitHub repository.
 3. Install and verify Git.
 4. Configure Git locally.
-5. Connect the local FlavorForge project to GitHub.
-6. Authenticate using either:
+5. Create or identify the local project repository.
+6. Connect the local FlavorForge project to GitHub.
+7. Authenticate using either:
 
    * HTTPS + Personal Access Token (PAT), or
    * SSH.
-7. Push the project to GitHub.
-8. Verify that the repository is correctly connected.
+8. Commit the project.
+9. Push the project to GitHub.
+10. Verify that the repository is correctly connected.
+11. Capture safe evidence for the BUILD-JOURNEY.
 
-The guide provides **two authentication options** because different users may prefer different approaches.
+> **Important:** FlavorForge already has an existing GitHub repository. The commands in the setup sections explain how the connection works for someone starting from zero. Do not recreate or delete the existing FlavorForge repository.
 
 ---
 
@@ -50,7 +53,7 @@ It allows us to:
 * view source code
 * manage branches
 * review changes
-* connect the repository to CI/CD systems
+* connect to CI/CD systems
 * integrate with Azure DevOps
 
 The relationship is:
@@ -76,7 +79,8 @@ The following are required:
 * GitHub account
 * Git
 * VS Code
-* WSL Ubuntu
+* WSL
+* Ubuntu
 * Internet connection
 
 The commands in this documentation are written for:
@@ -125,13 +129,13 @@ Continue to the next section.
 
 # 4. Install Git If It Is Missing
 
-If the command:
+If:
 
 ```bash
 git --version
 ```
 
-returns something similar to:
+returns:
 
 ```text
 git: command not found
@@ -175,7 +179,7 @@ Check the current configuration:
 git config --global user.name
 ```
 
-and:
+Then:
 
 ```bash
 git config --global user.email
@@ -193,7 +197,7 @@ git config --global user.name "Your Name"
 git config --global user.email "your-email@example.com"
 ```
 
-Use the email address associated with the GitHub account when appropriate.
+Use an email address associated with the GitHub account when appropriate.
 
 Verify:
 
@@ -203,7 +207,7 @@ git config --global --list
 
 Important:
 
-The Git username/email configuration is **not** a GitHub password or authentication token.
+The Git username and email configuration are **not** a GitHub password or authentication token.
 
 ---
 
@@ -217,14 +221,16 @@ If the person does not already have a GitHub account:
 4. Create a password.
 5. Choose a username.
 6. Complete GitHub's verification steps.
-7. Verify the email address if GitHub requests it.
+7. Verify the email address if requested.
 8. Sign in.
 
-For this project, the repository will be:
+For this project, the repository name is:
 
 ```text
 flavorforge-azure-devsecops-capstone
 ```
+
+If a GitHub account already exists, continue to the next section.
 
 ---
 
@@ -245,26 +251,31 @@ flavorforge-azure-devsecops-capstone
 
 For a public reference implementation, the repository can be public.
 
-5. Do not add unnecessary files if the project already exists locally.
-
-If the project already has a local:
+5. If the project already exists locally, avoid unnecessarily creating:
 
 ```text
 README.md
 .gitignore
+LICENSE
 ```
 
-do not create another README unnecessarily.
+on GitHub if those files already exist locally.
 
 6. Select **Create repository**.
 
-GitHub will create an empty remote repository.
+GitHub will create the remote repository.
+
+### Important for the existing FlavorForge project
+
+The FlavorForge repository already exists.
+
+Do **not** create another repository with the same purpose.
 
 ---
 
 # 8. Understand Local Repository vs Remote Repository
 
-At this point there are two locations:
+There are two locations:
 
 ```text
 Local Project
@@ -278,7 +289,7 @@ GitHub
 flavorforge-azure-devsecops-capstone
 ```
 
-They are separate until we connect them.
+They are separate until the local repository is connected to GitHub.
 
 The connection is called a **Git remote**.
 
@@ -300,7 +311,7 @@ means:
 
 ---
 
-# 9. Create or Enter the Local Project Folder
+# 9. Enter the Local Project Folder
 
 If the project folder already exists:
 
@@ -326,31 +337,57 @@ List the files:
 ls
 ```
 
+For FlavorForge, the project should contain the application and project files already created for the project.
+
 ---
 
-# 10. Initialize Git If This Is a New Local Project
+# 10. Check Whether the Local Project Is Already a Git Repository
 
-If the project is not already a Git repository, run:
+Before running `git init`, check the existing repository.
 
-```bash
-git init
-```
-
-Git will create a hidden `.git` directory.
-
-Verify:
+Run:
 
 ```bash
 git status
 ```
 
-If the repository is already initialized, **do not run `git init` again unnecessarily**.
+If Git recognizes the repository, it is already initialized.
+
+You can also check:
+
+```bash
+git rev-parse --is-inside-work-tree
+```
+
+Expected:
+
+```text
+true
+```
+
+### If this is a completely new project
+
+Only then use:
+
+```bash
+git init
+```
+
+Then:
+
+```bash
+git status
+```
+
+### Important
+
+If the FlavorForge repository is already initialized, **do not run `git init` again unnecessarily**.
 
 ---
 
 # 11. Set the Main Branch
 
-Use:
+For a new repository, use:
 
 ```bash
 git branch -M main
@@ -368,25 +405,27 @@ Expected:
 main
 ```
 
+For the existing FlavorForge repository, first verify the current branch before changing anything.
+
 ---
 
-# 12. GitHub Authentication Options
+# 12. Choose a GitHub Authentication Method
 
-GitHub supports multiple ways of authenticating Git operations.
+GitHub supports multiple authentication methods.
 
 For this documentation we provide two options:
 
-## Option A
+### Option A
 
 HTTPS + Personal Access Token (PAT)
 
-## Option B
+### Option B
 
 SSH
 
-The person following this guide can choose either.
+Choose one method.
 
-Do not configure both unless there is a specific reason.
+Do not change an already-working FlavorForge authentication method unless there is a specific reason.
 
 ---
 
@@ -396,7 +435,7 @@ Do not configure both unless there is a specific reason.
 
 When Git communicates with GitHub over HTTPS, GitHub needs to authenticate the user.
 
-GitHub no longer uses a normal account password for Git operations over HTTPS.
+GitHub does not use the normal account password for Git HTTPS operations.
 
 A **Personal Access Token (PAT)** can be used as the authentication credential.
 
@@ -434,7 +473,7 @@ GitHub
 
 GitHub may provide different token types.
 
-If using the classic token flow:
+For a classic PAT:
 
 ```text
 Personal access tokens
@@ -478,9 +517,9 @@ If the token expires, create a new token rather than sharing the old one.
 
 Do **not** automatically select every permission.
 
-The required permissions depend on what the token is being used for and whether the repository is public/private.
+The required permissions depend on the repository and the operation being performed.
 
-For a classic PAT being used to work with repositories, the repository-related permission is the important one.
+For a classic PAT used for repository access, the repository-related permission may be required.
 
 For example:
 
@@ -490,19 +529,7 @@ repo
 
 provides repository access.
 
-Do not enable unrelated permissions such as:
-
-```text
-admin:org
-delete_repo
-admin:enterprise
-codespace
-billing
-user
-audit_log
-```
-
-unless there is a specific requirement.
+Do not enable unrelated permissions unless there is a specific requirement.
 
 The principle is:
 
@@ -520,7 +547,7 @@ After selecting the required settings:
 
 The token may only be displayed in full at creation time.
 
-Copy it securely if you need it.
+Copy it securely if required.
 
 ### IMPORTANT
 
@@ -540,13 +567,19 @@ public notes
 
 Never publish it.
 
-If a token is accidentally exposed, revoke it immediately and create a new one.
+If a token is accidentally exposed:
+
+1. Revoke it immediately.
+2. Create a replacement token.
+3. Update the required authentication configuration.
 
 ---
 
 # 19. Connect the Local Repository Using HTTPS
 
-From the WSL terminal, use:
+Only run this if an `origin` remote does not already exist.
+
+Run:
 
 ```bash
 git remote add origin https://github.com/<GITHUB-USERNAME>/flavorforge-azure-devsecops-capstone.git
@@ -571,11 +604,23 @@ origin  https://github.com/<GITHUB-USERNAME>/flavorforge-azure-devsecops-capston
 origin  https://github.com/<GITHUB-USERNAME>/flavorforge-azure-devsecops-capstone.git (push)
 ```
 
+### If `origin` already exists
+
+Do **not** run `git remote add origin` again.
+
+Check it first:
+
+```bash
+git remote -v
+```
+
+If the URL is correct, leave it unchanged.
+
 ---
 
 # 20. Test HTTPS Authentication
 
-When pushing:
+After the local repository has been connected:
 
 ```bash
 git push -u origin main
@@ -618,7 +663,7 @@ Public key
 
 The public key is added to GitHub.
 
-The private key stays on the local computer.
+The private key remains on the local computer.
 
 Conceptually:
 
@@ -657,7 +702,7 @@ or:
 id_rsa.pub
 ```
 
-To specifically check for public keys:
+You can specifically check:
 
 ```bash
 ls -al ~/.ssh/*.pub
@@ -698,8 +743,6 @@ and:
 ---
 
 # 24. Understand the Two SSH Files
-
-The files have different purposes.
 
 ### Private key
 
@@ -743,7 +786,7 @@ ssh-ed25519 AAAA... your-email@example.com
 
 Copy the entire public key.
 
-Never copy or display:
+Never run:
 
 ```bash
 cat ~/.ssh/id_ed25519
@@ -809,13 +852,15 @@ A successful authentication will indicate that GitHub recognizes the SSH key.
 
 # 28. Change the Git Remote to SSH
 
-If the repository currently uses HTTPS:
+Only do this if you intentionally want to use SSH.
+
+Check the current remote:
 
 ```bash
 git remote -v
 ```
 
-Change it:
+Then:
 
 ```bash
 git remote set-url origin git@github.com:<GITHUB-USERNAME>/flavorforge-azure-devsecops-capstone.git
@@ -844,19 +889,18 @@ origin  git@github.com:<GITHUB-USERNAME>/flavorforge-azure-devsecops-capstone.gi
 
 # 29. HTTPS/PAT vs SSH
 
-Both methods can be used to connect Git to GitHub.
+Both methods can connect Git to GitHub.
 
-| Feature                         | HTTPS + PAT                          | SSH                 |
-| ------------------------------- | ------------------------------------ | ------------------- |
-| Protocol                        | HTTPS                                | SSH                 |
-| Authentication                  | PAT                                  | SSH key             |
-| GitHub password used            | No                                   | No                  |
-| Credential required during push | PAT may be requested/cached          | Usually no          |
-| Private key required            | No                                   | Yes                 |
-| Public key added to GitHub      | No                                   | Yes                 |
-| Good for automation             | Yes, with secure credential handling | Yes                 |
-| Setup complexity                | Easier initially                     | Slightly more setup |
-| Security requirement            | Protect PAT                          | Protect private key |
+| Feature                        | HTTPS + PAT | SSH                 |
+| ------------------------------ | ----------- | ------------------- |
+| Protocol                       | HTTPS       | SSH                 |
+| Authentication                 | PAT         | SSH key             |
+| GitHub account password        | No          | No                  |
+| Private key required           | No          | Yes                 |
+| Public key added to GitHub     | No          | Yes                 |
+| Credential handling            | PAT         | SSH key             |
+| Initial setup                  | Easier      | Slightly more setup |
+| Common for long-term WSL usage | Yes         | Yes                 |
 
 ### Recommended principle
 
@@ -864,19 +908,19 @@ Choose one method and use it consistently.
 
 For a beginner, HTTPS + PAT can be easier to understand.
 
-For long-term Git usage from WSL, SSH is also a very common approach.
+SSH is also a common and convenient option for long-term Git usage from WSL.
 
 ---
 
-# 30. Check the Remote
+# 30. Verify the Remote
 
-Regardless of which authentication method was selected:
+Regardless of the authentication method:
 
 ```bash
 git remote -v
 ```
 
-This command answers:
+This answers:
 
 > Which GitHub repository is this local project connected to?
 
@@ -890,6 +934,12 @@ For SSH:
 
 ```text
 git@github.com:<USERNAME>/flavorforge-azure-devsecops-capstone.git
+```
+
+For the existing FlavorForge repository, the expected repository is:
+
+```text
+flavorforge-azure-devsecops-capstone
 ```
 
 ---
@@ -928,29 +978,21 @@ main
 
 ---
 
-# 33. Add Project Files
+# 33. Review `.gitignore` Before Adding Files
 
-Before adding files, make sure `.gitignore` exists.
-
-Then:
+Before staging files, verify that `.gitignore` exists:
 
 ```bash
-git add .
+ls -la .gitignore
 ```
 
-Check what will be committed:
+Review it:
 
 ```bash
-git status
+cat .gitignore
 ```
 
-Do not commit files containing secrets.
-
----
-
-# 34. Important `.gitignore` Entries
-
-The project should normally exclude files such as:
+The project should normally exclude sensitive or generated files such as:
 
 ```text
 node_modules/
@@ -970,7 +1012,31 @@ Do not blindly exclude files that the application genuinely needs in source cont
 
 ---
 
-# 35. Create the First Commit
+# 34. Review Files Before Staging
+
+Check the repository:
+
+```bash
+git status
+```
+
+Then add the project files:
+
+```bash
+git add .
+```
+
+Review what is staged:
+
+```bash
+git status
+```
+
+If anything sensitive is staged, stop and remove it before committing.
+
+---
+
+# 35. Create the Commit
 
 Once the files have been reviewed:
 
@@ -984,22 +1050,52 @@ Verify:
 git log --oneline -5
 ```
 
+### Existing FlavorForge repository
+
+Do not create an unnecessary new "Initial FlavorForge project" commit if the existing repository already contains its commits.
+
+Instead, verify the existing history:
+
+```bash
+git log --oneline -5
+```
+
 ---
 
 # 36. Push the Main Branch
 
-If `origin` is configured:
+For a new local repository:
 
 ```bash
 git push -u origin main
 ```
 
-The `-u` option establishes the upstream relationship between the local `main` branch and the remote `origin/main` branch.
+The `-u` option establishes the upstream relationship between:
 
-After the first push, future pushes can normally be:
+```text
+local main
+```
+
+and:
+
+```text
+origin/main
+```
+
+After the first successful push, future pushes can normally be:
 
 ```bash
 git push
+```
+
+### Existing FlavorForge repository
+
+If the repository is already connected and synchronized, do not push unnecessarily just for documentation.
+
+Verify the relationship instead:
+
+```bash
+git status --short --branch
 ```
 
 ---
@@ -1008,19 +1104,21 @@ git push
 
 Open the GitHub repository in a browser.
 
-Verify that the project files are visible.
+Verify that the expected project files are visible.
 
-Check:
+Check areas such as:
 
-* README
-* frontend
-* backend
-* Docker files
-* Kubernetes files
-* documentation
-* pipeline files
-* Argo CD configuration
-* `.gitignore`
+```text
+README.md
+frontend/
+backend/
+docker/
+kubernetes/
+docs/
+azure-pipelines.yml
+.github/
+.gitignore
+```
 
 Do not publish secrets.
 
@@ -1034,7 +1132,7 @@ Run:
 git status --short --branch
 ```
 
-A healthy relationship may show:
+A healthy synchronized repository may show:
 
 ```text
 ## main...origin/main
@@ -1050,13 +1148,15 @@ For example:
 
 means the local branch is one commit behind the remote branch.
 
-It does NOT automatically mean something is broken.
+It does **not** automatically mean something is broken.
 
 Check the differences before deciding whether to pull, merge, or push.
 
 ---
 
-# 39. Useful Git Verification Commands
+# 39. Final GitHub Verification Commands
+
+Run:
 
 ### Git version
 
@@ -1067,7 +1167,7 @@ git --version
 ### Repository status
 
 ```bash
-git status
+git status --short --branch
 ```
 
 ### Current branch
@@ -1102,122 +1202,9 @@ git branch -r
 
 ---
 
-# 40. Common Problems
+# 40. Security Verification
 
-## Problem 1 — `git: command not found`
-
-Install Git:
-
-```bash
-sudo apt update
-sudo apt install git -y
-```
-
-Then:
-
-```bash
-git --version
-```
-
----
-
-## Problem 2 — `remote origin already exists`
-
-Check:
-
-```bash
-git remote -v
-```
-
-If the existing remote is correct, do nothing.
-
-If it is incorrect:
-
-```bash
-git remote set-url origin <correct-repository-url>
-```
-
-Then verify:
-
-```bash
-git remote -v
-```
-
----
-
-## Problem 3 — GitHub authentication failed with HTTPS
-
-Check:
-
-* GitHub username
-* PAT
-* PAT expiration
-* PAT permissions
-* repository access
-
-Do not use the normal GitHub account password as the Git HTTPS password.
-
----
-
-## Problem 4 — SSH authentication failed
-
-Check:
-
-```bash
-ls -al ~/.ssh
-```
-
-Then:
-
-```bash
-ssh -T git@github.com
-```
-
-Verify that the public key added to GitHub matches the local public key.
-
----
-
-## Problem 5 — Permission denied when pushing
-
-Check:
-
-```bash
-git remote -v
-```
-
-Make sure the repository belongs to the correct GitHub account or that the account has permission to push.
-
-For SSH, verify:
-
-```bash
-ssh -T git@github.com
-```
-
-For HTTPS, verify the PAT.
-
----
-
-## Problem 6 — `main` is behind `origin/main`
-
-Check the status:
-
-```bash
-git status
-```
-
-Then inspect the remote commits:
-
-```bash
-git log --oneline HEAD..origin/main
-```
-
-Do not automatically reset or delete anything.
-
-If the remote changes need to be brought into the local branch, handle the pull/merge deliberately.
-
----
-
-# 41. Security Rules
+Before capturing screenshots or publishing the documentation, check for sensitive information.
 
 Never commit or publish:
 
@@ -1238,7 +1225,7 @@ Access tokens
 If a secret is accidentally committed:
 
 1. Stop using it.
-2. Revoke/rotate it.
+2. Revoke or rotate it.
 3. Create a replacement credential.
 4. Remove the secret from the repository/history as appropriate.
 5. Verify that the new credential is secure.
@@ -1247,34 +1234,97 @@ Simply deleting a secret from the latest file does not necessarily remove it fro
 
 ---
 
+# 41. Evidence Capture
+
+For the BUILD-JOURNEY, capture only safe evidence.
+
+### Recommended screenshot
+
+Run:
+
+```bash
+git status --short --branch
+git branch --show-current
+git remote -v
+git log --oneline -5
+```
+
+You may capture the terminal showing:
+
+```text
+main
+origin
+flavorforge-azure-devsecops-capstone
+recent commits
+```
+
+### Suggested filename
+
+```text
+02-github-verification.png
+```
+
+### Suggested location
+
+```text
+screenshots/BUILD-JOURNEY/02-github/
+```
+
+Before saving or publishing the screenshot, verify that it does not contain:
+
+* PAT
+* password
+* access token
+* private key
+* Azure secret
+* unnecessary personal information
+
+---
+
 # 42. What We Actually Verified for FlavorForge
 
-The existing FlavorForge repository has already been connected to GitHub.
+The existing FlavorForge repository is already connected to GitHub.
 
-The current remote is:
+The repository is:
+
+```text
+flavorforge-azure-devsecops-capstone
+```
+
+The GitHub owner is:
+
+```text
+shettymalathib
+```
+
+The existing remote is:
 
 ```text
 origin
+```
+
+with the repository URL:
+
+```text
 https://github.com/shettymalathib/flavorforge-azure-devsecops-capstone.git
 ```
 
-The current branch is:
+The expected primary branch is:
 
 ```text
 main
 ```
 
-Git is installed and verified.
+Git is installed and has already been verified.
 
-The repository can be checked with:
+The existing project should **not** be:
 
-```bash
-git status --short --branch
-```
+* deleted
+* recreated
+* reinitialized unnecessarily
+* connected to a new GitHub repository
 
-The existing project should not be deleted or recreated merely to repeat these verification steps.
-
-This document exists so that a **new person starting from zero** understands how the GitHub setup works.
+The purpose of this document is to explain the complete setup from zero while also documenting the actual FlavorForge GitHub configuration.
 
 ---
 
@@ -1308,6 +1358,12 @@ git remote -v
 git branch --show-current
 ```
 
+## How do you check repository status?
+
+```bash
+git status
+```
+
 ## How do you push code?
 
 ```bash
@@ -1328,12 +1384,48 @@ SSH authentication uses a key pair. The public key is registered with GitHub whi
 
 ## Which is better — PAT or SSH?
 
-Both are valid. The choice depends on the user's workflow. The important requirement is to protect the credential/private key and use the minimum required access.
+Both are valid. The choice depends on the workflow. The important requirement is to protect the credential/private key and use the minimum required access.
 
 ## Why should secrets not be committed?
 
-Because Git repositories can expose credentials to unauthorized users and Git history can retain previously committed secrets.
+Because Git repositories can expose credentials to unauthorized users, and Git history can retain previously committed secrets.
+
+## What does `git remote -v` show?
+
+It shows the remote repository URLs configured for fetching and pushing.
+
+## What does `git push -u origin main` do?
+
+It pushes the local `main` branch to the `origin` remote and establishes the upstream relationship between the local and remote branches.
 
 ## How does GitHub connect to the DevOps pipeline?
 
-The GitHub repository acts as the source-code repository. Azure DevOps can connect to it and use the repository as the source for the CI/CD pipeline.
+The GitHub repository acts as the source-code repository. Azure DevOps can connect to the repository and use it as the source for the CI/CD pipeline.
+
+---
+
+# 44. Completion Criteria
+
+The GitHub step is complete when:
+
+* [ ] GitHub account is available
+* [ ] Git is installed
+* [ ] Git username is configured
+* [ ] Git email is configured
+* [ ] Local FlavorForge repository exists
+* [ ] Main branch is verified
+* [ ] GitHub repository exists
+* [ ] `origin` remote is configured
+* [ ] GitHub authentication works
+* [ ] Project files are committed
+* [ ] Project is pushed to GitHub
+* [ ] GitHub repository is verified
+* [ ] `.gitignore` is reviewed
+* [ ] No secrets are committed
+* [ ] Screenshot captured
+* [ ] Screenshot checked for sensitive information
+* [ ] Documentation completed
+
+For the **existing FlavorForge project**, items that are already complete should be **verified rather than recreated**.
+
+Only after the GitHub step is verified should the BUILD-JOURNEY continue to the next step.

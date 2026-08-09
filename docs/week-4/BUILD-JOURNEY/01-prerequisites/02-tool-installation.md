@@ -1,29 +1,50 @@
 # Step 1.2 — Development and DevOps Tool Installation
 
-## Objective
+## What we wanted to do
 
-Verify and, if necessary, install all tools required to build and deploy FlavorForge.
+After preparing Windows, WSL 2, Ubuntu, and VS Code, the next step was to prepare the command-line tools required to build, containerize, deploy, and manage FlavorForge.
 
-The instructions below support both situations:
+The main tools required were:
 
-1. The tool is already installed.
-2. The tool is missing.
+* Git
+* Node.js
+* npm
+* Docker
+* Azure CLI
+* kubectl
+* Helm
+* Azure DevOps CLI extension
 
-Never reinstall a working tool unnecessarily.
+We did **not** want to reinstall tools that were already working.
+
+The approach was:
+
+```text
+Check tool
+    ↓
+Already installed?
+    ├── Yes → Verify and continue
+    │
+    └── No → Install → Verify
+```
+
+This avoided unnecessary changes to an already working development environment.
 
 ---
 
-# 1. Git
+# Step 1 — Verify Git
 
-## Check
+Git was required for source-code version control and for working with the FlavorForge GitHub repository.
 
-Run:
+### Command
 
 ```bash
 git --version
 ```
 
-### If Git is installed
+### What the command did
+
+It displayed the installed Git version.
 
 Example:
 
@@ -31,56 +52,54 @@ Example:
 git version 2.43.0
 ```
 
-### Action
+The exact version can differ between systems.
 
-Git is available.
+### If Git was missing
 
-Continue to Node.js.
-
----
-
-## If Git is missing
-
-If the terminal reports something similar to:
+If the terminal returned:
 
 ```text
 git: command not found
 ```
 
-run:
+Git could be installed using:
 
 ```bash
 sudo apt update
+```
+
+```bash
 sudo apt install -y git
 ```
 
-Then verify:
+Then it was verified again:
 
 ```bash
 git --version
 ```
 
-Expected output similar to:
+### Result
 
-```text
-git version 2.43.0
-```
-
-The exact version may differ.
+Git was available for the FlavorForge repository workflow.
 
 ---
 
-# 2. Node.js
+# Step 2 — Verify Node.js
 
-## Check
+Node.js was required because FlavorForge uses:
 
-Run:
+* React + Vite for the frontend
+* Node.js + Express for the backend
+
+### Command
 
 ```bash
 node --version
 ```
 
-### If Node.js is installed
+### What the command did
+
+It displayed the installed Node.js version.
 
 Example:
 
@@ -88,56 +107,29 @@ Example:
 v24.18.0
 ```
 
-Verify npm as well:
+The exact version depends on the development environment.
 
-```bash
-npm --version
-```
+### Result
 
-### Action
-
-If both commands work, continue.
+If a Node.js version was returned, Node.js was available.
 
 ---
 
-## If Node.js is missing
+# Step 3 — Verify npm
 
-Do not immediately install an arbitrary latest version.
-
-First check the FlavorForge project configuration for its required Node.js version.
-
-If the project specifies a version, install that version.
-
-For a new Ubuntu environment where the project requires Node.js 24, a version manager such as `nvm` can be used.
-
-Install `nvm` using its official installation instructions, then install the required Node.js version.
-
-After installation:
-
-```bash
-node --version
-npm --version
-```
-
-Verify both commands before continuing.
-
-### Important
-
-Node.js version consistency matters because the frontend build and Azure DevOps pipeline must use compatible Node.js versions.
-
----
-
-# 3. npm
+npm is used to install and manage the JavaScript dependencies for the frontend and backend.
 
 npm normally comes with Node.js.
 
-## Check
+### Command
 
 ```bash
 npm --version
 ```
 
-### If installed
+### What the command did
+
+It displayed the installed npm version.
 
 Example:
 
@@ -145,23 +137,37 @@ Example:
 11.16.0
 ```
 
-Continue.
+### Result
 
-### If npm is missing
+If the command returned a version number, npm was available.
 
-Do not install a random npm version separately first.
+---
 
-Check the Node.js installation.
+# Step 4 — Check the Node.js version required by the project
 
-Run:
+We did not want to install an arbitrary Node.js version just because it was the latest available.
+
+The Node.js version needed to remain compatible with the FlavorForge application and its build process.
+
+This was particularly important because the frontend uses Vite and the Azure DevOps pipeline also specifies a Node.js version.
+
+Therefore, before changing an existing Node.js installation, the project configuration should be checked.
+
+### Important rule
+
+If the required project version is already installed and working:
+
+```text
+Do not reinstall Node.js.
+```
+
+If a new environment requires a different version, a version manager such as `nvm` can be used to install the required version.
+
+After changing Node.js, verify both:
 
 ```bash
 node --version
 ```
-
-If Node.js is not correctly installed, reinstall/configure Node.js using the project's required version.
-
-Then verify:
 
 ```bash
 npm --version
@@ -169,17 +175,19 @@ npm --version
 
 ---
 
-# 4. Docker
+# Step 5 — Verify Docker
 
-## Check
+Docker was required to containerize the FlavorForge frontend and backend.
 
-Run:
+### Command
 
 ```bash
 docker --version
 ```
 
-### If Docker is installed
+### What the command did
+
+It displayed the installed Docker version.
 
 Example:
 
@@ -187,28 +195,42 @@ Example:
 Docker version 29.5.3
 ```
 
-Then verify that Docker can actually run containers:
+The exact version may differ.
+
+However, checking the version alone was not enough.
+
+We also needed to verify that Docker could actually run a container.
+
+### Functional test
 
 ```bash
 docker run hello-world
 ```
 
-If the container completes successfully, Docker is working.
+### What the command did
+
+Docker downloaded and ran the `hello-world` test image.
+
+A successful completion confirmed that the Docker engine was accessible from the development environment.
+
+### Result
+
+Docker was ready for the FlavorForge containerization stage.
 
 ---
 
-## If Docker is missing
+# Step 6 — Configure Docker with WSL
 
-For the Windows + WSL environment, install Docker Desktop on Windows and enable WSL 2 integration.
+Because FlavorForge development was performed through Ubuntu WSL, Docker needed to be accessible from the WSL terminal.
 
-After installation:
+For the Windows + WSL setup:
 
-1. Open Docker Desktop.
-2. Ensure Docker Engine is running.
-3. Enable WSL integration for the Ubuntu distribution.
-4. Open the VS Code WSL terminal again.
+1. Docker Desktop was installed on Windows.
+2. Docker Engine was started.
+3. WSL integration was enabled for the Ubuntu distribution.
+4. The VS Code WSL terminal was reopened.
 
-Then run:
+Docker was then verified again:
 
 ```bash
 docker --version
@@ -220,27 +242,35 @@ and:
 docker run hello-world
 ```
 
-Both must work before continuing.
+The important result was that Docker commands worked directly from the Ubuntu WSL terminal.
 
 ---
 
-# 5. Azure CLI
+# Step 7 — Verify Azure CLI
 
-## Check
+Azure CLI was required to create and manage the Azure resources used by FlavorForge.
 
-Run:
+These included resources such as:
+
+* Resource Group
+* Azure Container Registry
+* Azure Kubernetes Service
+
+### Command
 
 ```bash
 az version
 ```
 
-or:
+A more focused version check was:
 
 ```bash
 az version --query '"azure-cli"' -o tsv
 ```
 
-### If Azure CLI is installed
+### What the command did
+
+It displayed the installed Azure CLI version.
 
 Example:
 
@@ -248,167 +278,136 @@ Example:
 2.88.0
 ```
 
-Continue.
+The exact version may differ.
+
+### Result
+
+Azure CLI was available for the Azure setup and deployment stages.
 
 ---
 
-## If Azure CLI is missing
+# Step 8 — Verify Azure authentication
 
-Install Azure CLI using the official Microsoft Azure CLI installation instructions for Ubuntu.
+Having Azure CLI installed was not enough.
 
-After installation:
+We also needed to verify that the CLI was authenticated to an Azure subscription.
 
-```bash
-az version --query '"azure-cli"' -o tsv
-```
-
-Verify that a version number is returned.
-
----
-
-# 6. Azure Authentication
-
-## Check
-
-Run:
+### Command
 
 ```bash
 az account show --query "{subscription:name,state:state}" -o table
 ```
 
-### If authentication is already available
+### What the command did
 
-Expected example:
+It displayed a limited set of Azure account information.
+
+Example:
 
 ```text
-Subscription       State
------------------  -------
-Azure subscription 1 Enabled
+Subscription        State
+------------------  -------
+Azure subscription  1 Enabled
 ```
 
-Continue.
+The important information was that the subscription was available and enabled.
 
----
+### If Azure CLI was not authenticated
 
-## If Azure CLI is not authenticated
-
-Run:
+The login command was:
 
 ```bash
 az login
 ```
 
-A browser-based login process will start.
+A browser-based authentication process then allowed the Azure account to be authenticated.
 
-Complete Azure authentication.
-
-Then verify using the safe command:
+After login, verification was performed using:
 
 ```bash
 az account show --query "{subscription:name,state:state}" -o table
 ```
 
-Do NOT use the following command in recorded videos:
+### Security rule
+
+For screenshots and recorded demonstrations, we avoided commands that unnecessarily exposed sensitive Azure account information.
+
+For example, we did not use the full:
 
 ```bash
 az account show
 ```
 
-because it can display account identifiers.
-
-Also do not record commands that display:
-
-* subscription IDs
-* tenant IDs
-* access tokens
-* credentials
+in recorded demonstrations when a sanitized query was sufficient.
 
 ---
 
-# 7. kubectl
+# Step 9 — Verify kubectl
 
-## Check
+`kubectl` was required to communicate with Kubernetes and later with the FlavorForge AKS cluster.
 
-Run:
+### Command
 
 ```bash
 kubectl version --client
 ```
 
-Expected example:
+### Example output
 
 ```text
 Client Version: v1.35.0
 Kustomize Version: v5.7.1
 ```
 
-### If installed
+The exact versions may differ.
 
-Continue.
+### What the command did
 
----
+The `--client` option checked the local kubectl installation without requiring a Kubernetes cluster connection.
 
-## If kubectl is missing
+### Result
 
-Install the Kubernetes command-line tool using the official Kubernetes installation instructions for Linux.
-
-Then verify:
-
-```bash
-kubectl version --client
-```
-
-Do not continue until the command works.
+kubectl was installed and ready for the later AKS/Kubernetes stages.
 
 ---
 
-# 8. Helm
+# Step 10 — Verify Helm
 
-## Check
+Helm was another Kubernetes command-line tool required in the DevOps environment.
 
-Run:
+### Command
 
 ```bash
 helm version --short
 ```
 
-Expected example:
+### Example
 
 ```text
 v3.21.2+g1259634
 ```
 
-### If Helm is installed
+The exact version may differ.
 
-Continue.
+### Result
 
----
-
-## If Helm is missing
-
-Install Helm using the official Helm installation instructions.
-
-Then verify:
-
-```bash
-helm version --short
-```
+Helm was available for Kubernetes-related tooling.
 
 ---
 
-# 9. Azure DevOps CLI Extension
+# Step 11 — Verify the Azure DevOps CLI extension
 
-The Azure DevOps extension is an extension of Azure CLI.
+Azure DevOps functionality is provided through an Azure CLI extension.
 
-## Check
-
-Run:
+### Command
 
 ```bash
 az extension show --name azure-devops --query version -o tsv
 ```
 
-### If installed
+### What the command did
+
+It checked whether the Azure DevOps extension was installed and returned its version.
 
 Example:
 
@@ -416,29 +415,31 @@ Example:
 1.0.6
 ```
 
-Continue.
+### If the extension was missing
 
----
-
-## If missing
-
-Run:
+It could be installed using:
 
 ```bash
 az extension add --name azure-devops
 ```
 
-Then verify:
+Then verified again:
 
 ```bash
 az extension show --name azure-devops --query version -o tsv
 ```
 
+### Result
+
+The Azure CLI environment was prepared for Azure DevOps-related operations.
+
 ---
 
-# 10. Final Tool Verification
+# Step 12 — Perform final tool verification
 
-After installing anything that was missing, run:
+After all required tools were available, we could run a combined verification.
+
+### Command
 
 ```bash
 echo "===== FlavorForge Prerequisites ====="
@@ -488,11 +489,32 @@ echo "=== Azure Authentication ==="
 az account show --query "{subscription:name,state:state}" -o table
 ```
 
+### What this verified
+
+The command checked the major tools in one place:
+
+```text
+Ubuntu
+Git
+Node.js
+npm
+Docker
+Azure CLI
+kubectl
+Helm
+Azure DevOps extension
+Azure authentication
+```
+
+This gave us a final readiness check before continuing with the FlavorForge implementation.
+
 ---
 
-# Security Rule
+# Security — What we must never publish
 
-Never publish or record:
+While running these commands, we had to make sure credentials and sensitive information were not included in screenshots, videos, or Git commits.
+
+Never publish:
 
 ```text
 Subscription ID
@@ -508,22 +530,63 @@ Connection strings
 Service principal credentials
 ```
 
-Use sanitized verification commands for recorded demonstrations.
+Where possible, use filtered commands such as:
+
+```bash
+az account show --query "{subscription:name,state:state}" -o table
+```
+
+instead of displaying the complete account object.
 
 ---
 
-# Verification Checklist
+# Final Verification
 
-* [ ] Git checked
-* [ ] Git installed if required
-* [ ] Node.js checked
-* [ ] Node.js installed if required
-* [ ] npm checked
-* [ ] Docker checked
-* [ ] Docker functional test completed
-* [ ] Azure CLI checked
-* [ ] Azure authentication verified
-* [ ] kubectl checked
-* [ ] Helm checked
-* [ ] Azure DevOps extension checked
-* [ ] Final verification completed
+The development environment was ready when the following checks were successful:
+
+```text
+✓ Git available
+✓ Node.js available
+✓ npm available
+✓ Docker available
+✓ Docker container test successful
+✓ Azure CLI available
+✓ Azure authentication available
+✓ kubectl available
+✓ Helm available
+✓ Azure DevOps CLI extension available
+```
+
+---
+
+# What we achieved
+
+At the end of this step, the WSL development environment contained the command-line tooling required for the FlavorForge journey.
+
+The environment was now ready for the next stages:
+
+```text
+GitHub
+   ↓
+Application
+   ↓
+Docker
+   ↓
+Azure
+   ↓
+Kubernetes
+   ↓
+Kustomize
+   ↓
+Azure DevOps
+   ↓
+SonarCloud
+   ↓
+Argo CD
+```
+
+The important rule throughout the setup was:
+
+> **Check first. Install only when required. Verify after installation.**
+
+This prevented unnecessary changes to an already working development environment.

@@ -4,27 +4,29 @@
 
 After authenticating with Azure and verifying the Azure CLI environment, the next step in the FlavorForge Azure journey was to create the Azure Resource Group.
 
-A Resource Group provides a logical container for related Azure resources.
+An Azure Resource Group provides a logical container for related Azure resources.
 
 For FlavorForge, the Resource Group became the main organizational boundary for the cloud infrastructure.
 
-The structure is:
+The overall structure eventually became:
 
 ```text
 Azure Subscription
         ↓
 flavorforge-rg
         ↓
-┌───────────────────────┐
-│ FlavorForge Resources │
-├───────────────────────┤
-│ Azure Container       │
-│ Registry (ACR)        │
-│                       │
-│ Azure Kubernetes      │
-│ Service (AKS)         │
-└───────────────────────┘
+┌─────────────────────────────┐
+│ FlavorForge Azure Resources │
+├─────────────────────────────┤
+│ Azure Container Registry    │
+│ (ACR)                       │
+│                             │
+│ Azure Kubernetes Service    │
+│ (AKS)                       │
+└─────────────────────────────┘
 ```
+
+> **Chronology note:** ACR and AKS were created in later Azure stages. They are shown here to explain the final relationship with the Resource Group, not to imply that they already existed when the Resource Group was created.
 
 ---
 
@@ -36,9 +38,9 @@ The Resource Group created for the project was:
 flavorforge-rg
 ```
 
-The Azure resources used by FlavorForge were organized under this Resource Group.
+The Azure infrastructure for FlavorForge was organized under this Resource Group.
 
-The project infrastructure was located in:
+The project infrastructure was created in:
 
 ```text
 East US
@@ -54,19 +56,11 @@ Region:
 East US
 ```
 
-
-![Resource Group Created](/screenshots/azure/02-resource-group-created.png)
-
-
-![Azure Portal-Resource Group Created](image.png)
-
-![Azure Portal Resource Group](image-1.png)
-
 ---
 
 # 3. Create the Resource Group
 
-The Azure CLI command for creating the Resource Group is:
+The Azure CLI command used to create the Resource Group was:
 
 ```bash
 az group create \
@@ -81,7 +75,13 @@ The command specifies:
 | Resource Group | `flavorforge-rg` |
 | Azure Region   | `eastus`         |
 
-The Azure region name `eastus` corresponds to the Azure portal region:
+The Azure CLI region name:
+
+```text
+eastus
+```
+
+corresponds to the Azure Portal region:
 
 ```text
 East US
@@ -89,7 +89,45 @@ East US
 
 ---
 
-# 4. Verify the Resource Group
+# 4. Understand the Command
+
+The command:
+
+```bash
+az group create
+```
+
+tells Azure CLI to create a Resource Group.
+
+The:
+
+```bash
+--name flavorforge-rg
+```
+
+parameter specifies the Resource Group name.
+
+The:
+
+```bash
+--location eastus
+```
+
+parameter specifies the Azure region associated with the Resource Group.
+
+Conceptually:
+
+```text
+az group create
+       │
+       ├── Resource Group: flavorforge-rg
+       │
+       └── Location: eastus
+```
+
+---
+
+# 5. Verify the Resource Group
 
 After creation, the Resource Group can be verified using:
 
@@ -97,6 +135,8 @@ After creation, the Resource Group can be verified using:
 az group show \
   --name flavorforge-rg
 ```
+
+This displays detailed information about the Resource Group.
 
 For a simpler table view, Resource Groups can also be listed using:
 
@@ -112,33 +152,41 @@ flavorforge-rg
 
 ---
 
-# 5. Azure Portal Verification
+# 6. Azure Portal Verification
 
 The Resource Group was also verified through the Azure Portal.
 
-The project contains the following evidence:
+The project contains evidence for the Resource Group creation and Azure environment.
+
+These screenshots provide supporting evidence that the Resource Group existed in Azure.
+
+The Portal verification complements the Azure CLI verification:
 
 ```text
-screenshots/azure/02-resource-group-created.png
+Azure CLI
+    ↓
+az group show
+    ↓
+Resource Group verified
 ```
 
-This screenshot documents the Resource Group creation stage.
-
-The repository also contains:
+and:
 
 ```text
-screenshots/azure/flavorforge-rg-microsoft-azure-resource-group.png
+Azure Portal
+    ↓
+Resource Group
+    ↓
+Visual verification
 ```
-
-This provides additional evidence of the FlavorForge Resource Group in Azure.
 
 ---
 
-# 6. Resource Group Overview
+# 7. Resource Group Overview
 
-The Resource Group provides a single location from which the FlavorForge Azure resources can be managed.
+The Resource Group provides a single logical location from which the FlavorForge Azure resources can be managed.
 
-Conceptually:
+The eventual structure was:
 
 ```text
                     Azure
@@ -157,17 +205,17 @@ Conceptually:
 
 The Resource Group itself does not run the application.
 
-Instead, it organizes the Azure infrastructure used to run the application.
+Instead, it organizes the Azure infrastructure used by the application.
 
 ---
 
-# 7. Why Use a Resource Group?
+# 8. Why Use a Resource Group?
 
-The Resource Group provides several practical benefits for FlavorForge.
+The Resource Group provided several practical benefits for FlavorForge.
 
 ### Organization
 
-Related Azure resources are grouped together:
+Related Azure resources could be grouped together:
 
 ```text
 flavorforge-rg
@@ -177,21 +225,21 @@ flavorforge-rg
 
 ### Resource Management
 
-Resources can be viewed and managed together through the Azure Portal or Azure CLI.
+Resources could be viewed and managed together through the Azure Portal or Azure CLI.
 
 ### Lifecycle Management
 
-The Resource Group provides a convenient boundary for managing the lifecycle of the project's Azure resources.
+The Resource Group provided a convenient boundary for managing the lifecycle of the project's Azure resources.
 
 ### Cost Visibility
 
-Resources belonging to the project can be reviewed together when monitoring Azure usage and costs.
+Resources associated with the project could be reviewed together when monitoring Azure usage and costs.
 
 ---
 
-# 8. Verify Resources Inside the Resource Group
+# 9. Verify Resources Inside the Resource Group
 
-Azure CLI can be used to list the resources belonging to the Resource Group:
+Once resources were created, Azure CLI could be used to list resources belonging to the Resource Group:
 
 ```bash
 az resource list \
@@ -199,9 +247,11 @@ az resource list \
   --output table
 ```
 
-As the FlavorForge infrastructure was built, resources were added to this Resource Group.
+At the time of Resource Group creation, the Resource Group itself was the primary resource being established.
 
-The intended high-level structure became:
+As the Azure infrastructure was built in later stages, additional resources were associated with it.
+
+The eventual high-level structure became:
 
 ```text
 flavorforge-rg
@@ -215,9 +265,11 @@ flavorforge-rg
              └── Kubernetes Workloads
 ```
 
+> **Important:** The ACR and AKS entries above represent the later state of the FlavorForge Azure environment. They were not created as part of this Resource Group creation command.
+
 ---
 
-# 9. Resource Group and Azure Container Registry
+# 10. Resource Group and Azure Container Registry — Later Stage
 
 The Azure Container Registry created later in the project was:
 
@@ -225,9 +277,7 @@ The Azure Container Registry created later in the project was:
 flavorforgeacr2026ms
 ```
 
-It belongs to the FlavorForge Resource Group.
-
-The relationship is:
+It was associated with the FlavorForge Resource Group:
 
 ```text
 flavorforge-rg
@@ -239,13 +289,19 @@ flavorforgeacr2026ms
 FlavorForge Container Images
 ```
 
-The ACR is documented in the next Azure BUILD-JOURNEY stage.
+The ACR creation and configuration are documented separately in:
+
+```text
+03 — Azure Container Registry
+```
+
+This keeps the BUILD-JOURNEY chronological.
 
 ---
 
-# 10. Resource Group and AKS
+# 11. Resource Group and AKS — Later Stage
 
-The Azure Kubernetes Service cluster created for FlavorForge was:
+The Azure Kubernetes Service cluster created later for FlavorForge was:
 
 ```text
 flavorforge-aks
@@ -257,7 +313,7 @@ It was also associated with:
 flavorforge-rg
 ```
 
-The relationship is:
+The later relationship became:
 
 ```text
 flavorforge-rg
@@ -274,13 +330,17 @@ Kubernetes Cluster
        └── Ingress
 ```
 
-This infrastructure was used later to deploy the containerized FlavorForge application.
+The AKS infrastructure is documented separately in:
+
+```text
+04 — Azure Kubernetes Service
+```
 
 ---
 
-# 11. Resource Group as the Cloud Boundary
+# 12. Resource Group as the Cloud Boundary
 
-The Resource Group became the main Azure boundary for the FlavorForge deployment.
+The Resource Group became the main Azure organizational boundary for the FlavorForge deployment.
 
 The overall architecture was:
 
@@ -301,7 +361,7 @@ Azure Subscription
   Container Images
 ```
 
-This separation is important:
+The important distinction is:
 
 ```text
 ACR
@@ -314,10 +374,10 @@ while:
 ```text
 AKS
  ↓
-Runs the containers
+Runs the containerized application
 ```
 
-Both resources are organized under:
+Both resources were organized under:
 
 ```text
 flavorforge-rg
@@ -325,7 +385,7 @@ flavorforge-rg
 
 ---
 
-# 12. Resource Group Verification Checklist
+# 13. Resource Group Verification Checklist
 
 The Resource Group stage can be verified using the following checklist:
 
@@ -339,31 +399,44 @@ The Resource Group stage can be verified using the following checklist:
 | ACR associated later               | `flavorforgeacr2026ms` |
 | AKS associated later               | `flavorforge-aks`      |
 
----
-
-# 13. Evidence Available in the Repository
-
-The existing repository contains sufficient evidence for this stage.
-
-### Resource Group creation
-
-```text
-screenshots/azure/02-resource-group-created.png
-```
-
-### Resource Group in Azure Portal
-
-```text
-screenshots/azure/flavorforge-rg-microsoft-azure-resource-group.png
-```
-
-No new screenshot is required for this stage because the existing evidence already documents the Resource Group.
+The ACR and AKS checks are **later-stage checks** and are not required to consider Resource Group creation itself successful.
 
 ---
 
-# 14. Important Learning
+# 14. Evidence for This Stage
 
-A Resource Group is not the same thing as an application server or Kubernetes cluster.
+The relevant evidence for this stage should demonstrate:
+
+1. Azure CLI access
+2. Resource Group creation
+3. Resource Group visibility in Azure
+
+The most useful CLI verification command is:
+
+```bash
+az group show \
+  --name flavorforge-rg
+```
+
+A broader verification command is:
+
+```bash
+az group list --output table
+```
+
+Azure Portal can also be used to visually verify:
+
+```text
+flavorforge-rg
+```
+
+These provide evidence that the Resource Group was successfully created.
+
+---
+
+# 15. Important Learning
+
+A Resource Group is not the same thing as an application server, container registry, or Kubernetes cluster.
 
 The relationship is:
 
@@ -398,7 +471,7 @@ Understanding this distinction is important when explaining the architecture dur
 
 ---
 
-# 15. Result
+# 16. Result
 
 The FlavorForge Azure Resource Group was established as:
 
@@ -412,7 +485,7 @@ East US
 
 The Resource Group provided the Azure organizational boundary for the project's cloud infrastructure.
 
-The next Azure resources were created within this environment:
+Later Azure stages added:
 
 ```text
 flavorforge-rg
@@ -422,13 +495,13 @@ flavorforge-rg
       └── Azure Kubernetes Service
 ```
 
-The Resource Group stage is therefore complete.
+The Resource Group creation stage was therefore complete before moving to the ACR stage.
 
 ---
 
-# 16. Azure Stage Progress
+# 17. Azure Stage Progress
 
-The Azure BUILD-JOURNEY now follows:
+The Azure BUILD-JOURNEY follows this sequence:
 
 ```text
 01 — Azure Account and CLI
@@ -444,10 +517,16 @@ The Azure BUILD-JOURNEY now follows:
 06 — Azure Verification
 ```
 
+The current document completed:
+
+```text
+02 — Resource Group
+```
+
 The next document is:
 
 ```text
-docs/week-4/BUILD-JOURNEY/05-azure/03-acr.md
+docs/BUILD-JOURNEY/05-azure/03-acr.md
 ```
 
-This will document how the FlavorForge Azure Container Registry was created, verified, and used to store the Docker images.
+That document will explain how the FlavorForge Azure Container Registry was created, verified, and used to store the Docker images.

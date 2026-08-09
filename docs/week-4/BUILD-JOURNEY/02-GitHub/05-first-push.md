@@ -2,88 +2,94 @@
 
 ## Objective
 
-This document explains how to perform the **first Git push** from the local FlavorForge repository to the GitHub repository.
+This document explains how to push an existing local FlavorForge Git repository to the GitHub repository for the first time.
 
 A person following this guide should be able to:
 
-1. Confirm the local repository is ready.
-2. Confirm the GitHub remote.
-3. Review the files that will be committed.
-4. Create a commit if required.
-5. Push the local branch to GitHub.
-6. Verify that the files are available on GitHub.
-7. Understand common first-push errors.
+1. Verify the local repository.
+2. Verify the GitHub remote.
+3. Review files before committing.
+4. Check for sensitive information.
+5. Create a commit if required.
+6. Push the correct branch to GitHub.
+7. Verify the push locally and on GitHub.
+8. Troubleshoot common first-push problems.
+
+> **Important:** This guide does not assume that the local repository is brand new. If the local repository already contains commits, do not create an unnecessary "initial" commit.
 
 ---
 
-# 1. Understand What a First Push Does
+# 1. Understand the Git Flow
 
-Before the first push, the project exists locally:
+Git does not directly upload every file in the project folder.
+
+The normal Git workflow is:
 
 ```text
-Developer Computer
-        |
-        v
-Local FlavorForge Repository
+Working Directory
+       |
+       | git add
+       v
+Staging Area
+       |
+       | git commit
+       v
+Local Git Repository
+       |
+       | git push
+       v
+GitHub Remote Repository
 ```
 
-After the push:
+Therefore:
 
 ```text
-Developer Computer
-        |
-        | git push
-        v
-GitHub Repository
-```
-
-The push transfers Git commits from the local repository to the remote GitHub repository.
-
-The basic flow is:
-
-```text
-Files
-  |
-  v
 git add
-  |
-  v
-git commit
-  |
-  v
-git push
-  |
-  v
-GitHub
 ```
+
+prepares changes.
+
+```text
+git commit
+```
+
+stores the changes in local Git history.
+
+```text
+git push
+```
+
+transfers commits to GitHub.
 
 ---
 
 # 2. Open the FlavorForge Project
 
-Open the WSL terminal in the project directory.
+Open the WSL/Ubuntu terminal.
 
-Example:
+Run:
 
 ```bash
 cd ~/flavorforge-azure-devsecops-capstone
 ```
 
-Verify the current directory:
+Verify the location:
 
 ```bash
 pwd
 ```
 
-Expected:
+Expected format:
 
 ```text
 /home/YOUR_USERNAME/flavorforge-azure-devsecops-capstone
 ```
 
+The Linux username may be different on another computer.
+
 ---
 
-# 3. Verify Git Is Available
+# 3. Verify Git
 
 Run:
 
@@ -97,17 +103,11 @@ Example:
 git version 2.43.0
 ```
 
-If Git is not installed, return to:
-
-```text
-docs/week-4/BUILD-JOURNEY/01-prerequisites/02-tool-installation.md
-```
-
-and follow the Git installation instructions.
+If Git is not installed, stop here and complete the Git installation from the prerequisites documentation.
 
 ---
 
-# 4. Verify the Local Git Repository
+# 4. Verify the Local Repository
 
 Run:
 
@@ -115,7 +115,7 @@ Run:
 git status
 ```
 
-You should see information about the current branch and working tree.
+A valid Git repository should display information about the current branch and working tree.
 
 For example:
 
@@ -123,13 +123,13 @@ For example:
 On branch main
 ```
 
-If the project is not a Git repository, Git may display:
+If you see:
 
 ```text
 fatal: not a git repository
 ```
 
-If that happens, stop here and verify that you are inside:
+verify that you are inside:
 
 ```text
 ~/flavorforge-azure-devsecops-capstone
@@ -145,13 +145,15 @@ Run:
 git branch --show-current
 ```
 
-For the existing FlavorForge project, the branch is:
+For the existing FlavorForge repository:
 
 ```text
 main
 ```
 
-The important point is to know which local branch you are about to push.
+The important thing is to identify the branch that will be pushed.
+
+Do not blindly assume the branch is `main` without checking.
 
 ---
 
@@ -163,21 +165,21 @@ Run:
 git remote -v
 ```
 
-For the existing FlavorForge repository, the remote is:
+For the existing FlavorForge repository:
 
 ```text
 origin  https://github.com/shettymalathib/flavorforge-azure-devsecops-capstone.git (fetch)
 origin  https://github.com/shettymalathib/flavorforge-azure-devsecops-capstone.git (push)
 ```
 
-For another person recreating the project, the username will be different:
+For another user:
 
 ```text
 origin  https://github.com/YOUR_GITHUB_USERNAME/flavorforge-azure-devsecops-capstone.git (fetch)
 origin  https://github.com/YOUR_GITHUB_USERNAME/flavorforge-azure-devsecops-capstone.git (push)
 ```
 
-If using SSH, it may instead look like:
+If SSH is being used:
 
 ```text
 origin  git@github.com:YOUR_GITHUB_USERNAME/flavorforge-azure-devsecops-capstone.git (fetch)
@@ -186,21 +188,13 @@ origin  git@github.com:YOUR_GITHUB_USERNAME/flavorforge-azure-devsecops-capstone
 
 ---
 
-# 7. Important — Do Not Add `origin` Again
+# 7. Verify `origin` Before Doing Anything Else
 
-If:
+If `origin` already exists and points to the correct repository:
 
-```bash
-git remote -v
-```
+**Do nothing.**
 
-already shows:
-
-```text
-origin
-```
-
-do not run:
+Do not run:
 
 ```bash
 git remote add origin ...
@@ -208,15 +202,19 @@ git remote add origin ...
 
 again.
 
-That command is only required when the local repository does not already have a remote.
+If you run that command when `origin` already exists, Git may return:
 
-If the existing remote is incorrect, use:
-
-```bash
-git remote set-url origin <correct-url>
+```text
+error: remote origin already exists.
 ```
 
-Then verify again:
+If the remote is wrong, correct it with:
+
+```bash
+git remote set-url origin <CORRECT_REPOSITORY_URL>
+```
+
+Then verify:
 
 ```bash
 git remote -v
@@ -224,36 +222,38 @@ git remote -v
 
 ---
 
-# 8. Review the Working Tree
+# 8. Check the Working Tree
 
-Before creating a commit or pushing anything, run:
+Run:
 
 ```bash
 git status
 ```
 
-This is an important safety check.
-
-Look for:
+Review anything listed as:
 
 ```text
-modified:
-new file:
-deleted:
-untracked files:
+modified
+new file
+deleted
+untracked
 ```
 
-Review the changes before adding them.
+Do not immediately run:
 
-Do not blindly commit files that may contain credentials.
+```bash
+git add .
+```
+
+without first understanding what has changed.
 
 ---
 
-# 9. Check for Sensitive Files
+# 9. Check for Sensitive Information
 
-Before the first push, make sure the repository does not contain credentials.
+Before pushing the project to GitHub, make sure it does not contain credentials.
 
-Look for files such as:
+Check for files such as:
 
 ```text
 .env
@@ -264,47 +264,38 @@ credentials.*
 secret.*
 ```
 
-Also make sure you have not placed:
+Also check that the repository does not contain:
 
 ```text
-GitHub PAT
-GitHub password
+GitHub Personal Access Tokens
+GitHub passwords
 Azure credentials
 Azure client secrets
 SSH private keys
 Kubernetes secret values
+Database passwords
 Connection strings containing credentials
 ```
 
-inside the repository.
-
-A credential should never be committed just because Git allows it.
+Never commit credentials simply because Git allows the file to be committed.
 
 ---
 
-# 10. Check `.gitignore`
+# 10. Verify `.gitignore`
 
-Verify that the project has a `.gitignore` file:
+Check that `.gitignore` exists:
 
 ```bash
 ls -la
 ```
 
-You should be able to see:
-
-```text
-.gitignore
-```
-
-You can inspect it using:
+Then inspect it:
 
 ```bash
 cat .gitignore
 ```
 
-The `.gitignore` should contain appropriate entries for files that should remain local.
-
-For example:
+Typical entries may include:
 
 ```text
 node_modules/
@@ -313,9 +304,9 @@ node_modules/
 *.log
 ```
 
-The exact contents should come from the project's actual requirements.
+The exact `.gitignore` must match the actual project requirements.
 
-Do not blindly replace an existing `.gitignore`.
+**Do not replace an existing project `.gitignore` blindly.**
 
 ---
 
@@ -333,66 +324,61 @@ Example:
 ?? docs/BUILD-JOURNEY/
 ```
 
-The `??` means Git sees the path as **untracked**.
+The `??` means the path is currently untracked.
 
-It does not automatically mean the file is bad.
-
-It means Git has not yet started tracking it.
-
-Review the path before adding it.
+Review every important untracked path before adding it.
 
 ---
 
-# 12. Add the Files
+# 12. Stage the Project Changes
 
-If the files are reviewed and should be included in the repository, stage them.
-
-For the complete project:
+If the changes have been reviewed and should be committed:
 
 ```bash
 git add .
 ```
 
-Then check what has been staged:
+Then immediately check the staging area:
 
 ```bash
 git status
 ```
 
-This is an important checkpoint.
-
-Do not immediately push without reviewing the staged changes.
+This gives you an opportunity to catch unwanted files before creating the commit.
 
 ---
 
 # 13. Review the Staged Changes
 
-Run:
+Check the summary:
 
 ```bash
 git diff --cached --stat
 ```
 
-This shows a summary of the files that will be included in the commit.
-
-You can also inspect the actual staged changes:
+For a detailed review:
 
 ```bash
 git diff --cached
 ```
 
-Review the output.
+Look specifically for:
 
-If something sensitive or incorrect has been staged, remove it before committing.
+* credentials
+* `.env` files
+* private keys
+* unnecessary generated files
+* large files
+* files that should have been ignored
 
 ---
 
 # 14. Unstage a File If Necessary
 
-If you accidentally staged a file, you can remove it from the staging area without deleting the file:
+If an unwanted file was staged, remove it from staging:
 
 ```bash
-git restore --staged <file>
+git restore --staged <FILE>
 ```
 
 Example:
@@ -401,31 +387,53 @@ Example:
 git restore --staged .env
 ```
 
-Then check:
+Then verify:
 
 ```bash
 git status
 ```
 
+This does **not** delete the file from the computer. It only removes it from the staging area.
+
 ---
 
-# 15. Create the First Commit
+# 15. Decide Whether a Commit Is Required
 
-Once the staged files have been reviewed, create the commit:
+There are two possible situations.
+
+### Situation A — Changes are already committed
+
+Check:
+
+```bash
+git status
+```
+
+If there are no changes that need committing, do **not** create another unnecessary commit.
+
+You can proceed toward the push.
+
+### Situation B — There are staged changes
+
+Create a commit:
 
 ```bash
 git commit -m "Initial FlavorForge project"
 ```
 
-The commit message can be different if the project already has an established commit history.
+For an existing project, use an appropriate commit message rather than creating a fake "initial" commit.
 
-For a project that is already committed locally, **do not create another unnecessary initial commit**.
+For example:
 
-Instead, push the existing local commits.
+```bash
+git commit -m "docs: add BUILD-JOURNEY documentation"
+```
+
+The commit message should describe the actual change.
 
 ---
 
-# 16. Verify the Commit
+# 16. Verify the Local Commit History
 
 Run:
 
@@ -433,9 +441,7 @@ Run:
 git log --oneline -5
 ```
 
-You should see the latest commits.
-
-For the existing FlavorForge repository, the local history already contains commits such as:
+For the existing FlavorForge repository, the history already contains commits such as:
 
 ```text
 c85aee2 documenting step by step implementation
@@ -445,13 +451,15 @@ c640066 docs: update generated documentation
 557c0a5 changes in root readme
 ```
 
-The exact commit history will be different for someone recreating the project.
+The exact history will differ when the project is recreated by another person.
+
+Do not manually reproduce these commit IDs.
 
 ---
 
-# 17. Confirm the Branch
+# 17. Confirm the Branch Again
 
-Before pushing, run:
+Run:
 
 ```bash
 git branch --show-current
@@ -463,29 +471,63 @@ For FlavorForge:
 main
 ```
 
+We now know:
+
+```text
+Local branch = main
+```
+
 ---
 
-# 18. First Push — Existing `main` Branch
+# 18. Check Whether the GitHub Repository Is Empty
 
-If the GitHub repository is empty and your local branch is already named `main`, push using:
+Before pushing, determine whether the remote repository already contains commits.
+
+Run:
+
+```bash
+git ls-remote origin
+```
+
+If the repository is completely empty, there may be no branch references.
+
+If the repository already contains a branch such as:
+
+```text
+refs/heads/main
+```
+
+then the remote already has Git history.
+
+This distinction is important.
+
+---
+
+# 19. First Push to an Empty GitHub Repository
+
+If:
+
+* local branch is `main`
+* GitHub repository is empty
+* `origin` is correct
+* authentication works
+
+then push:
 
 ```bash
 git push -u origin main
 ```
 
-The `-u` option establishes the relationship between:
+The `-u` option establishes the upstream relationship:
 
 ```text
 local main
-```
-
-and:
-
-```text
+      |
+      v
 origin/main
 ```
 
-After this, future pushes can usually be performed with:
+After that, normal pushes can usually use:
 
 ```bash
 git push
@@ -493,7 +535,7 @@ git push
 
 ---
 
-# 19. If Your Branch Has Another Name
+# 20. If the Local Branch Has Another Name
 
 Check:
 
@@ -507,35 +549,29 @@ If the result is:
 master
 ```
 
-or another branch name, do not blindly run:
+or another name, do not automatically run:
 
 ```bash
 git push -u origin main
 ```
 
-You need to decide which branch should be used.
-
-For this project, the standard branch is:
-
-```text
-main
-```
-
-If you intentionally want to rename the current local branch to `main`:
+If `main` is the intended project branch, rename the local branch:
 
 ```bash
 git branch -M main
 ```
 
-Then:
+Then push:
 
 ```bash
 git push -u origin main
 ```
 
+Only rename the branch when that is actually the intended repository convention.
+
 ---
 
-# 20. HTTPS Authentication During the Push
+# 21. HTTPS Authentication During Push
 
 If the remote uses HTTPS:
 
@@ -543,39 +579,38 @@ If the remote uses HTTPS:
 https://github.com/YOUR_GITHUB_USERNAME/flavorforge-azure-devsecops-capstone.git
 ```
 
-Git may ask for credentials.
+Git may request credentials.
 
-If prompted:
+Enter:
 
 ```text
 Username:
-```
-
-enter:
-
-```text
 YOUR_GITHUB_USERNAME
 ```
 
-If prompted:
+For the password prompt, enter:
 
 ```text
-Password:
+YOUR_PERSONAL_ACCESS_TOKEN
 ```
 
-enter the:
+Do **not** enter the normal GitHub account password.
+
+The PAT should never be written into:
 
 ```text
-Personal Access Token
+README.md
+documentation
+scripts
+source code
+screenshots
+videos
+Git commits
 ```
-
-Do **not** enter your normal GitHub password.
-
-The PAT should not appear in the terminal output or documentation.
 
 ---
 
-# 21. SSH Authentication During the Push
+# 22. SSH Authentication During Push
 
 If the remote uses SSH:
 
@@ -583,15 +618,15 @@ If the remote uses SSH:
 git@github.com:YOUR_GITHUB_USERNAME/flavorforge-azure-devsecops-capstone.git
 ```
 
-Git uses the SSH key configured in the previous authentication step.
+Git will use the configured SSH key.
 
-Before pushing, you can test:
+You can test authentication first:
 
 ```bash
 ssh -T git@github.com
 ```
 
-If SSH authentication is successful, run:
+If authentication succeeds:
 
 ```bash
 git push -u origin main
@@ -599,7 +634,7 @@ git push -u origin main
 
 ---
 
-# 22. What Happens During `git push`?
+# 23. Understand What `git push` Does
 
 Conceptually:
 
@@ -614,13 +649,13 @@ origin/main
 GitHub
 ```
 
-Git transfers the commits that GitHub does not already have.
+Git transfers commits that the remote does not already contain.
 
-The files then become visible in the GitHub repository.
+It does not simply upload every file from the folder.
 
 ---
 
-# 23. Successful Push
+# 24. Successful Push
 
 A successful push may display output similar to:
 
@@ -636,25 +671,29 @@ branch 'main' set up to track 'origin/main'.
 
 The exact output will vary.
 
-The important part is that:
+The important result is:
 
 ```text
 main -> main
 ```
 
-was successfully pushed.
+and:
+
+```text
+branch 'main' set up to track 'origin/main'
+```
 
 ---
 
-# 24. Verify the Local Repository After Push
+# 25. Verify the Local Repository
 
-Run:
+After the push, run:
 
 ```bash
 git status
 ```
 
-A clean working tree should look similar to:
+A clean repository should look similar to:
 
 ```text
 On branch main
@@ -663,11 +702,33 @@ Your branch is up to date with 'origin/main'.
 nothing to commit, working tree clean
 ```
 
-This is a useful verification point.
+---
+
+# 26. Verify Branch Tracking
+
+Run:
+
+```bash
+git branch -vv
+```
+
+You should see that:
+
+```text
+main
+```
+
+tracks:
+
+```text
+origin/main
+```
+
+This confirms that the local branch is associated with the remote branch.
 
 ---
 
-# 25. Verify the Remote
+# 27. Verify the Remote Again
 
 Run:
 
@@ -675,7 +736,19 @@ Run:
 git remote -v
 ```
 
-Confirm that the expected GitHub repository is shown for both:
+Confirm:
+
+```text
+origin
+```
+
+points to:
+
+```text
+flavorforge-azure-devsecops-capstone
+```
+
+for both:
 
 ```text
 fetch
@@ -684,31 +757,11 @@ push
 
 ---
 
-# 26. Verify the Tracking Relationship
+# 28. Verify the GitHub Repository
 
-Run:
+Open the FlavorForge repository in GitHub.
 
-```bash
-git branch -vv
-```
-
-You should see the local `main` branch tracking:
-
-```text
-origin/main
-```
-
-This confirms that the upstream relationship was established.
-
----
-
-# 27. Verify the Repository on GitHub
-
-Open the GitHub repository in a browser.
-
-You should now see the FlavorForge project files.
-
-Examples include:
+You should now see the project files, such as:
 
 ```text
 frontend/
@@ -723,47 +776,101 @@ azure-pipelines.yml
 README.md
 ```
 
-The exact repository contents depend on the project version being recreated.
+The exact contents depend on the project version.
 
 ---
 
-# 28. Verify the README
+# 29. Verify the README
 
-On GitHub, open:
+Open:
 
 ```text
 README.md
 ```
 
-Confirm that the project README is displayed correctly.
+on GitHub.
 
-This verifies that the local project content was successfully transferred to GitHub.
+Confirm that the project README is displayed correctly.
 
 ---
 
-# 29. Verify the GitHub Commit History
+# 30. Verify the Commit History
 
-Open the repository's commit history on GitHub.
-
-Compare the latest commit with:
+Compare the latest local commit:
 
 ```bash
 git log --oneline -5
 ```
 
-The latest local commit should also appear in the GitHub repository after a successful push.
+with the commit history displayed on GitHub.
+
+The latest pushed commit should appear on GitHub.
 
 ---
 
-# 30. Common Error — `remote origin already exists`
+# 31. Important — What If the Push Is Rejected?
 
-If you see:
+You may see:
 
 ```text
-error: remote origin already exists.
+! [rejected] main -> main (non-fast-forward)
 ```
 
-do not add another remote.
+This normally means the GitHub repository already contains commits that are not present locally.
+
+For example:
+
+```text
+Local history
+      |
+      | different history
+      |
+Remote history
+```
+
+This can happen if the GitHub repository was created with:
+
+* README
+* `.gitignore`
+* LICENSE
+* another initial commit
+
+### Do not immediately run:
+
+```bash
+git push --force
+```
+
+First inspect the histories.
+
+---
+
+# 32. Why `git push --force` Is Dangerous
+
+Force pushing can replace remote history.
+
+For a beginner workflow, never use:
+
+```bash
+git push --force
+```
+
+as a first troubleshooting step.
+
+First determine:
+
+```text
+What commits exist locally?
+What commits exist remotely?
+Are they supposed to be combined?
+Is the remote repository disposable?
+```
+
+Then choose the appropriate recovery method.
+
+---
+
+# 33. Common Error — `remote origin already exists`
 
 Run:
 
@@ -771,12 +878,14 @@ Run:
 git remote -v
 ```
 
-If the URL is correct, continue.
+If the URL is correct:
 
-If it is incorrect:
+**Do nothing.**
+
+If the URL is incorrect:
 
 ```bash
-git remote set-url origin <correct-url>
+git remote set-url origin <CORRECT_URL>
 ```
 
 Then:
@@ -787,77 +896,74 @@ git remote -v
 
 ---
 
-# 31. Common Error — `Authentication failed`
+# 34. Common Error — Authentication Failed
 
-For HTTPS, check:
+For HTTPS, verify:
 
 ```text
 GitHub username
-PAT validity
+PAT
 PAT expiration
 PAT permissions
 Repository access
+Repository URL
 ```
 
 Remember:
 
 ```text
-GitHub password ≠ Git HTTPS password
+GitHub account password
+        ≠
+Git HTTPS password
 ```
 
 The PAT is used for Git HTTPS authentication.
 
 ---
 
-# 32. Common Error — `Permission denied (publickey)`
+# 35. Common Error — Permission Denied (Public Key)
 
-This normally indicates an SSH authentication problem.
-
-Run:
+For SSH:
 
 ```bash
 ssh -T git@github.com
 ```
 
-Then check:
+Then:
 
 ```bash
 ssh-add -l
 ```
 
-Verify that:
+Verify:
 
-* the SSH key exists
-* the private key is loaded
-* the public key was added to the correct GitHub account
-* the remote URL uses SSH
-
-Check the remote:
-
-```bash
-git remote -v
-```
+* SSH key exists
+* private key is loaded
+* public key is registered with GitHub
+* correct GitHub account is being used
+* remote URL uses SSH
 
 ---
 
-# 33. Common Error — `Repository not found`
+# 36. Common Error — Repository Not Found
 
-Check:
+Run:
 
 ```bash
 git remote -v
 ```
 
-Verify:
+Check:
 
 ```text
 GitHub username
-Repository name
 Repository owner
+Repository name
 Authentication account
+Repository access
 ```
 
-The repository should be:
+The expected repository name is:
 
 ```text
 flavorforge-azure-devsecops-capstone
@@ -865,47 +971,7 @@ flavorforge-azure-devsecops-capstone
 
 ---
 
-# 34. Common Error — `rejected` / `non-fast-forward`
-
-You may see an error similar to:
-
-```text
-! [rejected] main -> main (non-fast-forward)
-```
-
-This can happen when the GitHub repository already contains commits that the local repository does not have.
-
-For example, someone may have created the GitHub repository with a README.
-
-**Do not immediately use `git push --force`.**
-
-First inspect the histories.
-
-A safe approach is to determine whether the remote contains commits that need to be integrated.
-
-For an intentionally empty repository, this normally should not occur.
-
----
-
-# 35. Do Not Use `git push --force` as a First Fix
-
-Avoid:
-
-```bash
-git push --force
-```
-
-unless you fully understand the consequences.
-
-Force pushing can overwrite remote history.
-
-For a beginner workflow, first understand why the push was rejected.
-
----
-
-# 36. Common Error — Files Are Missing on GitHub
-
-If some files do not appear on GitHub:
+# 37. Common Error — Files Are Missing on GitHub
 
 Run:
 
@@ -922,58 +988,28 @@ git log --oneline -5
 Remember:
 
 ```text
-Untracked file
-    ↓
+File
+ ↓
 git add
-    ↓
-Staged file
-    ↓
+ ↓
+Staged
+ ↓
 git commit
-    ↓
+ ↓
 Local commit
-    ↓
+ ↓
 git push
-    ↓
+ ↓
 GitHub
 ```
 
-A file does not reach GitHub simply because it exists in the local folder.
-
----
-
-# 37. Important Git Concept
-
-The first push does **not** mean:
-
-> "Upload everything in my folder."
-
-Git pushes **commits**.
-
-The normal process is:
-
-```text
-Working Directory
-       |
-       | git add
-       v
-Staging Area
-       |
-       | git commit
-       v
-Local Git Repository
-       |
-       | git push
-       v
-Remote GitHub Repository
-```
-
-Understanding this is important for troubleshooting Git.
+A file existing in the local directory does not mean that it has been pushed to GitHub.
 
 ---
 
 # 38. Final Verification Commands
 
-Run these commands:
+Run:
 
 ```bash
 git status
@@ -995,7 +1031,7 @@ git log --oneline -5
 git branch -vv
 ```
 
-Expected overall state:
+The expected overall state is:
 
 ```text
 Branch:
@@ -1013,52 +1049,81 @@ clean
 
 ---
 
-# 39. First Push Verification Checklist
+# 39. Existing FlavorForge Repository
 
-* [ ] Local FlavorForge repository exists
-* [ ] Git is installed
-* [ ] Correct branch identified
-* [ ] GitHub repository exists
-* [ ] `origin` points to the correct GitHub repository
-* [ ] Authentication is configured
-* [ ] Sensitive files were checked
-* [ ] `.gitignore` was checked
-* [ ] Files were reviewed before staging
-* [ ] Commit exists locally
-* [ ] `git push -u origin main` completed successfully
-* [ ] GitHub shows the project files
-* [ ] GitHub shows the expected commit history
-* [ ] Local `main` tracks `origin/main`
-* [ ] `git status` is clean
+The existing FlavorForge repository already contains Git history and has been connected to:
+
+```text
+https://github.com/shettymalathib/flavorforge-azure-devsecops-capstone.git
+```
+
+The local branch is:
+
+```text
+main
+```
+
+Therefore, when documenting or reproducing the project:
+
+> Do not create unnecessary commits or reinitialize the repository simply because this guide is called "First Push."
+
+The correct action depends on the actual state of the local and remote repositories.
 
 ---
 
-# 40. Reviewer Explanation
+# 40. Verification Checklist
+
+Before moving to the next document:
+
+* [ ] Correct FlavorForge project directory opened
+* [ ] Git is installed
+* [ ] Local Git repository verified
+* [ ] Correct branch identified
+* [ ] `origin` verified
+* [ ] GitHub repository verified
+* [ ] Sensitive files reviewed
+* [ ] `.gitignore` reviewed
+* [ ] Staged changes reviewed
+* [ ] Required commit exists locally
+* [ ] Authentication works
+* [ ] Push completed successfully
+* [ ] GitHub shows the project files
+* [ ] GitHub shows the expected commit
+* [ ] `main` tracks `origin/main`
+* [ ] Working tree is clean
+
+---
+
+# 41. Reviewer Explanation
 
 ### "How did you perform the first push?"
 
-> "I first verified the local Git repository, branch and GitHub remote. I reviewed the files and checked for sensitive information before staging and committing them. I then pushed the `main` branch using `git push -u origin main`, which established the upstream relationship with `origin/main`."
+> "I first verified the local Git repository, current branch, and GitHub remote. I reviewed the files and checked for sensitive information before staging and committing any required changes. Once the repository was ready and authentication was working, I pushed the `main` branch using `git push -u origin main`."
 
 ### "What does `-u` do?"
 
-> "It establishes the upstream tracking relationship between the local `main` branch and the remote `origin/main` branch. After that, normal `git push` and `git pull` commands can use that relationship."
+> "It establishes the upstream tracking relationship between the local `main` branch and `origin/main`. After that, normal `git push` and `git pull` commands can use the configured upstream branch."
 
 ### "What is the difference between commit and push?"
 
-> "A commit saves changes into the local Git repository. A push transfers those commits to the remote GitHub repository."
+> "A commit records changes in the local Git repository. A push transfers those commits from the local repository to the remote GitHub repository."
 
-### "What happens if a file exists locally but isn't on GitHub?"
+### "Why might a file exist locally but not on GitHub?"
 
-> "The file may not have been staged and committed. Git only pushes commits, so I would check `git status`, stage the required file, commit it, and then push."
+> "Because Git only pushes committed changes. The file may not have been staged and committed. I would check `git status`, stage the required file, create a commit, and push it."
+
+### "Why shouldn't you use force push immediately?"
+
+> "A force push can overwrite remote history. I first inspect the local and remote histories and determine why the push was rejected before deciding how to reconcile them."
 
 ---
 
-# 41. Next Step
+# 42. Next Step
 
-After the first push is successful, continue with:
+After the first push has been verified, continue with:
 
 ```text
 06-verify-github-repository.md
 ```
 
-That document performs the final GitHub-side verification and confirms that the local FlavorForge repository and remote GitHub repository are correctly connected.
+The next document performs the final GitHub-side verification and confirms that the local FlavorForge repository and GitHub repository are correctly connected.

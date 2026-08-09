@@ -4,9 +4,9 @@
 
 After creating the Azure Resource Group, the next step in the FlavorForge Azure infrastructure journey was to create an **Azure Container Registry (ACR)**.
 
-Azure Container Registry is used to store and manage the Docker images required by the FlavorForge application.
+Azure Container Registry was used to store the Docker images required by the FlavorForge application.
 
-The overall flow is:
+The overall flow was:
 
 ```text
 FlavorForge Application
@@ -15,153 +15,92 @@ Docker Images
         ↓
 Azure Container Registry
         ↓
-Backend / Frontend Images
+Container Images
         ↓
 AKS
 ```
 
-The ACR created for FlavorForge was:
+The ACR used by FlavorForge was:
 
 ```text
 flavorforgeacr2026ms
 ```
 
-It was created inside:
+It was associated with:
 
 ```text
-flavorforge-rg
-```
-
-in:
-
-```text
-East US
+Resource Group: flavorforge-rg
+Region: East US
 ```
 
 ---
 
 # 2. Why FlavorForge Needed ACR
 
-The application was first containerized locally using Docker.
+During the Docker stage, the frontend and backend were packaged as separate Docker images.
 
-The local workflow was:
+Conceptually:
 
 ```text
-Frontend Source Code
-        ↓
-Frontend Dockerfile
-        ↓
+Frontend Source
+      ↓
+frontend/Dockerfile
+      ↓
 Frontend Docker Image
 ```
 
 and:
 
 ```text
-Backend Source Code
-        ↓
-Backend Dockerfile
-        ↓
+Backend Source
+      ↓
+backend/Dockerfile
+      ↓
 Backend Docker Image
 ```
 
-These images then needed a central registry where they could be stored and later retrieved by the Azure Kubernetes Service (AKS) cluster.
+These images needed to be stored in a registry that could be accessed by the Azure deployment environment.
 
-ACR provides that registry.
+Azure Container Registry provided that central image repository.
 
-The resulting architecture is:
+The resulting workflow was:
 
 ```text
-                    FlavorForge
-                         │
-              ┌──────────┴──────────┐
-              │                     │
-              ▼                     ▼
-       Frontend Image         Backend Image
-              │                     │
-              └──────────┬──────────┘
-                         │
-                         ▼
-              Azure Container Registry
-                  flavorforgeacr2026ms
-                         │
-                         ▼
-                        AKS
+Local Docker Images
+        ↓
+Azure Container Registry
+        ↓
+Azure Kubernetes Service
+        ↓
+Kubernetes Pods
 ```
 
 ---
 
-# 3. Azure Container Registry Used
+# 3. FlavorForge ACR
 
-The FlavorForge project used the following Azure Container Registry:
+The Azure Container Registry used by FlavorForge was:
 
 ```text
 ACR Name:
 flavorforgeacr2026ms
 ```
 
-Resource group:
+It was associated with:
 
 ```text
+Resource Group:
 flavorforge-rg
 ```
 
-Region:
+and:
 
 ```text
+Region:
 East US
 ```
 
-The ACR was created as part of the FlavorForge Azure infrastructure.
-
----
-
-# 4. Register the Required Azure Resource Provider
-
-Before creating the registry, the required Azure Container Registry resource provider was registered.
-
-The repository contains evidence of this step:
-
-```text
-screenshots/azure/03-containerregistry-provider-registered.png
-```
-
-### Evidence
-
-![Azure Container Registry provider registered](/screenshots/azure/03-containerregistry-provider-registered.png)
-
-This confirmed that the Azure subscription was ready to create Container Registry resources.
-
----
-
-# 5. Create the Azure Container Registry
-
-The ACR was created inside the existing FlavorForge resource group.
-
-The resulting resource was:
-
-```text
-flavorforgeacr2026ms
-```
-
-### Evidence
-
-![FlavorForge ACR created](../../../screenshots/azure/04-acr-created.png)
-
-This screenshot provides evidence that the Azure Container Registry was successfully created.
-
----
-
-# 6. ACR and Resource Group Relationship
-
-The Azure infrastructure was organized using the FlavorForge resource group:
-
-```text
-flavorforge-rg
-```
-
-The Container Registry belongs to this resource group.
-
-The relationship is:
+The high-level Azure structure was:
 
 ```text
 Azure Subscription
@@ -174,166 +113,244 @@ flavorforge-rg
         └── flavorforge-aks
 ```
 
-This organization keeps the major FlavorForge Azure resources together.
+The AKS resource is documented in the following stage.
+
+---
+
+# 4. Register the Container Registry Resource Provider
+
+Before creating the registry, the required Azure Container Registry resource provider was registered.
+
+Existing project evidence:
+
+![](/screenshots/azure/03-containerregistry-provider-registered.png)
+
+This provided evidence that the Azure subscription was prepared to work with Azure Container Registry resources.
+
+The important point for the BUILD-JOURNEY is that the provider registration was completed before the registry was created.
+
+---
+
+# 5. Create the Azure Container Registry
+
+The FlavorForge Azure Container Registry was created as part of the Azure infrastructure setup.
+
+The resulting registry was:
+
+```text
+flavorforgeacr2026ms
+```
+
+Existing repository evidence documents the registry creation.
+
+The registry belonged to:
+
+```text
+flavorforge-rg
+```
+
+and was created in:
+
+```text
+East US
+```
+
+The relationship was:
+
+```text
+Azure
+  │
+  ▼
+flavorforge-rg
+  │
+  ▼
+flavorforgeacr2026ms
+```
+
+---
+
+# 6. Verify the Container Registry
+
+The registry could be verified through Azure.
+
+A CLI verification command is:
+
+```bash
+az acr show \
+  --name flavorforgeacr2026ms \
+  --resource-group flavorforge-rg
+```
+
+A simpler table view can also be used:
+
+```bash
+az acr list --output table
+```
+
+The expected registry is:
+
+```text
+flavorforgeacr2026ms
+```
+
+These commands are verification commands and should not be confused with the original registry creation step.
 
 ---
 
 # 7. Authenticate Docker with ACR
 
-After creating the registry, Docker was authenticated with the Azure Container Registry.
+After the registry was available, Docker was authenticated with the FlavorForge ACR.
 
-The repository contains evidence of the successful ACR login:
+The standard Azure CLI command is:
 
-```text
-screenshots/azure/06-az-acr-login-success.png
+```bash
+az acr login --name flavorforgeacr2026ms
 ```
 
-### Evidence
+The project contains evidence of successful ACR authentication.
 
-![Azure Container Registry login success](../../../screenshots/azure/06-az-acr-login-success.png)
+The purpose of this step was to allow Docker to interact with the Azure Container Registry.
 
-The successful login allowed Docker to interact with the FlavorForge ACR.
-
-Conceptually:
+The relationship was:
 
 ```text
 Local Docker
      │
      │ Authentication
      ▼
-Azure Container Registry
-     │
-     ▼
 flavorforgeacr2026ms
 ```
 
 ---
 
-# 8. Docker Images for FlavorForge
+# 8. Prepare Docker Images for ACR
 
-The application contains separate frontend and backend Docker images.
+The frontend and backend had already been built as Docker images during the Docker stage.
 
-The containerization stage produced:
+The local workflow was:
 
 ```text
+Frontend
+    ↓
+frontend/Dockerfile
+    ↓
 Frontend Docker Image
 ```
 
 and:
 
 ```text
+Backend
+    ↓
+backend/Dockerfile
+    ↓
 Backend Docker Image
 ```
 
-These images were then prepared for storage in ACR.
-
-The workflow was:
-
-```text
-Application Source
-        │
-        ├───────────────┐
-        │               │
-        ▼               ▼
-    Frontend         Backend
-    Dockerfile       Dockerfile
-        │               │
-        ▼               ▼
- Frontend Image      Backend Image
-        │               │
-        └───────┬───────┘
-                │
-                ▼
-              ACR
-```
-
----
-
-# 9. Tagging Images for ACR
-
-Docker images need to be associated with the ACR registry before they can be pushed.
-
-The repository contains evidence of the image tagging workflow:
-
-```text
-screenshots/azure/05-tag-create.png
-```
-
-The tagging process identifies the target registry and repository for the image.
+Before an image can be pushed to ACR, it must use an image reference that identifies the target registry and repository.
 
 Conceptually:
 
 ```text
 Local Docker Image
         ↓
-ACR-qualified image tag
+Registry-qualified image reference
         ↓
-flavorforgeacr2026ms
-        ↓
-Push to ACR
+Azure Container Registry
 ```
 
-The exact image tags used during the project can also be verified from the Docker and ACR evidence already captured in the repository.
+The exact image tags used during the FlavorForge implementation should be taken from the existing Docker/ACR evidence rather than reconstructed from memory.
+
+This keeps the documentation reproducible and avoids claiming an exact command that was not recorded.
+
+---
+
+# 9. Push Images to ACR
+
+After the images were prepared for the registry and Docker was authenticated, the application images were pushed to Azure Container Registry.
+
+The conceptual workflow was:
+
+```text
+Local Docker Image
+        ↓
+ACR-qualified Image
+        ↓
+Docker Push
+        ↓
+flavorforgeacr2026ms
+```
+
+The important result was that the FlavorForge container images became available in ACR for use by the later AKS deployment.
+
+Where the original push command is not directly available in the project evidence, this document intentionally describes the workflow rather than inventing an exact command.
 
 ---
 
 # 10. Verify Images in ACR
 
-After the Docker images were pushed, the images stored in Azure Container Registry were verified.
+The images stored in ACR were verified.
 
-Evidence:
+Existing evidence:
+
+![](/screenshots/azure/09-verify-images-in-acr.png)
+
+This confirmed that FlavorForge container images were available in the Azure Container Registry.
+
+The verification flow was:
 
 ```text
-screenshots/azure/09-verify-images-in-acr.png
+Docker Images
+      ↓
+Push to ACR
+      ↓
+ACR Repository
+      ↓
+Verify Images
 ```
-
-### Evidence
-
-![Images verified in Azure Container Registry](../../../screenshots/azure/09-verify-images-in-acr.png)
-
-This confirmed that the FlavorForge container images were available in ACR.
 
 ---
 
-# 11. ACR Images in Azure Portal
+# 11. Verify ACR Images in Azure Portal
 
-The ACR repositories were also inspected from the Azure Portal.
+The ACR images were also inspected through the Azure Portal.
 
-Evidence:
+Existing evidence:
 
-```text
-screenshots/azure/25-acr-images.png
-```
+![](/screenshots/azure/25-acr-images.png)
 
-### Evidence
 
-![FlavorForge ACR images](../../../screenshots/azure/25-acr-images.png)
+This provides additional evidence that the container images were stored successfully in the registry.
 
-This provides additional evidence that the container images were stored in the Azure Container Registry.
+The Portal view provides a visual confirmation of the registry contents.
 
 ---
 
-# 12. ACR Repository Structure
+# 12. ACR Repository Concept
 
-The FlavorForge ACR stores the application container images that are later required by AKS.
+The registry acts as the central storage location for the container images used by the application.
 
-The logical structure is:
+Conceptually:
 
 ```text
 Azure Container Registry
         │
-        ├── Frontend image
+        ├── Frontend Image
         │
-        └── Backend image
+        └── Backend Image
 ```
 
-The registry therefore acts as the central image repository between Docker image creation and Kubernetes deployment.
+The registry separates image storage from image execution.
+
+ACR stores the images.
+
+AKS later uses those images to create Kubernetes workloads.
 
 ---
 
 # 13. Docker → ACR Workflow
 
-The complete image publishing workflow was:
+The complete FlavorForge image publishing workflow can be represented as:
 
 ```text
 FlavorForge Source Code
@@ -344,70 +361,26 @@ Docker Build
         ↓
 Local Docker Image
         ↓
-ACR Image Tag
+Registry-qualified Image Reference
         ↓
-Docker Login to ACR
+Docker / ACR Authentication
         ↓
-Docker Push
+Push Image
         ↓
 Azure Container Registry
+        ↓
+Verify Image
 ```
 
-This establishes the connection between the local Docker stage and the Azure deployment stage.
+This connects the Docker stage with the Azure deployment stage.
 
 ---
 
-# 14. ACR Verification
+# 14. ACR and AKS Relationship
 
-The ACR stage was verified using multiple pieces of evidence.
+The next major Azure component was Azure Kubernetes Service.
 
-### Provider registration
-
-```text
-screenshots/azure/03-containerregistry-provider-registered.png
-```
-
-Confirmed that the required Container Registry resource provider was registered.
-
-### ACR creation
-
-```text
-screenshots/azure/04-acr-created.png
-```
-
-Confirmed that the FlavorForge ACR was created.
-
-### ACR authentication
-
-```text
-screenshots/azure/06-az-acr-login-success.png
-```
-
-Confirmed successful authentication to the registry.
-
-### Image verification
-
-```text
-screenshots/azure/09-verify-images-in-acr.png
-```
-
-Confirmed that images were available in ACR.
-
-### Azure Portal image verification
-
-```text
-screenshots/azure/25-acr-images.png
-```
-
-Provided additional evidence of the images stored in the registry.
-
----
-
-# 15. ACR → AKS Relationship
-
-The ACR stage prepares the container images for the next stage of the FlavorForge deployment.
-
-The relationship is:
+The relationship between ACR and AKS is:
 
 ```text
 Local Docker
@@ -420,38 +393,49 @@ flavorforgeacr2026ms
       ▼
 Azure Kubernetes Service
 flavorforge-aks
+      │
+      ▼
+Kubernetes Pods
 ```
 
-AKS later uses the container images stored in ACR when creating the application workloads.
+ACR provides the image source.
 
-This is why ACR is an important component of the Azure infrastructure.
+AKS runs workloads based on those images.
+
+The ACR → AKS access configuration is documented separately in:
+
+```text
+05 — ACR → AKS Access
+```
+
+This distinction is important because simply having an image in ACR does not by itself document how AKS obtains permission to pull it.
 
 ---
 
-# 16. Why ACR Is Used Instead of Local Docker Images
+# 15. Why ACR Is Needed
 
-A Docker image available only on the developer's local machine cannot be directly used by an AKS cluster.
+An image stored only on the developer's local machine cannot be directly used as the image source for a cloud Kubernetes cluster.
 
-The image needs to be available from a registry that the cluster can access.
+The image needs to be available from a registry accessible to the cluster.
 
 Therefore:
 
 ```text
-Local Machine
-     │
-     │ Docker Image
-     ▼
+Developer Machine
+       │
+       │ Docker Image
+       ▼
 Azure Container Registry
-     │
-     │ Pull Image
-     ▼
+       │
+       │ Image Pull
+       ▼
 AKS
-     │
-     ▼
+       │
+       ▼
 Kubernetes Pod
 ```
 
-This provides a clear separation between:
+This creates a clear separation between:
 
 ```text
 Image Building
@@ -460,89 +444,113 @@ Image Building
 and:
 
 ```text
-Application Deployment
+Image Deployment
 ```
 
-Docker is responsible for building the image.
+Docker builds the image.
 
 ACR stores the image.
 
-AKS later deploys the image.
+AKS deploys workloads using the image.
 
 ---
 
-# 17. FlavorForge ACR Architecture
+# 16. ACR Verification Evidence
 
-The Azure container image flow can be represented as:
+The existing repository contains evidence for the major ACR activities.
 
-```text
-                         Azure
-                          │
-             ┌────────────┴────────────┐
-             │                         │
-             ▼                         ▼
-      Container Registry             AKS
-   flavorforgeacr2026ms        flavorforge-aks
-             │                         │
-             │                         │
-       Container Images          Kubernetes Pods
-             │                         │
-             └────────────┬────────────┘
-                          │
-                    FlavorForge
-                    Application
-```
+### Provider registration
 
-The registry provides the image source for the Kubernetes deployment.
+![](/screenshots/azure/03-containerregistry-provider-registered.png)
 
----
+### ACR creation
 
-# 18. Evidence Available in Repository
-
-The following screenshots already exist in the FlavorForge repository for the ACR stage:
+Existing Azure evidence documents the creation of:
 
 ```text
-screenshots/azure/
-├── 03-containerregistry-provider-registered.png
-├── 04-acr-created.png
-├── 05-tag create.png
-├── 06-az acr login success.png
-├── 09-Verify Images in ACR.png
-└── 25-ACR-images.png
+flavorforgeacr2026ms
 ```
 
-These screenshots provide evidence for:
+### ACR authentication
+
+Existing project evidence documents successful authentication to the registry.
+
+### Image verification
+
+![](/screenshots/azure/09-verify-images-in-acr.png)
+
+### Azure Portal image verification
+
+![](/screenshots/azure/25-acr-images.png)
+
+Together, these provide evidence of the major ACR workflow:
 
 ```text
 Provider Registration
         ↓
 ACR Creation
         ↓
-Image Tagging
-        ↓
-ACR Authentication
+Authentication
         ↓
 Image Publishing
         ↓
 Image Verification
 ```
 
-No additional screenshots need to be recreated for this document because the repository already contains evidence for the ACR workflow.
+---
+
+# 17. Important Reproducibility Note
+
+The exact image tags used during the FlavorForge implementation should be taken from the captured project evidence and later pipeline configuration.
+
+This document therefore does **not** invent a specific image tag or push command where the original evidence is not available.
+
+This is intentional.
+
+The BUILD-JOURNEY should distinguish between:
+
+```text
+What was actually recorded
+```
+
+and:
+
+```text
+What Docker/Azure supports in general
+```
+
+For example, the concept of tagging an image for ACR is valid:
+
+```text
+Local Image
+     ↓
+ACR-qualified Image
+     ↓
+Push
+```
+
+but the exact historical tag should only be documented when supported by the project's actual evidence.
 
 ---
 
-# 19. What We Actually Achieved
+# 18. What We Actually Achieved
 
-At the end of this stage, FlavorForge had a working Azure Container Registry:
+At the end of this stage, FlavorForge had an Azure Container Registry:
 
 ```text
 flavorforgeacr2026ms
 ```
 
-inside:
+associated with:
 
 ```text
 flavorforge-rg
+```
+
+in:
+
+```text
+East US
 ```
 
 The container image workflow was:
@@ -552,26 +560,24 @@ FlavorForge Application
         ↓
 Docker Images
         ↓
-Tag Images for ACR
+ACR Preparation
         ↓
-Authenticate with ACR
+ACR Authentication
         ↓
-Push Images
+Image Push
         ↓
-Verify Images
+Image Verification
         ↓
 Images Available in ACR
 ```
 
-The Docker images were therefore no longer limited to the local development environment.
-
-They were available in Azure for the next deployment stage.
+The container images were therefore available in Azure rather than being limited to the local Docker environment.
 
 ---
 
-# 20. Important Learning
+# 19. Important Learning
 
-The important distinction between Docker and ACR is:
+The important distinction between Docker, ACR, and AKS is:
 
 ```text
 Docker
@@ -579,15 +585,19 @@ Docker
 Builds and runs containers
 ```
 
-while:
-
 ```text
 Azure Container Registry
     ↓
 Stores and distributes container images
 ```
 
-The complete relationship is:
+```text
+Azure Kubernetes Service
+    ↓
+Runs containerized workloads
+```
+
+The overall relationship is:
 
 ```text
 Dockerfile
@@ -601,30 +611,34 @@ AKS
 Kubernetes Pod
 ```
 
-This pattern is commonly used in cloud-native deployment workflows.
+This distinction is important when explaining the FlavorForge architecture during the CBC demonstration or an interview.
 
 ---
 
-# 21. ACR Stage Completed
+# 20. ACR Stage Completed
 
-The Azure BUILD-JOURNEY now looks like:
+The Azure BUILD-JOURNEY now follows:
 
 ```text
 01 — Azure Account and CLI
         ↓
 02 — Resource Group
         ↓
-03 — ACR
+03 — Azure Container Registry
         ↓
-Next: 04 — AKS
+04 — Azure Kubernetes Service
+        ↓
+05 — ACR → AKS Access
+        ↓
+06 — Azure Verification
 ```
 
-The FlavorForge container images were successfully prepared and stored in Azure Container Registry.
+The FlavorForge Azure Container Registry was created, authenticated, populated with the application container images, and verified.
 
-The next stage is:
+The next document is:
 
 ```text
 docs/week-4/BUILD-JOURNEY/05-azure/04-aks.md
 ```
 
-This will document how the FlavorForge Azure Kubernetes Service cluster was created and connected to the application deployment workflow.
+This will document how the FlavorForge Azure Kubernetes Service cluster was created and verified.

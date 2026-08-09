@@ -2,13 +2,29 @@
 
 ## Objective
 
-This document explains how to create a GitHub account for the FlavorForge Azure DevSecOps project.
+This document explains how to create and verify a GitHub account for the FlavorForge Azure DevSecOps project.
 
-A person following this guide should be able to create a GitHub account without needing prior GitHub experience.
+A person following this guide should be able to:
 
-The project uses GitHub as the remote source-code repository.
+1. Understand what GitHub is.
+2. Create a GitHub account.
+3. Verify the GitHub email address.
+4. Choose a GitHub username.
+5. Sign in successfully.
+6. Understand the security requirements before continuing.
 
-The overall relationship is:
+> **Scope:** This document covers **GitHub account creation only**.
+> Repository creation, Git configuration, authentication, and project connection are covered in later documents.
+
+---
+
+# 1. What Is GitHub?
+
+GitHub is a cloud platform used to host Git repositories.
+
+For the FlavorForge project, GitHub will eventually store the project's source code, configuration, infrastructure files, and documentation.
+
+The overall project flow is:
 
 ```text
 Developer Computer
@@ -27,80 +43,77 @@ Azure DevOps CI/CD
 
 ---
 
-# 1. What Is GitHub?
+# 2. Git vs GitHub
 
-GitHub is a cloud platform used to host Git repositories.
+Before continuing, understand the difference between Git and GitHub.
 
-For this project, GitHub stores the FlavorForge source code and project configuration.
+## Git
 
-The repository will eventually contain:
+Git is a version-control tool installed on the developer's computer.
 
-```text
-FlavorForge
-├── frontend
-├── backend
-├── docker
-├── kubernetes
-├── argocd
-├── docs
-├── scripts
-├── azure-pipelines.yml
-└── README.md
-```
+Git is used to:
 
-GitHub is different from Git.
-
-### Git
-
-Git is installed on the developer's computer.
-
-It is used to:
-
-* track changes
+* track file changes
 * create commits
 * create branches
-* connect to remote repositories
+* compare changes
+* restore previous versions
 * push code
 * pull code
+* connect to remote repositories
 
-### GitHub
+## GitHub
 
-GitHub hosts the remote repository online.
+GitHub is the online platform that hosts Git repositories.
 
-It is used to:
+GitHub is used to:
 
-* store the project
-* collaborate
+* store source code remotely
+* collaborate with other developers
 * review source code
 * manage branches
-* integrate with CI/CD
+* integrate with CI/CD systems
 * provide the source repository for Azure DevOps
 
----
+The relationship is:
 
-# 2. What Do I Need?
-
-Before creating the account, you need:
-
-* A working internet connection
-* A web browser
-* An email address
-* A GitHub username
-* A password
-
-You do **not** need Git installed just to create the GitHub account.
-
-Git will be installed and verified separately in the prerequisites section.
+```text
+Git
+  |
+  | manages
+  v
+Local Git Repository
+  |
+  | communicates with
+  v
+GitHub Repository
+```
 
 ---
 
-# 3. Open GitHub
+# 3. What Is Required?
+
+To create a GitHub account, you need:
+
+* Internet connection
+* Web browser
+* Working email address
+* GitHub username
+* Password
+
+You do **not** need Git installed to create the GitHub account.
+
+Git will be installed and verified separately during the development-environment setup.
+
+---
+
+# 4. Open GitHub
 
 Open the official GitHub website:
 
 [GitHub](https://github.com/?utm_source=chatgpt.com)
 
-You should see the GitHub home page.
+The GitHub home page should open.
 
 Select:
 
@@ -108,105 +121,128 @@ Select:
 
 ---
 
-# 4. Create the Account
+# 5. Create the GitHub Account
 
-GitHub will ask for account information.
+Follow the registration process shown by GitHub.
 
-Follow the instructions shown by GitHub.
+The exact screens may change over time, so follow the instructions displayed on the current GitHub registration page.
 
-The exact screens may change over time, so follow the current GitHub registration page.
-
-Typically, GitHub will ask for:
+GitHub may ask for:
 
 * Email address
 * Password
 * Username
 * Email preferences
-* Verification/challenge
+* Verification or security challenge
 
 Use an email address that you can access.
 
+Complete the registration process.
+
 ---
 
-# 5. Verify the Email Address
+# 6. Verify the Email Address
 
-GitHub may send a verification email.
+GitHub may send a verification email to the email address used during registration.
 
 Open your email inbox.
 
-Find the email from GitHub.
+Look for the email from GitHub.
 
 Follow the verification instructions.
 
-Return to GitHub after completing verification.
+After completing verification, return to GitHub.
 
-Email verification is important because some GitHub functionality may not work correctly until the account is verified.
+Email verification is important because some GitHub functionality may require a verified email address.
 
 ---
 
-# 6. Choose a GitHub Username
+# 7. Choose a GitHub Username
 
 Choose a username that you are comfortable using publicly.
 
-For this project, the GitHub username used in the existing FlavorForge repository is:
+For the existing FlavorForge repository, the GitHub username is:
 
 ```text
 shettymalathib
 ```
 
-For someone recreating the project, they may use their own GitHub username.
+If recreating the project using another GitHub account, use your own username.
 
-Do **not** hard-code the username into project documentation unless it is necessary.
-
-Use placeholders such as:
+For reusable documentation and commands, use:
 
 ```text
 YOUR_GITHUB_USERNAME
 ```
 
-when writing reusable commands.
+instead of hard-coding a specific username.
+
+For example:
+
+```text
+https://github.com/YOUR_GITHUB_USERNAME/
+```
 
 ---
 
-# 7. Sign In
+# 8. Sign In to GitHub
 
 After creating and verifying the account:
 
 1. Open GitHub.
-2. Sign in.
-3. Confirm that your GitHub profile opens successfully.
+2. Select **Sign in** if necessary.
+3. Enter your GitHub credentials.
+4. Confirm that the GitHub account opens successfully.
 
-You should be able to access your GitHub dashboard/profile.
+You should be able to access your GitHub profile and account settings.
 
 ---
 
-# 8. Important Security Rule
+# 9. Verify the GitHub Account
 
-Never put the following information into project documentation:
+Confirm that:
+
+* You can sign in successfully.
+* Your GitHub profile opens.
+* Your username is correct.
+* Your email address has been verified.
+
+At this point, the GitHub account is ready for the next stage.
+
+---
+
+# 10. Security Rules
+
+Protect your GitHub account credentials.
+
+Never put the following into project documentation or source code:
 
 ```text
-Passwords
-Personal Access Tokens
-SSH private keys
-Client secrets
+GitHub password
+Personal Access Token (PAT)
+SSH private key
+Client secret
 Azure credentials
 Kubernetes secret values
 Connection strings containing credentials
+Access tokens
 ```
 
-A GitHub Personal Access Token (PAT) is a credential.
+A Personal Access Token is a credential and must be protected like a password.
 
-If you create one later, **never paste the token into GitHub documentation, screenshots, videos, Git commits, README files, or chat messages.**
+An SSH private key is also sensitive and must remain on the local machine.
 
-The token should be treated like a password.
+Do not create or configure either credential as part of this account-creation step.
 
 ---
 
-# 9. GitHub Authentication Options
+# 11. GitHub Authentication Comes Later
 
-Later, when connecting the local FlavorForge repository to GitHub, there are two supported approaches in this documentation:
+The local FlavorForge repository will later need an authentication method to communicate with GitHub.
 
-### Option A — HTTPS + Personal Access Token
+Two methods will be documented:
+
+## Option A — HTTPS + Personal Access Token
 
 ```text
 Local Git
@@ -217,7 +253,7 @@ Local Git
 GitHub
 ```
 
-### Option B — SSH
+## Option B — SSH
 
 ```text
 Local Git
@@ -228,23 +264,43 @@ Local Git
 GitHub
 ```
 
-The user only needs to configure **one** authentication method.
+Only one method needs to be configured.
 
-The authentication procedure is documented separately in:
+The authentication setup will be covered in a later BUILD-JOURNEY document.
 
-```text
-03-github-authentication.md
-```
-
-Do not create a PAT or SSH key as part of this account-creation step.
+> **Do not create a PAT or SSH key during this step.**
 
 ---
 
-# 10. What Happens Next?
+# 12. What Happens Next?
 
-After the GitHub account is ready, the next step is to create the remote GitHub repository.
+The GitHub account is now ready.
 
-The repository will contain the FlavorForge project.
+The next step is to create the remote GitHub repository for FlavorForge.
+
+The BUILD-JOURNEY flow is:
+
+```text
+01. Create GitHub Account
+          |
+          v
+02. Create GitHub Repository
+          |
+          v
+03. Configure Git Locally
+          |
+          v
+04. Configure GitHub Authentication
+          |
+          v
+05. Connect Local Repository
+          |
+          v
+06. Commit and Push Project
+          |
+          v
+07. Verify GitHub Repository
+```
 
 The next document is:
 
@@ -252,115 +308,112 @@ The next document is:
 02-create-repository.md
 ```
 
-The expected flow is:
-
-```text
-GitHub Account
-      |
-      v
-Create Repository
-      |
-      v
-Configure Git
-      |
-      v
-Configure Authentication
-      |
-      v
-Connect Local Repository
-      |
-      v
-Push Project
-      |
-      v
-Verify GitHub Repository
-```
-
 ---
 
-# 11. Verification Checklist
+# 13. Verification Checklist
 
 Before continuing, confirm:
 
 * [ ] GitHub account created
-* [ ] Email verified
+* [ ] Email address verified
 * [ ] GitHub sign-in works
 * [ ] GitHub username selected
+* [ ] GitHub profile opens successfully
 * [ ] No password or credential was added to project files
-* [ ] Authentication method has not yet been configured
+* [ ] PAT has not been created
+* [ ] SSH key has not been created
 
----
-
-# 12. Common Problems
-
-## Problem: Verification email did not arrive
-
-Check:
-
-* Spam/Junk folder
-* Email address entered during registration
-* GitHub account notification area
-
-Follow the current GitHub instructions for resending the verification email.
-
----
-
-## Problem: Username is already taken
-
-Choose another username.
-
-The username does not need to be the same as the original FlavorForge project owner's username.
-
----
-
-## Problem: I forgot my GitHub password
-
-Use GitHub's password/account recovery process.
-
-Do not create a password file inside the project.
-
----
-
-# 13. Reference Documentation
-
-Official GitHub documentation should be preferred because GitHub's screens and security options can change.
-
-[GitHub Docs](https://docs.github.com/?utm_source=chatgpt.com)
-
-For account creation and getting started, use the current GitHub documentation available from the official documentation site.
-
----
-
-# 14. Reviewer Explanation
-
-If a reviewer asks:
-
-### "Why are you using GitHub?"
-
-Answer:
-
-> "GitHub is the remote source-code repository for the project. It stores the application code, infrastructure configuration, Kubernetes manifests, pipeline configuration and documentation. Azure DevOps consumes the repository as the source for the CI/CD process."
-
-### "Is Git the same as GitHub?"
-
-Answer:
-
-> "No. Git is the version-control tool running on my local machine. GitHub is the remote platform that hosts the Git repository."
-
-### "How does your local project connect to GitHub?"
-
-Answer:
-
-> "The local project is a Git repository with GitHub configured as its remote repository. Git communicates with GitHub using either HTTPS authentication with a Personal Access Token or SSH authentication."
-
----
-
-# 15. Next Step
-
-After the GitHub account is successfully created and verified, continue with:
+Once all items are complete, continue to:
 
 ```text
 02-create-repository.md
 ```
 
-That document explains how to create the FlavorForge GitHub repository from the beginning.
+---
+
+# 14. Common Problems
+
+## Problem 1 — Verification Email Did Not Arrive
+
+Check:
+
+* Spam/Junk folder
+* Email address entered during registration
+* GitHub notifications
+
+If necessary, use GitHub's current instructions to resend the verification email.
+
+---
+
+## Problem 2 — Username Is Already Taken
+
+Choose another available username.
+
+The username does not need to be the same as the original FlavorForge project owner's username.
+
+---
+
+## Problem 3 — Cannot Sign In
+
+Verify:
+
+* GitHub username or email
+* Password
+* Account verification status
+
+If the password has been forgotten, use GitHub's account recovery process.
+
+Do not store the password in the project directory.
+
+---
+
+# 15. Official Documentation
+
+GitHub's interface and account-security options can change over time.
+
+Use the official GitHub documentation when the current interface differs from this guide:
+
+[GitHub Documentation](https://docs.github.com/?utm_source=chatgpt.com)
+
+---
+
+# 16. Reviewer Questions
+
+## Why are you using GitHub?
+
+> "GitHub is the remote source-code repository for the project. It stores the application code, infrastructure configuration, Kubernetes manifests, pipeline configuration, and documentation. Azure DevOps can use the GitHub repository as the source for the CI/CD process."
+
+## Is Git the same as GitHub?
+
+> "No. Git is the version-control tool running on my local machine. GitHub is the remote platform that hosts the Git repository."
+
+## Do you need Git installed to create a GitHub account?
+
+> "No. A GitHub account can be created through the web browser. Git is required later when connecting the local project to the GitHub repository."
+
+## Have you configured GitHub authentication yet?
+
+> "Not at this stage. This step only creates and verifies the GitHub account. Repository creation and authentication are handled in the following steps."
+
+---
+
+# 17. Completion Criteria
+
+Step 1 is complete when:
+
+```text
+GitHub Account
+      |
+      ├── Account created
+      ├── Email verified
+      ├── Username selected
+      └── Sign-in verified
+```
+
+No repository or authentication configuration is required in this document.
+
+Continue with:
+
+```text
+02-create-repository.md
+```
