@@ -84,7 +84,7 @@ Those steps are handled separately.
 
 Open the official GitHub website:
 
-[GitHub](https://github.com/?utm_source=chatgpt.com)
+[GitHub](https://github.com/)
 
 Sign in using your GitHub account.
 

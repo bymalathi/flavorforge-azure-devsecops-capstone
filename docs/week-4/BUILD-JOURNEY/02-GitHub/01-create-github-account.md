@@ -111,7 +111,7 @@ Git will be installed and verified separately during the development-environment
 
 Open the official GitHub website:
 
-[GitHub](https://github.com/?utm_source=chatgpt.com)
+[GitHub](https://github.com/)
 
 The GitHub home page should open.
 
@@ -373,7 +373,7 @@ GitHub's interface and account-security options can change over time.
 
 Use the official GitHub documentation when the current interface differs from this guide:
 
-[GitHub Documentation](https://docs.github.com/?utm_source=chatgpt.com)
+[GitHub Documentation](https://docs.github.com)
 
 ---
 

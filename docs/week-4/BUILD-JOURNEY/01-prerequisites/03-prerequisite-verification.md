@@ -198,9 +198,7 @@ Once the verification command completed successfully, the complete terminal outp
 
 ### Screenshot filename
 
-```text
-01-prerequisites-verification.png
-```
+![](/screenshots/BUILD-JOURNEY/01-prerequisites/01-prerequisites-verification.png)
 
 ### Repository location
 

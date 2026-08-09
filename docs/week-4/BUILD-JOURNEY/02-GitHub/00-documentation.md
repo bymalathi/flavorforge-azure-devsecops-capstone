@@ -1260,15 +1260,7 @@ recent commits
 
 ### Suggested filename
 
-```text
-02-github-verification.png
-```
-
-### Suggested location
-
-```text
-screenshots/BUILD-JOURNEY/02-github/
-```
+![](/screenshots/azure/02-resource-group-created.png)
 
 Before saving or publishing the screenshot, verify that it does not contain:
 
