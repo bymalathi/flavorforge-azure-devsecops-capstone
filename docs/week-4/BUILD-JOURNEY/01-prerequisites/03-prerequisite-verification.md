@@ -108,23 +108,15 @@ screenshots/BUILD-JOURNEY/01-prerequisites/
 
 # Video
 
-### 🎥 SAFE TO RECORD
 
-Record the same verification process.
 
-Suggested filename:
+### Recorded the same verification process.
 
-```text
-01-prerequisites-verification.mp4
-```
-
-Save under:
+Saved under:
 
 ```text
 videos/BUILD-JOURNEY/01-prerequisites/
 ```
-
-No voice-over is required.
 
 ---
 

@@ -221,7 +221,7 @@ Do not assume that a Windows PowerShell command and a WSL command are interchang
 
 ---
 
-# Screenshot
+# Screenshot if you are documenting
 
 Capture:
 
@@ -239,25 +239,6 @@ Before publishing the screenshot, make sure no:
 
 is visible.
 
----
-
-# Video
-
-Record a short video showing:
-
-1. VS Code
-2. WSL Ubuntu terminal
-3. Project directory
-4. `pwd`
-5. Ubuntu verification
-
-Do not record passwords during the WSL user creation process.
-
-Suggested filename:
-
-```text
-01-windows-wsl-vscode-setup.mp4
-```
 
 ---
 
@@ -271,8 +252,6 @@ Suggested filename:
 * [ ] VS Code WSL extension installed
 * [ ] Project opened through WSL
 * [ ] VS Code terminal verified
-* [ ] Screenshot captured
-* [ ] Video captured
 
 ---
 

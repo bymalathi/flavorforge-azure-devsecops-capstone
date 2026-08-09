@@ -527,5 +527,3 @@ Use sanitized verification commands for recorded demonstrations.
 * [ ] Helm checked
 * [ ] Azure DevOps extension checked
 * [ ] Final verification completed
-* [ ] Screenshot captured
-* [ ] Video captured
