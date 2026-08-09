@@ -67,7 +67,7 @@ The running container was checked using:
 docker ps
 ```
 
-![Backend container running](../../../../screenshots/Docker/7-backend-container-running.png)
+![Backend container running](../../../../screenshots/docker/7-backend-container-running.png)
 
 This confirmed that the FlavorForge backend container was successfully running.
 
@@ -103,7 +103,7 @@ Health Response
 
 ### Backend health check
 
-![Backend health check](../../../../screenshots/Docker/8-backend-health-success.png)
+![Backend health check](../../../../screenshots/docker/8-backend-health-success.png)
 
 The successful response confirmed that the containerized backend application was responding correctly.
 
@@ -121,13 +121,13 @@ The endpoint used was:
 
 ### Backend Recipes API
 
-![Backend Recipes API](../../../../screenshots/Docker/9-backend-recipes-success.png)
+![Backend Recipes API](../../../../screenshots/docker/9-backend-recipes-success.png)
 
 The successful response confirmed that the backend container was not only running, but was also serving an application API successfully.
 
 ### Additional Recipes API verification
 
-![Additional Recipes API verification](../../../../screenshots/Docker/9.1-backend-recipes-success.png)
+![Additional Recipes API verification](../../../../screenshots/docker/9-1-backend-recipes-success.png)
 
 This provided additional evidence that the Recipes API was working in the containerized environment.
 
@@ -197,7 +197,7 @@ The frontend and backend containers were run as part of the local containerized 
 
 ### Frontend and backend containers running
 
-![Frontend and backend containers running](../../../../screenshots/Docker/10-frontend-backend-container-running.png)
+![Frontend and backend containers running](../../../../screenshots/docker/10-frontend-backend-container-running.png)
 
 This provided evidence that both application components were running as Docker containers.
 
@@ -219,7 +219,7 @@ docker ps -a
 
 ### Docker container status
 
-![Docker container status](../../../../screenshots/Docker/12.1-docker%20ps.png)
+![Docker container status](../../../../screenshots/docker/12-1-docker-ps.png)
 
 This provided direct evidence of the Docker containers running during the FlavorForge containerization workflow.
 
@@ -243,7 +243,7 @@ docker network inspect flavorforge-network
 
 ### FlavorForge Docker network
 
-![FlavorForge Docker network](../../../../screenshots/Docker/12-docker%20network%20inspect%20flavorforge-network.png)
+![FlavorForge Docker network](../../../../screenshots/docker/12-docker-network-inspect-flavorforge-network.png)
 
 The network inspection provided visibility into the Docker network used by the application containers.
 
@@ -276,7 +276,7 @@ Docker Compose was used to work with the frontend and backend containers togethe
 
 ### Docker Compose running
 
-![Docker Compose running](../../../../screenshots/Docker/13-Docker%20Compose%20Running.png)
+![Docker Compose running](../../../../screenshots/docker/13-docker-compose-running.png)
 
 This provided evidence that the Docker Compose environment was successfully started.
 
@@ -290,7 +290,7 @@ The Docker images used by the containerized application were also inspected.
 
 ### Docker images
 
-![Docker images](../../../../screenshots/Docker/13.1-Docker%20Images.png)
+![Docker images](../../../../screenshots/docker/13-1-docker-images.png)
 
 This provided evidence of the Docker images available during the containerized application workflow.
 
@@ -302,7 +302,7 @@ The backend API was tested while the Docker environment was running.
 
 ### Backend API
 
-![Backend API](../../../../screenshots/Docker/13.2-Backend%20API.png)
+![Backend API](../../../../screenshots/docker/13-2-backend-api.png)
 
 The successful response confirmed that the backend API was accessible from the containerized environment.
 
@@ -314,7 +314,7 @@ The frontend-side API interaction was also verified.
 
 ### Frontend API
 
-![Frontend API](../../../../screenshots/Docker/13.2-Frontend%20API.png)
+![Frontend API](../../../../screenshots/docker/13-2-frontend-api.png)
 
 This provided evidence that the frontend was able to interact with the backend API in the containerized environment.
 
@@ -348,7 +348,7 @@ The containerized frontend was opened in the browser to verify that the applicat
 
 ### FlavorForge website
 
-![FlavorForge website](../../../../screenshots/Docker/13.5-website.png)
+![FlavorForge website](../../../../screenshots/docker/13-5-website.png)
 
 The screenshot confirms that the FlavorForge web application was accessible from the containerized frontend.
 
@@ -380,7 +380,7 @@ docker logs <container-name>
 
 ### Docker container logs
 
-![Docker container logs](../../../../screenshots/Docker/13.6-docker%20logs.png)
+![Docker container logs](../../../../screenshots/docker/13-6-docker-logs.png)
 
 The logs provided runtime information that could be used to troubleshoot application startup and runtime behavior.
 

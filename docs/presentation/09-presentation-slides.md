@@ -232,7 +232,7 @@ Benefits:
 
 ## Visual
 
-![Docker Images](/screenshots/Docker/4-docker%20images.png)
+![Docker Images](/screenshots/docker/4-docker-images.png)
 
 ---
 
@@ -264,7 +264,7 @@ Explain cloud resources used.
 
 ## Visual
 
-![Azure Resource Group](/screenshots/Azure/flavorforge-rg-Microsoft-Azure-Resource%20Group.png)
+![Azure Resource Group](/screenshots/azure/flavorforge-rg-microsoft-azure-resource-group.png)
 
 ---
 
@@ -321,7 +321,7 @@ Application Access
 
 ## Visual
 
-![Kubernetes Resources](/screenshots/Kubernetes/kubectl%20get%20all%20-n%20flavorforge.png)
+![Kubernetes Resources](/screenshots/kubernetes/kubectl-get-all-n-flavorforge.png)
 
 ---
 
@@ -354,7 +354,7 @@ Explain automated software delivery.
 
 ## Visual
 
-![Pipeline Execution](/screenshots/Pipeline/6-Pipelines-Run.png)
+![Pipeline Execution](/screenshots/pipeline/6-pipelines-run.png)
 
 ---
 
@@ -417,7 +417,7 @@ Explain automated Kubernetes management.
 
 ## Visual
 
-![Argo CD Application](/screenshots/argo-cd/4-flavorforge-Application-Details-Tree-Argo-CD.png)
+![Argo CD Application](/screenshots/argo-cd/4-flavorforge-application-details-tree-argo-cd.png)
 
 ---
 

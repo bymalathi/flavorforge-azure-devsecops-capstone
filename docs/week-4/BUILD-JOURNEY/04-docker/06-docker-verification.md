@@ -102,13 +102,13 @@ docker images
 The Docker evidence contains:
 
 ```text
-screenshots/Docker/4-docker images.png
+screenshots/docker/4-docker-images.png
 ```
 
 and:
 
 ```text
-screenshots/Docker/13.1-Docker Images.png
+screenshots/docker/13-1-docker-images.png
 ```
 
 These provide evidence that Docker images were created and available for running the application.
@@ -124,7 +124,7 @@ The backend Docker image was successfully built before the container was started
 Evidence:
 
 ```text
-screenshots/Docker/6-backend-build-success.png
+screenshots/docker/6-backend-build-success.png
 ```
 
 This confirms the backend Docker build stage completed successfully.
@@ -150,7 +150,7 @@ After the backend image was created, the backend was started as a Docker contain
 Evidence:
 
 ```text
-screenshots/Docker/7-backend-container-running.png
+screenshots/docker/7-backend-container-running.png
 ```
 
 This confirms that the backend container successfully started.
@@ -182,7 +182,7 @@ Endpoint:
 Evidence:
 
 ```text
-screenshots/Docker/8-backend-health-success.png
+screenshots/docker/8-backend-health-success.png
 ```
 
 The verification flow was:
@@ -216,13 +216,13 @@ Endpoint:
 Evidence:
 
 ```text
-screenshots/Docker/9-backend-recipes-success.png
+screenshots/docker/9-backend-recipes-success.png
 ```
 
 Additional verification:
 
 ```text
-screenshots/Docker/9.1-backend-recipes-success.png
+screenshots/docker/9-1-backend-recipes-success.png
 ```
 
 The verification flow was:
@@ -250,7 +250,7 @@ The frontend and backend were also verified together as Docker containers.
 Evidence:
 
 ```text
-screenshots/Docker/10-frontend-backend-container-running.png
+screenshots/docker/10-frontend-backend-container-running.png
 ```
 
 The resulting local architecture was:
@@ -293,7 +293,7 @@ docker network inspect flavorforge-network
 Evidence:
 
 ```text
-screenshots/Docker/12-docker network inspect flavorforge-network.png
+screenshots/docker/12-docker-network-inspect-flavorforge-network.png
 ```
 
 This provides evidence that the Docker networking configuration was inspected during the containerization process.
@@ -326,7 +326,7 @@ docker ps
 Evidence:
 
 ```text
-screenshots/Docker/12.1-docker ps.png
+screenshots/docker/12-1-docker-ps.png
 ```
 
 This provides visibility into:
@@ -359,7 +359,7 @@ Docker Compose was used to work with the frontend and backend containers togethe
 Evidence:
 
 ```text
-screenshots/Docker/13-Docker Compose Running.png
+screenshots/docker/13-docker-compose-running.png
 ```
 
 The Compose workflow can be represented as:
@@ -389,7 +389,7 @@ The images used during the Docker Compose workflow were also inspected.
 Evidence:
 
 ```text
-screenshots/Docker/13.1-Docker Images.png
+screenshots/docker/13-1-docker-images.png
 ```
 
 This provides supporting evidence that the required Docker images were available during the Compose workflow.
@@ -403,7 +403,7 @@ The backend API was tested while the Docker environment was running.
 Evidence:
 
 ```text
-screenshots/Docker/13.2-Backend API.png
+screenshots/docker/13-2-backend-api.png
 ```
 
 The verification flow was:
@@ -431,7 +431,7 @@ Frontend-side API interaction was also verified.
 Evidence:
 
 ```text
-screenshots/Docker/13.2-Frontend API.png
+screenshots/docker/13-2-frontend-api.png
 ```
 
 The application flow was:
@@ -463,7 +463,7 @@ The containerized frontend application was opened and verified in the browser.
 Evidence:
 
 ```text
-screenshots/Docker/13.5-website.png
+screenshots/docker/13-5-website.png
 ```
 
 The runtime flow was:
@@ -497,7 +497,7 @@ docker logs <container-name>
 Evidence:
 
 ```text
-screenshots/Docker/13.6-docker logs.png
+screenshots/docker/13-6-docker-logs.png
 ```
 
 Container logs are useful for investigating:
@@ -517,7 +517,7 @@ This is an important operational verification because a container being in a `Ru
 The repository also contains supporting Docker build evidence.
 
 ```text
-screenshots/Docker/
+screenshots/docker/
 ├── 1-docker-build-success.png
 ├── 2-dockerignore-created.png
 ├── 3-build-context-optimized.png
@@ -548,7 +548,7 @@ The detailed implementation steps are documented in the previous Docker BUILD-JO
 The main evidence used for the final Docker verification is:
 
 ```text
-screenshots/Docker/
+screenshots/docker/
 ├── 6-backend-build-success.png
 ├── 7-backend-container-running.png
 ├── 8-backend-health-success.png

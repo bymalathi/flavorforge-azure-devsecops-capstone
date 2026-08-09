@@ -662,23 +662,23 @@ Azure DevOps service connections provide secure authentication between Azure Dev
 
 **Figure 4.X.1 – Select Azure Resource Manager service connection**
 
-![Azure Resource Manager](../../screenshots/Pipeline/3-Azure%20resource%20manager.png)
+![Azure Resource Manager](../../screenshots/pipeline/3-azure-resource-manager.png)
 
 **Figure 4.X.2 – Create a new Azure Service Connection**
 
-![New Service Connection](../../screenshots/Pipeline/4-New%20Azure%20service%20connection.png)
+![New Service Connection](../../screenshots/pipeline/4-new-azure-service-connection.png)
 
 **Figure 4.X.3 – Configure the Azure Resource Manager Service Connection**
 
-![Configure Service Connection](../../screenshots/Pipeline/2-service%20connection.png)
+![Configure Service Connection](../../screenshots/pipeline/2-service-connection.png)
 
 **Figure 4.X.4 – Verify the configured Service Connections**
 
-![Service Connections](../../screenshots/Pipeline/11-service%20connections.png)
+![Service Connections](../../screenshots/pipeline/11-service-connections.png)
 
 **Figure 4.X.5 – Verify ACR and AKS Service Connections**
 
-![ACR and AKS Connections](../../screenshots/Pipeline/12-acr%20%26%20aks.png)
+![ACR and AKS Connections](../../screenshots/pipeline/12-acr%20%26%20aks.png)
 
 #### Result
 

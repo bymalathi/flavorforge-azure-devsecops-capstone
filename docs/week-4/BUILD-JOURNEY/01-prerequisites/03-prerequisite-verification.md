@@ -101,7 +101,7 @@ Suggested filename:
 Save under:
 
 ```text
-screenshots/BUILD-JOURNEY/01-prerequisites/
+screenshots/build-journey/01-prerequisites/
 ```
 
 ---

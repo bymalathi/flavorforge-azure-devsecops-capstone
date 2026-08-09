@@ -129,7 +129,7 @@ Each stage introduces an additional layer of automation, quality assurance, secu
 
 #### Evidence
 
-![Azure DevOps Pipeline](screenshots/Pipeline/9-Advance-Pipelines-Run-Pass.png)
+![Azure DevOps Pipeline](screenshots/pipeline/9-advance-pipelines-run-pass.png)
 
 *Figure 3.1 – Multi-stage Azure DevOps pipeline implementing automated build, validation, security scanning, containerization, and deployment stages.*
 
@@ -171,7 +171,7 @@ Each layer has a clearly defined responsibility within the software delivery lif
 
 #### Evidence
 
-![Azure Resource Group](screenshots/Azure/flavorforge-rg-Microsoft-Azure-Resource%20Group.png)
+![Azure Resource Group](screenshots/azure/flavorforge-rg-microsoft-azure-resource-group.png)
 
 *Figure 4.1 – Azure Resource Group containing the core cloud infrastructure used by the FlavorForge platform.*
 
@@ -231,7 +231,7 @@ Azure Kubernetes Service (AKS) runs the application workloads, while Azure Monit
 
 #### Evidence
 
-![Azure DevOps Pipeline](screenshots/Pipeline/9-Advance-Pipelines-Run-Pass.png)
+![Azure DevOps Pipeline](screenshots/pipeline/9-advance-pipelines-run-pass.png)
 
 *Figure 5.1 – Successful execution of the Azure DevOps pipeline demonstrating the automated CI workflow.*
 
@@ -272,7 +272,7 @@ The frontend is developed using **React** and built with **Vite**, then served t
 
 #### Evidence
 
-![Frontend Application](screenshots/Frontend/21-Frontend-Recipes-Integrated.png)
+![Frontend Application](screenshots/frontend/21-frontend-recipes-integrated.png)
 
 *Figure 6.1 – FlavorForge React frontend displaying the integrated recipe application.*
 
@@ -300,7 +300,7 @@ It manages application logic, health monitoring endpoints, and API services whil
 
 #### Evidence
 
-![Backend API](screenshots/Backend/13-Backend-api.png)
+![Backend API](screenshots/backend/13-backend-api.png)
 
 *Figure 6.2 – Backend REST API successfully serving application requests.*
 
@@ -339,7 +339,7 @@ By integrating automation into every stage, FlavorForge reduces manual effort, i
 
 #### Evidence
 
-![Azure DevOps Pipeline](screenshots/Pipeline/8-Pipelines-Run-Pass.png)
+![Azure DevOps Pipeline](screenshots/pipeline/8-pipelines-run-pass.png)
 
 *Figure 7.1 – Successful execution of the DevSecOps pipeline demonstrating automated build, validation, and deployment stages.*
 
@@ -372,7 +372,7 @@ Each component contributes to a production-inspired DevSecOps workflow, ensuring
 
 #### Evidence
 
-![Azure Services](screenshots/Azure/flavorforge-rg-Microsoft-Azure-Resource%20Group.png)
+![Azure Services](screenshots/azure/flavorforge-rg-microsoft-azure-resource-group.png)
 
 *Figure 8.1 – Azure Resource Group containing the primary cloud services supporting the FlavorForge platform.*
 
@@ -407,7 +407,7 @@ The repository structure separates application development from infrastructure, 
 
 #### Evidence
 
-![Repository Structure](screenshots/Enterprise%20Azure%20DevOps%20Release%20Simulation/20-tree%20-L%202.png)
+![Repository Structure](screenshots/enterprise-azure-devops-release-simulation/20-tree-l-2.png)
 
 *Figure 8.2 – Project structure after successful frontend production build.*
 
@@ -497,7 +497,7 @@ The project now demonstrates an end-to-end DevSecOps implementation covering app
 
 #### Evidence
 
-![Pipeline Success](screenshots/Pipeline/13-Pipelines-Run.png)
+![Pipeline Success](screenshots/pipeline/13-pipelines-run.png)
 
 *Figure 8.3 – Successful Azure DevOps pipeline execution confirming the implemented DevSecOps workflow.*
 
@@ -536,7 +536,7 @@ The automated pipeline provides:
 
 #### Evidence
 
-![Azure DevOps Pipeline](screenshots/Pipeline/13-Pipelines-Run.png)
+![Azure DevOps Pipeline](screenshots/pipeline/13-pipelines-run.png)
 
 *Figure 9.1 – Successful execution of the Azure DevOps multi-stage pipeline.*
 
@@ -611,7 +611,7 @@ Only validated images continue through the delivery workflow.
 
 #### Evidence
 
-![Pipeline Execution](screenshots/Pipeline/9-Advance-Pipelines-Run-Pass.png)
+![Pipeline Execution](screenshots/pipeline/9-advance-pipelines-run-pass.png)
 
 *Figure 9.2 – Azure DevOps pipeline completing all validation stages successfully.*
 
@@ -641,7 +641,7 @@ The implementation follows containerization best practices, including multi-stag
 
 #### Evidence
 
-![Docker Containers Running](screenshots/Docker/10-frontend-backend-container-running.png)
+![Docker Containers Running](screenshots/docker/10-frontend-backend-container-running.png)
 
 *Figure 10.1 – Frontend and backend containers running successfully using Docker.*
 
@@ -668,7 +668,7 @@ Azure Container Registry provides secure image storage, version management, and 
 
 #### Evidence
 
-![Azure Container Registry Images](screenshots/Azure/25-ACR-images.png)
+![Azure Container Registry Images](screenshots/azure/25-acr-images.png)
 
 *Figure 10.2 – Container images successfully stored in Azure Container Registry.*
 
@@ -712,7 +712,7 @@ ArgoCD continuously monitors the Git repository and synchronizes Kubernetes reso
 
 #### Evidence
 
-![ArgoCD Application](screenshots/argo-cd/4-flavorforge-Application-Details-Tree-Argo-CD.png)
+![ArgoCD Application](screenshots/argo-cd/4-flavorforge-application-details-tree-argo-cd.png)
 
 *Figure 10.3 – ArgoCD managing and synchronizing the FlavorForge Kubernetes application.*
 
@@ -771,7 +771,7 @@ By validating application quality and container security before deployment, Flav
 
 #### Evidence
 
-![Pipeline Execution](screenshots/Pipeline/9-Advance-Pipelines-Run-Pass.png)
+![Pipeline Execution](screenshots/pipeline/9-advance-pipelines-run-pass.png)
 
 *Figure 11.1 – Azure DevOps pipeline successfully completing quality validation and security verification.*
 
@@ -814,7 +814,7 @@ The primary Azure services used in this project are:
 
 #### Evidence
 
-![Azure Resource Group](screenshots/Azure/flavorforge-rg-Microsoft-Azure-Resource%20Group.png)
+![Azure Resource Group](screenshots/azure/flavorforge-rg-microsoft-azure-resource-group.png)
 
 *Figure 11.2 – Azure Resource Group containing the cloud infrastructure supporting the FlavorForge platform.*
 
@@ -837,7 +837,7 @@ The platform hosts both frontend and backend workloads while integrating with Az
 
 #### Evidence
 
-![AKS Workloads](screenshots/Azure/15-AKS%20Workloads%20(Deployments%20%26%20Pods).png)
+![AKS Workloads](screenshots/azure/15-AKS%20Workloads%20(Deployments%20%26%20Pods).png)
 
 *Figure 11.3 – Azure Kubernetes Service displaying the deployed frontend and backend workloads, ReplicaSets, and running Pods.*
 
@@ -858,7 +858,7 @@ This structure promotes configuration reuse while allowing each deployment envir
 
 #### Evidence
 
-![Kubernetes Repository Structure](screenshots/Enterprise%20Azure%20DevOps%20Release%20Simulation/7-overlay.png)
+![Kubernetes Repository Structure](screenshots/enterprise-azure-devops-release-simulation/7-overlay.png)
 
 *Figure 12.1 – Kustomize base and overlay structure used to manage multiple deployment environments.*
 
@@ -883,7 +883,7 @@ Responsibilities include:
 
 #### Evidence
 
-![Deployments](screenshots/Azure/15-AKS%20Workloads%20(Deployments%20%26%20Pods).png)
+![Deployments](screenshots/azure/15-AKS%20Workloads%20(Deployments%20%26%20Pods).png)
 
 *Figure 12.2 – AKS Deployments managing frontend and backend application Pods.*
 
@@ -900,7 +900,7 @@ They enable service discovery while abstracting Pod IP addresses.
 
 #### Evidence
 
-![Services and Ingress](screenshots/Azure/22-Services%20%26%20Ingress.png)
+![Services and Ingress](screenshots/azure/22-Services%20%26%20Ingress.png)
 
 *Figure 12.3 – Kubernetes Services and Ingress resources exposing the FlavorForge application.*
 
@@ -918,7 +918,7 @@ Examples include:
 
 #### Evidence
 
-![ConfigMap](screenshots/Kubernetes/1-ConfigMap.png)
+![ConfigMap](screenshots/kubernetes/1-configmap.png)
 
 *Figure 12.4 – Kubernetes ConfigMap used to manage application configuration.*
 
@@ -938,7 +938,7 @@ Examples include:
 
 #### Evidence
 
-![Kubernetes Secrets](screenshots/Kubernetes/secrets/1-kubectl%20get%20secrets%20-n%20flavorforge.png)
+![Kubernetes Secrets](screenshots/kubernetes/secrets/1-kubectl-get-secrets-n-flavorforge.png)
 
 *Figure 12.5 – Kubernetes Secrets securely managing sensitive application configuration.*
 
@@ -960,7 +960,7 @@ Benefits include:
 
 #### Evidence
 
-![Horizontal Pod Autoscaler](screenshots/Kubernetes/hpa/6-%20kubectl%20get%20hpa.png)
+![Horizontal Pod Autoscaler](screenshots/kubernetes/hpa/6-kubectl-get-hpa.png)
 
 *Figure 12.6 – Horizontal Pod Autoscaler configured to scale application workloads automatically.*
 
@@ -987,7 +987,7 @@ Ingress provides the following benefits:
 
 #### Evidence
 
-![Services and Ingress](screenshots/Azure/22-Services%20%26%20Ingress.png)
+![Services and Ingress](screenshots/azure/22-Services%20%26%20Ingress.png)
 
 *Figure 13.1 – Kubernetes Services and Ingress routing external traffic to the FlavorForge application.*
 
@@ -1021,7 +1021,7 @@ Benefits include:
 
 #### Evidence
 
-![Kustomize Overlay Structure](screenshots/Enterprise%20Azure%20DevOps%20Release%20Simulation/7-overlay.png)
+![Kustomize Overlay Structure](screenshots/enterprise-azure-devops-release-simulation/7-overlay.png)
 
 *Figure 13.2 – Base and overlay structure used for Development, QA, and Production environments.*
 
@@ -1056,7 +1056,7 @@ The GitOps approach provides:
 
 #### Evidence
 
-![ArgoCD Application Tree](screenshots/argo-cd/4-flavorforge-Application-Details-Tree-Argo-CD.png)
+![ArgoCD Application Tree](screenshots/argo-cd/4-flavorforge-application-details-tree-argo-cd.png)
 
 *Figure 13.3 – ArgoCD managing and synchronizing the FlavorForge application deployed on AKS.*
 
@@ -1095,7 +1095,7 @@ Operational monitoring provides visibility into:
 
 #### Evidence
 
-![Azure Kubernetes Center](screenshots/Azure/16-Kubernetes-center-Microsoft-Azure.png)
+![Azure Kubernetes Center](screenshots/azure/16-kubernetes-center-microsoft-azure.png)
 
 *Figure 14.1 – Azure Kubernetes Service dashboard providing operational visibility into the FlavorForge cluster.*
 
@@ -1120,7 +1120,7 @@ Deployment verification confirms that the application is healthy and accessible 
 
 #### Evidence
 
-![AKS Workloads](screenshots/Azure/15-AKS%20Workloads%20(Deployments%20%26%20Pods).png)
+![AKS Workloads](screenshots/azure/15-AKS%20Workloads%20(Deployments%20%26%20Pods).png)
 
 *Figure 14.2 – Running frontend and backend workloads successfully verified within Azure Kubernetes Service.*
 
@@ -1380,7 +1380,7 @@ Keeping documentation close to the source code improves maintainability, knowled
 
 #### Evidence
 
-![Documentation Structure](screenshots/Enterprise%20Azure%20DevOps%20Release%20Simulation/24-ls%20docs.png)
+![Documentation Structure](screenshots/enterprise-azure-devops-release-simulation/24-ls-docs.png)
 
 *Figure 14.3 – Repository documentation structure supporting the complete FlavorForge implementation.*
 
@@ -1472,7 +1472,7 @@ The project can be demonstrated using the following sequence:
 
 #### Evidence
 
-![Azure DevOps Pipeline](screenshots/Pipeline/13-Pipelines-Run.png)
+![Azure DevOps Pipeline](screenshots/pipeline/13-pipelines-run.png)
 
 *Figure 15.1 – Successful Azure DevOps pipeline execution used during the project demonstration.*
 

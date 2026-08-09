@@ -235,7 +235,7 @@ The command should display details similar to:
 
 ### Evidence
 
-![Azure CLI Authenticated](/screenshots/Azure/01-azure-cli-authenticated.png)
+![Azure CLI Authenticated](/screenshots/azure/01-azure-cli-authenticated.png)
 
 *Figure 2.1 – Successful Azure CLI authentication.*
 
@@ -289,7 +289,7 @@ The AKS cluster should appear with a **Running** status.
 
 ### Evidence
 
-![AKS Cluster Running](/screenshots/Azure/27-aks-cluster-running.png)
+![AKS Cluster Running](/screenshots/azure/27-aks-cluster-running.png)
 
 *Figure 2.2 – Azure Kubernetes Service (AKS) cluster is running successfully.*
 
@@ -418,7 +418,7 @@ The command should display details similar to:
 
 ### Evidence
 
-![Azure CLI Authenticated](/screenshots/Azure/01-azure-cli-authenticated.png)
+![Azure CLI Authenticated](/screenshots/azure/01-azure-cli-authenticated.png)
 
 *Figure 2.1 – Successful Azure CLI authentication.*
 
@@ -472,7 +472,7 @@ The AKS cluster should appear with a **Running** status.
 
 ### Evidence
 
-![AKS Cluster Running](/screenshots/Azure/27-aks-cluster-running.png)
+![AKS Cluster Running](/screenshots/azure/27-aks-cluster-running.png)
 
 *Figure 2.2 – Azure Kubernetes Service (AKS) cluster is running successfully.*
 
@@ -527,7 +527,7 @@ The running containers should include the frontend and backend services.
 
 ### Evidence
 
-![Docker Images](/screenshots/Azure/07-docker%20images.png)
+![Docker Images](/screenshots/azure/07-docker-images.png)
 
 *Figure 2.3 – Local Docker images available for the FlavorForge application.*
 
@@ -560,7 +560,7 @@ aks-nodepool1-xxxxxxxx-vmss000000   Ready    <none>  XXd   v1.xx.x
 
 ### Evidence
 
-![AKS Nodes](/screenshots/Azure/28-kubectl%20get%20nodes.png)
+![AKS Nodes](/screenshots/azure/28-kubectl-get-nodes.png)
 
 *Figure 2.4 – AKS cluster nodes are in the Ready state.*
 
@@ -640,7 +640,7 @@ The ingress should display an assigned external IP address.
 
 ### Evidence
 
-![Kubernetes Resources](/screenshots/Kubernetes/kubectl%20get%20all%20-n%20flavorforge.png)
+![Kubernetes Resources](/screenshots/kubernetes/kubectl-get-all-n-flavorforge.png)
 
 *Figure 2.5 – Kubernetes resources deployed successfully in the FlavorForge namespace.*
 
@@ -673,7 +673,7 @@ Confirm the following:
 
 ### Evidence
 
-![Azure DevOps Pipeline](/screenshots/Pipeline/6-Pipelines-Run.png)
+![Azure DevOps Pipeline](/screenshots/pipeline/6-pipelines-run.png)
 
 *Figure 2.6 – Successful Azure DevOps pipeline execution.*
 
@@ -702,7 +702,7 @@ The FlavorForge application should display:
 
 ### Evidence
 
-![Argo CD Application](/screenshots/argo-cd/4-flavorforge-Application-Details-Tree-Argo-CD.png)
+![Argo CD Application](/screenshots/argo-cd/4-flavorforge-application-details-tree-argo-cd.png)
 
 *Figure 2.7 – Argo CD application synchronized and healthy.*
 

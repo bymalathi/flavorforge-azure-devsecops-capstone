@@ -325,7 +325,7 @@ This means that code quality, testing, and security validation happen before the
 
 ### Evidence
 
-![Azure DevOps Pipeline](/screenshots/Pipeline/6-Pipelines-Run.png)
+![Azure DevOps Pipeline](/screenshots/pipeline/6-pipelines-run.png)
 
 *Figure – Successful Azure DevOps pipeline execution.*
 
@@ -353,7 +353,7 @@ This encourages developers to improve code quality continuously instead of fixin
 
 ### Evidence
 
-![Code Coverage](/screenshots/Enterprise%20Azure%20DevOps%20Release%20Simulation/16-code%20coverage.png)
+![Code Coverage](/screenshots/enterprise-azure-devops-release-simulation/16-code-coverage.png)
 
 *Figure – SonarCloud quality analysis and code coverage.*
 
@@ -391,7 +391,7 @@ This creates a controlled and reliable deployment process.
 
 ### Evidence
 
-![Azure Container Registry](/screenshots/Azure/25-ACR-images.png)
+![Azure Container Registry](/screenshots/azure/25-acr-images.png)
 
 *Figure – FlavorForge container images stored in Azure Container Registry.*
 
@@ -464,7 +464,7 @@ Synced confirms that the Kubernetes cluster matches the Git repository.
 
 ### Evidence
 
-![Argo CD Application](/screenshots/argo-cd/4-flavorforge-Application-Details-Tree-Argo-CD.png)
+![Argo CD Application](/screenshots/argo-cd/4-flavorforge-application-details-tree-argo-cd.png)
 
 *Figure – Argo CD showing the FlavorForge application in a Healthy and Synced state.*
 

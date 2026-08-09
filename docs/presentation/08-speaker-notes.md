@@ -355,7 +355,7 @@ Mention:
 
 ## Evidence
 
-![Docker Images](/screenshots/Docker/4-docker%20images.png)
+![Docker Images](/screenshots/docker/4-docker-images.png)
 
 ---
 
@@ -401,7 +401,7 @@ Focus on how services connect together.
 
 ## Evidence
 
-![Azure Resource Group](/screenshots/Azure/flavorforge-rg-Microsoft-Azure-Resource%20Group.png)
+![Azure Resource Group](/screenshots/azure/flavorforge-rg-microsoft-azure-resource-group.png)
 
 ---
 
@@ -445,7 +445,7 @@ Automation reduces manual mistakes.
 
 ## Evidence
 
-![Azure DevOps Pipeline](/screenshots/Pipeline/6-Pipelines-Run.png)
+![Azure DevOps Pipeline](/screenshots/pipeline/6-pipelines-run.png)
 
 ---
 
@@ -522,7 +522,7 @@ Explain:
 
 ## Evidence
 
-![Argo CD Application](/screenshots/argo-cd/4-flavorforge-Application-Details-Tree-Argo-CD.png)
+![Argo CD Application](/screenshots/argo-cd/4-flavorforge-application-details-tree-argo-cd.png)
 
 ---
 

@@ -85,7 +85,7 @@ Verify:
 
 ### Evidence
 
-![Azure Account](/screenshots/Enterprise%20Azure%20DevOps%20Release%20Simulation/19-az%20account%20show.png)
+![Azure Account](/screenshots/enterprise-azure-devops-release-simulation/19-az-account-show.png)
 
 *Figure 4.1 – Azure account verification.*
 
@@ -109,7 +109,7 @@ kubectl get nodes
 
 ### Evidence
 
-![AKS Nodes](/screenshots/Azure/28-kubectl%20get%20nodes.png)
+![AKS Nodes](/screenshots/azure/28-kubectl-get-nodes.png)
 
 *Figure 4.2 – AKS worker nodes are ready.*
 
@@ -138,7 +138,7 @@ Verify that:
 
 ### Evidence
 
-![Kubernetes Resources](/screenshots/Kubernetes/kubectl%20get%20all%20-n%20flavorforge.png)
+![Kubernetes Resources](/screenshots/kubernetes/kubectl-get-all-n-flavorforge.png)
 
 *Figure 4.3 – FlavorForge resources running inside the Kubernetes cluster.*
 
@@ -164,7 +164,7 @@ Walk through:
 
 ### Evidence
 
-![FlavorForge Home Page](/screenshots/Kubernetes/Frontend%20in%20the%20browser%20-%20http-104.45.175.93.png)
+![FlavorForge Home Page](/screenshots/kubernetes/frontend-in-the-browser-http-104-45-175-93.png)
 
 *Figure 4.4 – FlavorForge frontend running successfully.*
 
@@ -207,7 +207,7 @@ Explain that this endpoint is used for:
 
 ### Evidence
 
-![Backend Health](/screenshots/Backend/curl.png)
+![Backend Health](/screenshots/backend/curl.png)
 
 *Figure 4.5 – Backend health endpoint responding successfully.*
 
@@ -230,7 +230,7 @@ Explain that:
 
 ### Evidence
 
-![Docker Containers](/screenshots/Docker/10-frontend-backend-container-running.png)
+![Docker Containers](/screenshots/docker/10-frontend-backend-container-running.png)
 
 *Figure 4.6 – Frontend and Backend running as Docker containers.*
 
@@ -272,7 +272,7 @@ Explain that:
 
 ### Evidence
 
-![Azure Container Registry](/screenshots/Azure/25-ACR-images.png)
+![Azure Container Registry](/screenshots/azure/25-acr-images.png)
 
 *Figure 4.7 – Container images stored in Azure Container Registry.*
 
@@ -300,7 +300,7 @@ Explain:
 
 ### Evidence
 
-![AKS Cluster](/screenshots/Azure/27-aks-cluster-running.png)
+![AKS Cluster](/screenshots/azure/27-aks-cluster-running.png)
 
 *Figure 4.8 – Azure Kubernetes Service cluster.*
 
@@ -338,7 +338,7 @@ Highlight that:
 
 ### Evidence
 
-![Azure DevOps Pipeline](/screenshots/Pipeline/6-Pipelines-Run.png)
+![Azure DevOps Pipeline](/screenshots/pipeline/6-pipelines-run.png)
 
 *Figure 4.9 – Successful Azure DevOps pipeline execution.*
 
@@ -364,7 +364,7 @@ Quality Gates help prevent low-quality code from progressing through the pipelin
 
 ### Evidence
 
-![Code Coverage](/screenshots/Enterprise%20Azure%20DevOps%20Release%20Simulation/16-code%20coverage.png)
+![Code Coverage](/screenshots/enterprise-azure-devops-release-simulation/16-code-coverage.png)
 
 *Figure 4.10 – SonarCloud quality analysis.*
 
@@ -399,7 +399,7 @@ Explain that:
 
 ### Evidence
 
-![Argo CD](/screenshots/argo-cd/4-flavorforge-Application-Details-Tree-Argo-CD.png)
+![Argo CD](/screenshots/argo-cd/4-flavorforge-application-details-tree-argo-cd.png)
 
 *Figure 4.11 – Argo CD application status.*
 

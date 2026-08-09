@@ -489,7 +489,7 @@ Approximately 20–30 minutes.
 
 Use the following screenshot.
 
-![Node.js Installation](/screenshots/Backend/07-Node24-Installation.png)
+![Node.js Installation](/screenshots/backend/07-node24-installation.png)
 
 *Figure 2.1 – Development environment with Node.js installed.*
 
@@ -916,11 +916,11 @@ Confirm:
 
 Use the repository structure screenshots.
 
-![Repository Structure](/screenshots/Enterprise%20Azure%20DevOps%20Release%20Simulation/20-tree%20-L%202.png)
+![Repository Structure](/screenshots/enterprise-azure-devops-release-simulation/20-tree-l-2.png)
 
 *Figure 3.1 – FlavorForge repository structure.*
 
-![Repository Files](/screenshots/Enterprise%20Azure%20DevOps%20Release%20Simulation/20-ls.png)
+![Repository Files](/screenshots/enterprise-azure-devops-release-simulation/20-ls.png)
 
 *Figure 3.2 – Initial repository files.*
 
@@ -1443,19 +1443,19 @@ Confirm:
 
 Use the following screenshots.
 
-![React Application Running](/screenshots/Frontend/03-React-Application-Running.png)
+![React Application Running](/screenshots/frontend/03-react-application-running.png)
 
 *Figure 4.1 – React application running successfully.*
 
-![Frontend Enterprise Structure](/screenshots/Frontend/04-Frontend-Enterprise-Structure.png)
+![Frontend Enterprise Structure](/screenshots/frontend/04-frontend-enterprise-structure.png)
 
 *Figure 4.2 – Frontend enterprise folder structure.*
 
-![Frontend Recipes Integrated](/screenshots/Frontend/21-Frontend-Recipes-Integrated.png)
+![Frontend Recipes Integrated](/screenshots/frontend/21-frontend-recipes-integrated.png)
 
 *Figure 4.3 – Frontend integrated with application functionality.*
 
-![Recipe Search Working](/screenshots/Frontend/23-Recipe-Search-Working.png)
+![Recipe Search Working](/screenshots/frontend/23-recipe-search-working.png)
 
 *Figure 4.4 – Recipe search functionality working.*
 
@@ -2036,23 +2036,23 @@ Confirm:
 
 Use the following screenshots.
 
-![Backend Folder Structure](/screenshots/Backend/01-Backend-Folder-Structure.png)
+![Backend Folder Structure](/screenshots/backend/01-backend-folder-structure.png)
 
 *Figure 5.1 – Backend project structure.*
 
-![Backend Health Endpoint](/screenshots/Backend/02-Backend-Health-Endpoint.png)
+![Backend Health Endpoint](/screenshots/backend/02-backend-health-endpoint.png)
 
 *Figure 5.2 – Backend health endpoint response.*
 
-![Backend Server Running](/screenshots/Backend/09-Backend-Server-Running.png)
+![Backend Server Running](/screenshots/backend/09-backend-server-running.png)
 
 *Figure 5.3 – Backend server running successfully.*
 
-![Recipes API Working](/screenshots/Backend/12-Recipes-API-Working.png)
+![Recipes API Working](/screenshots/backend/12-recipes-api-working.png)
 
 *Figure 5.4 – Recipe API endpoint working successfully.*
 
-![Backend API](/screenshots/Backend/13-Backend-api.png)
+![Backend API](/screenshots/backend/13-backend-api.png)
 
 *Figure 5.5 – Backend API verification.*
 
@@ -2535,19 +2535,19 @@ Confirm:
 
 Use the following screenshots.
 
-![Frontend Backend Connected](/screenshots/Backend/10-CORS-Enabled-Frontend-Backend-Connected.png)
+![Frontend Backend Connected](/screenshots/backend/10-cors-enabled-frontend-backend-connected.png)
 
 *Figure 6.1 – Frontend and backend communication verified successfully.*
 
-![Frontend Recipes Integrated](/screenshots/Frontend/21-Frontend-Recipes-Integrated.png)
+![Frontend Recipes Integrated](/screenshots/frontend/21-frontend-recipes-integrated.png)
 
 *Figure 6.2 – Frontend displaying backend-provided recipe data.*
 
-![Recipe Search Working](/screenshots/Frontend/23-Recipe-Search-Working.png)
+![Recipe Search Working](/screenshots/frontend/23-recipe-search-working.png)
 
 *Figure 6.3 – Recipe search functionality verified.*
 
-![Category Filtering Working](/screenshots/Frontend/25-Category-Filtering-Working.png)
+![Category Filtering Working](/screenshots/frontend/25-category-filtering-working.png)
 
 *Figure 6.4 – Category filtering functionality verified.*
 
@@ -3191,23 +3191,23 @@ Verify:
 
 Use the following screenshots.
 
-![Docker Build Success](/screenshots/Docker/1-docker-build-success.png)
+![Docker Build Success](/screenshots/docker/1-docker-build-success.png)
 
 *Figure 7.1 – Docker image build completed successfully.*
 
-![Backend Container Running](/screenshots/Docker/7-backend-container-running.png)
+![Backend Container Running](/screenshots/docker/7-backend-container-running.png)
 
 *Figure 7.2 – Backend container running successfully.*
 
-![Docker Images](/screenshots/Docker/4-docker-images.png)
+![Docker Images](/screenshots/docker/4-docker-images.png)
 
 *Figure 7.3 – Docker images created locally.*
 
-![Docker Compose Running](/screenshots/Docker/13-Docker%20Compose%20Running.png)
+![Docker Compose Running](/screenshots/docker/13-docker-compose-running.png)
 
 *Figure 7.4 – Application containers running using Docker Compose.*
 
-![Frontend Backend Containers Running](/screenshots/Docker/10-frontend-backend-container-running.png)
+![Frontend Backend Containers Running](/screenshots/docker/10-frontend-backend-container-running.png)
 
 *Figure 7.5 – Frontend and backend containers communicating.*
 
@@ -3703,19 +3703,19 @@ are registered.
 
 Use the following screenshots.
 
-![Azure CLI Authentication](/screenshots/Azure/01-azure-cli-authenticated.png)
+![Azure CLI Authentication](/screenshots/azure/01-azure-cli-authenticated.png)
 
 *Figure 8.1 – Azure CLI authentication completed successfully.*
 
-![Resource Group Created](/screenshots/Azure/02-resource-group-created.png)
+![Resource Group Created](/screenshots/azure/02-resource-group-created.png)
 
 *Figure 8.2 – FlavorForge Azure resource group created.*
 
-![Container Registry Provider Registration](/screenshots/Azure/03-containerregistry-provider-registered.png)
+![Container Registry Provider Registration](/screenshots/azure/03-containerregistry-provider-registered.png)
 
 *Figure 8.3 – Azure Container Registry provider registered.*
 
-![Azure Resource Group Portal View](/screenshots/Azure/flavorforge-rg-Microsoft-Azure-Resource%20Group.png)
+![Azure Resource Group Portal View](/screenshots/azure/flavorforge-rg-microsoft-azure-resource-group.png)
 
 *Figure 8.4 – FlavorForge resource group visible in Azure Portal.*
 
@@ -4288,27 +4288,27 @@ flavorforge-backend
 
 Use the following screenshots.
 
-![ACR Created](/screenshots/Azure/04-acr-created.png)
+![ACR Created](/screenshots/azure/04-acr-created.png)
 
 *Figure 9.1 – Azure Container Registry created successfully.*
 
-![ACR Login Success](/screenshots/Azure/06-az%20acr%20login%20success.png)
+![ACR Login Success](/screenshots/azure/06-az-acr-login-success.png)
 
 *Figure 9.2 – Successful authentication with Azure Container Registry.*
 
-![Docker Images](/screenshots/Azure/07-docker%20images.png)
+![Docker Images](/screenshots/azure/07-docker-images.png)
 
 *Figure 9.3 – Local Docker images available before pushing.*
 
-![Tagged Images Verification](/screenshots/Azure/08-Tag%20the%20Images%20and%20verify%20in%20docker%20images.png)
+![Tagged Images Verification](/screenshots/azure/08-tag-the-images-and-verify-in-docker-images.png)
 
 *Figure 9.4 – Docker images tagged with ACR repository names.*
 
-![Images Verified in ACR](/screenshots/Azure/09-Verify%20Images%20in%20ACR.png)
+![Images Verified in ACR](/screenshots/azure/09-verify-images-in-acr.png)
 
 *Figure 9.5 – Docker images available inside Azure Container Registry.*
 
-![ACR Images Portal View](/screenshots/Azure/25-ACR-images.png)
+![ACR Images Portal View](/screenshots/azure/25-acr-images.png)
 
 *Figure 9.6 – Container images displayed in Azure Container Registry.*
 
@@ -4860,23 +4860,23 @@ provisioningState = Succeeded
 
 Use the following screenshots.
 
-![AKS Creation](/screenshots/Azure/10-az%20aks%20create.png)
+![AKS Creation](/screenshots/azure/10-az-aks-create.png)
 
 *Figure 10.1 – AKS cluster creation command executed.*
 
-![Connect Local Machine to AKS](/screenshots/Azure/11-Connect%20Local%20Machine%20to%20AKS.png)
+![Connect Local Machine to AKS](/screenshots/azure/11-connect-local-machine-to-aks.png)
 
 *Figure 10.2 – Local kubectl connection configured with AKS.*
 
-![AKS Cluster Running](/screenshots/Azure/27-aks-cluster-running.png)
+![AKS Cluster Running](/screenshots/azure/27-aks-cluster-running.png)
 
 *Figure 10.3 – AKS cluster running successfully.*
 
-![Kubectl Get Nodes](/screenshots/Azure/28-kubectl%20get%20nodes.png)
+![Kubectl Get Nodes](/screenshots/azure/28-kubectl-get-nodes.png)
 
 *Figure 10.4 – Kubernetes nodes in Ready state.*
 
-![Azure Version Verification](/screenshots/Azure/29-Azure%20version.png)
+![Azure Version Verification](/screenshots/azure/29-azure-version.png)
 
 *Figure 10.5 – Azure and Kubernetes tooling verification.*
 
@@ -5563,27 +5563,27 @@ Open application URL after ingress configuration.
 
 Use the following screenshots.
 
-![ConfigMap Creation](/screenshots/Kubernetes/1-ConfigMap.png)
+![ConfigMap Creation](/screenshots/kubernetes/1-configmap.png)
 
 *Figure 11.1 – Backend configuration stored using Kubernetes ConfigMap.*
 
-![Deployment Creation](/screenshots/Kubernetes/2-Deployment.png)
+![Deployment Creation](/screenshots/kubernetes/2-deployment.png)
 
 *Figure 11.2 – Kubernetes deployment resources created.*
 
-![Environment Variables](/screenshots/Kubernetes/3.%20Environment%20Variables.png)
+![Environment Variables](/screenshots/kubernetes/3-environment-variables.png)
 
 *Figure 11.3 – Application environment variables configured.*
 
-![Health Endpoint](/screenshots/Kubernetes/4.%20Health%20Endpoint.png)
+![Health Endpoint](/screenshots/kubernetes/4-health-endpoint.png)
 
 *Figure 11.4 – Backend health endpoint verified inside Kubernetes.*
 
-![Pods Running](/screenshots/Kubernetes/pods.png)
+![Pods Running](/screenshots/kubernetes/pods.png)
 
 *Figure 11.5 – FlavorForge application pods running successfully.*
 
-![All Kubernetes Resources](/screenshots/Kubernetes/all-deployment.png)
+![All Kubernetes Resources](/screenshots/kubernetes/all-deployment.png)
 
 *Figure 11.6 – Kubernetes workloads deployed.*
 
@@ -6198,27 +6198,27 @@ http://<external-ip>/api/health
 
 Use the following screenshots.
 
-![NGINX Installation](/screenshots/Kubernetes/NGINX%20Ingress/1-installation.png)
+![NGINX Installation](/screenshots/kubernetes/nginx-ingress/1-installation.png)
 
 *Figure 12.1 – NGINX Ingress Controller installation.*
 
-![Service Type Change](/screenshots/Kubernetes/NGINX%20Ingress/2-%20change%20type%20loadbalancer%20to%20clusterIP.png)
+![Service Type Change](/screenshots/kubernetes/nginx-ingress/2-change-type-loadbalancer-to-clusterip.png)
 
 *Figure 12.2 – Application services changed to ClusterIP.*
 
-![Ingress External Address](/screenshots/Kubernetes/NGINX%20Ingress/3-ingress%20external%20address.png)
+![Ingress External Address](/screenshots/kubernetes/nginx-ingress/3-ingress-external-address.png)
 
 *Figure 12.3 – External address assigned to Ingress.*
 
-![Frontend Access](/screenshots/Kubernetes/NGINX%20Ingress/4-Frontend%20-%20http-4.157.77.48.png)
+![Frontend Access](/screenshots/kubernetes/nginx-ingress/4-frontend-http-4-157-77-48.png)
 
 *Figure 12.4 – FlavorForge frontend accessible through Ingress.*
 
-![Backend Access](/screenshots/Kubernetes/NGINX%20Ingress/5-Backend.png)
+![Backend Access](/screenshots/kubernetes/nginx-ingress/5-backend.png)
 
 *Figure 12.5 – Backend API accessible through Ingress.*
 
-![API Health Verification](/screenshots/Kubernetes/NGINX%20Ingress/7-api-health.png)
+![API Health Verification](/screenshots/kubernetes/nginx-ingress/7-api-health.png)
 
 *Figure 12.6 – Backend health endpoint verified externally.*
 
@@ -6752,31 +6752,31 @@ maxReplicas: 5
 
 Use the following screenshots.
 
-![Metrics Server](/screenshots/Kubernetes/hpa/1-metrics%20server.png)
+![Metrics Server](/screenshots/kubernetes/hpa/1-metrics-server.png)
 
 *Figure 13.1 – Kubernetes metrics server providing resource information.*
 
-![HPA Configuration](/screenshots/Kubernetes/hpa/2-autoscaling%20configured%20successfully.png)
+![HPA Configuration](/screenshots/kubernetes/hpa/2-autoscaling-configured-successfully.png)
 
 *Figure 13.2 – Horizontal Pod Autoscaler configured successfully.*
 
-![Deployments and Pods](/screenshots/Kubernetes/hpa/3-deploymemts-pods.png)
+![Deployments and Pods](/screenshots/kubernetes/hpa/3-deploymemts-pods.png)
 
 *Figure 13.3 – Application deployments and pods available.*
 
-![Backend Deployment Description](/screenshots/Kubernetes/hpa/4-kubectl%20describe%20deployment%20backend%20-%20n-flavorforge.png)
+![Backend Deployment Description](/screenshots/kubernetes/hpa/4-kubectl%20describe%20deployment%20backend%20-%20n-flavorforge.png)
 
 *Figure 13.4 – Backend deployment resource configuration.*
 
-![Pod Resource Usage](/screenshots/Kubernetes/hpa/5-kubectl%20top%20pods%20-%20n-flavorforge.png)
+![Pod Resource Usage](/screenshots/kubernetes/hpa/5-kubectl%20top%20pods%20-%20n-flavorforge.png)
 
 *Figure 13.5 – Pod CPU and memory metrics.*
 
-![HPA Status](/screenshots/Kubernetes/hpa/6-%20kubectl%20get%20hpa.png)
+![HPA Status](/screenshots/kubernetes/hpa/6-kubectl-get-hpa.png)
 
 *Figure 13.6 – HPA status showing scaling configuration.*
 
-![HPA YAML Verification](/screenshots/Kubernetes/hpa/7-kubectl%20get%20hpa%20backend-hpa%20-n%20flavorforge%20-o%20yaml.png)
+![HPA YAML Verification](/screenshots/kubernetes/hpa/7-kubectl-get-hpa-backend-hpa-n-flavorforge-o-yaml.png)
 
 *Figure 13.7 – HPA configuration details in Kubernetes YAML output.*
 
@@ -7493,35 +7493,35 @@ kubectl get pods -n flavorforge
 
 Use the following screenshots.
 
-![Azure DevOps Organization](/screenshots/Pipeline/1-Azure%20DevOps%20Organizations.png)
+![Azure DevOps Organization](/screenshots/pipeline/1-azure-devops-organizations.png)
 
 *Figure 14.1 – Azure DevOps organization created.*
 
-![Service Connection](/screenshots/Pipeline/2-service%20connection.png)
+![Service Connection](/screenshots/pipeline/2-service-connection.png)
 
 *Figure 14.2 – Azure service connection configuration.*
 
-![Azure Resource Manager Connection](/screenshots/Pipeline/3-Azure%20resource%20manager.png)
+![Azure Resource Manager Connection](/screenshots/pipeline/3-azure-resource-manager.png)
 
 *Figure 14.3 – Azure Resource Manager service connection.*
 
-![New Pipeline Creation](/screenshots/Pipeline/5-Click%20New%20Pipeline..png)
+![New Pipeline Creation](/screenshots/pipeline/5-click-new-pipeline.png)
 
 *Figure 14.4 – Creating Azure DevOps YAML pipeline.*
 
-![Pipeline Execution](/screenshots/Pipeline/8-Pipelines-Run-Pass.png)
+![Pipeline Execution](/screenshots/pipeline/8-pipelines-run-pass.png)
 
 *Figure 14.5 – Successful pipeline execution.*
 
-![Advanced Pipeline Run](/screenshots/Pipeline/9-Advance-Pipelines-Run-Pass.png)
+![Advanced Pipeline Run](/screenshots/pipeline/9-advance-pipelines-run-pass.png)
 
 *Figure 14.6 – Complete DevOps pipeline execution.*
 
-![SonarCloud Extension](/screenshots/Pipeline/15-Extensions-sonarcloud.png)
+![SonarCloud Extension](/screenshots/pipeline/15-Extensions-sonarcloud.png)
 
 *Figure 14.7 – SonarCloud extension integration.*
 
-![Code Coverage](/screenshots/Pipeline/16-code%20coverage.png)
+![Code Coverage](/screenshots/pipeline/16-code%20coverage.png)
 
 *Figure 14.8 – Test coverage report generated.*
 
@@ -8209,35 +8209,35 @@ Deploy Prod
 
 # Evidence
 
-![Azure DevOps Environments](/screenshots/Enterprise%20Azure%20DevOps%20Release%20Simulation/1-Azure%20DevOps%20Environments.png)
+![Azure DevOps Environments](/screenshots/enterprise-azure-devops-release-simulation/1-azure-devops-environments.png)
 
 *Figure 15.1 – Azure DevOps environments created.*
 
-![Dev QA Prod Environments](/screenshots/Enterprise%20Azure%20DevOps%20Release%20Simulation/1.2-Dev-QA-Prod-Azure%20DevOps%20Environments.png)
+![Dev QA Prod Environments](/screenshots/enterprise-azure-devops-release-simulation/1-2-dev-qa-prod-azure-devops-environments.png)
 
 *Figure 15.2 – Development, QA, and Production environments.*
 
-![Variable Library](/screenshots/Enterprise%20Azure%20DevOps%20Release%20Simulation/2-Library.png)
+![Variable Library](/screenshots/enterprise-azure-devops-release-simulation/2-library.png)
 
 *Figure 15.3 – Pipeline variable groups.*
 
-![Production Variables](/screenshots/Enterprise%20Azure%20DevOps%20Release%20Simulation/2-prod_variables.png)
+![Production Variables](/screenshots/enterprise-azure-devops-release-simulation/2-prod-variables.png)
 
 *Figure 15.4 – Production environment variables.*
 
-![Approvals Configuration](/screenshots/Enterprise%20Azure%20DevOps%20Release%20Simulation/3-Approvals.png)
+![Approvals Configuration](/screenshots/enterprise-azure-devops-release-simulation/3-approvals.png)
 
 *Figure 15.5 – Deployment approval configuration.*
 
-![Dev Deployment Verification](/screenshots/Enterprise%20Azure%20DevOps%20Release%20Simulation/6-kubectl%20get%20all%20-n%20flavorforge-dev.png)
+![Dev Deployment Verification](/screenshots/enterprise-azure-devops-release-simulation/6-kubectl-get-all-n-flavorforge-dev.png)
 
 *Figure 15.6 – Development environment workloads running.*
 
-![Kustomize Overlay Configuration](/screenshots/Enterprise%20Azure%20DevOps%20Release%20Simulation/7-overlay.png)
+![Kustomize Overlay Configuration](/screenshots/enterprise-azure-devops-release-simulation/7-overlay.png)
 
 *Figure 15.7 – Environment overlay configuration.*
 
-![Production Ingress](/screenshots/Enterprise%20Azure%20DevOps%20Release%20Simulation/11-production%20ingress.png)
+![Production Ingress](/screenshots/enterprise-azure-devops-release-simulation/11-production%20ingress.png)
 
 *Figure 15.8 – Production ingress configuration.*
 
@@ -8851,11 +8851,11 @@ Use the following screenshots.
 
 *Figure 16.2 – Argo CD components running.*
 
-![Argo CD Application Creation](/screenshots/argo-cd/3-create%20argocd%20yaml.png)
+![Argo CD Application Creation](/screenshots/argo-cd/3-create-argocd-yaml.png)
 
 *Figure 16.3 – FlavorForge Argo CD application manifest.*
 
-![Argo CD Application Tree](/screenshots/argo-cd/4-flavorforge-Application-Details-Tree-Argo-CD.png)
+![Argo CD Application Tree](/screenshots/argo-cd/4-flavorforge-application-details-tree-argo-cd.png)
 
 *Figure 16.4 – Argo CD application synchronization tree.*
 
@@ -9405,23 +9405,23 @@ shows Kubernetes activity.
 
 Use the following screenshots.
 
-![Backend Live Logs](/screenshots/Azure/19-backend%20-%20Live%20logs.png)
+![Backend Live Logs](/screenshots/azure/19-backend-live-logs.png)
 
 *Figure 17.2 – Backend application logs from AKS.*
 
-![Backend Events](/screenshots/Azure/20-backend%20-%20Events.png)
+![Backend Events](/screenshots/azure/20-backend-events.png)
 
 *Figure 17.3 – Kubernetes events for workload monitoring.*
 
-![Replica Set Verification](/screenshots/Azure/21-replica%20set.png)
+![Replica Set Verification](/screenshots/azure/21-replica-set.png)
 
 *Figure 17.4 – Backend replica set status.*
 
-![Frontend Replica Set](/screenshots/Azure/21.2-Frontend-replica%20set.png)
+![Frontend Replica Set](/screenshots/azure/21-2-frontend-replica-set.png)
 
 *Figure 17.5 – Frontend replica set status.*
 
-![Pod Verification](/screenshots/Kubernetes/pods.png)
+![Pod Verification](/screenshots/kubernetes/pods.png)
 
 *Figure 17.6 – Kubernetes pods running successfully.*
 
@@ -10071,23 +10071,23 @@ Verify:
 
 Use the following screenshots.
 
-![Repository Structure](/screenshots/Enterprise%20Azure%20DevOps%20Release%20Simulation/20-tree%20-L%202.png)
+![Repository Structure](/screenshots/enterprise-azure-devops-release-simulation/20-tree-l-2.png)
 
 *Figure 18.1 – Complete repository structure.*
 
-![Backend Structure](/screenshots/Enterprise%20Azure%20DevOps%20Release%20Simulation/21-ls%20backend.png)
+![Backend Structure](/screenshots/enterprise-azure-devops-release-simulation/21-ls-backend.png)
 
 *Figure 18.2 – Backend project structure.*
 
-![Frontend Structure](/screenshots/Enterprise%20Azure%20DevOps%20Release%20Simulation/22-ls%20frontend.png)
+![Frontend Structure](/screenshots/enterprise-azure-devops-release-simulation/22-ls-frontend.png)
 
 *Figure 18.3 – Frontend project structure.*
 
-![Kubernetes Structure](/screenshots/Enterprise%20Azure%20DevOps%20Release%20Simulation/23-ls%20kubernetes.png)
+![Kubernetes Structure](/screenshots/enterprise-azure-devops-release-simulation/23-ls-kubernetes.png)
 
 *Figure 18.4 – Kubernetes configuration structure.*
 
-![Documentation Structure](/screenshots/Enterprise%20Azure%20DevOps%20Release%20Simulation/24-ls%20docs.png)
+![Documentation Structure](/screenshots/enterprise-azure-devops-release-simulation/24-ls-docs.png)
 
 *Figure 18.5 – Documentation repository structure.*
 
@@ -10765,19 +10765,19 @@ At least one controlled failure and recovery can be demonstrated.
 
 Use the following screenshots.
 
-![Final Pipeline](/screenshots/Enterprise%20Azure%20DevOps%20Release%20Simulation/14-Final%20Azure%20Pipeline.png)
+![Final Pipeline](/screenshots/enterprise-azure-devops-release-simulation/14-final-azure-pipeline.png)
 
 *Figure 19.1 – Final Azure DevOps CI/CD pipeline.*
 
-![Argo CD Pipeline](/screenshots/Enterprise%20Azure%20DevOps%20Release%20Simulation/17-argocd-pipeline.png)
+![Argo CD Pipeline](/screenshots/enterprise-azure-devops-release-simulation/17-argocd-pipeline.png)
 
 *Figure 19.2 – Argo CD GitOps deployment workflow.*
 
-![Frontend Application](/screenshots/Kubernetes/Frontend%20in%20the%20browser%20-%20http-104.45.175.93.png)
+![Frontend Application](/screenshots/kubernetes/frontend-in-the-browser-http-104-45-175-93.png)
 
 *Figure 19.3 – FlavorForge frontend application running on AKS.*
 
-![Backend Health Endpoint](/screenshots/Kubernetes/Backend%20in%20the%20browser%20-%20http-104.45.175.93-api-health.png)
+![Backend Health Endpoint](/screenshots/kubernetes/backend-in-the-browser-http-104-45-175-93-api-health.png)
 
 *Figure 19.4 – Backend API health verification.*
 
@@ -11433,19 +11433,19 @@ docs/BUILD-JOURNEY.md
 
 Use the following screenshots.
 
-![All Environments](/screenshots/Enterprise%20Azure%20DevOps%20Release%20Simulation/10-All%20environments.png)
+![All Environments](/screenshots/enterprise-azure-devops-release-simulation/10-all-environments.png)
 
 *Figure 20.1 – Final deployment environments.*
 
-![Final Pipeline](/screenshots/Enterprise%20Azure%20DevOps%20Release%20Simulation/14-Final%20Azure%20Pipeline.png)
+![Final Pipeline](/screenshots/enterprise-azure-devops-release-simulation/14-final-azure-pipeline.png)
 
 *Figure 20.2 – Final successful CI/CD pipeline.*
 
-![Production Pipeline](/screenshots/Enterprise%20Azure%20DevOps%20Release%20Simulation/14.2-Prod-Environment-Final%20Azure%20Pipeline.png)
+![Production Pipeline](/screenshots/enterprise-azure-devops-release-simulation/14-2-prod-environment-final-azure-pipeline.png)
 
 *Figure 20.3 – Production deployment validation.*
 
-![Azure Resource Group](/screenshots/Enterprise%20Azure%20DevOps%20Release%20Simulation/flavorforge-rg-Microsoft-Azure-Resource%20Group.png)
+![Azure Resource Group](/screenshots/enterprise-azure-devops-release-simulation/flavorforge-rg-microsoft-azure-resource-group.png)
 
 *Figure 20.4 – Final Azure resource organization.*
 
@@ -12609,19 +12609,19 @@ BUILD-JOURNEY.md
 
 Use final project validation screenshots.
 
-![Final Azure Pipeline](/screenshots/Enterprise%20Azure%20DevOps%20Release%20Simulation/14-Final%20Azure%20Pipeline.png)
+![Final Azure Pipeline](/screenshots/enterprise-azure-devops-release-simulation/14-final-azure-pipeline.png)
 
 *Figure 22.1 – Final Azure DevOps pipeline execution.*
 
-![AKS Workloads](/screenshots/Azure/15-AKS%20Workloads%20(Deployments%20%26%20Pods).png)
+![AKS Workloads](/screenshots/azure/15-AKS%20Workloads%20(Deployments%20%26%20Pods).png)
 
 *Figure 22.2 – Running AKS workloads.*
 
-![Argo CD Application](/screenshots/argo-cd/4-flavorforge-Application-Details-Tree-Argo-CD.png)
+![Argo CD Application](/screenshots/argo-cd/4-flavorforge-application-details-tree-argo-cd.png)
 
 *Figure 22.3 – Argo CD synchronized application.*
 
-![Production Ingress](/screenshots/Enterprise%20Azure%20DevOps%20Release%20Simulation/11-Production%20ingress.png)
+![Production Ingress](/screenshots/enterprise-azure-devops-release-simulation/11-production-ingress.png)
 
 *Figure 22.4 – Production ingress configuration.*
 
@@ -13372,23 +13372,23 @@ docs/architecture/
 
 Use the following repository structure screenshots.
 
-![Repository Structure](/screenshots/Enterprise%20Azure%20DevOps%20Release%20Simulation/20-tree%20-L%202.png)
+![Repository Structure](/screenshots/enterprise-azure-devops-release-simulation/20-tree-l-2.png)
 
 *Figure 21.1 – Complete FlavorForge repository structure.*
 
-![Backend Structure](/screenshots/Enterprise%20Azure%20DevOps%20Release%20Simulation/21-ls%20backend.png)
+![Backend Structure](/screenshots/enterprise-azure-devops-release-simulation/21-ls-backend.png)
 
 *Figure 21.2 – Backend source structure.*
 
-![Frontend Structure](/screenshots/Enterprise%20Azure%20DevOps%20Release%20Simulation/22-ls%20frontend.png)
+![Frontend Structure](/screenshots/enterprise-azure-devops-release-simulation/22-ls-frontend.png)
 
 *Figure 21.3 – Frontend source structure.*
 
-![Kubernetes Structure](/screenshots/Enterprise%20Azure%20DevOps%20Release%20Simulation/23-ls%20kubernetes.png)
+![Kubernetes Structure](/screenshots/enterprise-azure-devops-release-simulation/23-ls-kubernetes.png)
 
 *Figure 21.4 – Kubernetes deployment structure.*
 
-![Documentation Structure](/screenshots/Enterprise%20Azure%20DevOps%20Release%20Simulation/24-ls%20docs.png)
+![Documentation Structure](/screenshots/enterprise-azure-devops-release-simulation/24-ls-docs.png)
 
 *Figure 21.5 – Documentation structure.*
 

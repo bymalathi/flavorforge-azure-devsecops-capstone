@@ -69,7 +69,7 @@ The backend pods should be in the **Running** state.
 
 ### Evidence
 
-![Pods Running](/screenshots/Kubernetes/pods.png)
+![Pods Running](/screenshots/kubernetes/pods.png)
 
 *Figure 5.1 – Backend pods before the incident.*
 
@@ -160,7 +160,7 @@ The backend deployment should be running with the expected number of replicas.
 
 ### Evidence
 
-![Deployment](/screenshots/Kubernetes/backend-deployment.png)
+![Deployment](/screenshots/kubernetes/backend-deployment.png)
 
 *Figure 5.2 – Backend deployment before introducing configuration drift.*
 
@@ -202,7 +202,7 @@ Otherwise, click **Sync** to restore the desired state.
 
 ### Evidence
 
-![Argo CD](/screenshots/argo-cd/4-flavorforge-Application-Details-Tree-Argo-CD.png)
+![Argo CD](/screenshots/argo-cd/4-flavorforge-application-details-tree-argo-cd.png)
 
 *Figure 5.3 – Argo CD detecting configuration drift.*
 
@@ -336,7 +336,7 @@ You can also verify the frontend in the browser and access the backend health en
 
 ### Evidence
 
-![Rollout History](/screenshots/Kubernetes/NGINX%20Ingress/6-rollout%20history.png)
+![Rollout History](/screenshots/kubernetes/nginx-ingress/6-rollout-history.png)
 
 *Figure 5.4 – Kubernetes deployment rollout history.*
 

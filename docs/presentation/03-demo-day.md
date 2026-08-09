@@ -126,11 +126,11 @@ Before beginning the demonstration, verify that:
 
 ### Evidence
 
-![AKS Cluster Running](/screenshots/Azure/27-aks-cluster-running.png)
+![AKS Cluster Running](/screenshots/azure/27-aks-cluster-running.png)
 
 *Figure 3.1 – AKS cluster ready for demonstration.*
 
-![Azure DevOps Pipeline](/screenshots/Pipeline/6-Pipelines-Run.png)
+![Azure DevOps Pipeline](/screenshots/pipeline/6-pipelines-run.png)
 
 *Figure 3.2 – Latest Azure DevOps pipeline completed successfully.*
 
@@ -266,11 +266,11 @@ Explain how the frontend retrieves recipe data from the backend API.
 
 ### Evidence
 
-![Frontend Application](/screenshots/Kubernetes/Frontend%20in%20the%20browser%20-%20http-104.45.175.93.png)
+![Frontend Application](/screenshots/kubernetes/frontend-in-the-browser-http-104-45-175-93.png)
 
 *Figure 3.4 – FlavorForge application running successfully.*
 
-![Backend Health](/screenshots/Kubernetes/Backend%20in%20the%20browser%20-%20http-104.45.175.93-api-health.png)
+![Backend Health](/screenshots/kubernetes/backend-in-the-browser-http-104-45-175-93-api-health.png)
 
 *Figure 3.5 – Backend health endpoint responding successfully.*
 
@@ -315,7 +315,7 @@ Explain that the generated images are pushed to Azure Container Registry (ACR) a
 
 ### Evidence
 
-![Docker Images](/screenshots/Azure/07-docker%20images.png)
+![Docker Images](/screenshots/azure/07-docker-images.png)
 
 *Figure 3.6 – Docker images built successfully.*
 
@@ -343,11 +343,11 @@ Explain that these services work together to provide a scalable and reliable hos
 
 ### Evidence
 
-![Azure Resource Group](/screenshots/Azure/flavorforge-rg-Microsoft-Azure-Resource%20Group.png)
+![Azure Resource Group](/screenshots/azure/flavorforge-rg-microsoft-azure-resource-group.png)
 
 *Figure 3.7 – Azure Resource Group.*
 
-![AKS Cluster](/screenshots/Azure/27-aks-cluster-running.png)
+![AKS Cluster](/screenshots/azure/27-aks-cluster-running.png)
 
 *Figure 3.8 – Azure Kubernetes Service (AKS) cluster.*
 
@@ -398,11 +398,11 @@ Explain:
 
 ### Evidence
 
-![Kubernetes Resources](/screenshots/Kubernetes/kubectl%20get%20all%20-n%20flavorforge.png)
+![Kubernetes Resources](/screenshots/kubernetes/kubectl-get-all-n-flavorforge.png)
 
 *Figure 3.9 – Kubernetes resources running successfully.*
 
-![Ingress](/screenshots/Azure/22-Services%20%26%20Ingress.png)
+![Ingress](/screenshots/azure/22-Services%20%26%20Ingress.png)
 
 *Figure 3.10 – Kubernetes Service and Ingress configuration.*
 
@@ -459,7 +459,7 @@ Highlight that the pipeline:
 
 ### Evidence
 
-![Pipeline Execution](/screenshots/Pipeline/6-Pipelines-Run.png)
+![Pipeline Execution](/screenshots/pipeline/6-pipelines-run.png)
 
 *Figure 3.11 – Successful Azure DevOps pipeline execution.*
 
@@ -494,7 +494,7 @@ Highlight the following:
 
 ### Evidence
 
-![Code Coverage](/screenshots/Enterprise%20Azure%20DevOps%20Release%20Simulation/16-code%20coverage.png)
+![Code Coverage](/screenshots/enterprise-azure-devops-release-simulation/16-code-coverage.png)
 
 *Figure 3.12 – SonarCloud code quality and coverage results.*
 
@@ -548,7 +548,7 @@ Explain the meaning of:
 
 ### Evidence
 
-![Argo CD](/screenshots/argo-cd/4-flavorforge-Application-Details-Tree-Argo-CD.png)
+![Argo CD](/screenshots/argo-cd/4-flavorforge-application-details-tree-argo-cd.png)
 
 *Figure 3.13 – Argo CD reporting a Healthy and Synced application.*
 
