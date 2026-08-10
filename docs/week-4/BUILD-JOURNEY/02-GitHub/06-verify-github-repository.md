@@ -1,114 +1,72 @@
-# GitHub Repository — Complete Verification Guide
+# GitHub Repository Verification
 
 ## Objective
 
-This document verifies that the local FlavorForge Git repository is correctly connected to GitHub and that the project was successfully pushed.
+After connecting the local FlavorForge repository to GitHub and completing the first push, we verified that:
 
-By the end of this guide, you should be able to confirm:
-
-1. Git is installed.
-2. The FlavorForge directory is a Git repository.
-3. The correct branch is being used.
-4. The `origin` remote exists.
-5. `origin` points to the correct GitHub repository.
-6. GitHub authentication works.
-7. The local branch tracks the correct remote branch.
-8. The project files are available on GitHub.
-9. The latest commits are available on GitHub.
-10. The local and remote branches are synchronized.
+* the local project is a Git repository
+* the correct branch is being used
+* the GitHub remote is configured
+* the remote points to the FlavorForge repository
+* the local branch tracks the GitHub branch
+* the project files are available on GitHub
+* the local repository and GitHub repository are synchronized
 
 ---
 
-# 1. Expected Setup
+# 1. Open the FlavorForge Project
 
-The final GitHub setup should look like this:
-
-```text
-Developer Computer
-        |
-        | WSL + Ubuntu
-        |
-        v
-FlavorForge Local Git Repository
-        |
-        | origin
-        |
-        v
-GitHub Remote Repository
-        |
-        v
-flavorforge-azure-devsecops-capstone
-```
-
-The important relationship is:
-
-```text
-local main
-     |
-     v
-origin/main
-     |
-     v
-GitHub
-```
-
----
-
-# 2. Open the FlavorForge Project
-
-Open the WSL/Ubuntu terminal.
-
-Move into the project:
+We opened the WSL/Ubuntu terminal and moved into the existing FlavorForge project.
 
 ```bash
 cd ~/flavorforge-azure-devsecops-capstone
 ```
 
-Verify the current directory:
+We verified the current location:
 
 ```bash
 pwd
 ```
 
-Expected format:
+Expected:
 
 ```text
-/home/YOUR_USERNAME/flavorforge-azure-devsecops-capstone
+/home/<username>/flavorforge-azure-devsecops-capstone
 ```
 
-The Linux username and path may be different on another machine.
+The exact Linux username depends on the machine.
 
 ---
 
-# 3. Verify Git Installation
+# 2. Verify Git Installation
 
-Run:
+We verified that Git was installed:
 
 ```bash
 git --version
 ```
 
-Example:
+Actual environment:
 
 ```text
 git version 2.43.0
 ```
 
-If a Git version is displayed, Git is installed.
+This confirmed that Git was available for the FlavorForge repository.
 
 ---
 
-# 4. Verify the Local Git Repository
+# 3. Verify the Local Git Repository
 
-Run:
+We checked the repository status:
 
 ```bash
 git status
 ```
 
-A valid Git repository should return information about the current branch and working tree.
+The command confirmed that the FlavorForge directory was already a Git repository.
 
-Example:
+A typical clean state is:
 
 ```text
 On branch main
@@ -117,68 +75,75 @@ Your branch is up to date with 'origin/main'.
 nothing to commit, working tree clean
 ```
 
-The exact output depends on the current repository state.
-
-If you receive:
-
-```text
-fatal: not a git repository
-```
-
-stop and verify that you are inside:
-
-```text
-~/flavorforge-azure-devsecops-capstone
-```
+The exact output changes depending on the current repository state.
 
 ---
 
-# 5. Verify the Current Branch
+# 4. Verify the Current Branch
 
-Run:
+We checked the active branch:
 
 ```bash
 git branch --show-current
 ```
 
-For FlavorForge, the expected branch is:
+Result:
 
 ```text
 main
 ```
 
-Do not automatically rename the branch if another branch is displayed.
+Therefore, the FlavorForge repository was using:
 
-First determine whether the different branch is intentional.
+```text
+main
+```
+
+as the primary branch.
 
 ---
 
-# 6. Verify the GitHub Remote
+# 5. Verify the GitHub Remote
 
-Run:
+We checked the configured GitHub remote:
 
 ```bash
 git remote -v
 ```
 
-For HTTPS, the expected format is:
+The configured remote was the FlavorForge GitHub repository:
 
 ```text
-origin  https://github.com/YOUR_GITHUB_USERNAME/flavorforge-azure-devsecops-capstone.git (fetch)
-origin  https://github.com/YOUR_GITHUB_USERNAME/flavorforge-azure-devsecops-capstone.git (push)
+origin  https://github.com/shettymalathib/flavorforge-azure-devsecops-capstone.git (fetch)
+origin  https://github.com/shettymalathib/flavorforge-azure-devsecops-capstone.git (push)
 ```
 
-For SSH, it may be:
+This confirmed that the local repository was connected to the correct GitHub repository.
 
-```text
-origin  git@github.com:YOUR_GITHUB_USERNAME/flavorforge-azure-devsecops-capstone.git (fetch)
-origin  git@github.com:YOUR_GITHUB_USERNAME/flavorforge-azure-devsecops-capstone.git (push)
+### Evidence
+
+![](/screenshots/build-journey/02-github/github-local-repository-remote.png)
+
+---
+
+# 6. Verify the Remote URL
+
+We also checked only the URL configured for `origin`:
+
+```bash
+git remote get-url origin
 ```
 
-Verify:
+Result:
 
 ```text
-Remote name:
+https://github.com/shettymalathib/flavorforge-azure-devsecops-capstone.git
+```
+
+This confirmed:
+
+```text
+Remote:
 origin
 
 Repository:
@@ -187,330 +152,112 @@ flavorforge-azure-devsecops-capstone
 
 ---
 
-# 7. Verify Only the Remote URL
+# 7. Verify Branch Tracking
 
-Run:
-
-```bash
-git remote get-url origin
-```
-
-HTTPS example:
-
-```text
-https://github.com/YOUR_GITHUB_USERNAME/flavorforge-azure-devsecops-capstone.git
-```
-
-SSH example:
-
-```text
-git@github.com:YOUR_GITHUB_USERNAME/flavorforge-azure-devsecops-capstone.git
-```
-
-Confirm that the repository name is:
-
-```text
-flavorforge-azure-devsecops-capstone
-```
-
----
-
-# 8. Verify Branch Tracking
-
-Run:
+We checked whether the local `main` branch was tracking the GitHub branch:
 
 ```bash
 git branch -vv
 ```
 
-Example:
+The expected relationship was:
 
 ```text
-* main c85aee2 [origin/main] documenting step by step implementation
+main → origin/main
 ```
 
-The important part is:
-
-```text
-[origin/main]
-```
-
-This means the local `main` branch is tracking the remote `origin/main` branch.
+This means the local `main` branch is associated with the remote `main` branch.
 
 ---
 
-# 9. Verify Communication With GitHub
+# 8. Verify Communication With GitHub
 
-Run:
+We tested communication with the configured remote:
 
 ```bash
 git ls-remote origin
 ```
 
-If the connection is working, Git should return remote references similar to:
+This command reads the references available on the remote repository.
+
+A successful result contains references similar to:
 
 ```text
 <commit-hash>    HEAD
 <commit-hash>    refs/heads/main
 ```
 
-The exact commit hashes will be different.
+The commit hash is different for each repository state.
 
-This command is useful because it verifies that Git can communicate with the configured remote repository.
-
-It does **not** push or modify your project.
+The command does not modify the local repository or push any changes.
 
 ---
 
-# 10. Verify HTTPS Authentication
+# 9. Refresh Remote Information
 
-If the repository uses HTTPS, run:
-
-```bash
-git ls-remote origin
-```
-
-If Git asks for:
-
-```text
-Username:
-```
-
-enter:
-
-```text
-YOUR_GITHUB_USERNAME
-```
-
-If Git asks for:
-
-```text
-Password:
-```
-
-enter your:
-
-```text
-Personal Access Token
-```
-
-Do **not** enter your normal GitHub account password.
-
-Never write the PAT into:
-
-```text
-README.md
-documentation
-scripts
-commands
-screenshots
-videos
-Git commits
-```
-
----
-
-# 11. Verify SSH Authentication
-
-If the repository uses SSH, first run:
-
-```bash
-ssh -T git@github.com
-```
-
-A successful response indicates that GitHub recognizes the SSH key.
-
-Then run:
-
-```bash
-git ls-remote origin
-```
-
-If this returns the remote references, Git can communicate with the GitHub repository using SSH.
-
----
-
-# 12. Refresh Remote Information
-
-Before comparing local and remote branches, fetch the latest remote information:
+Before comparing the local and remote repositories, we refreshed the remote information:
 
 ```bash
 git fetch origin
 ```
 
-This does **not** merge anything into your local branch.
-
-It updates your local knowledge of the remote repository.
-
-This is important when checking whether your branch is:
-
-```text
-ahead
-behind
-synchronized
-```
+This updates the local information about the GitHub repository without merging changes into the local `main` branch.
 
 ---
 
-# 13. Check Local and Remote Status
+# 10. Check Local and Remote Synchronization
 
-Run:
+We checked the branch status:
 
 ```bash
 git status -sb
 ```
 
-You may see:
+A synchronized repository can show:
 
 ```text
 ## main...origin/main
 ```
 
-This means the local branch and remote tracking branch are synchronized.
+This means there are no commits ahead or behind between the local tracking branch and `origin/main`.
 
-You may instead see:
-
-```text
-## main...origin/main [ahead 1]
-```
-
-This means:
+If the result contains:
 
 ```text
-Local main
-    |
-    | 1 commit not pushed
-    v
-origin/main
+[ahead 1]
 ```
 
-You may see:
+the local repository contains a commit that has not been pushed.
+
+If it contains:
 
 ```text
-## main...origin/main [behind 1]
+[behind 1]
 ```
 
-This means:
-
-```text
-origin/main
-    |
-    | 1 commit not present locally
-    v
-local main
-```
+the remote repository contains a commit that is not present locally.
 
 ---
 
-# 14. If the Branch Is `[ahead 1]`
+# 11. Verify the Working Tree
 
-Example:
-
-```text
-## main...origin/main [ahead 1]
-```
-
-The local branch contains a commit that has not been pushed.
-
-Check the commit:
-
-```bash
-git log --oneline origin/main..HEAD
-```
-
-If the commit should be on GitHub, push it:
-
-```bash
-git push
-```
-
----
-
-# 15. If the Branch Is `[behind 1]`
-
-Example:
-
-```text
-## main...origin/main [behind 1]
-```
-
-The remote contains a commit that the local branch does not have.
-
-Inspect it:
-
-```bash
-git log --oneline HEAD..origin/main
-```
-
-Do **not** immediately run:
-
-```bash
-git reset --hard
-```
-
-and do **not** immediately run:
-
-```bash
-git push --force
-```
-
-First determine why the remote contains the additional commit.
-
----
-
-# 16. If the Branch Is Synchronized
-
-If you see:
-
-```text
-## main...origin/main
-```
-
-with no `ahead` or `behind` indicator, the local branch and remote tracking branch are synchronized.
-
-This is the desired state after a successful push.
-
----
-
-# 17. Check the Local Working Tree
-
-Run:
+We checked the complete repository status:
 
 ```bash
 git status
 ```
 
-A clean working tree should show:
+A clean working tree shows:
 
 ```text
 nothing to commit, working tree clean
 ```
 
-This means there are no uncommitted local changes.
+This confirms that there are no uncommitted changes.
 
-### Important
+However, a clean working tree does not by itself prove that GitHub is synchronized.
 
-A clean working tree does **not** automatically mean the repository is synchronized with GitHub.
-
-You could have:
-
-```text
-nothing to commit, working tree clean
-```
-
-and still be:
-
-```text
-behind 1
-```
-
-or:
-
-```text
-ahead 1
-```
-
-Therefore, check both:
+Therefore we checked both:
 
 ```bash
 git status
@@ -524,15 +271,17 @@ git status -sb
 
 ---
 
-# 18. Verify Recent Local Commits
+# 12. Verify Recent Commits
 
-Run:
+We checked the local Git history:
 
 ```bash
 git log --oneline -5
 ```
 
-Example:
+The existing FlavorForge repository contains commits documenting the implementation and documentation work.
+
+For example, the repository history included commits such as:
 
 ```text
 c85aee2 documenting step by step implementation
@@ -542,96 +291,37 @@ c640066 docs: update generated documentation
 557c0a5 changes in root readme
 ```
 
-The exact commit history depends on the repository version.
+The exact history may change as additional work is committed.
 
 ---
 
-# 19. Verify the Latest Commit
+# 13. Verify the Latest Commit
 
-Run:
+We checked the latest local commit:
 
 ```bash
 git log -1 --oneline
 ```
 
-Example:
+This gives the latest commit ID and commit message.
 
-```text
-c85aee2 documenting step by step implementation
-```
-
-Copy the commit ID if required.
-
-You can compare this with the latest commit shown in GitHub.
+The same latest commit can then be checked in the GitHub repository.
 
 ---
 
-# 20. Verify the GitHub Repository in the Browser
+# 14. Verify the Repository on GitHub
 
-Open the GitHub repository:
+We opened the FlavorForge repository in GitHub.
 
-```text
-https://github.com/YOUR_GITHUB_USERNAME/flavorforge-azure-devsecops-capstone
-```
-
-Verify that the repository belongs to the expected GitHub account.
-
-Check that the project files are visible.
-
-For example:
+Repository:
 
 ```text
-frontend/
-backend/
-docker/
-kubernetes/
-docs/
-scripts/
-.github/
-README.md
-azure-pipelines.yml
-LICENSE
+flavorforge-azure-devsecops-capstone
 ```
 
-The exact structure may change as the project evolves.
+We verified that the project files were visible in GitHub.
 
----
-
-# 21. Verify `README.md`
-
-Open:
-
-```text
-README.md
-```
-
-on GitHub.
-
-Confirm that the FlavorForge README is displayed correctly.
-
-This confirms that the README from the local repository is available in the remote repository.
-
----
-
-# 22. Verify the Commit History on GitHub
-
-Open the repository's **Commits** section.
-
-Compare the latest GitHub commit with:
-
-```bash
-git log -1 --oneline
-```
-
-The latest local commit should be visible on GitHub when the branch has been successfully pushed.
-
----
-
-# 23. Verify Important Project Files
-
-Check that important files and directories are present.
-
-For example:
+The repository contains major project areas such as:
 
 ```text
 frontend/
@@ -641,10 +331,11 @@ kubernetes/
 argocd/
 docs/
 scripts/
-.github/
+screenshots/
+videos/
 ```
 
-and:
+and project files such as:
 
 ```text
 README.md
@@ -652,227 +343,228 @@ azure-pipelines.yml
 LICENSE
 ```
 
-Do not assume every file must exist in every project version.
-
-The purpose of this check is to confirm that the expected FlavorForge project content has reached GitHub.
+The exact repository contents depend on the current project version.
 
 ---
 
-# 24. Verify Repository Visibility
+# 15. Verify the README
 
-On GitHub, confirm that the repository visibility is intentional:
+We opened `README.md` from the GitHub repository.
 
-```text
-Public
-```
-
-or:
-
-```text
-Private
-```
-
-If the repository is public, verify that no confidential information has been committed.
+The README was available in the remote repository, confirming that the project documentation had been pushed successfully.
 
 ---
 
-# 25. Security Verification
+# 16. Verify the Commit History on GitHub
 
-Before declaring the GitHub setup complete, check that the repository does not contain:
+We opened the GitHub repository's commit history.
+
+We compared the latest GitHub commit with:
+
+```bash
+git log -1 --oneline
+```
+
+The latest pushed commit should be visible in the GitHub commit history.
+
+This provides a second verification that the local commit reached GitHub.
+
+---
+
+# 17. Verify Important Project Directories
+
+We checked that the major FlavorForge project directories were available on GitHub:
 
 ```text
-GitHub PATs
+frontend/
+backend/
+docker/
+kubernetes/
+argocd/
+docs/
+scripts/
+screenshots/
+videos/
+```
+
+This confirmed that the project structure had been pushed to the remote repository.
+
+---
+
+# 18. Verify Repository Visibility
+
+We checked the GitHub repository visibility and confirmed that it was configured intentionally.
+
+For a public repository, special care is required to ensure that no credentials or other sensitive information are committed.
+
+---
+
+# 19. Security Verification
+
+Before considering the GitHub setup complete, we verified that sensitive information was not committed.
+
+The repository should not contain:
+
+```text
+GitHub Personal Access Tokens
 Passwords
 SSH private keys
-Azure client secrets
-Service principal credentials
-Connection strings containing passwords
+Azure credentials
+Service principal secrets
+Database passwords
 Private certificates
 Kubernetes secret values
 ```
 
-Never commit credentials simply because an application needs them.
-
-Use appropriate secret-management mechanisms.
+Credentials should never be committed simply because the application requires them.
 
 ---
 
-# 26. Complete Verification Command Set
+# 20. Final Verification Commands
 
-The following commands provide a quick final verification.
-
-Run them from the FlavorForge project directory:
+The following commands provide the final local verification:
 
 ```bash
-echo "===== GITHUB REPOSITORY VERIFICATION ====="
-
-echo ""
-echo "=== Git Version ==="
 git --version
+```
 
-echo ""
-echo "=== Current Directory ==="
+```bash
 pwd
+```
 
-echo ""
-echo "=== Repository Status ==="
+```bash
 git status -sb
+```
 
-echo ""
-echo "=== Current Branch ==="
+```bash
 git branch --show-current
+```
 
-echo ""
-echo "=== Git Remote ==="
+```bash
 git remote -v
+```
 
-echo ""
-echo "=== Remote URL ==="
+```bash
 git remote get-url origin
+```
 
-echo ""
-echo "=== Branch Tracking ==="
+```bash
 git branch -vv
+```
 
-echo ""
-echo "=== Recent Commits ==="
+```bash
 git log --oneline -5
+```
 
-echo ""
-echo "=== Remote References ==="
+```bash
 git ls-remote origin
 ```
 
-This command set does not change the repository.
+These commands verify:
 
-It provides a final snapshot of the GitHub configuration.
+```text
+Git installation
+        ↓
+Project directory
+        ↓
+Git repository
+        ↓
+Current branch
+        ↓
+GitHub remote
+        ↓
+Branch tracking
+        ↓
+Local commit history
+        ↓
+Remote communication
+```
 
 ---
 
-# 27. Expected Verification Result
+# 21. Actual FlavorForge GitHub Configuration
 
-A correctly configured repository should look conceptually like:
-
-```text
-===== GITHUB REPOSITORY VERIFICATION =====
-
-=== Git Version ===
-git version 2.43.0
-
-=== Current Directory ===
-/home/YOUR_USERNAME/flavorforge-azure-devsecops-capstone
-
-=== Repository Status ===
-## main...origin/main
-
-=== Current Branch ===
-main
-
-=== Git Remote ===
-origin  https://github.com/YOUR_GITHUB_USERNAME/flavorforge-azure-devsecops-capstone.git (fetch)
-origin  https://github.com/YOUR_GITHUB_USERNAME/flavorforge-azure-devsecops-capstone.git (push)
-
-=== Remote URL ===
-https://github.com/YOUR_GITHUB_USERNAME/flavorforge-azure-devsecops-capstone.git
-
-=== Branch Tracking ===
-* main <commit> [origin/main] <commit message>
-
-=== Recent Commits ===
-<recent commits>
-
-=== Remote References ===
-<commit-hash> HEAD
-<commit-hash> refs/heads/main
-```
-
-The exact:
-
-* username
-* Git version
-* commit hashes
-* commit messages
-
-will vary.
-
----
-
-# 28. Existing FlavorForge Verification
-
-For the existing FlavorForge project:
-
-```bash
-git --version
-```
-
-returned:
+The actual FlavorForge repository was configured as follows:
 
 ```text
-git version 2.43.0
-```
-
-The primary branch is:
-
-```text
+GitHub Account
+    ↓
+shettymalathib
+    ↓
+flavorforge-azure-devsecops-capstone
+    ↓
+origin
+    ↓
+local FlavorForge repository
+    ↓
 main
 ```
 
-The configured remote is:
+The configured GitHub remote was:
 
 ```text
 https://github.com/shettymalathib/flavorforge-azure-devsecops-capstone.git
 ```
 
-Therefore:
+The primary branch was:
 
 ```text
-Local FlavorForge
-       |
-       | main
-       v
-origin
-       |
-       | HTTPS
-       v
-GitHub
-       |
-       v
-shettymalathib/flavorforge-azure-devsecops-capstone
+main
 ```
 
-For a new recreation, replace:
+Git version:
 
 ```text
-shettymalathib
+git version 2.43.0
 ```
-
-with the user's own GitHub username.
 
 ---
 
-# 29. Common Problems
+# 22. GitHub Verification Result
+
+The verification confirmed the following relationship:
+
+```text
+Local FlavorForge Repository
+          |
+          | main
+          ↓
+       origin/main
+          |
+          ↓
+GitHub
+          |
+          ↓
+flavorforge-azure-devsecops-capstone
+```
+
+The local repository was therefore correctly connected to GitHub.
+
+---
+
+# 23. Common Problems
 
 ## Problem 1 — `origin` does not exist
 
-Run:
+Check:
 
 ```bash
 git remote -v
 ```
 
-If there is no output, the remote has not been configured.
-
-Return to:
+If no remote is displayed, return to:
 
 ```text
 04-connect-local-git-to-github.md
 ```
 
+and configure the GitHub remote.
+
 ---
 
 ## Problem 2 — Wrong GitHub repository
 
-Run:
+Check:
 
 ```bash
 git remote -v
@@ -884,7 +576,7 @@ If the URL is incorrect:
 git remote set-url origin <correct-repository-url>
 ```
 
-Then verify:
+Then verify again:
 
 ```bash
 git remote -v
@@ -892,78 +584,48 @@ git remote -v
 
 ---
 
-## Problem 3 — GitHub repository is empty
+## Problem 3 — Repository is empty on GitHub
 
-The local project may not have been pushed.
-
-Return to:
+If the local project exists but the GitHub repository is empty, return to:
 
 ```text
 05-first-push.md
 ```
 
-and complete the push procedure.
+and complete the push.
 
 ---
 
-## Problem 4 — Authentication failed
+## Problem 4 — Authentication failure
 
-### HTTPS
-
-Check:
+For HTTPS, verify:
 
 ```text
 GitHub username
-PAT
-PAT expiration
-Repository permissions
+Personal Access Token
+PAT validity
+Repository access
 ```
 
-Do not use your normal GitHub password.
+Do not use the normal GitHub account password for Git HTTPS authentication.
 
-### SSH
-
-Run:
+For SSH, test:
 
 ```bash
 ssh -T git@github.com
 ```
 
-Then:
-
-```bash
-ssh-add -l
-```
-
 ---
 
-## Problem 5 — Branch is `behind`
+## Problem 5 — Branch is ahead
 
-Run:
-
-```bash
-git fetch origin
-```
-
-Then:
-
-```bash
-git log --oneline HEAD..origin/main
-```
-
-Inspect the remote commit before making changes.
-
----
-
-## Problem 6 — Branch is `ahead`
-
-Run:
+Check:
 
 ```bash
 git log --oneline origin/main..HEAD
 ```
 
-If the commits should be on GitHub:
+If the commit should be available on GitHub:
 
 ```bash
 git push
@@ -971,45 +633,62 @@ git push
 
 ---
 
-# 30. Final Verification Checklist
+## Problem 6 — Branch is behind
 
-Before considering the GitHub setup complete:
+Refresh the remote information:
 
-* [ ] Git is installed.
-* [ ] Correct FlavorForge project directory is open.
-* [ ] Project is a Git repository.
-* [ ] Current branch is verified.
-* [ ] Branch is `main` for the standard FlavorForge setup.
-* [ ] Remote named `origin` exists.
-* [ ] `origin` points to the correct GitHub repository.
-* [ ] Authentication works.
-* [ ] `main` tracks `origin/main`.
-* [ ] Remote information has been refreshed with `git fetch origin`.
-* [ ] Local/remote status has been checked.
-* [ ] Project files are visible on GitHub.
-* [ ] `README.md` is visible on GitHub.
-* [ ] Recent commits are visible on GitHub.
-* [ ] Repository visibility is intentional.
-* [ ] No PAT or password is committed.
-* [ ] No SSH private key is committed.
-* [ ] No Azure credentials are committed.
-* [ ] No Kubernetes secret values are committed.
+```bash
+git fetch origin
+```
+
+Then inspect:
+
+```bash
+git log --oneline HEAD..origin/main
+```
+
+Do not immediately use `git reset --hard` or `git push --force`.
+
+First understand why the remote contains additional commits.
 
 ---
 
-# 31. Reviewer Explanation
+# 24. Final Verification Checklist
+
+Before moving to the next phase:
+
+* [ ] Git is installed
+* [ ] FlavorForge project directory is correct
+* [ ] Local Git repository is verified
+* [ ] Current branch is verified
+* [ ] Branch is `main`
+* [ ] `origin` exists
+* [ ] `origin` points to the FlavorForge GitHub repository
+* [ ] GitHub communication works
+* [ ] `main` tracks `origin/main`
+* [ ] Remote information was refreshed
+* [ ] Local/remote synchronization was checked
+* [ ] Project files are visible on GitHub
+* [ ] `README.md` is visible on GitHub
+* [ ] Recent commits are visible on GitHub
+* [ ] No credentials are committed
+* [ ] Working tree is clean
+
+---
+
+# 25. Reviewer Explanation
 
 ### "How did you verify the GitHub connection?"
 
-> "I verified the local Git installation and repository, checked the current branch, inspected the `origin` remote using `git remote -v`, verified branch tracking with `git branch -vv`, fetched the latest remote information, and tested communication with GitHub using `git ls-remote origin`."
+> "I verified the local Git repository and current branch first. Then I checked the `origin` remote using `git remote -v`, verified branch tracking with `git branch -vv`, refreshed the remote information using `git fetch origin`, and tested communication with GitHub using `git ls-remote origin`."
 
 ### "How do you know which GitHub repository is connected?"
 
 > "I use `git remote -v` or `git remote get-url origin` to verify the repository URL configured for the `origin` remote."
 
-### "How do you know the first push succeeded?"
+### "How did you verify the push?"
 
-> "I verified that the FlavorForge project files and recent commits are visible in the GitHub repository and confirmed that the local `main` branch tracks `origin/main`."
+> "I checked the local branch and remote tracking information, verified that the project files were visible in GitHub, and compared the latest local commit with the commit history shown in GitHub."
 
 ### "What does `main...origin/main` mean?"
 
@@ -1021,57 +700,32 @@ Before considering the GitHub setup complete:
 
 ### "What does `behind 1` mean?"
 
-> "It means the remote branch contains one commit that the local branch does not currently have. I would fetch and inspect that commit before deciding how to synchronize the branches."
+> "It means the remote branch contains one commit that is not currently present in the local branch. I would fetch and inspect that commit before deciding how to synchronize the repositories."
 
-### "Does `git status` being clean mean GitHub is synchronized?"
+### "Does a clean `git status` mean GitHub is synchronized?"
 
-> "Not necessarily. A clean working tree only means there are no uncommitted local changes. I also check the branch's ahead or behind status against `origin/main`."
+> "Not necessarily. A clean working tree only means there are no uncommitted local changes. I also check the branch status against `origin/main` to confirm whether the branch is ahead, behind, or synchronized."
 
 ---
 
-# 32. GitHub Setup Complete
+# 26. GitHub Setup Complete
 
-The GitHub setup is complete when the following relationship is verified:
-
-```text
-GitHub Account
-      |
-      v
-GitHub Repository
-      |
-      ^
-      |
-    origin
-      |
-      ^
-      |
-Local Git Repository
-      |
-      v
-main
-```
-
-The complete GitHub setup flow was:
+The completed GitHub flow was:
 
 ```text
 01-github-account.md
-        |
-        v
+        ↓
 02-create-repository.md
-        |
-        v
+        ↓
 03-github-authentication.md
-        |
-        v
+        ↓
 04-connect-local-git-to-github.md
-        |
-        v
+        ↓
 05-first-push.md
-        |
-        v
+        ↓
 06-verify-github-repository.md
 ```
 
-At this point, GitHub is established as the remote source-code repository for FlavorForge.
+At this point, GitHub has been established and verified as the remote source-code repository for FlavorForge.
 
-The next phase can build on this verified GitHub foundation.
+The repository is ready for the next stage of the FlavorForge implementation journey.

@@ -2,7 +2,7 @@
 
 ## Objective
 
-This document records the **actual frontend setup and verification work** for FlavorForge.
+This document records the frontend setup and verification work for the FlavorForge application.
 
 The frontend is located in:
 
@@ -10,7 +10,7 @@ The frontend is located in:
 frontend/
 ```
 
-The application uses:
+The frontend application uses:
 
 ```text
 React
@@ -18,17 +18,39 @@ Vite
 react-router-dom
 ```
 
-The focus of this document is the commands and configuration that were part of the FlavorForge implementation.
+The frontend was prepared as a separate application from the Node.js/Express backend and was later packaged into its own Docker image.
 
 ---
 
-## Step 1 — Verify the frontend project
+# 1. Frontend Application
 
-### Command
+## What we wanted
 
-The original terminal command used to create the frontend project is not established in the available FlavorForge evidence, so it is not reproduced here.
+FlavorForge required a web-based frontend that could communicate with the backend API.
 
-The repository itself establishes that the frontend exists under:
+The frontend was implemented using:
+
+```text
+React
++
+Vite
+```
+
+The frontend is maintained separately from the backend:
+
+```text
+flavorforge-azure-devsecops-capstone/
+├── frontend/
+└── backend/
+```
+
+---
+
+# 2. Frontend Project
+
+## Step 1 — Verify the frontend directory
+
+### Project location
 
 ```text
 frontend/
@@ -36,21 +58,25 @@ frontend/
 
 ### What happened
 
-The FlavorForge repository contains a separate frontend application.
+The FlavorForge repository contains the frontend application under the `frontend/` directory.
 
-The frontend is maintained independently from the Node.js/Express backend.
+The frontend and backend are maintained as separate application components.
 
 ### Verify
+
+The frontend project can be inspected from:
 
 ```text
 frontend/
 ```
 
-Expected project structure includes the frontend source and package configuration.
+The directory contains the frontend source code and project configuration.
 
 ---
 
-## Step 2 — Configure the frontend dependencies
+# 3. Frontend Package Configuration
+
+## Step 1 — Check `package.json`
 
 ### File
 
@@ -60,15 +86,15 @@ frontend/package.json
 
 ### What happened
 
-The frontend package configuration contains the React/Vite application dependencies and scripts.
+The frontend package configuration defines the React/Vite application dependencies and npm scripts.
 
-The FlavorForge implementation also uses:
+The FlavorForge frontend also uses:
 
 ```text
 react-router-dom
 ```
 
-with the project version recorded as:
+The project version recorded for this dependency is:
 
 ```text
 7.18.1
@@ -82,13 +108,45 @@ Check the existing file:
 frontend/package.json
 ```
 
-The repository's `package.json` is the source of truth for the installed dependencies and available npm scripts.
+The repository's `package.json` is the source of truth for the frontend dependencies and available npm scripts.
 
 ---
 
-## Step 3 — Configure the frontend API base URL
+# 4. Frontend Routing
 
-### File
+## What we needed
+
+The application required frontend routing so that different application views could be handled by the React application.
+
+FlavorForge uses:
+
+```text
+react-router-dom
+```
+
+### What happened
+
+The frontend routing functionality was implemented using the project's React Router dependency.
+
+### Verify
+
+Check:
+
+```text
+frontend/package.json
+```
+
+and the frontend source files that use the routing dependency.
+
+---
+
+# 5. Frontend API Configuration
+
+## What we needed
+
+The frontend needed a way to communicate with the backend API.
+
+The Docker-specific frontend configuration is stored in:
 
 ```text
 frontend/.env.docker
@@ -102,19 +160,19 @@ VITE_API_BASE_URL=http://backend:3000
 
 ### What happened
 
-The Docker-specific frontend configuration was created so the frontend can communicate with the backend using the Docker network hostname:
+This configuration allows the containerized frontend to use the backend service hostname:
 
 ```text
 backend
 ```
 
-and backend port:
+with the backend listening on:
 
 ```text
 3000
 ```
 
-The resulting communication path is:
+The intended communication path is:
 
 ```text
 Frontend
@@ -132,7 +190,7 @@ Check:
 frontend/.env.docker
 ```
 
-and confirm it contains:
+and confirm:
 
 ```text
 VITE_API_BASE_URL=http://backend:3000
@@ -140,11 +198,17 @@ VITE_API_BASE_URL=http://backend:3000
 
 ---
 
-## Step 4 — Configure local frontend API access
+# 6. Local Frontend and Backend Communication
 
-### Configuration
+During local development, the frontend used the Vite development server.
 
-The initial local backend CORS configuration used:
+The local frontend address was:
+
+```text
+http://localhost:5173
+```
+
+The backend CORS configuration initially allowed:
 
 ```text
 http://localhost:5173
@@ -152,7 +216,7 @@ http://localhost:5173
 
 ### What happened
 
-This allowed the Vite frontend running locally to communicate with the backend during local development.
+This allowed the locally running frontend to communicate with the backend during development.
 
 The local application flow was:
 
@@ -160,7 +224,7 @@ The local application flow was:
 Frontend
 http://localhost:5173
        |
-       | HTTP
+       | HTTP request
        v
 Backend
 http://localhost:3000
@@ -168,23 +232,23 @@ http://localhost:3000
 
 ### Verify
 
-The corresponding backend CORS configuration is part of the backend implementation and should be checked in the backend source/configuration.
+The corresponding CORS configuration can be checked in the backend implementation.
 
 ---
 
-## Step 5 — Verify the frontend build configuration
+# 7. Frontend Build Configuration
 
-### Command
+## What we needed
 
-The exact original frontend build command is not preserved in the available evidence, so a command is not claimed here.
+The React application needed to be converted into production-ready static files before being served by the production web server.
 
-The build configuration is established by the frontend project and its `package.json`.
+The FlavorForge frontend uses Vite for the production build.
 
 ### What happened
 
-The frontend is a Vite application and is later built into production static assets.
+The frontend application is structured as a Vite project and is later built into production static assets.
 
-The production build is then used by the frontend Docker image.
+The production build output is used by the frontend Docker image.
 
 ### Verify
 
@@ -196,17 +260,13 @@ frontend/package.json
 
 for the project's actual build script.
 
+The `package.json` remains the source of truth for the configured frontend build command.
+
 ---
 
-## Step 6 — Frontend Docker build configuration
+# 8. Preparation for Docker
 
-### Files
-
-```text
-frontend/
-```
-
-and the frontend Docker configuration.
+The frontend was prepared to be packaged separately from the backend.
 
 The implemented frontend container uses:
 
@@ -220,64 +280,83 @@ for the build stage and:
 nginx:1.29-alpine
 ```
 
-for the runtime stage.
+for serving the production files.
 
-### What happened
-
-The frontend is built using Node.js/Vite and the generated production files are served by Nginx.
-
-The flow is:
+The resulting flow is:
 
 ```text
 React Source
      |
      v
-Node 22 Alpine
+Node.js 22 Alpine
      |
      v
-Vite Build
+Vite Production Build
      |
      v
-Production Files
+Static Frontend Files
      |
      v
 Nginx 1.29 Alpine
 ```
 
-### Verify
+The detailed Dockerfile implementation is documented in the Docker Build Journey.
 
-Check the frontend Docker configuration in the repository and confirm the implemented base images:
+---
+
+# 9. Frontend Verification
+
+At the application stage, the important frontend components were verified as part of the FlavorForge project structure and configuration.
+
+The frontend contains:
 
 ```text
-node:22-alpine
-nginx:1.29-alpine
+React
+Vite
+react-router-dom
+API configuration
 ```
 
----
+The Docker-specific API configuration is:
 
-## Step 7 — Verify the frontend after deployment
+```text
+VITE_API_BASE_URL=http://backend:3000
+```
 
-The deployed FlavorForge frontend was eventually exposed through Kubernetes/Ingress.
-
-The repository contains browser evidence for the deployed application.
-
-### Verify
-
-The frontend was verified through the deployed application URL represented by the existing screenshot:
-
-![FlavorForge frontend in browser](/screenshots/kubernetes/nginx-ingress/4-frontend-http-4-157-77-48.png)
-
-### What happened
-
-The screenshot provides evidence that the deployed frontend was reachable through the external application endpoint.
-
-This verification belongs to the later Kubernetes deployment stage, but it confirms that the frontend built during this application stage eventually became part of the running FlavorForge application.
+The frontend was then prepared for the Docker packaging stage.
 
 ---
 
-## Frontend Setup Result
+# 10. Frontend Deployment Evidence
 
-At the end of the frontend setup, FlavorForge had:
+The frontend was later deployed as part of the complete FlavorForge application through Docker, Kubernetes, and Ingress.
+
+The deployed frontend was verified through the running application.
+
+### Screenshot / Evidence
+
+Use the actual frontend verification screenshot from the repository here:
+
+
+### Screenshot / Evidence
+
+![React application running](/screenshots/frontend/03-react-application-running.png)
+
+![Frontend project structure](/screenshots/frontend/04-frontend-enterprise-structure.png)
+
+![Frontend backend build success](/screenshots/frontend/30-frontend-backend-build-success.png)
+
+![Frontend build success](/screenshots/frontend/32-build-success.png)
+
+The screenshot should be replaced with the actual filename used in the FlavorForge screenshot inventory.
+
+This deployment verification belongs to the later Kubernetes stage; it is included here only as evidence that the frontend created during this stage became part of the running FlavorForge application.
+
+---
+
+# 11. Frontend Setup Result
+
+At the end of the frontend application stage, FlavorForge had a separate frontend application:
 
 ```text
 frontend/
@@ -293,7 +372,7 @@ frontend/
     +-- Docker-specific configuration
     |
     v
-Docker-ready frontend
+Frontend ready for Docker packaging
 ```
 
 The important frontend configuration established during the implementation was:
@@ -302,10 +381,37 @@ The important frontend configuration established during the implementation was:
 VITE_API_BASE_URL=http://backend:3000
 ```
 
-The frontend was then used as the input to the Docker stage, where it was packaged into its own image using Node.js for the build stage and Nginx for serving the production files.
+The frontend was ready to move into the Docker stage, where it was packaged into its own container image.
+
+---
+
+# 12. Build Journey Result
+
+The frontend portion of the FlavorForge application was established as:
+
+```text
+FlavorForge Frontend
+        |
+        +-- React
+        |
+        +-- Vite
+        |
+        +-- react-router-dom
+        |
+        +-- API configuration
+        |
+        v
+Ready for Docker
+```
 
 The next application document is:
 
 ```text
-03-backend-setup.md
+02-backend-setup.md
+```
+
+The next major Build Journey phase after the application setup is:
+
+```text
+04-docker/
 ```

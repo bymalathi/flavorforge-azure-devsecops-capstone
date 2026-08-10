@@ -1,224 +1,180 @@
-# GitHub — Connect the Local Git Repository to GitHub
+# Connect Local Git to GitHub
 
 ## Objective
 
-This document records how the existing local **FlavorForge Git repository** was connected to its GitHub repository.
+This document records how the existing local FlavorForge Git repository was connected to the GitHub repository.
 
-By the end of this step, the local repository should:
+By the end of this step, we verified:
 
-* exist as a Git repository
-* use the `main` branch
-* have `origin` configured
-* point `origin` to the FlavorForge GitHub repository
-* be able to communicate with GitHub
-* be ready for the first project push
+1. The FlavorForge project directory.
+2. Git installation.
+3. The local Git repository.
+4. The current branch.
+5. The `origin` remote.
+6. The GitHub repository URL.
+7. Communication between the local repository and GitHub.
 
-> **Important:** This step connects the local Git repository to GitHub. It does **not** perform the first project push. The first push is documented in `05-first-push.md`.
-
----
-
-# 1. What We Wanted
-
-The FlavorForge project already existed locally and was already initialized as a Git repository.
-
-The GitHub repository had also been created.
-
-The required connection was:
-
-```text
-Local FlavorForge Project
-        |
-        v
-Local Git Repository
-        |
-        | origin
-        v
-GitHub
-        |
-        v
-shettymalathib/flavorforge-azure-devsecops-capstone
-```
-
-The local repository therefore needed to know that the GitHub repository was its remote named:
-
-```text
-origin
-```
+> **Important:** FlavorForge was already an existing Git repository. We did not initialize a new repository or create unnecessary Git history.
 
 ---
 
-# 2. Actual FlavorForge Repository
+# 1. Open the FlavorForge Project
 
-The local FlavorForge project was:
+The FlavorForge project was stored in the local WSL/Ubuntu environment.
 
-```text
-~/flavorforge-azure-devsecops-capstone
-```
-
-The GitHub repository was:
-
-```text
-https://github.com/shettymalathib/flavorforge-azure-devsecops-capstone.git
-```
-
-The local branch used by FlavorForge was:
-
-```text
-main
-```
-
-The remote name was:
-
-```text
-origin
-```
-
----
-
-# 3. Open the Local FlavorForge Project
-
-The work was performed from the WSL/Ubuntu terminal.
-
-Enter the FlavorForge project:
+We opened the project directory:
 
 ```bash
 cd ~/flavorforge-azure-devsecops-capstone
 ```
 
-Verify the current directory:
+Then verified the current directory:
 
 ```bash
 pwd
 ```
 
-Expected path format:
+### What happened
+
+The terminal showed:
 
 ```text
-/home/<LINUX_USERNAME>/flavorforge-azure-devsecops-capstone
+/home/malathi/flavorforge-azure-devsecops-capstone
 ```
 
-The exact Linux username is environment-specific.
-
-List the project:
-
-```bash
-ls
-```
-
-The FlavorForge project files should be displayed.
+This confirmed that the commands were being executed from the FlavorForge project directory.
 
 ---
 
-# 4. Verify Git Installation
+# 2. Verify Git Installation
 
-Check the installed Git version:
+We checked whether Git was installed:
 
 ```bash
 git --version
 ```
 
-The FlavorForge environment reported:
+### Result
 
 ```text
 git version 2.43.0
 ```
 
-This confirmed that Git was available in the WSL environment.
-
-### Evidence
-
-Capture the terminal showing:
-
-```bash
-pwd
-git --version
-```
-
-Suggested screenshot:
-
-```text
-github-local-git-version.png
-```
+This confirmed that Git was installed and available in the WSL/Ubuntu environment.
 
 ---
 
-# 5. Verify the Existing Git Repository
+# 3. Verify the Local Git Repository
 
-The FlavorForge project was already a Git repository.
-
-Verify it with:
+We checked the repository status:
 
 ```bash
 git status
 ```
 
-The command should return Git repository information instead of:
+### Result
+
+The repository reported:
 
 ```text
-fatal: not a git repository
+On branch main
+Your branch is behind 'origin/main' by 1 commit, and can be fast-forwarded.
+(use "git pull" to update your local branch)
 ```
 
-For the existing FlavorForge repository, Git recognized the project as a repository.
+The working tree also contained documentation changes that had not yet been staged.
 
-This was an existing Git repository, so there was **no need to run**:
+The modified files reported by Git were:
 
-```bash
-git init
+```text
+docs/week-4/BUILD-JOURNEY/02-GitHub/04-connect-local-git-to-github.md
+docs/week-4/BUILD-JOURNEY/07-kustomize/05-prod-overlay.md
+docs/week-4/BUILD-JOURNEY/08-azure-devops/01-azure-devops-project.md
+docs/week-4/BUILD-JOURNEY/08-azure-devops/02-service-connections.md
+docs/week-4/BUILD-JOURNEY/08-azure-devops/03-pipeline-setup.md
+docs/week-4/BUILD-JOURNEY/08-azure-devops/04-pipeline-variables.md
+docs/week-4/BUILD-JOURNEY/08-azure-devops/05-build-test-security.md
+docs/week-4/BUILD-JOURNEY/08-azure-devops/06-docker-publish.md
+docs/week-4/BUILD-JOURNEY/08-azure-devops/07-trivy-scan.md
 ```
+
+### What this confirmed
+
+The directory was already a Git repository.
+
+It also showed that the local repository and GitHub were **not currently synchronized**:
+
+```text
+Local main
+    |
+    | behind by 1 commit
+    v
+origin/main
+```
+
+At this point, we did **not** run `git pull`, because there were already local documentation changes that needed to be preserved and reviewed.
 
 ---
 
-# 6. Verify the Current Branch
+# 4. Check the Current Branch
 
-Check the current branch:
+We checked the active branch:
 
 ```bash
 git branch --show-current
 ```
 
-The FlavorForge repository used:
+### Result
 
 ```text
 main
 ```
 
-Therefore:
+Therefore the current local branch was:
 
 ```text
-Local branch = main
-```
-
-No unnecessary branch rename was performed.
-
-### Evidence
-
-Capture the terminal showing:
-
-```bash
-git branch --show-current
-```
-
-Suggested screenshot:
-
-```text
-github-local-branch-main.png
+main
 ```
 
 ---
 
-# 7. Check the Existing Remote
+# 5. Check the GitHub Remote
 
-Before adding or changing anything, the existing remote configuration was checked:
+We checked the configured Git remotes:
 
 ```bash
 git remote -v
 ```
 
-The FlavorForge repository was already configured with:
+### Result
 
 ```text
 origin  https://github.com/shettymalathib/flavorforge-azure-devsecops-capstone.git (fetch)
 origin  https://github.com/shettymalathib/flavorforge-azure-devsecops-capstone.git (push)
+```
+
+This confirmed that the local repository already had an `origin` remote configured.
+
+The remote repository was:
+
+```text
+https://github.com/shettymalathib/flavorforge-azure-devsecops-capstone.git
+```
+
+---
+
+# 6. Verify the Remote URL Directly
+
+We verified only the URL associated with `origin`:
+
+```bash
+git remote get-url origin
+```
+
+### Result
+
+```text
+https://github.com/shettymalathib/flavorforge-azure-devsecops-capstone.git
 ```
 
 This confirmed that:
@@ -226,670 +182,243 @@ This confirmed that:
 ```text
 Remote name = origin
 Repository = flavorforge-azure-devsecops-capstone
-Owner = shettymalathib
 Protocol = HTTPS
 ```
 
-### Evidence
-
-This is the **most important screenshot for this document** because it directly proves the local Git repository was connected to the intended GitHub repository.
-
-Capture:
-
-```bash
-git remote -v
-```
-
-Suggested screenshot name:
-
-```text
-github-local-repository-remote.png
-```
-
-> **Screenshot to attach:** the terminal output showing both `(fetch)` and `(push)` URLs.
-
 ---
 
-# 8. Why We Did Not Run `git remote add origin`
+# 7. Verify the Local-to-GitHub Relationship
 
-The FlavorForge repository already had the correct `origin`.
-
-Therefore, we did **not** run:
-
-```bash
-git remote add origin ...
-```
-
-Running it again would be unnecessary and could produce:
+The verified setup was:
 
 ```text
-error: remote origin already exists.
-```
-
-The correct action for the existing FlavorForge repository was simply to verify the remote:
-
-```bash
-git remote -v
-```
-
----
-
-# 9. What `origin` Means
-
-`origin` is the local name Git uses for a configured remote repository.
-
-In FlavorForge:
-
-```text
+WSL / Ubuntu
+      |
+      v
+Local FlavorForge Git Repository
+      |
+      | main
+      v
 origin
-   |
-   v
-https://github.com/shettymalathib/flavorforge-azure-devsecops-capstone.git
-```
-
-Therefore:
-
-```bash
-git push origin main
-```
-
-means:
-
-```text
-Push the local main branch
-to the remote repository named origin.
-```
-
-`origin` is not:
-
-* a GitHub username
-* a password
-* a Personal Access Token
-* a branch
-* an organization
-
-It is simply the name of the configured Git remote.
-
----
-
-# 10. Verify the Remote URL Directly
-
-The configured URL can also be checked with:
-
-```bash
-git remote get-url origin
-```
-
-For FlavorForge, the expected result was:
-
-```text
-https://github.com/shettymalathib/flavorforge-azure-devsecops-capstone.git
-```
-
-This provided a direct verification that `origin` pointed to the intended repository.
-
----
-
-# 11. Verify GitHub Communication
-
-Checking the remote URL alone does not prove that Git can communicate with GitHub.
-
-The configured remote was tested with:
-
-```bash
-git ls-remote origin
-```
-
-This command contacts the remote repository and returns its references.
-
-It does **not** push the project.
-
-A successful result indicates that Git can communicate with the configured GitHub repository.
-
-Conceptually:
-
-```text
-Local Git Repository
-        |
-        | git ls-remote origin
-        v
-GitHub Repository
-```
-
----
-
-# 12. Authentication Used by the Repository
-
-The FlavorForge remote used HTTPS:
-
-```text
-https://github.com/shettymalathib/flavorforge-azure-devsecops-capstone.git
-```
-
-The authentication configuration was handled separately in:
-
-```text
-03-github-authentication.md
-```
-
-This document does not recreate the authentication setup.
-
-The important distinction is:
-
-```text
-Remote URL
-     |
-     | tells Git where the repository is
-     v
-GitHub Repository
-
-Authentication
-     |
-     | proves access
-     v
+      |
+      | HTTPS
+      v
 GitHub
+      |
+      v
+shettymalathib/flavorforge-azure-devsecops-capstone
 ```
 
-The remote URL itself does not contain a password or token.
-
----
-
-# 13. Security Check
-
-The GitHub remote was configured without credentials embedded in the URL.
-
-Correct:
+The local branch was:
 
 ```text
-https://github.com/shettymalathib/flavorforge-azure-devsecops-capstone.git
+main
 ```
 
-Credentials must **not** be embedded like:
-
-```text
-https://USERNAME:PASSWORD@github.com/...
-```
-
-or:
-
-```text
-https://USERNAME:TOKEN@github.com/...
-```
-
-The repository configuration should contain only the repository location.
-
----
-
-# 14. Check the Local Repository Status
-
-Verify the repository state:
-
-```bash
-git status --short --branch
-```
-
-This command shows:
-
-* current branch
-* tracking information, if configured
-* modified files
-* untracked files
-
-For example:
-
-```text
-## main
-```
-
-or, after upstream tracking has been established:
-
-```text
-## main...origin/main
-```
-
-If files are shown as untracked or modified, that does not mean the GitHub connection is broken.
-
-It only means there are local changes that have not yet been committed.
-
----
-
-# 15. Check Remote Branches
-
-Remote branches can be checked with:
-
-```bash
-git branch -r
-```
-
-After the GitHub repository contains a `main` branch, the expected remote branch is:
+The configured remote branch was:
 
 ```text
 origin/main
 ```
 
-The remote can also be inspected with:
+The repository was already connected to GitHub.
+
+---
+
+# 8. Evidence
+
+The Git verification commands and their output were captured in:
+
+![](/screenshots/build-journey/02-github/github-local-repository-remote.png)
+
+The evidence shows:
+
+```text
+/home/malathi/flavorforge-azure-devsecops-capstone
+git version 2.43.0
+On branch main
+origin → https://github.com/shettymalathib/flavorforge-azure-devsecops-capstone.git
+```
+
+This provides evidence for:
+
+* local project location
+* Git installation
+* current branch
+* GitHub remote
+* remote repository URL
+
+The verification was also recorded in:
+
+[▶️ Watch Git Verification Video](/videos/BUILD-JOURNEY/02-git-verification.mp4)
+
+---
+
+# 9. Important Repository State
+
+At the time of this verification, Git reported:
+
+```text
+Your branch is behind 'origin/main' by 1 commit, and can be fast-forwarded.
+```
+
+This means the local repository was not yet synchronized with the GitHub `main` branch.
+
+It did **not** mean that the GitHub connection was broken.
+
+The connection was working because Git successfully identified:
+
+```text
+origin/main
+```
+
+and displayed the configured GitHub remote.
+
+The repository also contained local documentation changes that had not yet been committed.
+
+Therefore, synchronization was intentionally **not performed as part of this connection step**.
+
+The next action must first account for the existing local changes and the additional remote commit.
+
+---
+
+# 10. What We Did Not Do
+
+Because the FlavorForge repository already existed, we did not run:
 
 ```bash
-git remote show origin
+git init
 ```
 
-This provides information about the configured remote and branch relationships.
+We also did not add the remote again:
+
+```bash
+git remote add origin ...
+```
+
+The `origin` remote already existed and pointed to the correct repository.
+
+We also did not use:
+
+```bash
+git push --force
+```
+
+or:
+
+```bash
+git reset --hard
+```
+
+because the repository had both:
+
+* local documentation changes
+* one commit present on the remote that was not yet present locally
+
+Those changes must be reviewed before synchronization.
 
 ---
 
-# 16. Connection vs First Push
+# 11. Verification Commands Used
 
-It is important to separate these two activities.
+The actual verification sequence was:
 
-### This document
-
-```text
-Connect local Git
-        |
-        v
-Configure origin
-        |
-        v
-Verify origin
-        |
-        v
-Test GitHub communication
+```bash
+cd ~/flavorforge-azure-devsecops-capstone
+pwd
+git --version
+git status
+git branch --show-current
+git remote -v
+git remote get-url origin
 ```
 
-### Next document
-
-```text
-Prepare files
-        |
-        v
-git add
-        |
-        v
-git commit
-        |
-        v
-git push
-        |
-        v
-GitHub
-```
-
-The actual first project push belongs to:
-
-```text
-05-first-push.md
-```
+These commands were read-only verification commands. They did not create commits or modify the Git history.
 
 ---
 
-# 17. Actual FlavorForge State
+# 12. Result
 
-The existing FlavorForge repository already had the required GitHub connection.
+The local FlavorForge Git repository was successfully verified as connected to GitHub.
 
 The verified configuration was:
 
 ```text
-Local repository:
+Project:
 ~/flavorforge-azure-devsecops-capstone
+
+Git:
+2.43.0
 
 Branch:
 main
 
 Remote:
 origin
-
-Protocol:
-HTTPS
-
+```
 GitHub repository:
 https://github.com/shettymalathib/flavorforge-azure-devsecops-capstone.git
-```
 
-Therefore, no new Git repository was initialized and no duplicate `origin` remote was created.
 
----
-
-# 18. Actual Verification Commands
-
-The important commands used for this step were:
-
-### Enter the project
-
-```bash
-cd ~/flavorforge-azure-devsecops-capstone
-```
-
-### Verify Git
-
-```bash
-git --version
-```
-
-### Verify the repository
-
-```bash
-git status
-```
-
-### Verify the branch
-
-```bash
-git branch --show-current
-```
-
-### Verify the remote
-
-```bash
-git remote -v
-```
-
-### Verify the remote URL
-
-```bash
-git remote get-url origin
-```
-
-### Test GitHub communication
-
-```bash
-git ls-remote origin
-```
-
-### Check remote branches
-
-```bash
-git branch -r
-```
-
-### Inspect the remote
-
-```bash
-git remote show origin
-```
-
----
-
-# 19. What We Did Not Do
-
-Because the FlavorForge repository was already initialized and already had the correct remote, we did **not** perform:
-
-```bash
-git init
-```
-
-We also did not unnecessarily run:
-
-```bash
-git remote add origin ...
-```
-
-And we did not perform the first project push in this step.
-
-The push is documented separately in:
+The repository was connected correctly, but the local branch was currently:
 
 ```text
-05-first-push.md
+behind origin/main by 1 commit
 ```
+
+and contained local documentation changes.
+
+Therefore, this step confirms the **local Git → GitHub connection**, but does not claim that the local and remote repositories are currently synchronized.
 
 ---
 
-# 20. If `origin` Did Not Exist
+# Verification Checklist
 
-For a new recreation where:
-
-```bash
-git remote -v
-```
-
-returns no output, the GitHub remote would need to be added:
-
-```bash
-git remote add origin https://github.com/YOUR_GITHUB_USERNAME/flavorforge-azure-devsecops-capstone.git
-```
-
-Then verify:
-
-```bash
-git remote -v
-```
-
-This was **not required for the existing FlavorForge repository** because `origin` was already configured correctly.
-
----
-
-# 21. If `origin` Pointed to the Wrong Repository
-
-If a repository already had an `origin`, but it pointed to the wrong GitHub repository, the existing remote should be corrected instead of creating another `origin`.
-
-Use:
-
-```bash
-git remote set-url origin https://github.com/YOUR_GITHUB_USERNAME/flavorforge-azure-devsecops-capstone.git
-```
-
-Then verify:
-
-```bash
-git remote -v
-```
-
-Again, this was not required for the existing FlavorForge repository because the configured URL was already correct.
-
----
-
-# 22. Common Problems
-
-## Problem 1 — `remote origin already exists`
-
-Run:
-
-```bash
-git remote -v
-```
-
-If it points to the correct FlavorForge repository:
-
-```text
-Do nothing.
-```
-
-If it points somewhere else:
-
-```bash
-git remote set-url origin <CORRECT_URL>
-```
-
----
-
-## Problem 2 — `fatal: not a git repository`
-
-First verify:
-
-```bash
-pwd
-```
-
-Then:
-
-```bash
-ls -la
-```
-
-Make sure the terminal is inside:
-
-```text
-~/flavorforge-azure-devsecops-capstone
-```
-
-Do not immediately run:
-
-```bash
-git init
-```
-
-The existing FlavorForge project was already a Git repository.
-
----
-
-## Problem 3 — `Repository not found`
-
-Check:
-
-```bash
-git remote -v
-```
-
-Verify:
-
-* GitHub username
-* repository name
-* repository owner
-* repository URL
-* GitHub account being authenticated
-* repository access
-
-The expected FlavorForge repository is:
-
-```text
-shettymalathib/flavorforge-azure-devsecops-capstone
-```
-
----
-
-## Problem 4 — Authentication Failed
-
-The remote URL and authentication are separate.
-
-Check the authentication configuration documented in:
-
-```text
-03-github-authentication.md
-```
-
-For HTTPS authentication, do not use the normal GitHub account password as the Git password.
-
----
-
-# 23. Reviewer Questions
-
-### "How did you connect the local repository to GitHub?"
-
-> "FlavorForge was already a local Git repository. I verified the repository and current `main` branch, then checked the configured remote using `git remote -v`. The existing `origin` remote already pointed to the FlavorForge GitHub repository, so I did not create another remote."
-
-### "What does `git remote -v` do?"
-
-> "`git remote -v` displays the remote repositories configured for the local Git repository, including their fetch and push URLs."
-
-### "What is `origin`?"
-
-> "`origin` is the conventional local name for a Git remote repository. In FlavorForge, `origin` points to the FlavorForge GitHub repository."
-
-### "Did you run `git remote add origin`?"
-
-> "No. The FlavorForge repository already had the correct `origin` remote, so I verified it instead of creating a duplicate."
-
-### "How did you test GitHub communication?"
-
-> "I used `git ls-remote origin`. It communicates with the configured remote and verifies that Git can access the repository without performing a push."
-
-### "Did this step push the project?"
-
-> "No. This step only established and verified the GitHub connection. The first project push is handled separately in `05-first-push.md`."
-
----
-
-# 24. Screenshot Evidence
-
-The following screenshot is relevant and should be captured as evidence for this step.
-
-### Remote configuration
-
-Command:
-
-```bash
-git remote -v
-```
-
-Suggested filename:
-
-```text
-github-local-repository-remote.png
-```
-
-The screenshot should clearly show:
-
-```text
-origin  https://github.com/shettymalathib/flavorforge-azure-devsecops-capstone.git (fetch)
-origin  https://github.com/shettymalathib/flavorforge-azure-devsecops-capstone.git (push)
-```
-
-### Optional additional evidence
-
-If screenshots are being collected for the complete BUILD-JOURNEY, these are also useful:
-
-```text
-github-local-git-version.png
-github-local-branch-main.png
-github-local-github-access.png
-```
-
-For example, `github-local-github-access.png` can show the successful:
-
-```bash
-git ls-remote origin
-```
-
-result.
-
-> **If you do not already have these screenshots, capture them during the actual reproduction instead of inserting invented output into the documentation.**
-
----
-
-# 25. Verification Checklist
-
-Before moving to the first push:
-
-* [x] FlavorForge project directory identified
+* [x] FlavorForge project directory verified
 * [x] Git installation verified
-* [x] Existing Git repository verified
-* [x] Current branch verified as `main`
-* [x] Existing `origin` remote checked
-* [x] `origin` points to the FlavorForge GitHub repository
+* [x] Local Git repository verified
+* [x] Current branch verified
+* [x] `main` branch identified
+* [x] `origin` remote verified
+* [x] GitHub repository URL verified
 * [x] HTTPS remote confirmed
-* [x] GitHub communication tested
-* [x] No credentials embedded in the remote URL
-* [x] No unnecessary `git init` performed
-* [x] No unnecessary `git remote add origin` performed
-* [ ] First project push — handled in the next document
+* [x] Local-to-GitHub relationship confirmed
+* [x] Screenshot evidence captured
+* [x] Verification video available
+* [x] Existing local changes identified
+* [x] Remote/local synchronization state identified
+* [ ] Local and remote branches synchronized
+
+The final synchronization check belongs to the subsequent GitHub push/verification steps.
 
 ---
 
-# 26. Result
+# Reviewer Explanation
 
-The existing FlavorForge local Git repository was connected to GitHub through the existing `origin` remote.
+### "How did you connect the local FlavorForge repository to GitHub?"
 
-The final relationship was:
+> "I opened the existing FlavorForge Git repository in WSL, verified Git and the current `main` branch, and checked the configured `origin` remote using `git remote -v`. The remote pointed to the FlavorForge GitHub repository over HTTPS, confirming that the local repository was connected to GitHub."
 
-```text
-FlavorForge Local Repository
-          |
-          | main
-          v
-       Git / origin
-          |
-          | HTTPS
-          v
-GitHub
-          |
-          v
-shettymalathib/
-flavorforge-azure-devsecops-capstone
-```
+### "How did you verify which GitHub repository was connected?"
 
-The repository was therefore ready for the next step:
+> "I used `git remote -v` and `git remote get-url origin`. Both showed the FlavorForge GitHub repository."
+
+### "Did you initialize a new Git repository?"
+
+> "No. FlavorForge already had an existing Git repository, so I verified the existing repository instead of running `git init`."
+
+### "Was the local repository synchronized with GitHub at this point?"
+
+> "Not at that point. Git reported that the local `main` branch was behind `origin/main` by one commit, and there were also local documentation changes. I therefore did not blindly pull or overwrite anything before reviewing the repository state."
+
+---
+
+# Next Step
+
+Continue with:
 
 ```text
 05-first-push.md
 ```
 
-The next document records how the local FlavorForge commits were pushed to GitHub for the first time.
+The next document handles staging, committing, and pushing changes when the actual local and remote repository state has been reviewed.

@@ -1,95 +1,62 @@
-# Application Verification — Complete Beginner Build Guide
+# Application Verification
 
 ## Objective
 
-This is the **final verification step of the application stage**.
+This is the **final verification of the FlavorForge application stage**.
 
-Before starting Docker, we want to make sure that the FlavorForge application itself is working.
+The application has already been built and tested in the previous documents.
 
-We will verify:
+Now we perform one final verification before moving to Docker.
 
-```text
-1. Project structure
-2. Git repository
-3. Frontend
-4. Backend
-5. Backend health API
-6. Backend tests
-7. Frontend build
-8. Frontend → Backend communication
-9. GitHub repository
-10. Final application readiness
-```
-
-The most important idea is:
+The verification flow is:
 
 ```text
-First make sure the application works
-                |
-                v
-        Then introduce Docker
+Application
+    ↓
+Frontend verified
+    ↓
+Backend verified
+    ↓
+Health API verified
+    ↓
+Backend tests verified
+    ↓
+Frontend build verified
+    ↓
+Application ready
+    ↓
+Move to Docker
 ```
 
-If the application works before Docker, troubleshooting later becomes much easier.
+The goal is simple:
+
+> Confirm that the application is ready to be containerized.
 
 ---
 
-# 1. Application Verification Flow
+# 1. Go to the FlavorForge Project
 
-Our final application verification looks like this:
-
-```text
-FlavorForge
-    |
-    +-------------------+
-    |                   |
-    v                   v
-Frontend             Backend
-React + Vite         Node.js + Express
-    |                   |
-    |                   v
-    |              /api/health
-    |                   |
-    +---------+---------+
-              |
-              v
-       Application Works
-              |
-              v
-        Ready for Docker
-```
-
----
-
-# 2. Open WSL
-
-Open your **WSL terminal**.
-
-We will work from the FlavorForge project directory.
-
-Move to the project:
+Open WSL and move to the project:
 
 ```bash
 cd ~/flavorforge-azure-devsecops-capstone
 ```
 
-Now check where you are:
+Verify the location:
 
 ```bash
 pwd
 ```
 
-You should see something similar to:
+Expected location:
 
 ```text
-/home/YOUR_USERNAME/flavorforge-azure-devsecops-capstone
+/home/<your-username>/flavorforge-azure-devsecops-capstone
 ```
-
-Your username may be different.
 
 ---
 
-# 3. Check the Project Files
+# 2. Verify the Application Directories
 
 Run:
 
@@ -97,68 +64,49 @@ Run:
 ls
 ```
 
-You should see the main project directories.
+Verify the application directories:
 
-At this stage, the important application directories are:
-
-```text
-frontend/
-backend/
+```bash
+ls frontend
 ```
 
-You will also have other directories because the project was later expanded for Docker, Kubernetes, Azure DevOps and documentation.
-
-For example:
-
-```text
-frontend/
-backend/
-docker/
-kubernetes/
-argocd/
-docs/
-scripts/
-.github/
+```bash
+ls backend
 ```
 
-Do not worry if the complete list is larger.
+The application structure is:
 
-We are currently checking only the application foundation.
+```text
+flavorforge-azure-devsecops-capstone/
+│
+├── frontend/
+│
+└── backend/
+```
+
+### Result
+
+Both application components are present.
 
 ---
 
-# 4. Check Git Status
+# 3. Verify the Git Repository
 
-Before testing the application, check the Git repository.
-
-Run:
+From the project root, run:
 
 ```bash
 git status
 ```
 
-This tells us:
+This confirms that the project is recognized as a Git repository and shows the current working-tree state.
 
-* whether Git recognizes the project
-* which branch we are on
-* whether files have changed
-* whether there are untracked files
+We are not making changes here.
 
-You may see something like:
-
-```text
-On branch main
-```
-
-and possibly a list of modified or untracked files.
-
-Do **not** delete changes just because `git status` is not clean.
-
-At this stage, we are only checking the repository state.
+We are only verifying the repository before moving to Docker.
 
 ---
 
-# 5. Check the Current Branch
+# 4. Verify the Current Branch
 
 Run:
 
@@ -166,23 +114,19 @@ Run:
 git branch --show-current
 ```
 
-The main branch used for the project is:
+The project branch is:
 
 ```text
 main
 ```
 
-If you see:
+### Result
 
-```text
-main
-```
-
-the branch check is successful.
+The current branch is verified.
 
 ---
 
-# 6. Check the GitHub Remote
+# 5. Verify the GitHub Remote
 
 Run:
 
@@ -190,221 +134,446 @@ Run:
 git remote -v
 ```
 
-You should see the GitHub repository configured as `origin`.
+Verify that the `origin` remote points to the FlavorForge GitHub repository.
 
-For the FlavorForge repository, it should point to the project's GitHub repository.
-
-The important idea is:
+The repository flow is:
 
 ```text
-Local FlavorForge Repository
-          |
-          v
-        origin
-          |
-          v
-GitHub FlavorForge Repository
+Local FlavorForge Project
+        ↓
+      origin
+        ↓
+GitHub Repository
 ```
 
-This confirms that the local project is connected to GitHub.
+### Result
+
+The local repository is connected to GitHub.
 
 ---
 
-# 7. Check Recent Commits
+# 6. Verify the Backend
 
-Run:
-
-```bash
-git log --oneline -5
-```
-
-This displays the five most recent commits.
-
-For example:
-
-```text
-abc1234 latest change
-def5678 documentation update
-...
-```
-
-The actual commit IDs and messages will be different.
-
-This is simply a quick way to confirm that the repository contains the expected project history.
-
----
-
-# 8. Verify the Frontend
-
-Now we will verify the React frontend.
-
-From the project root, run:
+Move to the backend:
 
 ```bash
-cd frontend
+cd ~/flavorforge-azure-devsecops-capstone/backend
 ```
 
-Check your location:
+Verify the location:
 
 ```bash
 pwd
 ```
 
-You should now be inside:
-
-```text
-flavorforge-azure-devsecops-capstone/frontend
-```
-
-Check the files:
+List the files:
 
 ```bash
 ls
 ```
 
-The frontend contains the React/Vite application.
+Verify the important backend areas:
 
-Important areas include:
+```text
+package.json
+src/
+tests/
+```
+
+### Result
+
+The backend source and test structure are present.
+
+---
+
+# 7. Verify Backend Dependencies
+
+Run:
+
+```bash
+npm install
+```
+
+This ensures that the dependencies defined by the backend project are installed.
+
+### Result
+
+Backend dependencies are installed and the backend is ready to run.
+
+---
+
+# 8. Verify the Backend Starts
+
+Run:
+
+```bash
+npm start
+```
+
+The FlavorForge backend starts on port:
+
+```text
+3000
+```
+
+The backend should remain running while the health endpoint is checked.
+
+![](/screenshots/backend/03-backend-server-running.png)
+
+### Result
+
+The Node.js/Express backend is running.
+
+---
+
+# 9. Verify the Backend Health Endpoint
+
+Open another WSL terminal.
+
+Run:
+
+```bash
+curl http://localhost:3000/api/health
+```
+
+This verifies the application health endpoint.
+
+The request flow is:
+
+```text
+curl
+  ↓
+localhost:3000
+  ↓
+Express
+  ↓
+/api/health
+  ↓
+Response
+```
+
+### Result
+
+The backend health endpoint responds successfully.
+
+---
+
+# 10. Verify the HTTP Response
+
+Run:
+
+```bash
+curl -i http://localhost:3000/api/health
+```
+
+Verify that the response contains a successful HTTP status.
+
+For example:
+
+```text
+HTTP/1.1 200 OK
+```
+
+### Result
+
+The backend successfully responds at the HTTP level.
+
+---
+
+# 11. Verify Backend Tests
+
+From the backend directory, run:
+
+```bash
+cd ~/flavorforge-azure-devsecops-capstone/backend
+```
+
+Then:
+
+```bash
+npm test
+```
+
+Verify the Jest output and confirm that the configured tests pass.
+
+### Result
+
+The backend automated tests pass.
+
+---
+
+# 12. Backend Verification Complete
+
+The backend verification is now:
+
+```text
+Backend
+   ↓
+Dependencies installed
+   ↓
+Server starts
+   ↓
+Port 3000 available
+   ↓
+/api/health responds
+   ↓
+HTTP response successful
+   ↓
+Jest tests pass
+```
+
+### Result
+
+**Backend verification complete.**
+
+---
+
+# 13. Verify the Frontend
+
+Open another WSL terminal.
+
+Move to the frontend:
+
+```bash
+cd ~/flavorforge-azure-devsecops-capstone/frontend
+```
+
+Verify the location:
+
+```bash
+pwd
+```
+
+List the files:
+
+```bash
+ls
+```
+
+Verify the frontend project structure:
 
 ```text
 package.json
 src/
 ```
 
+### Result
+
+The React/Vite frontend source is present.
+
 ---
 
-# 9. Install Frontend Dependencies
+# 14. Verify Frontend Dependencies
 
-From the `frontend/` directory, run:
+Run:
 
 ```bash
 npm install
 ```
 
-npm reads the frontend:
+This installs the dependencies defined in the frontend `package.json`.
 
-```text
-package.json
-```
+### Result
 
-and installs the required packages.
-
-The generated dependencies are normally stored in:
-
-```text
-node_modules/
-```
-
-You do not manually create `node_modules`.
-
-npm creates it for you.
+Frontend dependencies are installed.
 
 ---
 
-# 10. Verify the Frontend Build
+# 15. Verify the Frontend Production Build
 
-Still inside:
-
-```text
-frontend/
-```
-
-run:
+Run:
 
 ```bash
 npm run build
 ```
 
-This runs the configured Vite production build.
+The Vite build process converts the React source into production assets.
 
 The flow is:
 
 ```text
-React Source Code
-       |
-       v
-      Vite
-       |
-       v
-Production Build
-```
-
-If the command finishes successfully, the frontend can be compiled for production.
-
-This is important because the frontend will later be placed inside a Docker image.
-
----
-
-# 11. What Does a Successful Build Mean?
-
-A successful:
-
-```bash
-npm run build
-```
-
-means that the frontend source can be converted into production-ready files.
-
-Conceptually:
-
-```text
-frontend/src/
-     |
-     v
+React Source
+     ↓
 Vite
-     |
-     v
+     ↓
 Production Assets
 ```
 
-At this point, we know that the frontend can be built.
+Verify that the command completes successfully.
+
+### Result
+
+The frontend production build succeeds.
 
 ---
 
-# 12. Start the Frontend
+# 16. Verify the Frontend Development Server
 
-To test the frontend in the browser, run:
+Run:
 
 ```bash
 npm run dev
 ```
 
-Vite will display a URL in the terminal.
+Vite starts the frontend development server.
 
-It will normally be similar to:
+Use the URL displayed by Vite and open it in the browser.
+
+The local development URL is normally:
 
 ```text
 http://localhost:5173
 ```
 
-Use the URL shown by the terminal.
+Use the actual URL displayed by the terminal.
 
-Open it in your browser.
+### Result
+
+The frontend development server starts successfully.
 
 ---
 
-# 13. Verify the Frontend UI
+# 17. Verify the Frontend UI
 
-Once the application opens in the browser, check:
+Open the application in the browser.
+
+Verify:
 
 ```text
-✓ Page loads
-✓ UI is visible
-✓ No major JavaScript error
-✓ FlavorForge functionality is displayed
+Frontend loads
+      ↓
+React application renders
+      ↓
+FlavorForge UI is visible
 ```
 
-At this point, we are checking the frontend itself.
+Check the application from the browser.
 
-Do not worry yet if an API-dependent feature does not work.
+### Result
 
-We will verify the backend separately.
+The frontend UI loads successfully.
 
 ---
 
-# 14. Stop the Frontend
+# 18. Verify Frontend → Backend Communication
 
-When you finish checking the frontend, return to the terminal where Vite is running.
+With the backend and frontend running:
+
+```text
+Browser
+   ↓
+React Frontend
+   ↓
+localhost:5173
+   ↓
+HTTP Request
+   ↓
+localhost:3000
+   ↓
+Node.js + Express
+   ↓
+API Response
+   ↓
+Frontend
+```
+
+Use the application and verify that API-dependent functionality works.
+
+### Result
+
+Frontend-to-backend communication is working.
+
+---
+
+# 19. Verify Browser Network Requests
+
+Open Developer Tools:
+
+```text
+F12
+```
+
+Open:
+
+```text
+Network
+```
+
+Use the application and inspect the API requests.
+
+Check:
+
+```text
+Request URL
+HTTP Method
+Status
+Response
+```
+
+Verify that the relevant API requests complete successfully.
+
+### Result
+
+Browser API requests are successfully reaching the backend.
+
+---
+
+# 20. Verify Browser Console
+
+Open:
+
+```text
+Console
+```
+
+Check for application errors.
+
+Pay particular attention to:
+
+```text
+JavaScript errors
+API errors
+CORS errors
+Network errors
+```
+
+### Result
+
+The browser console has been checked as part of final application verification.
+
+---
+
+# 21. Verify the Frontend API Configuration
+
+The frontend uses:
+
+```text
+VITE_API_BASE_URL
+```
+
+for API configuration.
+
+The local backend is running on:
+
+```text
+http://localhost:3000
+```
+
+The Docker-specific configuration is:
+
+```text
+VITE_API_BASE_URL=http://backend:3000
+```
+
+The Docker configuration will be used in the Docker stage.
+
+At this stage, we are only confirming that the local application works before containerization.
+
+---
+
+# 22. Stop the Frontend
+
+After completing the browser verification, return to the terminal running Vite.
 
 Press:
 
@@ -414,396 +583,11 @@ Ctrl + C
 
 This stops the development server.
 
-We can start it again later when we test frontend-to-backend communication.
-
 ---
 
-# 15. Return to the Project Root
+# 23. Stop the Backend
 
-Run:
-
-```bash
-cd ~/flavorforge-azure-devsecops-capstone
-```
-
-Now enter the backend directory:
-
-```bash
-cd backend
-```
-
-Check your location:
-
-```bash
-pwd
-```
-
-You should now be inside:
-
-```text
-flavorforge-azure-devsecops-capstone/backend
-```
-
----
-
-# 16. Check Backend Files
-
-Run:
-
-```bash
-ls
-```
-
-The backend contains the Node.js/Express application.
-
-Important areas include:
-
-```text
-package.json
-src/
-tests/
-```
-
-The backend application code is under:
-
-```text
-src/
-```
-
-and the automated tests are under:
-
-```text
-tests/
-```
-
----
-
-# 17. Install Backend Dependencies
-
-From:
-
-```text
-backend/
-```
-
-run:
-
-```bash
-npm install
-```
-
-npm reads:
-
-```text
-backend/package.json
-```
-
-and installs the dependencies required by the backend.
-
----
-
-# 18. Check Available Backend Commands
-
-Before starting the backend, run:
-
-```bash
-npm run
-```
-
-This displays the npm scripts configured in:
-
-```text
-backend/package.json
-```
-
-This is a useful beginner habit.
-
-Instead of guessing an npm command, you can look at the commands the project provides.
-
-For example, the project may provide commands for:
-
-```text
-start
-test
-```
-
-The exact list displayed by `npm run` comes from the project's current `package.json`.
-
----
-
-# 19. Start the Backend
-
-Start the backend using the project's configured start command.
-
-For the FlavorForge backend, use:
-
-```bash
-npm start
-```
-
-The backend runs using:
-
-```text
-Node.js
-+
-Express
-```
-
-The configured application port is:
-
-```text
-3000
-```
-
-The terminal should remain running while the backend is active.
-
-Do not close this terminal yet.
-
----
-
-# 20. Understand What Is Happening
-
-When you run:
-
-```bash
-npm start
-```
-
-the flow is:
-
-```text
-npm
- |
- v
-Node.js
- |
- v
-Express
- |
- v
-HTTP Server
- |
- v
-Port 3000
-```
-
-The backend is now waiting for HTTP requests.
-
----
-
-# 21. Open a Second WSL Terminal
-
-Do not stop the backend.
-
-Open another WSL terminal.
-
-We need the backend terminal to keep running while we test it.
-
-The two terminals will look like this:
-
-```text
-Terminal 1
-    |
-    +-- Backend running
-
-
-Terminal 2
-    |
-    +-- Commands used for verification
-```
-
-This is a very common way to test a local frontend/backend application.
-
----
-
-# 22. Test the Backend Health API
-
-In the **second terminal**, run:
-
-```bash
-curl http://localhost:3000/api/health
-```
-
-This sends an HTTP request to:
-
-```text
-localhost
-```
-
-on port:
-
-```text
-3000
-```
-
-for:
-
-```text
-/api/health
-```
-
-The request flow is:
-
-```text
-curl
- |
- v
-localhost:3000
- |
- v
-Express Backend
- |
- v
-/api/health
- |
- v
-JSON Response
-```
-
----
-
-# 23. What Should You See?
-
-The backend should return a JSON response.
-
-The exact response can depend on the current application configuration.
-
-The important thing is that the request successfully reaches the backend and produces a response.
-
-For example, the response can contain information related to:
-
-```text
-health/status
-version
-environment
-build information
-```
-
-Do not worry if the exact JSON is different from an older screenshot or example.
-
-The running application's response is the source of truth.
-
----
-
-# 24. Why We Test `/api/health`
-
-The health endpoint gives us a very simple way to answer:
-
-> "Is my backend actually running?"
-
-Instead of checking the entire application, we can make one HTTP request:
-
-```bash
-curl http://localhost:3000/api/health
-```
-
-If we receive the expected response:
-
-```text
-Backend is running
-```
-
-This same idea becomes useful later with:
-
-```text
-Docker
-   |
-   v
-Kubernetes
-   |
-   v
-AKS
-```
-
----
-
-# 25. Check the HTTP Response
-
-We can also use:
-
-```bash
-curl -i http://localhost:3000/api/health
-```
-
-The `-i` option displays the HTTP response headers as well as the response body.
-
-This helps us see information such as the HTTP status.
-
-Conceptually:
-
-```text
-HTTP Request
-     |
-     v
-GET /api/health
-     |
-     v
-HTTP Response
-     |
-     +---- Status
-     |
-     +---- Headers
-     |
-     +---- JSON Body
-```
-
----
-
-# 26. Run Backend Tests
-
-Now we will test the backend automatically.
-
-Make sure you are inside:
-
-```text
-backend/
-```
-
-Run:
-
-```bash
-npm test
-```
-
-The FlavorForge backend uses Jest for automated testing.
-
-The flow is:
-
-```text
-Backend Tests
-      |
-      v
-     Jest
-      |
-      v
-Backend Code
-      |
-      v
-Assertions
-      |
-      v
-PASS / FAIL
-```
-
----
-
-# 27. Verify the Test Result
-
-Look at the terminal output.
-
-We want to see that the configured tests completed successfully.
-
-Do not just assume success because the command finished.
-
-Look for the Jest test summary and confirm that the tests passed.
-
-The exact number of tests can change as the project evolves.
-
----
-
-# 28. Stop the Backend
-
-After completing the backend verification, return to the terminal where the backend is running.
+Return to the terminal running the backend.
 
 Press:
 
@@ -811,296 +595,47 @@ Press:
 Ctrl + C
 ```
 
-This stops the backend.
+This stops the local backend server.
 
-We will start it again when testing frontend-to-backend communication.
-
----
-
-# 29. Start the Backend Again
-
-Open one WSL terminal and run:
-
-```bash
-cd ~/flavorforge-azure-devsecops-capstone/backend
-```
-
-Then:
-
-```bash
-npm start
-```
-
-Leave this terminal running.
+The local application verification is now complete.
 
 ---
 
-# 30. Start the Frontend Again
+# 24. Final Backend Verification Summary
 
-Open another WSL terminal.
-
-Run:
-
-```bash
-cd ~/flavorforge-azure-devsecops-capstone/frontend
-```
-
-Then:
-
-```bash
-npm run dev
-```
-
-Vite will display the frontend URL.
-
-Open that URL in the browser.
-
-Usually it will be similar to:
+The backend has been verified for:
 
 ```text
-http://localhost:5173
-```
-
-Use the actual URL shown by Vite.
-
----
-
-# 31. Test Frontend → Backend Communication
-
-Now both applications are running:
-
-```text
-Frontend
-localhost:5173
-       |
-       | HTTP API request
-       v
-Backend
-localhost:3000
-```
-
-Use the application normally.
-
-When the frontend needs backend information, it should send an HTTP request to the backend.
-
-The flow is:
-
-```text
-Browser
-   |
-   v
-React Frontend
-   |
-   | API Request
-   v
-Node.js + Express
-   |
-   v
-API Response
-   |
-   v
-React Frontend
+[✓] Backend directory exists
+[✓] Dependencies installed
+[✓] Backend starts
+[✓] Port 3000 responds
+[✓] /api/health responds
+[✓] HTTP response succeeds
+[✓] Jest tests pass
 ```
 
 ---
 
-# 32. Check the Browser
+# 25. Final Frontend Verification Summary
 
-Open the browser developer tools.
-
-Usually:
+The frontend has been verified for:
 
 ```text
-F12
+[✓] Frontend directory exists
+[✓] Dependencies installed
+[✓] Vite development server starts
+[✓] Frontend opens in browser
+[✓] UI renders
+[✓] API communication works
+[✓] Browser Network checked
+[✓] Browser Console checked
+[✓] Production build succeeds
 ```
-
-or:
-
-```text
-Right click
-    |
-    v
-Inspect
-```
-
-Then check:
-
-```text
-Console
-Network
-```
-
-The **Network** tab is particularly useful.
 
 ---
 
-# 33. Check API Requests
-
-In the Network tab, look for requests going to the backend.
-
-You may see requests related to:
-
-```text
-/api/health
-```
-
-or other application API endpoints.
-
-Check:
-
-```text
-Request URL
-HTTP method
-Status
-Response
-```
-
-A successful API request should show a successful HTTP status.
-
----
-
-# 34. Verify CORS
-
-If the browser reports a CORS error, do not immediately change random settings.
-
-First understand the problem.
-
-The flow should be:
-
-```text
-Frontend Origin
-      |
-      v
-CORS Configuration
-      |
-      v
-Backend
-      |
-      v
-Request Allowed
-```
-
-The documented local frontend origin is:
-
-```text
-http://localhost:5173
-```
-
-The backend must allow the appropriate frontend origin.
-
----
-
-# 35. Troubleshoot Frontend → Backend Communication
-
-If the frontend cannot communicate with the backend, use this order.
-
-### Step 1 — Test backend directly
-
-Run:
-
-```bash
-curl http://localhost:3000/api/health
-```
-
-If this works:
-
-```text
-Backend is working
-```
-
-Continue checking:
-
-```text
-Frontend API URL
-CORS
-Browser Network tab
-```
-
-If this does not work:
-
-```text
-Backend problem
-```
-
-Investigate the backend first.
-
-This prevents us from changing frontend code when the real problem is the backend.
-
----
-
-# 36. Verify Frontend API Configuration
-
-The frontend uses:
-
-```text
-VITE_API_BASE_URL
-```
-
-to determine where the backend API is located.
-
-This configuration is important because the backend address changes between environments.
-
-Conceptually:
-
-```text
-Local
-   |
-   +--> Backend on localhost:3000
-
-
-Docker
-   |
-   +--> Backend container/service
-
-
-Kubernetes
-   |
-   +--> Backend Service
-```
-
-Therefore, the frontend should use the appropriate API configuration for the environment.
-
----
-
-# 37. Verify the Frontend Production Build Again
-
-After completing the runtime testing, stop the frontend if it is still running:
-
-```text
-Ctrl + C
-```
-
-Then make sure you are inside:
-
-```text
-frontend/
-```
-
-Run:
-
-```bash
-npm run build
-```
-
-We want the production build to complete successfully.
-
-The flow is:
-
-```text
-React Source
-     |
-     v
-Vite
-     |
-     v
-Production Assets
-```
-
-These production assets are later packaged into the frontend Docker image.
-
----
-
-# 38. Check Git Status Again
+# 26. Final Repository Verification
 
 Return to the project root:
 
@@ -1114,509 +649,161 @@ Run:
 git status
 ```
 
-Testing may create generated files.
-
-Check what Git reports.
-
-Do not blindly commit every generated file.
-
-For example:
-
-```text
-node_modules/
-```
-
-should normally not be committed.
-
-The project's `.gitignore` should handle generated dependency directories.
-
----
-
-# 39. Check GitHub Remote Again
-
-Run:
-
-```bash
-git remote -v
-```
-
-Confirm that:
-
-```text
-origin
-```
-
-points to the FlavorForge GitHub repository.
-
-This is important because the next stages of the project will use the repository for:
-
-```text
-Docker
-Azure DevOps
-CI/CD
-GitOps
-Documentation
-```
-
----
-
-# 40. Final Backend Verification
-
-At this point we have verified:
-
-```text
-Backend
-   |
-   +---- Node.js
-   |
-   +---- Express
-   |
-   +---- Port 3000
-   |
-   +---- /api/health
-   |
-   +---- Jest tests
-```
-
-The backend application is ready for the next stage.
-
----
-
-# 41. Final Frontend Verification
-
-We have also verified:
-
-```text
-Frontend
-   |
-   +---- React
-   |
-   +---- Vite
-   |
-   +---- Development server
-   |
-   +---- Browser UI
-   |
-   +---- API communication
-   |
-   +---- Production build
-```
-
-The frontend is ready for the next stage.
-
----
-
-# 42. Final Integration Verification
-
-The application consists of:
-
-```text
-React Frontend
-       |
-       | HTTP
-       v
-Node.js + Express Backend
-       |
-       v
-API Response
-```
-
-We have tested the components individually and then tested their communication.
-
-This is important.
-
-Testing only the frontend does not prove that the backend works.
-
-Testing only the backend does not prove that the frontend can communicate with it.
-
-We therefore test both.
-
----
-
-# 43. Final Application Checklist
-
-Before moving to Docker, verify the following.
-
-## Project
-
-```text
-[ ] FlavorForge project opens correctly
-[ ] frontend/ exists
-[ ] backend/ exists
-[ ] Git repository works
-[ ] origin remote is configured
-```
-
-## Frontend
-
-```text
-[ ] npm install completed
-[ ] npm run dev works
-[ ] Frontend opens in browser
-[ ] UI loads correctly
-[ ] npm run build succeeds
-```
-
-## Backend
-
-```text
-[ ] npm install completed
-[ ] npm start works
-[ ] Backend listens on port 3000
-[ ] /api/health responds
-[ ] npm test succeeds
-```
-
-## Integration
-
-```text
-[ ] Frontend can communicate with backend
-[ ] API URL is configured correctly
-[ ] CORS configuration is correct
-[ ] Browser Network tab shows successful API requests
-```
-
-## GitHub
-
-```text
-[ ] Current branch is main
-[ ] origin points to GitHub
-[ ] Project changes are understood
-[ ] No unwanted generated files are committed
-```
-
----
-
-# 44. Useful Final Commands
-
-## Go to project
-
-```bash
-cd ~/flavorforge-azure-devsecops-capstone
-```
-
-## Check Git status
-
-```bash
-git status
-```
-
-## Check branch
+Then:
 
 ```bash
 git branch --show-current
 ```
 
-## Check remote
+And:
 
 ```bash
 git remote -v
 ```
 
-## Enter backend
+Verify that the project remains connected to the expected GitHub repository and that the working-tree changes are understood before continuing.
 
-```bash
-cd ~/flavorforge-azure-devsecops-capstone/backend
-```
+---
 
-## Install backend dependencies
+# 27. Final Application Verification
 
-```bash
-npm install
-```
+The complete application verification is:
 
-## See backend commands
-
-```bash
-npm run
-```
-
-## Start backend
-
-```bash
-npm start
-```
-
-## Test backend
-
-```bash
-npm test
-```
-
-## Test backend health API
-
-```bash
-curl http://localhost:3000/api/health
-```
-
-## Enter frontend
-
-```bash
-cd ~/flavorforge-azure-devsecops-capstone/frontend
-```
-
-## Install frontend dependencies
-
-```bash
-npm install
-```
-
-## Start frontend
-
-```bash
-npm run dev
-```
-
-## Build frontend
-
-```bash
-npm run build
+```text
+                 FlavorForge
+                     |
+          +----------+----------+
+          |                     |
+          v                     v
+      Frontend               Backend
+     React/Vite          Node.js/Express
+          |                     |
+          |                     |
+          +----------+----------+
+                     |
+                     v
+              HTTP Communication
+                     |
+                     v
+                /api/health
+                     |
+                     v
+              Backend Tests
+                     |
+                     v
+             Frontend Build
+                     |
+                     v
+             Final Verification
+                     |
+                     v
+              Ready for Docker
 ```
 
 ---
 
-# 45. If Something Fails
+# 28. Final Application Checklist
 
-Do not jump directly to Docker.
+Before moving to Docker:
 
-Use this troubleshooting order:
-
-```text
-Application
-    |
-    +---- Does backend start?
-    |
-    +---- Does /api/health work?
-    |
-    +---- Do backend tests pass?
-    |
-    +---- Does frontend start?
-    |
-    +---- Does frontend build?
-    |
-    +---- Can frontend reach backend?
-    |
-    v
-Application confirmed
-    |
-    v
-Move to Docker
-```
-
-This order is important.
-
-If:
-
-```bash
-curl http://localhost:3000/api/health
-```
-
-fails, fix the backend first.
-
-If the backend works but the browser cannot call it, investigate:
+## Application
 
 ```text
-Frontend API configuration
-CORS
-Browser Network tab
+[✓] FlavorForge project available
+[✓] frontend/ exists
+[✓] backend/ exists
 ```
 
-If the frontend works but:
+## Backend
 
-```bash
-npm run build
+```text
+[✓] Dependencies installed
+[✓] Backend starts
+[✓] Port 3000 responds
+[✓] /api/health works
+[✓] HTTP response verified
+[✓] Backend tests pass
 ```
 
-fails, fix the frontend build before starting Docker.
+## Frontend
+
+```text
+[✓] Dependencies installed
+[✓] Vite starts
+[✓] Frontend loads
+[✓] UI renders
+[✓] API communication works
+[✓] Browser Network checked
+[✓] Browser Console checked
+[✓] Production build succeeds
+```
+
+## Repository
+
+```text
+[✓] Git repository verified
+[✓] Current branch verified
+[✓] GitHub remote verified
+```
 
 ---
 
-# 46. Why We Do Not Start Docker Yet
+# 29. Application Stage Result
 
-At this point, Docker has still not been used to verify the application.
-
-That is intentional.
-
-We first establish:
+The application stage is now complete.
 
 ```text
-Known-good source application
+Application Overview
+        ↓
+Frontend Setup
+        ↓
+Backend Setup
+        ↓
+API Implementation
+        ↓
+Application Testing
+        ↓
+Application Verification
+        ↓
+Application Ready
 ```
 
-Only after that do we introduce:
-
-```text
-Docker
-```
-
-Then:
-
-```text
-Docker Image
-      |
-      v
-Container
-      |
-      v
-Container Registry
-      |
-      v
-Kubernetes
-      |
-      v
-AKS
-```
-
-This makes troubleshooting much easier because each layer can be tested separately.
-
----
-
-# 47. What We Have Proven
-
-After completing this document, we have verified the application layer.
-
-```text
-                    FlavorForge
-                         |
-             +-----------+-----------+
-             |                       |
-             v                       v
-         Frontend                 Backend
-       React + Vite           Node.js + Express
-             |                       |
-             |                       v
-             |                  /api/health
-             |                       |
-             +-----------+-----------+
-                         |
-                         v
-                  Integration
-                         |
-                         v
-                Automated Tests
-                         |
-                         v
-                 Production Build
-                         |
-                         v
-                  Ready for Docker
-```
-
-The important result is:
+The final result is:
 
 ```text
 Application verified
-        |
-        v
-Dockerization can begin
+        ↓
+Known-good application baseline
+        ↓
+Ready for Docker
 ```
 
 ---
 
-# 48. Reviewer Explanation
+# 30. Build Journey Status
 
-### "How did you verify the application before Docker?"
-
-> "I verified the application layer first. I checked the project structure, started the Express backend, tested `/api/health`, ran the backend Jest tests, started the React frontend, verified the UI and frontend-to-backend communication, and confirmed that the Vite production build succeeds."
-
-### "Why did you verify the application before Docker?"
-
-> "I wanted a known-good application baseline before introducing containers. That way, if something failed during Dockerization, I could determine whether the issue came from the application or the container configuration."
-
-### "How did you verify the backend?"
-
-> "I started the Node.js and Express backend, verified the health endpoint using curl, and ran the configured Jest test suite."
-
-### "How did you verify the frontend?"
-
-> "I started the Vite development server, opened the application in the browser, checked the UI and API communication, and ran the production build using `npm run build`."
-
-### "How did you troubleshoot frontend-to-backend communication?"
-
-> "I first tested `/api/health` directly. If the backend responded successfully, I then checked the frontend API configuration, CORS configuration, and the browser Network and Console tabs."
-
-### "What is the result of this stage?"
-
-> "The application has been verified independently of Docker, so it is ready to move into the containerization stage."
-
----
-
-# 49. Application Stage Complete
-
-The complete application Build Journey is now:
+The `03-application` stage is now:
 
 ```text
 03-application/
 │
 ├── 01-application-overview.md
-│
 ├── 02-frontend-setup.md
-│
 ├── 03-backend-setup.md
-│
 ├── 04-api-implementation.md
-│
 ├── 05-application-testing.md
-│
 └── 06-application-verification.md
 ```
 
-The complete flow is:
+`05-application-testing.md` documented the **testing process**.
 
-```text
-Application Overview
-        |
-        v
-Frontend Setup
-        |
-        v
-Backend Setup
-        |
-        v
-API Implementation
-        |
-        v
-Application Testing
-        |
-        v
-Application Verification
-        |
-        v
-Application Ready
-```
+`06-application-verification.md` documents the **final readiness check**.
 
 ---
 
-# 50. Next Build Journey Stage
+# 31. Next Build Journey Stage
 
-The application layer is complete.
-
-Now we move to:
-
-```text
-04-docker/
-```
-
-The Docker stage will take the application we have just verified and explain, step by step:
-
-```text
-Application
-     |
-     v
-Dockerfile
-     |
-     v
-Docker Image
-     |
-     v
-Container
-     |
-     v
-Local Container Verification
-     |
-     v
-Ready for Azure Container Registry
-```
+The application is now ready for containerization.
 
 The next document is:
 
@@ -1624,4 +811,20 @@ The next document is:
 docs/BUILD-JOURNEY/04-docker/01-docker-setup.md
 ```
 
-This is where containerization begins.
+The build journey continues:
+
+```text
+Application
+      ↓
+Application Verified
+      ↓
+Docker
+      ↓
+Docker Image
+      ↓
+Container Verification
+      ↓
+Azure Container Registry
+```
+
+Dockerization begins in the next stage.

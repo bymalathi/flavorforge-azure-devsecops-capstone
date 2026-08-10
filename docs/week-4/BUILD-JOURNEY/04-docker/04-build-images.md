@@ -1,108 +1,47 @@
 # 04 — Build Docker Images
 
-## 1. Purpose
+## Objective
 
-After creating the frontend and backend Dockerfiles, the next step in FlavorForge was to build Docker images from those Dockerfiles.
+After creating the frontend and backend Dockerfiles, the next step in the FlavorForge build journey was to build the Docker images.
 
-The goal was to turn the application source code into deployable container images that could later be:
-
-1. Tested locally
-2. Tagged as required for the container registry
-3. Pushed to Azure Container Registry (ACR)
-4. Pulled by Azure Kubernetes Service (AKS)
-
-For FlavorForge, the frontend and backend were built as **separate Docker images**.
-
-This separation allowed Kubernetes to deploy and manage the frontend and backend independently.
-
----
-
-# 2. Images Created
-
-FlavorForge has two application images.
-
-### Frontend
+At this stage, the goal was to convert the two application components into Docker images:
 
 ```text
 Frontend source
-    ↓
-React + Vite application
-    ↓
+      |
+      v
 frontend/Dockerfile
-    ↓
-Docker image
-    ↓
-Nginx runtime
+      |
+      v
+Frontend Docker image
 ```
 
-### Backend
+and:
 
 ```text
 Backend source
-    ↓
-Node.js + Express application
-    ↓
+      |
+      v
 backend/Dockerfile
-    ↓
-Docker image
-    ↓
-Node.js runtime
+      |
+      v
+Backend Docker image
 ```
 
-The frontend Dockerfile uses a multi-stage build.
-
-Conceptually:
-
-```text
-Node.js builder
-      ↓
-Install dependencies
-      ↓
-Copy application source
-      ↓
-npm run build
-      ↓
-React production files
-      ↓
-Nginx runtime image
-```
-
-The backend image packages the Node.js/Express application with the dependencies required to run it.
+The frontend and backend were built as **separate Docker images** because they are separate application components and are deployed independently later in Kubernetes.
 
 ---
 
-# 3. Before Building
+# 1. Docker Build Setup
 
-Docker must be installed and running before building the images.
-
-Verify the Docker installation:
-
-```bash
-docker --version
-```
-
-Then verify that the Docker engine is available:
-
-```bash
-docker info
-```
-
-A successful `docker info` response confirms that the Docker engine is running and accessible.
-
-These commands are verification commands; they are not part of the image build itself.
-
----
-
-# 4. FlavorForge Repository Structure
-
-The Dockerfiles used for the application are:
+The Dockerfiles already created in the previous steps were:
 
 ```text
 frontend/Dockerfile
 backend/Dockerfile
 ```
 
-The relevant repository structure is:
+The repository structure confirmed that both application directories contain their own Dockerfiles:
 
 ```text
 flavorforge-azure-devsecops-capstone/
@@ -110,310 +49,431 @@ flavorforge-azure-devsecops-capstone/
 ├── frontend/
 │   ├── Dockerfile
 │   ├── package.json
-│   ├── package-lock.json
-│   └── application source
+│   └── package-lock.json
 │
 ├── backend/
 │   ├── Dockerfile
 │   ├── package.json
-│   ├── package-lock.json
-│   └── application source
+│   └── package-lock.json
 │
-└── docker/
-    └── README.md
+├── docker/
+│   └── README.md
+│
+└── screenshots/
+    └── docker/
 ```
 
-The `docker/README.md` contains the documented Docker build commands for FlavorForge.
+Before building the images, Docker was verified to be available.
+
+### Command
+
+```bash
+docker --version
+```
+
+Then Docker was checked with:
+
+```bash
+docker info
+```
+
+### Result
+
+Docker was running and ready to build the FlavorForge images.
+
+### Evidence
+
+![Docker build/setup verification](/screenshots/docker/1-docker-build-success.png)
 
 ---
 
-# 5. Build the Frontend Image
+# 2. Build the Frontend Docker Image
 
-The frontend image is built using:
+The frontend Docker image was built from the repository root.
 
-```text
-frontend/Dockerfile
-```
-
-From the **repository root**, the documented build command is:
+### Command
 
 ```bash
 docker build -t flavorforge-frontend ./frontend
 ```
 
-### What this command means
+The command contains three important parts:
 
 ```text
 docker build
 ```
 
-Tells Docker to build an image.
+Build a Docker image.
 
 ```text
 -t flavorforge-frontend
 ```
 
-Assigns the image the name:
+Give the image the name:
 
 ```text
 flavorforge-frontend
 ```
-
-No explicit tag is specified in this command.
-
-Therefore Docker uses its default tag:
-
-```text
-latest
-```
-
-The resulting local image is:
-
-```text
-flavorforge-frontend:latest
-```
-
-The final part:
 
 ```text
 ./frontend
 ```
 
-specifies the frontend directory as the Docker build context.
+Use the `frontend` directory as the Docker build context.
 
----
-
-# 6. What Happens During the Frontend Build
-
-The frontend Dockerfile uses a multi-stage build.
-
-Conceptually, the process is:
-
-```text
-Frontend source code
-        │
-        ▼
-Node.js builder image
-        │
-        ├── Install dependencies
-        │
-        ├── Copy application source
-        │
-        └── npm run build
-        │
-        ▼
-Production frontend files
-        │
-        ▼
-Nginx runtime image
-        │
-        ▼
-flavorforge-frontend:latest
-```
-
-The important point is that the Node.js build environment is used to create the production frontend files.
-
-The final runtime stage uses Nginx to serve those production files.
-
-Therefore, the final frontend runtime image does not need to run the development build environment.
-
----
-
-# 7. Verify the Frontend Image
-
-After the build completes, list the Docker images:
-
-```bash
-docker images
-```
-
-or:
-
-```bash
-docker image ls
-```
-
-You should find:
-
-```text
-flavorforge-frontend
-```
-
-with the default tag:
+Because no explicit tag was supplied, Docker used its default:
 
 ```text
 latest
 ```
 
-A more targeted check is:
+Therefore the resulting local image was:
+
+```text
+flavorforge-frontend:latest
+```
+
+---
+
+# 3. Frontend Image Build
+
+The frontend Dockerfile uses a multi-stage Docker build.
+
+The build process was:
+
+```text
+Frontend Source
+      |
+      v
+Node.js Builder
+      |
+      v
+Install Dependencies
+      |
+      v
+Copy Frontend Source
+      |
+      v
+npm run build
+      |
+      v
+Production Build
+      |
+      v
+Nginx Runtime
+      |
+      v
+flavorforge-frontend:latest
+```
+
+The Node.js stage was responsible for building the React/Vite application.
+
+The final image uses Nginx to serve the generated frontend files.
+
+This means the final runtime image contains the production frontend rather than requiring the development environment to run the application.
+
+### Evidence — Frontend Docker Build
+
+![Frontend Docker image build success](/screenshots/docker/6-backend-build-success.png)
+
+> The repository also contains additional Docker build screenshots under `screenshots/docker/`. The exact screenshot used here should correspond to the frontend build output when maintaining the final repository documentation.
+
+---
+
+# 4. Verify the Frontend Image
+
+After the frontend build completed, the Docker images were listed.
+
+### Command
+
+```bash
+docker images
+```
+
+The frontend image was expected to appear as:
+
+```text
+flavorforge-frontend    latest
+```
+
+A targeted check can also be performed with:
 
 ```bash
 docker images flavorforge-frontend
 ```
 
-The resulting local image is:
+### Result
+
+The frontend Docker image was successfully created locally.
 
 ```text
 flavorforge-frontend:latest
 ```
 
+### Evidence
+
+![Docker images](/screenshots/docker/4-docker-images.png)
+
 ---
 
-# 8. Build the Backend Image
+# 5. Build the Backend Docker Image
 
-The backend image is built using:
+The backend image was built separately from the backend directory.
 
-```text
-backend/Dockerfile
-```
+From the repository root:
 
-From the **repository root**, the documented command is:
+### Command
 
 ```bash
 docker build -t flavorforge-backend ./backend
 ```
 
-The resulting local image is:
-
-```text
-flavorforge-backend:latest
-```
-
-The final part of the command:
+The command uses:
 
 ```text
 ./backend
 ```
 
-specifies the backend directory as the Docker build context.
+as the Docker build context.
 
----
-
-# 9. What Happens During the Backend Build
-
-The backend build can be represented as:
+The image name is:
 
 ```text
-Backend source code
-        │
-        ▼
-backend/Dockerfile
-        │
-        ▼
-Docker build
-        │
-        ▼
-Node.js + Express application image
-        │
-        ▼
-flavorforge-backend:latest
+flavorforge-backend
 ```
 
-The backend image contains the Node.js/Express application and the dependencies required to run it.
-
----
-
-# 10. Verify the Backend Image
-
-Run:
-
-```bash
-docker images
-```
-
-or:
-
-```bash
-docker image ls
-```
-
-To specifically check the backend image:
-
-```bash
-docker images flavorforge-backend
-```
-
-The resulting image should be:
-
-```text
-flavorforge-backend:latest
-```
-
----
-
-# 11. Why Frontend and Backend Were Built Separately
-
-The two application components were packaged into separate images:
-
-```text
-                    FlavorForge
-                         │
-               ┌─────────┴─────────┐
-               │                   │
-               ▼                   ▼
-           Frontend             Backend
-               │                   │
-               ▼                   ▼
-    frontend/Dockerfile    backend/Dockerfile
-               │                   │
-               ▼                   ▼
-flavorforge-frontend:     flavorforge-backend:
-latest                    latest
-```
-
-This separation is important for the later Kubernetes deployment.
-
-Kubernetes can have:
-
-```text
-Frontend Deployment
-        ↓
-Frontend Pods
-```
-
-and:
-
-```text
-Backend Deployment
-        ↓
-Backend Pods
-```
-
-The two components can therefore be managed independently.
-
----
-
-# 12. Understanding Image Tags
-
-A Docker image reference normally follows this structure:
-
-```text
-image-name:tag
-```
-
-For example:
-
-```text
-flavorforge-frontend:latest
-```
-
-Here:
-
-```text
-flavorforge-frontend
-```
-
-is the image name.
-
-And:
+Since no explicit tag was supplied, Docker used:
 
 ```text
 latest
 ```
 
-is the image tag.
+Therefore the resulting local image was:
 
-In the documented local FlavorForge build commands, no explicit tag was supplied:
+```text
+flavorforge-backend:latest
+```
+
+---
+
+# 6. Backend Image Build
+
+The backend Dockerfile packages the Node.js and Express application into a Docker image.
+
+The build flow was:
+
+```text
+Backend Source
+      |
+      v
+backend/Dockerfile
+      |
+      v
+Node.js Base Image
+      |
+      v
+Install Backend Dependencies
+      |
+      v
+Copy Backend Source
+      |
+      v
+Backend Docker Image
+      |
+      v
+flavorforge-backend:latest
+```
+
+The backend image contains the application and the dependencies required to run the Express API.
+
+### Evidence — Backend Docker Build
+
+![Backend Docker build success](/screenshots/docker/6-backend-build-success.png)
+
+---
+
+# 7. Verify the Backend Image
+
+The Docker images were listed after the backend build.
+
+### Command
+
+```bash
+docker images
+```
+
+The resulting images included the FlavorForge application images:
+
+```text
+flavorforge-frontend:latest
+flavorforge-backend:latest
+```
+
+A targeted backend check can also be performed:
+
+```bash
+docker images flavorforge-backend
+```
+
+### Result
+
+The backend Docker image was successfully created locally.
+
+```text
+flavorforge-backend:latest
+```
+
+### Evidence
+
+![FlavorForge Docker images](/screenshots/docker/13-1-docker-images.png)
+
+---
+
+# 8. Both FlavorForge Images
+
+At this point, both application components had been converted into local Docker images.
+
+```text
+                 FlavorForge
+                     |
+          ┌──────────┴──────────┐
+          |                     |
+          v                     v
+      Frontend                Backend
+          |                     |
+          v                     v
+ frontend/Dockerfile     backend/Dockerfile
+          |                     |
+          v                     v
+flavorforge-frontend    flavorforge-backend
+       :latest                :latest
+```
+
+The local Docker image state was:
+
+```text
+flavorforge-frontend:latest
+flavorforge-backend:latest
+```
+
+### Evidence
+
+![FlavorForge Docker images created](/screenshots/docker/13-1-docker-images.png)
+
+---
+
+# 9. Understanding the Image Names and Tags
+
+Docker image references follow this format:
+
+```text
+image-name:tag
+```
+
+For FlavorForge:
+
+```text
+flavorforge-frontend:latest
+```
+
+means:
+
+```text
+Image name = flavorforge-frontend
+Tag        = latest
+```
+
+And:
+
+```text
+flavorforge-backend:latest
+```
+
+means:
+
+```text
+Image name = flavorforge-backend
+Tag        = latest
+```
+
+The actual local build commands were:
+
+```bash
+docker build -t flavorforge-frontend ./frontend
+```
+
+and:
+
+```bash
+docker build -t flavorforge-backend ./backend
+```
+
+Because the commands did not specify another tag, Docker assigned:
+
+```text
+latest
+```
+
+---
+
+# 10. Important: Local Build vs Registry Tagging
+
+Building an image does **not** automatically send the image to Azure Container Registry.
+
+At this stage the images existed on the local Docker environment:
+
+```text
+Local Docker
+     |
+     ├── flavorforge-frontend:latest
+     |
+     └── flavorforge-backend:latest
+```
+
+The later Azure workflow moves these images toward ACR:
+
+```text
+Local Docker Image
+        |
+        v
+ACR image tag
+        |
+        v
+Azure Container Registry
+        |
+        v
+AKS
+```
+
+Therefore:
+
+```text
+docker build
+```
+
+creates the local image.
+
+It does not perform:
+
+```text
+docker push
+```
+
+The registry publishing stage is documented separately in the Azure/ACR part of the BUILD-JOURNEY.
+
+---
+
+# 11. Version Tag Clarification
+
+FlavorForge later used version information such as:
+
+```text
+1.3
+```
+
+during the image publishing and deployment workflow.
+
+However, this build step records the actual local build commands:
 
 ```bash
 docker build -t flavorforge-frontend ./frontend
@@ -423,26 +483,14 @@ docker build -t flavorforge-frontend ./frontend
 docker build -t flavorforge-backend ./backend
 ```
 
-Therefore Docker uses:
-
-```text
-latest
-```
-
-and the resulting images are:
+Therefore the local images produced at this stage are documented as:
 
 ```text
 flavorforge-frontend:latest
 flavorforge-backend:latest
 ```
 
----
-
-# 13. Important Version-Tag Clarification
-
-FlavorForge later used version information such as `1.3` for application/image deployments.
-
-However, we should **not rewrite the documented local build commands as**:
+We do **not** rewrite these commands as:
 
 ```bash
 docker build -t flavorforge-frontend:1.3 ./frontend
@@ -454,266 +502,247 @@ or:
 docker build -t flavorforge-backend:1.3 ./backend
 ```
 
-unless there is direct evidence that those exact commands were used for this build step.
+unless there is direct evidence that those exact commands were used at this stage.
 
-The documented local build commands are:
-
-```bash
-docker build -t flavorforge-frontend ./frontend
-```
-
-```bash
-docker build -t flavorforge-backend ./backend
-```
-
-Therefore this BUILD-JOURNEY step records the local images as:
-
-```text
-flavorforge-frontend:latest
-flavorforge-backend:latest
-```
-
-Any later version-specific tagging belongs to the later image/registry workflow and should be documented there.
-
-This distinction keeps the BUILD-JOURNEY reproducible instead of mixing different stages of the project.
+The later ACR/version-tagging workflow belongs to the subsequent Azure documentation.
 
 ---
 
-# 14. Inspect the Images
+# 12. Inspect the Images
 
-Docker provides an image inspection command:
+Once the images were created, Docker could be used to inspect them.
+
+### Frontend
 
 ```bash
 docker image inspect flavorforge-frontend:latest
 ```
 
-and:
+### Backend
 
 ```bash
 docker image inspect flavorforge-backend:latest
 ```
 
-These commands can be useful for examining image metadata and configuration.
+These commands provide information about the image configuration and metadata.
 
-For example, image inspection can help troubleshoot:
-
-* Image configuration
-* Entrypoint
-* Environment configuration
-* Exposed ports
-* Architecture
-* Image metadata
-
-The important result at this stage is that Docker has successfully created the images.
+The important result for this build step was that both images had been successfully created.
 
 ---
 
-# 15. View Image Layers
+# 13. View Docker Image History
 
-Docker can also show the history of an image:
+Docker also provides image history information.
+
+### Frontend
 
 ```bash
 docker image history flavorforge-frontend:latest
 ```
 
-and:
+### Backend
 
 ```bash
 docker image history flavorforge-backend:latest
 ```
 
-This shows the layers that make up each image.
+This displays the image layers created during the Docker build.
+
+The relationship is:
+
+```text
+Dockerfile instructions
+        |
+        v
+Docker build
+        |
+        v
+Docker layers
+        |
+        v
+Docker image
+```
+
+This is particularly useful for understanding how the Dockerfile instructions become the final image.
+
+---
+
+# 14. Docker Build Cache
+
+Docker can reuse previously created layers when the inputs for those layers have not changed.
+
+For example, the frontend and backend Dockerfiles separate dependency-related steps from application source copying.
 
 Conceptually:
 
 ```text
-Dockerfile instructions
-        │
-        ▼
-Docker build
-        │
-        ▼
-Image layers
-        │
-        ▼
-Docker image
-```
-
-This is useful when understanding how the Dockerfile becomes a container image.
-
----
-
-# 16. Understand Docker Build Cache
-
-Docker can reuse previously built layers when the relevant inputs have not changed.
-
-For example, dependency-related files can affect an earlier layer:
-
-```text
 package.json
 package-lock.json
-        │
-        ▼
+        |
+        v
 Install dependencies
-        │
-        ▼
-Application source
-        │
-        ▼
-Application build
+        |
+        v
+Copy application source
+        |
+        v
+Build application
 ```
 
-If an earlier layer can be reused, Docker does not necessarily need to execute that part of the build again.
+If the dependency files have not changed, Docker may reuse the dependency layer during a subsequent build.
 
-This can make repeated builds faster.
+This makes repeated Docker builds faster.
 
-The exact cache behavior depends on the Dockerfile instructions and whether the files used by those instructions have changed.
+The exact cache behavior depends on the Dockerfile and the files that changed.
 
 ---
 
-# 17. Normal Build vs Clean Build
+# 15. Build Verification
 
-The normal documented frontend build is:
+After both images were built, the Docker image list was checked.
 
-```bash
-docker build -t flavorforge-frontend ./frontend
-```
-
-The normal documented backend build is:
-
-```bash
-docker build -t flavorforge-backend ./backend
-```
-
-Docker also supports options such as:
-
-```bash
---no-cache
-```
-
-and:
-
-```bash
---pull
-```
-
-For example:
-
-```bash
-docker build --no-cache -t flavorforge-frontend ./frontend
-```
-
-`--no-cache` tells Docker not to reuse the build cache.
-
-Similarly:
-
-```bash
-docker build --pull -t flavorforge-frontend ./frontend
-```
-
-asks Docker to check for a newer version of the base image.
-
-These are **optional Docker capabilities**, not commands that should be presented as part of the original FlavorForge build unless they were actually used.
-
-For reproducibility, we distinguish between:
-
-```text
-Actual FlavorForge command
-```
-
-and:
-
-```text
-Optional Docker troubleshooting command
-```
-
----
-
-# 18. Build Verification
-
-After building both images:
+### Command
 
 ```bash
 docker images
 ```
 
-The relevant FlavorForge images should be present:
+The important FlavorForge entries were:
 
 ```text
 flavorforge-frontend:latest
 flavorforge-backend:latest
 ```
 
-The overall process is:
+### Evidence
+
+![Final Docker image list](/screenshots/docker/4-docker-images.png)
+
+The Docker build stage therefore reached the expected result:
+
+```text
+Frontend Dockerfile
+        |
+        v
+flavorforge-frontend:latest
+
+Backend Dockerfile
+        |
+        v
+flavorforge-backend:latest
+```
+
+---
+
+# 16. Additional Docker Build Evidence
+
+The repository contains additional screenshots captured during the Docker workflow.
+
+These include:
+
+```text
+screenshots/docker/
+├── 1-docker-build-success.png
+├── 4-docker-images.png
+├── 6-backend-build-success.png
+├── 13-1-docker-images.png
+├── 13-4-terminal-build-success.png
+└── ...
+```
+
+The terminal build-success evidence can also be referenced directly:
+
+![Docker terminal build success](/screenshots/docker/13-4-terminal-build-success.png)
+
+These screenshots provide visual evidence of the Docker build activity rather than referring to an unspecified “previous screenshot.”
+
+---
+
+# 17. Frontend and Backend Are Independent Images
+
+FlavorForge intentionally separates the frontend and backend into different images.
+
+```text
+                  FlavorForge
+                      |
+             ┌────────┴────────┐
+             |                 |
+             v                 v
+         Frontend           Backend
+             |                 |
+             v                 v
+      Dockerfile          Dockerfile
+             |                 |
+             v                 v
+   frontend image       backend image
+```
+
+This allows the two application components to be managed independently.
+
+Later in Kubernetes, this becomes:
+
+```text
+Frontend Deployment
+        |
+        v
+Frontend Pods
+```
+
+and:
+
+```text
+Backend Deployment
+        |
+        v
+Backend Pods
+```
+
+---
+
+# 18. Complete Docker Build Flow
+
+The actual FlavorForge Docker build flow can be summarized as:
+
+```text
+                    FlavorForge Repository
+                             |
+                ┌────────────┴────────────┐
+                |                         |
+                v                         v
+            frontend/                 backend/
+                |                         |
+                v                         v
+        frontend/Dockerfile       backend/Dockerfile
+                |                         |
+                | docker build            | docker build
+                v                         v
+   flavorforge-frontend:latest  flavorforge-backend:latest
+                |                         |
+                └────────────┬────────────┘
+                             |
+                             v
+                   Local Docker Images
+                             |
+                             v
+                    Next Azure/ACR Stage
+```
+
+---
+
+# 19. What We Actually Achieved
+
+Before this step, FlavorForge had:
 
 ```text
 Application source
-       ↓
-Dockerfiles
-       ↓
-docker build
-       ↓
-Local Docker images
-       ↓
-Verify images
-       ↓
-Ready for the next container workflow stage
-```
-
----
-
-# 19. Local Image vs Azure Container Registry Image
-
-It is important to understand that building an image does **not** automatically push it to Azure Container Registry.
-
-After the local build:
-
-```text
-Developer machine
-└── Docker
-    ├── flavorforge-frontend:latest
-    └── flavorforge-backend:latest
-```
-
-The images are still stored locally.
-
-The later registry flow is:
-
-```text
-Local Docker Image
-        │
-        ▼
-ACR-compatible image reference/tag
-        │
-        ▼
-Azure Container Registry
-        │
-        ▼
-AKS
-```
-
-Therefore:
-
-> **`docker build` creates the local Docker image. It does not by itself push the image to ACR.**
-
-The registry push is a separate step.
-
----
-
-# 20. What We Actually Achieved
-
-At the end of this step, FlavorForge moved from:
-
-```text
-Dockerfiles
 +
-Application source
+Dockerfiles
 ```
 
-to:
+After this step, FlavorForge had:
 
 ```text
-Built local Docker images
+Built Docker images
 ```
 
 Specifically:
@@ -723,182 +752,7 @@ flavorforge-frontend:latest
 flavorforge-backend:latest
 ```
 
-The actual documented build commands were:
-
-```bash
-docker build -t flavorforge-frontend ./frontend
-```
-
-and:
-
-```bash
-docker build -t flavorforge-backend ./backend
-```
-
----
-
-# 21. Important Learning
-
-A Dockerfile is **not** the container itself.
-
-The relationship is:
-
-```text
-Dockerfile
-    │
-    │ docker build
-    ▼
-Docker Image
-    │
-    │ docker run
-    ▼
-Container
-```
-
-For FlavorForge:
-
-```text
-frontend/Dockerfile
-        │
-        ▼
-flavorforge-frontend:latest
-```
-
-and:
-
-```text
-backend/Dockerfile
-        │
-        ▼
-flavorforge-backend:latest
-```
-
-Later in the deployment process, Kubernetes does not build these images.
-
-Instead, Kubernetes pulls the required images from the container registry and creates containers from those images.
-
-This distinction is important when explaining the FlavorForge architecture during the CBC demo.
-
----
-
-# 22. Evidence to Capture
-
-For reproducibility documentation, the most useful evidence from this step is the Docker output showing that the images were created.
-
-### Docker version
-
-```bash
-docker --version
-```
-
-### Built images
-
-```bash
-docker images
-```
-
-### Frontend image details
-
-```bash
-docker image inspect flavorforge-frontend:latest
-```
-
-### Backend image details
-
-```bash
-docker image inspect flavorforge-backend:latest
-```
-
-### Optional image history
-
-```bash
-docker image history flavorforge-frontend:latest
-```
-
-```bash
-docker image history flavorforge-backend:latest
-```
-
-The most important screenshot is the output of:
-
-```bash
-docker images
-```
-
-showing:
-
-```text
-flavorforge-frontend
-flavorforge-backend
-```
-
-with the expected local tag:
-
-```text
-latest
-```
-
-These provide evidence that the Dockerfiles were successfully converted into local Docker images before the images moved into the Azure workflow.
-
----
-
-# 23. Complete Docker Build Flow
-
-The FlavorForge Docker build flow is:
-
-```text
-                         FlavorForge Repository
-                                  │
-                    ┌─────────────┴─────────────┐
-                    │                           │
-                    ▼                           ▼
-                frontend/                   backend/
-                    │                           │
-                    ▼                           ▼
-          frontend/Dockerfile         backend/Dockerfile
-                    │                           │
-                    │ docker build              │ docker build
-                    ▼                           ▼
-      flavorforge-frontend:latest   flavorforge-backend:latest
-                    │                           │
-                    └─────────────┬─────────────┘
-                                  │
-                                  ▼
-                         Local Docker Images
-                                  │
-                                  ▼
-                         Next Registry Stage
-```
-
----
-
-# 24. Result
-
-The Docker image build stage established the first container artifacts for FlavorForge:
-
-```text
-React + Vite Frontend
-        │
-        ▼
-frontend/Dockerfile
-        │
-        ▼
-flavorforge-frontend:latest
-```
-
-and:
-
-```text
-Node.js + Express Backend
-        │
-        ▼
-backend/Dockerfile
-        │
-        ▼
-flavorforge-backend:latest
-```
-
-The documented build commands are:
+The actual build commands were:
 
 ```bash
 docker build -t flavorforge-frontend ./frontend
@@ -908,6 +762,89 @@ docker build -t flavorforge-frontend ./frontend
 docker build -t flavorforge-backend ./backend
 ```
 
-At this point, the images exist locally.
+The images were then verified using Docker image listing commands.
 
-The next stage is to move from **local Docker images** to **Azure Container Registry (ACR)** as part of the FlavorForge Azure deployment workflow.
+---
+
+# 20. Evidence Summary
+
+The key evidence for this BUILD-JOURNEY step is stored in the repository under:
+
+```text
+screenshots/docker/
+```
+
+The most relevant evidence includes:
+
+### Docker build success
+
+![Docker build success](/screenshots/docker/1-docker-build-success.png)
+
+### Docker images
+
+![Docker images](/screenshots/docker/4-docker-images.png)
+
+### Backend build success
+
+![Backend Docker build success](/screenshots/docker/6-backend-build-success.png)
+
+### Final Docker image verification
+
+![Final Docker images](/screenshots/docker/13-1-docker-images.png)
+
+### Terminal build evidence
+
+![Docker terminal build success](/screenshots/docker/13-4-terminal-build-success.png)
+
+These screenshots are part of the FlavorForge repository and are used directly as evidence for the Docker build journey.
+
+---
+
+# 21. Result
+
+The Docker image build stage successfully converted the FlavorForge frontend and backend applications into local Docker images.
+
+### Frontend
+
+```text
+React + Vite
+      |
+      v
+frontend/Dockerfile
+      |
+      v
+flavorforge-frontend:latest
+```
+
+### Backend
+
+```text
+Node.js + Express
+      |
+      v
+backend/Dockerfile
+      |
+      v
+flavorforge-backend:latest
+```
+
+The resulting images were available locally and ready for the next stage of the FlavorForge deployment workflow.
+
+```text
+Local Docker Images
+        |
+        v
+Azure Container Registry
+        |
+        v
+AKS
+        |
+        v
+Kubernetes
+```
+
+The next BUILD-JOURNEY document is:
+
+```text
+docs/week-4/BUILD-JOURNEY/04-docker/05-run-containers.md
+```

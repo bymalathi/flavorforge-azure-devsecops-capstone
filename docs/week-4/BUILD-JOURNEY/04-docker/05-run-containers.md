@@ -2,11 +2,11 @@
 
 ## 1. Purpose
 
-After building the frontend and backend Docker images, the next step in the FlavorForge Docker journey was to run those images as containers.
+After building the FlavorForge frontend and backend Docker images, the next step was to run those images as Docker containers.
 
-The purpose of this step was to verify that the application images could start successfully and that the frontend and backend applications could run inside Docker.
+The purpose of this step was to verify that the built images could actually start and run the FlavorForge application.
 
-The overall flow was:
+The Docker flow was:
 
 ```text
 Dockerfile
@@ -18,14 +18,16 @@ Docker Container
 Running Application
 ```
 
-For FlavorForge, the frontend and backend were handled as separate containers.
+FlavorForge was run as separate frontend and backend containers:
 
 ```text
 Frontend Docker Image
         ↓
 Frontend Container
         ↓
-Nginx serving React application
+Nginx
+        ↓
+React Application
 ```
 
 ```text
@@ -33,152 +35,136 @@ Backend Docker Image
         ↓
 Backend Container
         ↓
-Node.js + Express API
+Node.js + Express
+        ↓
+FlavorForge APIs
 ```
 
 ---
 
-## 2. Run the Backend Container
+# 2. Run the Backend Container
 
-The backend image was started as a Docker container.
+The backend Docker image was started as a container so that the Node.js + Express application could be tested inside Docker.
 
-The container runs the Node.js + Express backend application and makes the backend available for API testing.
-
-The basic runtime flow was:
+The containerized backend flow was:
 
 ```text
 Host Machine
-     │
-     ▼
+     ↓
 Backend Container
-     │
-     ▼
+     ↓
 Node.js + Express
-     │
-     ▼
+     ↓
 FlavorForge API
 ```
 
 ### Backend container running
 
-The running container was checked using:
-
-```bash
-docker ps
-```
-
 ![Backend container running](/screenshots/docker/7-backend-container-running.png)
 
-This confirmed that the FlavorForge backend container was successfully running.
+The screenshot shows the FlavorForge backend container running successfully.
+
+This confirmed that the backend Docker image could be started as a container.
 
 ---
 
-## 3. Verify the Backend Health Endpoint
+# 3. Verify the Backend Health Endpoint
 
-FlavorForge provides a backend health endpoint:
+After starting the backend container, the FlavorForge health endpoint was tested.
 
 ```text
 /api/health
 ```
 
-This endpoint was used to verify that the Node.js + Express application was running and responding correctly from the container.
-
-The verification flow was:
-
-```text
-HTTP Request
-     │
-     ▼
-Backend Container
-     │
-     ▼
-Node.js + Express
-     │
-     ▼
-/api/health
-     │
-     ▼
-Health Response
-```
+The health endpoint was used to verify that the application inside the container was responding to HTTP requests.
 
 ### Backend health check
 
 ![Backend health check](/screenshots/docker/8-backend-health-success.png)
 
-The successful response confirmed that the containerized backend application was responding correctly.
+The successful response confirmed that:
+
+```text
+Backend Container
+       ↓
+Node.js + Express
+       ↓
+/api/health
+       ↓
+Successful Response
+```
+
+The backend was therefore not only running as a container, but also responding correctly at the application level.
 
 ---
 
-## 4. Verify the Recipes API
+# 4. Verify the Recipes API
 
-The backend Recipes API was also tested after starting the container.
-
-The endpoint used was:
+The Recipes API was also tested from the running backend container.
 
 ```text
 /api/recipes
 ```
 
-### Backend Recipes API
+### Recipes API verification
 
-![Backend Recipes API](/screenshots/docker/9-backend-recipes-success.png)
+![Recipes API](/screenshots/docker/9-backend-recipes-success.png)
 
-The successful response confirmed that the backend container was not only running, but was also serving an application API successfully.
+The successful response confirmed that the backend container was serving an actual application API.
 
-### Additional Recipes API verification
+Additional verification was also captured:
 
 ![Additional Recipes API verification](/screenshots/docker/9-1-backend-recipes-success.png)
-
-This provided additional evidence that the Recipes API was working in the containerized environment.
 
 The request flow was:
 
 ```text
 HTTP Request
-     │
-     ▼
+     ↓
 Backend Container
-     │
-     ▼
+     ↓
 Express Routes
-     │
-     ▼
+     ↓
 Recipes API
-     │
-     ▼
+     ↓
 API Response
 ```
 
+This provided application-level verification of the containerized backend.
+
 ---
 
-## 5. Run the Frontend Container
+# 5. Run the Frontend Container
 
-The frontend image was also run as a Docker container.
+The frontend Docker image was also run as a container.
 
-The FlavorForge frontend Dockerfile uses Nginx as the runtime server.
+The FlavorForge frontend uses Nginx as the runtime server.
 
 The runtime flow was:
 
 ```text
 Frontend Container
-       │
-       ▼
+       ↓
 Nginx
-       │
-       ▼
+       ↓
 React Production Files
-       │
-       ▼
+       ↓
 FlavorForge Web Application
 ```
 
-The frontend container therefore handled the React application's production files through Nginx.
+The frontend container therefore served the built React application through Nginx.
 
 ---
 
-## 6. Verify Frontend and Backend Containers
+# 6. Verify Frontend and Backend Containers Together
 
-The frontend and backend containers were run as part of the local containerized application.
+The frontend and backend containers were run together as part of the local containerized application.
+
+### Frontend and backend containers running
+
+![Frontend and backend containers running](/screenshots/docker/10-frontend-backend-container-running.png)
+
+The resulting local architecture was:
 
 ```text
                  Host Machine
@@ -186,7 +172,7 @@ The frontend and backend containers were run as part of the local containerized 
              ┌────────┴────────┐
              │                 │
              ▼                 ▼
-     Frontend Container   Backend Container
+      Frontend Container   Backend Container
              │                 │
              ▼                 ▼
            Nginx          Node.js + Express
@@ -195,17 +181,13 @@ The frontend and backend containers were run as part of the local containerized 
        React Application     REST API
 ```
 
-### Frontend and backend containers running
-
-![Frontend and backend containers running](/screenshots/docker/10-frontend-backend-container-running.png)
-
-This provided evidence that both application components were running as Docker containers.
+The screenshot provides evidence that both major application components were running as Docker containers.
 
 ---
 
-## 7. Check Container Status
+# 7. Check Running Containers
 
-Docker provides `docker ps` to view currently running containers:
+The running Docker containers were checked using:
 
 ```bash
 docker ps
@@ -221,15 +203,23 @@ docker ps -a
 
 ![Docker container status](/screenshots/docker/12-1-docker-ps.png)
 
-This provided direct evidence of the Docker containers running during the FlavorForge containerization workflow.
+The Docker container listing provided visibility into the containers participating in the FlavorForge Docker environment.
+
+The output included information such as:
+
+```text
+Container ID
+Image
+Status
+Ports
+Container Name
+```
 
 ---
 
-## 8. Inspect the Docker Network
+# 8. Inspect the FlavorForge Docker Network
 
-When multiple containers communicate with each other, Docker networking becomes important.
-
-FlavorForge used a Docker network named:
+The FlavorForge Docker environment used a Docker network named:
 
 ```text
 flavorforge-network
@@ -245,28 +235,30 @@ docker network inspect flavorforge-network
 
 ![FlavorForge Docker network](/screenshots/docker/12-docker-network-inspect-flavorforge-network.png)
 
-The network inspection provided visibility into the Docker network used by the application containers.
+The network inspection provided evidence of the Docker networking configuration used by the application containers.
 
-The conceptual relationship was:
+Conceptually:
 
 ```text
-                 flavorforge-network
-                         │
-              ┌──────────┴──────────┐
-              │                     │
-              ▼                     ▼
-      Frontend Container     Backend Container
-              │                     │
-              └─────────┬───────────┘
-                        │
-                  Docker Network
+             flavorforge-network
+                     │
+          ┌──────────┴──────────┐
+          │                     │
+          ▼                     ▼
+ Frontend Container      Backend Container
+          │                     │
+          └──────────┬──────────┘
+                     │
+              Docker Network
 ```
+
+This was important for running the frontend and backend as a connected local containerized application.
 
 ---
 
-## 9. Verify Docker Compose
+# 9. Run the Application with Docker Compose
 
-The FlavorForge repository also contains:
+The FlavorForge repository contains:
 
 ```text
 docker-compose.yml
@@ -278,25 +270,53 @@ Docker Compose was used to work with the frontend and backend containers togethe
 
 ![Docker Compose running](/screenshots/docker/13-docker-compose-running.png)
 
-This provided evidence that the Docker Compose environment was successfully started.
+The Compose workflow can be represented as:
 
-The Compose workflow provided a convenient way to work with the multiple application containers as a local environment.
+```text
+docker-compose.yml
+        │
+        ├────────────────┐
+        │                │
+        ▼                ▼
+    Frontend          Backend
+    Container         Container
+        │                │
+        └────────┬───────┘
+                 │
+          Docker Network
+```
+
+The screenshot provides evidence that the multi-container Docker Compose environment was running.
 
 ---
 
-## 10. Verify Docker Images
+# 10. Verify Docker Images During the Container Workflow
 
-The Docker images used by the containerized application were also inspected.
+The Docker images used by the application were also inspected.
 
 ### Docker images
 
 ![Docker images](/screenshots/docker/13-1-docker-images.png)
 
-This provided evidence of the Docker images available during the containerized application workflow.
+This confirmed that the required FlavorForge Docker images were available during the container workflow.
+
+The two application components were represented by separate Docker images:
+
+```text
+Frontend Image
+       ↓
+Frontend Container
+```
+
+```text
+Backend Image
+       ↓
+Backend Container
+```
 
 ---
 
-## 11. Verify Backend API
+# 11. Verify the Backend API
 
 The backend API was tested while the Docker environment was running.
 
@@ -304,53 +324,63 @@ The backend API was tested while the Docker environment was running.
 
 ![Backend API](/screenshots/docker/13-2-backend-api.png)
 
-The successful response confirmed that the backend API was accessible from the containerized environment.
+The verification flow was:
+
+```text
+Client
+  ↓
+Backend Container
+  ↓
+Node.js + Express
+  ↓
+API Route
+  ↓
+Response
+```
+
+The successful response provided additional evidence that the backend application was accessible from the containerized environment.
 
 ---
 
-## 12. Verify Frontend API Communication
+# 12. Verify Frontend API Communication
 
-The frontend-side API interaction was also verified.
+Frontend-side API communication was also verified.
 
 ### Frontend API
 
 ![Frontend API](/screenshots/docker/13-2-frontend-api.png)
 
-This provided evidence that the frontend was able to interact with the backend API in the containerized environment.
-
 The application communication flow was:
 
 ```text
 Browser
-   │
-   ▼
+   ↓
 Frontend Container
-   │
-   │ API Request
-   ▼
+   ↓
+API Request
+   ↓
 Backend Container
-   │
-   ▼
+   ↓
 Express API
-   │
-   ▼
+   ↓
 API Response
-   │
-   ▼
+   ↓
 Frontend
 ```
 
+This demonstrated the interaction between the frontend and backend components in the Docker environment.
+
 ---
 
-## 13. Verify the Frontend Application
+# 13. Verify the Frontend Application
 
-The containerized frontend was opened in the browser to verify that the application was being served successfully.
+The containerized frontend application was opened in the browser.
 
 ### FlavorForge website
 
 ![FlavorForge website](/screenshots/docker/13-5-website.png)
 
-The screenshot confirms that the FlavorForge web application was accessible from the containerized frontend.
+The screenshot shows the FlavorForge application being served successfully from the containerized frontend.
 
 The runtime flow was:
 
@@ -366,13 +396,15 @@ React Production Files
 FlavorForge UI
 ```
 
+This confirmed that the frontend Docker image could be run successfully and serve the production React application.
+
 ---
 
-## 14. Inspect Container Logs
+# 14. Inspect Docker Container Logs
 
-Docker logs can be used to inspect application output from a running container.
+Container logs were inspected during the Docker workflow.
 
-The command is:
+The standard Docker command is:
 
 ```bash
 docker logs <container-name>
@@ -382,170 +414,186 @@ docker logs <container-name>
 
 ![Docker container logs](/screenshots/docker/13-6-docker-logs.png)
 
-The logs provided runtime information that could be used to troubleshoot application startup and runtime behavior.
+The logs provided runtime information from the container.
 
----
-
-## 15. Docker Compose Application Verification
-
-The Docker Compose workflow provided another way to verify FlavorForge as a multi-container application.
-
-The relationship was:
+They are useful for checking:
 
 ```text
-docker-compose.yml
-        │
-        ├───────────────┐
-        │               │
-        ▼               ▼
-    Frontend         Backend
-    Container        Container
-        │               │
-        └───────┬───────┘
-                │
-         Docker Network
+Application startup
+Runtime messages
+Application errors
+API errors
+Unexpected container behavior
 ```
 
-The Compose environment, images, APIs, website, and container logs were verified during this stage.
-
-This provided a local multi-container validation stage before the later Kubernetes deployment.
+This is useful because a container showing a `Running` status does not by itself prove that the application inside the container is functioning correctly.
 
 ---
 
-## 16. Why Run Containers Before Kubernetes?
+# 15. Additional Docker Run Evidence
 
-Running the application in Docker before deploying it to Kubernetes provided an important validation stage.
+The Docker screenshot collection also contains earlier evidence from the image-build and container-run stages.
 
-The overall progression was:
+### Docker build success
+
+![Docker build success](/screenshots/docker/1-docker-build-success.png)
+
+### Dockerfile / Dockerignore setup
+
+![Dockerignore created](/screenshots/docker/2-dockerignore-created.png)
+
+### Build context optimization
+
+![Build context optimized](/screenshots/docker/3-build-context-optimized.png)
+
+### Docker images
+
+![Docker images](/screenshots/docker/4-docker-images.png)
+
+### Docker run
+
+![Docker run](/screenshots/docker/5-docker-run.png)
+
+These screenshots provide the supporting sequence:
 
 ```text
-Application Development
-        ↓
-Dockerfile
-        ↓
+Docker Configuration
+       ↓
+Docker Build
+       ↓
 Docker Image
-        ↓
-Docker Container
-        ↓
-Application Verification
-        ↓
-Kubernetes Deployment
+       ↓
+Docker Run
+       ↓
+Running Container
 ```
 
-This helped separate application and container issues from later Kubernetes infrastructure issues.
+The detailed image-building process is documented in:
 
-For example, if the application failed inside Docker, the problem could first be investigated at the application or container level rather than immediately assuming Kubernetes was responsible.
+```text
+docs/week-4/BUILD-JOURNEY/04-docker/04-build-images.md
+```
 
 ---
 
-## 17. Container Verification Summary
+# 16. What We Actually Achieved
 
-### Backend
+At the beginning of this step, FlavorForge had built Docker images.
 
-The backend verification flow was:
-
-```text
-Backend Container Running
-        ↓
-Health Endpoint Working
-        ↓
-Recipes API Working
-```
-
-Evidence:
-
-* Backend container running
-* Backend health endpoint
-* Recipes API responses
-
-### Frontend
-
-The frontend verification flow was:
-
-```text
-Frontend Container
-        ↓
-Nginx
-        ↓
-React Application
-        ↓
-Application Accessible
-```
-
-### Multi-container environment
-
-The combined environment was verified through:
-
-```text
-Frontend
-   ↕
-Backend
-   ↕
-Docker Network
-```
-
-and through the Docker Compose workflow.
-
----
-
-## 18. What We Actually Achieved
-
-At the end of this step, FlavorForge moved from:
-
-```text
-Docker Images
-```
-
-to:
-
-```text
-Running Docker Containers
-```
+The objective of this step was to run those images and verify the applications.
 
 The frontend flow was:
 
 ```text
-React + Vite Frontend
-        ↓
-Frontend Dockerfile
-        ↓
+React + Vite
+      ↓
+frontend/Dockerfile
+      ↓
 Frontend Docker Image
-        ↓
+      ↓
 Frontend Container
-        ↓
+      ↓
 Nginx
-        ↓
+      ↓
 Running Web Application
 ```
 
 The backend flow was:
 
 ```text
-Node.js + Express Backend
-        ↓
-Backend Dockerfile
-        ↓
+Node.js + Express
+      ↓
+backend/Dockerfile
+      ↓
 Backend Docker Image
-        ↓
+      ↓
 Backend Container
-        ↓
+      ↓
 Health / Recipe APIs
 ```
 
-The frontend and backend were also verified together as a multi-container application.
+The frontend and backend were also tested together using the Docker networking and Docker Compose environment.
 
 ---
 
-## 19. Important Learning
+# 17. Container Verification Summary
 
-Three Docker concepts should be kept separate.
+### Backend
+
+```text
+Backend Image
+      ↓
+Backend Container
+      ↓
+Health Endpoint
+      ↓
+Recipes API
+      ↓
+Successful Response
+```
+
+Verified through:
+
+```text
+7-backend-container-running.png
+8-backend-health-success.png
+9-backend-recipes-success.png
+9-1-backend-recipes-success.png
+13-2-backend-api.png
+```
+
+### Frontend
+
+```text
+Frontend Image
+      ↓
+Frontend Container
+      ↓
+Nginx
+      ↓
+React Application
+      ↓
+Application Accessible
+```
+
+Verified through:
+
+```text
+10-frontend-backend-container-running.png
+13-5-website.png
+13-2-frontend-api.png
+```
+
+### Multi-container environment
+
+```text
+Frontend Container
+        ↕
+Docker Network
+        ↕
+Backend Container
+```
+
+Verified through:
+
+```text
+12-docker-network-inspect-flavorforge-network.png
+13-docker-compose-running.png
+12-1-docker-ps.png
+```
+
+---
+
+# 18. Dockerfile → Image → Container
+
+The three Docker concepts should remain separate.
 
 ### Dockerfile
 
 ```text
 Dockerfile
     ↓
-Instructions for building an image
+Instructions used to build an image
 ```
 
 ### Docker Image
@@ -576,7 +624,7 @@ Frontend Container
 Nginx + React Application
 ```
 
-and:
+And:
 
 ```text
 backend/Dockerfile
@@ -588,13 +636,13 @@ Backend Container
 Node.js + Express API
 ```
 
-This distinction becomes important later because Kubernetes does not build the Docker images. Kubernetes uses already-built container images when creating application pods.
+This distinction becomes important later because Kubernetes does not build the application images. Kubernetes uses container images when creating application pods.
 
 ---
 
-## 20. Docker Stage Completed
+# 19. Docker Stage Progress
 
-The Docker BUILD-JOURNEY now looks like:
+The Docker BUILD-JOURNEY is:
 
 ```text
 01 — Docker Setup
@@ -612,7 +660,23 @@ The Docker BUILD-JOURNEY now looks like:
 Next: Azure Infrastructure
 ```
 
-At this point, FlavorForge had been containerized and the containers had been tested locally.
+At this point, FlavorForge had moved from:
+
+```text
+Docker Images
+```
+
+to:
+
+```text
+Running Docker Containers
+        ↓
+Working Backend APIs
+        ↓
+Working Frontend
+        ↓
+Multi-container Environment
+```
 
 The next document is:
 
@@ -620,4 +684,45 @@ The next document is:
 docs/week-4/BUILD-JOURNEY/04-docker/06-docker-verification.md
 ```
 
-This will consolidate the Docker verification results before continuing to the Azure stage.
+---
+
+# 20. Result
+
+The Docker container runtime stage was completed successfully.
+
+The verified local Docker architecture was:
+
+```text
+                     FlavorForge
+                          │
+                ┌─────────┴─────────┐
+                │                   │
+                ▼                   ▼
+            Frontend             Backend
+                │                   │
+                ▼                   ▼
+          Docker Image         Docker Image
+                │                   │
+                ▼                   ▼
+          Docker Container    Docker Container
+                │                   │
+                ▼                   ▼
+              Nginx           Node.js + Express
+                │                   │
+                ▼                   ▼
+        React Application       REST APIs
+```
+
+The application was also verified through:
+
+```text
+Docker Network
+      ↓
+Frontend + Backend
+      ↓
+Docker Compose
+      ↓
+Application Verification
+```
+
+Therefore, the FlavorForge Docker runtime stage established that the built images could be started as containers and that the containerized frontend and backend applications were functioning before moving to the Azure infrastructure stage.
