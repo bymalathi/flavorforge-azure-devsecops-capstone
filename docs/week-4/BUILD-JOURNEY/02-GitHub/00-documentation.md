@@ -101,6 +101,9 @@ Verify that the terminal is running Linux:
 cat /etc/os-release
 ```
 
+<img width="817" height="317" alt="image" src="https://github.com/user-attachments/assets/85dc139b-c977-41ae-b9fa-df5e470c3683" />
+
+
 You should see Ubuntu information.
 
 ---
@@ -263,6 +266,9 @@ on GitHub if those files already exist locally.
 
 6. Select **Create repository**.
 
+<img width="2476" height="1073" alt="image" src="https://github.com/user-attachments/assets/9226b38e-e170-4c25-a413-01e75e4c7102" />
+
+
 GitHub will create the remote repository.
 
 ### Important for the existing FlavorForge project
@@ -404,6 +410,8 @@ Expected:
 ```text
 main
 ```
+<img width="770" height="46" alt="image" src="https://github.com/user-attachments/assets/87ef519e-38b1-476d-94e6-9df635d0a34b" />
+
 
 For the existing FlavorForge repository, first verify the current branch before changing anything.
 
@@ -707,6 +715,8 @@ You can specifically check:
 ```bash
 ls -al ~/.ssh/*.pub
 ```
+<img width="842" height="337" alt="image" src="https://github.com/user-attachments/assets/3d4e2128-2d7a-4607-baa1-214f9e2ce78d" />
+
 
 If a public key already exists, you may be able to use it.
 
@@ -985,6 +995,8 @@ Before staging files, verify that `.gitignore` exists:
 ```bash
 ls -la .gitignore
 ```
+<img width="717" height="53" alt="image" src="https://github.com/user-attachments/assets/dfe610c9-8b38-416a-aec3-7400d7dc5982" />
+
 
 Review it:
 
@@ -1007,6 +1019,9 @@ secrets/
 ```
 
 The exact `.gitignore` should match the actual project.
+
+<img width="601" height="1156" alt="image" src="https://github.com/user-attachments/assets/e6494aed-bb27-4378-ad80-79f85541cf1f" />
+
 
 Do not blindly exclude files that the application genuinely needs in source control.
 
