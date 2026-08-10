@@ -1275,8 +1275,6 @@ recent commits
 
 ### Suggested filename
 
-![](/screenshots/azure/02-resource-group-created.png)
-
 Before saving or publishing the screenshot, verify that it does not contain:
 
 * PAT
