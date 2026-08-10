@@ -109,6 +109,9 @@ Example repository URL:
 https://github.com/YOUR_GITHUB_USERNAME/flavorforge-azure-devsecops-capstone.git
 ```
 
+![Uploading image.png…]()
+
+
 ## Option B — SSH
 
 ```text
