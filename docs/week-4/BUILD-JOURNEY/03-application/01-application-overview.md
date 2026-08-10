@@ -1,402 +1,199 @@
-# Application — Complete Build Journey
+# 03 — Application
 
-## Objective
+This is where we started creating the actual FlavorForge application.
 
-This document records how the FlavorForge application was created and verified before containerization.
+We already completed the prerequisites and GitHub setup.
 
-The application was built as two separate components:
+The next step was to create the application structure and start building the frontend and backend.
 
-```text
-Frontend
-   +
-Backend
-   +
-API
-   +
-Tests
+---
+
+## Step 1 — Go to the FlavorForge project
+
+We first went to the FlavorForge project directory:
+
+```bash
+cd ~/flavorforge-azure-devsecops-capstone
 ```
 
-The resulting application was then used as the input for the Docker stage:
+We verified the location:
+
+```bash
+pwd
+```
+
+Expected:
 
 ```text
-Application
-     ↓
-Docker
-     ↓
-Azure Container Registry
-     ↓
-Kubernetes / AKS
-     ↓
-Azure DevOps CI/CD
+/home/malathi/flavorforge-azure-devsecops-capstone
 ```
 
 ---
 
-# 1. Application Structure
+## Step 2 — Check the project files
 
-## What we wanted
+We checked what was already present:
 
-We wanted to keep the frontend and backend as separate application components so that they could later be packaged and deployed independently.
+```bash
+ls -la
+```
 
-The FlavorForge repository was structured as:
+We also checked the project structure:
+
+```bash
+tree -L 2
+```
+
+At this stage, the project contained the Git/GitHub files and the initial project files.
+
+---
+
+## Step 3 — Create the application folders
+
+The application was organized into separate frontend and backend parts.
+
+The final application structure contains:
 
 ```text
 flavorforge-azure-devsecops-capstone/
-│
 ├── frontend/
-│
-├── backend/
-│
-├── docker/
-├── kubernetes/
-├── argocd/
-├── docs/
-├── scripts/
-└── .github/
+└── backend/
 ```
 
-The application code was primarily contained in:
+The frontend contains the React application.
 
-```text
-frontend/
-backend/
-```
-
-### Verify
-
-```bash
-cd ~/flavorforge-azure-devsecops-capstone
-ls
-```
-
-### Result
-
-The repository contained separate `frontend` and `backend` application directories.
+The backend contains the Node.js application and API.
 
 ---
 
-# 2. Frontend Application
+## Step 4 — Create the frontend application
 
-## What we wanted
-
-We needed a web interface for FlavorForge.
-
-The frontend was implemented using:
-
-```text
-React
-+
-Vite
-```
-
-The frontend source code was maintained under:
+We created the frontend application inside:
 
 ```text
 frontend/
 ```
 
-## 2.1 Verify the Frontend Project
+The frontend was built using React.
 
-### Actual command
-
-```bash
-cd ~/flavorforge-azure-devsecops-capstone
-ls frontend
-```
-
-### What happened
-
-The command displayed the frontend project files.
-
-The frontend contained the React application source, configuration, public assets, and package files.
-
-### Verify
-
-The frontend project included files such as:
+The frontend project contains files such as:
 
 ```text
-Dockerfile
+frontend/
+├── package.json
+├── package-lock.json
+├── index.html
+├── src/
+└── public/
+```
+
+We verified the frontend files:
+
+```bash
+ls -la frontend
+```
+
+We also checked the source files:
+
+```bash
+ls -la frontend/src
+```
+
+### Screenshot
+
+![Frontend React application running](/screenshots/frontend/03-react-application-running.png)
+
+---
+
+## Step 5 — Install frontend dependencies
+
+We moved into the frontend directory:
+
+```bash
+cd frontend
+```
+
+The required npm dependencies were installed for the React application.
+
+We verified that the dependency files were created:
+
+```bash
+ls -la
+```
+
+We could see:
+
+```text
 package.json
 package-lock.json
-vite.config.js
-index.html
-src/
-public/
 ```
 
-### Evidence
-
-![](/screenshots/frontend/04-frontend-enterprise-structure.png)
-
-### Result
-
-The FlavorForge React/Vite frontend was present and ready for development and later containerization.
-
----
-
-# 3. Frontend Application Development
-
-## What we wanted
-
-We wanted the frontend to have a structured application rather than a single-page prototype.
-
-The application was organized into reusable components, pages, layouts, services, API utilities, and styles.
-
-The frontend source structure became:
-
-```text
-frontend/src/
-│
-├── api/
-├── assets/
-├── components/
-├── config/
-├── hooks/
-├── layouts/
-├── pages/
-├── services/
-├── styles/
-├── test/
-├── utils/
-├── App.jsx
-└── main.jsx
-```
-
-### Verify
+We then returned to the project root:
 
 ```bash
-ls frontend/src
+cd ..
 ```
-
-### Result
-
-The frontend application had a structured React codebase ready for the remaining application work.
 
 ---
 
-# 4. Frontend Application Running
+## Step 6 — Run the frontend
 
-## What we wanted
+We started the frontend development server from the frontend directory.
 
-Before moving to Docker, we needed to verify that the frontend could run successfully.
+The application became available locally.
 
-### Actual command
+The frontend was verified in the browser.
 
-From the frontend directory:
+The local development application used the Vite development server.
 
-```bash
-cd ~/flavorforge-azure-devsecops-capstone/frontend
-npm install
-```
+### Screenshot
 
-The frontend development server was then started using the project's configured npm script.
-
-### What happened
-
-The React/Vite application started successfully and was accessible through the local development URL.
-
-### Verify
-
-The application was opened at:
-
-```text
-http://localhost:5173
-```
-
-### Evidence
-
-![](/screenshots/frontend/03-react-application-running.png)
-
-### Result
-
-The FlavorForge frontend was running successfully in the local development environment.
+![Frontend running locally](/screenshots/frontend/03-react-application-running.png)
 
 ---
 
-# 5. Frontend Routing and Pages
+## Step 7 — Create the backend folder
 
-## What we wanted
-
-The application needed multiple pages and navigation rather than a single screen.
-
-The frontend used:
-
-```text
-react-router-dom
-```
-
-The application included pages such as:
-
-```text
-Home
-Recipes
-About
-Contact
-404 / Not Found
-```
-
-### What happened
-
-React Router was used to provide navigation between the application pages.
-
-A shared layout was also introduced for common application elements.
-
-### Verify
-
-The frontend source contained:
-
-```text
-frontend/src/pages/
-frontend/src/layouts/
-```
-
-and the application included routing configuration.
-
-### Evidence
-
-![](/screenshots/frontend/13-react-router-basic-routing.png)
-
-![](/screenshots/frontend/14-shared-layout-with-outlet.png)
-
-### Result
-
-The frontend had reusable navigation and page routing.
-
----
-
-# 6. Reusable Frontend Components
-
-## What we wanted
-
-We wanted the frontend to use reusable components instead of duplicating UI code.
-
-The component structure included areas such as:
-
-```text
-components/
-├── BackendStatus/
-├── CategoryFilter/
-├── EmptyState/
-├── ErrorBoundary/
-├── FeatureCard/
-├── Features/
-├── Header/
-├── Hero/
-├── NotFound/
-├── RecipeCard/
-├── RecipeList/
-├── SearchBar/
-└── ui/
-```
-
-### What happened
-
-Reusable UI components were created and used throughout the application.
-
-### Verify
-
-```bash
-ls frontend/src/components
-```
-
-### Evidence
-
-![](/screenshots/frontend/07-first-reusable-component.png)
-
-![](/screenshots/frontend/16-reusable-button-component.png)
-
-![](/screenshots/frontend/19-reusable-loading-component.png)
-
-### Result
-
-The frontend was organized into reusable components that could be maintained independently.
-
----
-
-# 7. Backend Application
-
-## What we wanted
-
-The frontend needed a backend service to provide application APIs.
-
-The backend was implemented using:
-
-```text
-Node.js
-+
-Express
-```
-
-The backend source was maintained under:
+We created the backend application separately:
 
 ```text
 backend/
 ```
 
-## 7.1 Verify the Backend Project
+The backend was built using Node.js.
 
-### Actual command
+The backend contains the application source code, configuration, routes, controllers, services, database-related code, and tests.
 
-```bash
-cd ~/flavorforge-azure-devsecops-capstone
-ls backend
-```
-
-### What happened
-
-The command confirmed the separate backend application and its project files.
-
-The backend contained:
+The final structure includes:
 
 ```text
-Dockerfile
-package.json
-package-lock.json
-jest.config.js
-src/
-tests/
+backend/
+├── package.json
+├── package-lock.json
+├── src/
+└── tests/
 ```
 
-### Verify
+We verified the backend directory:
 
 ```bash
-ls backend/src
+ls -la backend
 ```
-
-The backend source contained application areas including:
-
-```text
-config/
-controllers/
-database/
-middleware/
-models/
-routes/
-services/
-utils/
-```
-
-### Evidence
-
-![](/screenshots/backend/01-backend-folder-structure.png)
-
-### Result
-
-The Node.js/Express backend was established separately from the frontend.
 
 ---
 
-# 8. Backend Application Structure
+## Step 8 — Create the backend application structure
 
-## What we wanted
-
-We wanted the backend to follow a structured API application design.
-
-The backend source was organized into:
+The backend source code was organized under:
 
 ```text
 backend/src/
-│
+```
+
+The application was divided into separate areas such as:
+
+```text
+src/
 ├── config/
 ├── controllers/
 ├── database/
@@ -407,469 +204,109 @@ backend/src/
 └── utils/
 ```
 
-The health and recipe functionality was separated into appropriate routes, controllers, and services.
+The main server files include:
 
-### Verify
-
-```bash
-ls backend/src/controllers
-ls backend/src/routes
-ls backend/src/services
+```text
+src/app.js
+src/server.js
 ```
 
-### Result
-
-The backend was organized into separate application layers instead of placing all API logic in a single file.
+This structure allowed the backend application to keep its different responsibilities separated.
 
 ---
 
-# 9. Backend Health API
+## Step 9 — Add backend tests
 
-## What we wanted
-
-We needed a simple API endpoint that could confirm that the backend was running.
-
-FlavorForge provided:
-
-```text
-GET /api/health
-```
-
-### What happened
-
-The backend health route was implemented and connected to the application.
-
-The route was defined under:
-
-```text
-backend/src/routes/health.routes.js
-```
-
-and the health functionality was implemented through the corresponding controller/service structure.
-
-### Verify
-
-The health endpoint was tested while the backend was running.
-
-```text
-/api/health
-```
-
-### Evidence
-
-![](/screenshots/backend/02-backend-health-endpoint.png)
-
-![](/screenshots/backend/04-health-endpoint-browser.png)
-
-### Result
-
-The backend health API was responding successfully.
-
----
-
-# 10. Backend Running
-
-## What we wanted
-
-Before containerization, we needed to verify that the backend could start independently.
-
-### What happened
-
-The Node.js backend was started in the local development environment.
-
-### Verify
-
-The backend process was checked and the health endpoint was accessed.
-
-### Evidence
-
-![](/screenshots/backend/03-backend-server-running.png)
-
-### Result
-
-The backend was running successfully and ready to communicate with the frontend.
-
----
-
-# 11. Frontend–Backend Integration
-
-## What we wanted
-
-The frontend needed to communicate with the backend through API calls.
-
-The application therefore separated:
-
-```text
-Frontend UI
-     ↓
-API service layer
-     ↓
-Backend API
-```
-
-The frontend contained API/service code under:
-
-```text
-frontend/src/api/
-frontend/src/services/
-```
-
-### What happened
-
-The frontend was connected to the backend API.
-
-### Verify
-
-The application was tested with the backend running.
-
-### Evidence
-
-![](/screenshots/backend/10-cors-enabled-frontend-backend-connected.png)
-
-![](/screenshots/frontend/21-frontend-recipes-integrated.png)
-
-### Result
-
-The frontend and backend were successfully integrated.
-
----
-
-# 12. Recipe API
-
-## What we wanted
-
-In addition to the health endpoint, the backend needed to provide recipe-related functionality for the frontend.
-
-The backend contained:
-
-```text
-recipe.controller.js
-recipe.routes.js
-recipe.service.js
-```
-
-### Verify
-
-```bash
-ls backend/src/controllers
-ls backend/src/routes
-ls backend/src/services
-```
-
-### What happened
-
-The recipe API was implemented and connected to the frontend.
-
-### Evidence
-
-![](/screenshots/backend/11-recipes-api-structure.png)
-
-![](/screenshots/backend/12-recipes-api-working.png)
-
-### Result
-
-The frontend could retrieve and display recipe information through the backend API.
-
----
-
-# 13. Frontend API Service Layer
-
-## What we wanted
-
-We wanted API communication to remain separate from the React UI components.
-
-The frontend therefore contained:
-
-```text
-frontend/src/api/
-frontend/src/services/
-```
-
-including:
-
-```text
-apiClient.js
-healthService.js
-recipeService.js
-```
-
-### Verify
-
-```bash
-ls frontend/src/api
-ls frontend/src/services
-```
-
-### Result
-
-API communication was separated from the UI components, making the frontend easier to maintain.
-
----
-
-# 14. Frontend and Backend Configuration
-
-## What we wanted
-
-The frontend needed a configurable API base URL so that the application could later work in different environments.
-
-The Docker-specific frontend configuration used:
-
-```text
-VITE_API_BASE_URL=http://backend:3000
-```
-
-### What happened
-
-The frontend was configured to communicate with the backend using the backend service/container name when running through Docker networking.
-
-The resulting container communication model was:
-
-```text
-Frontend
-    |
-    | backend:3000
-    ↓
-Backend
-```
-
-The Kubernetes deployment later provided the environment-specific configuration through Kubernetes configuration.
-
-### Result
-
-The application was prepared for containerized frontend/backend communication.
-
----
-
-# 15. Frontend Tests
-
-## What we wanted
-
-The frontend needed automated tests for important application behavior.
-
-The frontend test files included:
-
-```text
-apiClient.test.js
-ErrorBoundary.test.jsx
-HomePage.test.jsx
-```
-
-### Verify
-
-```bash
-find frontend/src -name "*.test.*"
-```
-
-### Result
-
-Frontend test coverage was included as part of the application codebase.
-
----
-
-# 16. Backend Tests
-
-## What we wanted
-
-The backend needed automated tests before being included in the CI/CD pipeline.
-
-FlavorForge used:
-
-```text
-Jest
-```
-
-The backend tests were located under:
+Tests were created under:
 
 ```text
 backend/tests/
 ```
 
-including:
+The final test structure includes:
 
 ```text
-app.test.js
-controllers.test.js
-services.test.js
+tests/
+├── app.test.js
+├── controllers.test.js
+└── services.test.js
 ```
 
-### Verify
+The backend test configuration was also created:
+
+```text
+backend/jest.config.js
+```
+
+---
+
+## Step 10 — Run and verify the backend
+
+We started the backend application and verified that the server was running.
+
+The backend health endpoint was tested.
+
+The health endpoint was available at:
+
+```text
+/api/health
+```
+
+### Screenshot
+
+![Backend server running](/screenshots/backend/03-backend-server-running.png)
+
+The health endpoint was also verified:
+
+![Backend health endpoint](/screenshots/backend/02-backend-health-endpoint.png)
+
+---
+
+## Step 11 — Verify the application structure
+
+From the project root:
 
 ```bash
-ls backend/tests
+cd ~/flavorforge-azure-devsecops-capstone
 ```
 
-### Result
+We checked the application structure:
 
-The backend test suite was present and ready to be executed.
+```bash
+tree frontend -L 2
+```
 
----
+and:
 
-# 17. Application Build Verification
+```bash
+tree backend -L 2
+```
 
-## What we wanted
-
-Before moving to Docker, we needed to confirm that the application could be built successfully.
-
-The frontend build was verified using the project's npm build command.
-
-### What happened
-
-The frontend build generated the production output under:
+The project now had two main application components:
 
 ```text
-frontend/dist/
+frontend/
+backend/
 ```
-
-### Evidence
-
-![](/screenshots/frontend/31-dist-folder.png)
-
-![](/screenshots/frontend/32-build-success.png)
-
-### Result
-
-The frontend production build completed successfully.
 
 ---
 
-# 18. Final Application Verification
+## Result
 
-At the end of the application stage, the FlavorForge application consisted of:
+The basic FlavorForge application was created.
+
+At this point:
 
 ```text
 FlavorForge
 │
 ├── Frontend
-│   └── React + Vite
+│   └── React application
 │
-├── Backend
-│   └── Node.js + Express
-│
-├── API
-│   ├── /api/health
-│   └── Recipe API
-│
-└── Tests
-    ├── Frontend tests
-    └── Backend Jest tests
+└── Backend
+    └── Node.js API
 ```
 
-The frontend and backend were verified independently and then tested together.
+The frontend and backend could be developed and verified separately.
 
----
-
-# 19. Application Stage Result
-
-The application stage established the working application that would be packaged in the next phase.
-
-The final flow was:
-
-```text
-React + Vite Frontend
-          |
-          | API requests
-          ↓
-Node.js + Express Backend
-          |
-          ├── /api/health
-          └── Recipe API
-```
-
-The application was now ready for containerization.
-
----
-
-# 20. Evidence Summary
-
-The application stage produced the following evidence:
-
-```text
-Frontend
-    ↓
-03-react-application-running.png
-
-Frontend structure
-    ↓
-04-frontend-enterprise-structure.png
-
-React routing
-    ↓
-13-react-router-basic-routing.png
-
-Shared layout
-    ↓
-14-shared-layout-with-outlet.png
-
-Reusable components
-    ↓
-07-first-reusable-component.png
-16-reusable-button-component.png
-19-reusable-loading-component.png
-
-Backend structure
-    ↓
-01-backend-folder-structure.png
-
-Backend health endpoint
-    ↓
-02-backend-health-endpoint.png
-04-health-endpoint-browser.png
-
-Backend running
-    ↓
-03-backend-server-running.png
-
-Frontend/backend integration
-    ↓
-10-cors-enabled-frontend-backend-connected.png
-
-Recipe API
-    ↓
-11-recipes-api-structure.png
-12-recipes-api-working.png
-
-Frontend build
-    ↓
-31-dist-folder.png
-32-build-success.png
-```
-
----
-
-# 21. Reviewer Explanation
-
-### "How did you structure the application?"
-
-> "I separated FlavorForge into a React/Vite frontend and a Node.js/Express backend. The frontend contains the UI, pages, reusable components and API service layer, while the backend contains the API routes, controllers and services."
-
-### "How did you verify that the backend was working?"
-
-> "I started the backend locally and verified the `/api/health` endpoint. I also tested the recipe API and verified that the frontend could communicate with the backend."
-
-### "Why did you separate frontend and backend?"
-
-> "The separation allowed me to build, test, containerize and deploy the frontend and backend independently."
-
-### "What was verified before Docker?"
-
-> "I verified the frontend, backend, API endpoints, frontend-backend integration, automated tests and the frontend production build before moving to containerization."
-
----
-
-# 22. Next Step
-
-The application stage is complete.
-
-The next stage is:
-
-```text
-04-docker/
-```
-
-The application will now be packaged into Docker containers.
-
-The Docker Build Journey begins with:
-
-```text
-04-docker/01-docker-setup.md
-```
+➡️ **Next: 04 — Docker**
