@@ -30,11 +30,17 @@ Run from **Windows PowerShell** or **Windows Terminal**:
 wsl --status
 ```
 
+<img width="357" height="67" alt="image" src="https://github.com/user-attachments/assets/216e8625-2c2a-4e1c-9981-a2fc0d42daba" />
+
+
 We could also check the installed Linux distributions:
 
 ```powershell
 wsl --list --verbose
 ```
+
+<img width="438" height="66" alt="image" src="https://github.com/user-attachments/assets/ffa08b62-78c6-4328-8b14-331ae10a07b4" />
+
 
 ### What the command did
 
@@ -76,6 +82,9 @@ If WSL was not installed, we used an administrator PowerShell window.
 ```powershell
 wsl --install
 ```
+
+<img width="432" height="63" alt="image" src="https://github.com/user-attachments/assets/8b2c08ac-5948-4f02-ac0a-b2e45255d020" />
+
 
 ### What the command did
 
@@ -169,6 +178,10 @@ cat /etc/os-release | grep PRETTY_NAME
 PRETTY_NAME="Ubuntu 24.04.4 LTS"
 ```
 
+<img width="1237" height="1008" alt="image" src="https://github.com/user-attachments/assets/45215584-fdb5-4dec-a817-9be50a032714" />
+
+
+
 The exact Ubuntu version may change with future installations.
 
 ### What the command did
@@ -208,6 +221,9 @@ WSL
 
 We installed the Microsoft WSL extension.
 
+<img width="1445" height="543" alt="image" src="https://github.com/user-attachments/assets/b0363da1-ac40-4b95-a694-00249734a067" />
+
+
 ### What it did
 
 The extension allowed VS Code to work directly with files and terminals inside the WSL Linux environment.
@@ -226,6 +242,9 @@ We opened the Ubuntu terminal and navigated to the FlavorForge repository.
 cd ~/flavorforge-azure-devsecops-capstone
 ```
 
+<img width="616" height="81" alt="image" src="https://github.com/user-attachments/assets/1fdfe6e0-ca7f-4b46-8694-491d0bc2bfd6" />
+
+
 ### What the command did
 
 `cd` changed the current directory to the FlavorForge project directory.
@@ -243,6 +262,9 @@ From the FlavorForge project directory, we opened VS Code.
 ```bash
 code .
 ```
+
+<img width="578" height="120" alt="image" src="https://github.com/user-attachments/assets/67e0049c-456d-4296-bcbb-606b3965cee0" />
+
 
 ### What the command did
 
@@ -279,6 +301,9 @@ pwd
 ```
 
 The `<username>` value depends on the local Linux user.
+
+<img width="1408" height="231" alt="image" src="https://github.com/user-attachments/assets/1a33d05f-2221-476c-aa09-cbbf01ab1e95" />
+
 
 ### What this confirmed
 
@@ -423,7 +448,7 @@ This environment was then used for the subsequent Git, application, Docker, Azur
 
 ---
 
-# Reviewer Question
+#  Question
 
 ## Why did we use WSL?
 
