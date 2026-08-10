@@ -16,6 +16,9 @@ By the end of this step, we verified:
 
 > **Important:** FlavorForge was already an existing Git repository. We did not initialize a new repository or create unnecessary Git history.
 
+<img width="882" height="673" alt="image" src="https://github.com/user-attachments/assets/1fa360b1-82fb-409b-a90e-606d0d98d80d" />
+
+
 ---
 
 # 1. Open the FlavorForge Project
