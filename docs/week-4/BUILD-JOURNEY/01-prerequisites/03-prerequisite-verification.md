@@ -198,7 +198,8 @@ Once the verification command completed successfully, the complete terminal outp
 
 ### Screenshot filename
 
-![](/screenshots/BUILD-JOURNEY/01-prerequisites/01-prerequisites-verification.png)
+<img width="406" height="1152" alt="image" src="https://github.com/user-attachments/assets/a11ddffe-9b5e-4fe3-9804-55754bfea998" />
+
 
 ### Repository location
 
@@ -219,6 +220,8 @@ The same prerequisite verification process was also recorded for the BUILD-JOURN
 ```text
 videos/BUILD-JOURNEY/01-prerequisites/
 ```
+
+https://github.com/bymalathi/flavorforge-azure-devsecops-capstone/blob/main/videos/BUILD-JOURNEY/01-prerequisites-verification.mp4
 
 The recording should show the verification being performed from the WSL/VS Code environment.
 
