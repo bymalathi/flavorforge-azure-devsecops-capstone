@@ -1756,35 +1756,35 @@ This provides horizontal scaling for the FlavorForge backend. When CPU utilizati
 
 ## What we wanted to do
 
-After verifying the FlavorForge Deployments, Services, Ingress, and Horizontal Pod Autoscaler, the next step was to verify how Kubernetes handles application updates.
+After verifying the FlavorForge Deployments, Services, Ingress, and Horizontal Pod Autoscaler, the next step was to verify the Kubernetes Deployment rolling update configuration.
 
-Kubernetes Deployments support rolling updates, which allow a new application version to be introduced gradually without stopping the entire application.
+A rolling update allows Kubernetes to replace application Pods gradually when the Deployment configuration changes.
 
-For FlavorForge, the rolling update process follows this model:
+For FlavorForge, the rolling update process can be represented as:
 
 ```text
 Current Deployment
         |
         v
-Existing Pods
+Deployment Update
         |
         v
-Update container image
+New ReplicaSet
         |
         v
-Kubernetes creates new Pods
+New Pods
         |
         v
-New Pods become Ready
+Readiness Verification
         |
         v
-Old Pods are gradually removed
+Old Pods Removed
         |
         v
 Updated Deployment
-```
+````
 
-The objective was to verify that Kubernetes could update the application while maintaining the desired number of available replicas.
+The objective was to verify the Deployment configuration, revision history, ReplicaSet state, rollout status, and application health.
 
 ---
 
@@ -1792,13 +1792,13 @@ The objective was to verify that Kubernetes could update the application while m
 
 Before verifying the rolling update configuration, the current backend Deployment was inspected.
 
-The Deployment was checked using:
+Run:
 
 ```bash
 kubectl get deployment backend -n flavorforge -o wide
 ```
 
-The output confirmed:
+The current Deployment showed:
 
 ```text
 NAME      READY   UP-TO-DATE   AVAILABLE   AGE   CONTAINERS   IMAGES
@@ -1808,12 +1808,12 @@ backend   2/2     2            2           14d   backend      flavorforgeacr2026
 This confirms that:
 
 * The backend Deployment exists in the `flavorforge` namespace.
-* Two backend replicas are desired.
-* Two replicas are updated.
+* Two replicas are desired.
+* Two replicas are up to date.
 * Two replicas are available.
-* The backend container is using image version `1.8`.
+* The backend is using image version `1.8`.
 
-The current deployment state can be represented as:
+The current Deployment state is:
 
 ```text
 backend Deployment
@@ -1822,22 +1822,18 @@ backend Deployment
         |                |
         v                v
  Backend Pod 1      Backend Pod 2
-    Ready               Ready
+     Ready              Ready
 ```
 
-The Deployment was therefore in a healthy state before examining the rolling update configuration.
-
-### Evidence
-
-*Figure 24.1 — FlavorForge backend Deployment showing 2/2 replicas available and backend image version 1.8.*
+The backend Deployment was therefore in a healthy state before verifying the rolling update configuration.
 
 ---
 
 ## 24.2 Verify the rolling update strategy
 
-The backend Deployment was inspected to verify the Kubernetes update strategy.
+The backend Deployment configuration was inspected to verify the Kubernetes update strategy.
 
-The container image was checked using:
+The current backend image was checked using:
 
 ```bash
 kubectl get deployment backend -n flavorforge \
@@ -1845,13 +1841,13 @@ kubectl get deployment backend -n flavorforge \
 echo
 ```
 
-The current image was:
+The result was:
 
 ```text
 flavorforgeacr2026ms.azurecr.io/flavorforge-backend:1.8
 ```
 
-The Deployment update strategy was verified using:
+The Deployment strategy was then verified:
 
 ```bash
 kubectl get deployment backend -n flavorforge \
@@ -1865,7 +1861,7 @@ The result was:
 RollingUpdate
 ```
 
-The rolling update configuration was then checked using:
+The rolling update settings were checked using:
 
 ```bash
 kubectl get deployment backend -n flavorforge \
@@ -1879,58 +1875,52 @@ The result was:
 {"maxSurge":0,"maxUnavailable":1}
 ```
 
-This means the Deployment is configured to use Kubernetes `RollingUpdate`.
+The configuration is:
 
-The configured behavior is:
+| Setting          |           Value | Meaning                                                      |
+| ---------------- | --------------: | ------------------------------------------------------------ |
+| Update strategy  | `RollingUpdate` | Pods are replaced gradually                                  |
+| `maxSurge`       |             `0` | No additional Pod is created above the desired replica count |
+| `maxUnavailable` |             `1` | At most one Pod can be unavailable during the update         |
+| Desired replicas |             `2` | Two backend replicas are maintained                          |
 
-| Setting          |           Value | Meaning                                              |
-| ---------------- | --------------: | ---------------------------------------------------- |
-| Update strategy  | `RollingUpdate` | Pods are updated gradually                           |
-| `maxSurge`       |             `0` | No additional Pod above the desired replica count    |
-| `maxUnavailable` |             `1` | At most one Pod can be unavailable during the update |
-| Desired replicas |             `2` | Kubernetes maintains two backend replicas            |
-
-The configuration can be represented as:
+The rolling update behavior can therefore be represented as:
 
 ```text
 Backend Deployment
-       |
-       v
-RollingUpdate
-       |
-       +-------------------+
-       |                   |
-       v                   v
-maxSurge = 0       maxUnavailable = 1
-       |                   |
-       |                   |
-       +---------+---------+
-                 |
-                 v
+        |
+        v
+   RollingUpdate
+        |
+        +---------------------+
+        |                     |
+        v                     v
+  maxSurge = 0        maxUnavailable = 1
+        |                     |
+        +----------+----------+
+                   |
+                   v
        Controlled Pod replacement
 ```
 
-This configuration provides a controlled replacement process while allowing Kubernetes to maintain application availability within the configured limits.
-
-### Evidence
-
-*Figure 24.2 — Backend Deployment configured with the Kubernetes `RollingUpdate` strategy, `maxSurge: 0`, and `maxUnavailable: 1`.*
+This provides a controlled way to update the backend application while Kubernetes manages the transition between the old and new ReplicaSets.
 
 ---
 
 ## 24.3 Verify Deployment rollout history
 
-The Deployment revision history was verified using:
+Kubernetes maintains revision history for Deployments.
+
+The backend Deployment rollout history was checked using:
 
 ```bash
 kubectl rollout history deployment/backend -n flavorforge
 ```
 
-The current rollout history showed multiple Deployment revisions:
+The output showed multiple Deployment revisions:
 
 ```text
 deployment.apps/backend
-
 REVISION  CHANGE-CAUSE
 16        <none>
 17        <none>
@@ -1945,23 +1935,27 @@ REVISION  CHANGE-CAUSE
 27        Release 1.8 - Backend health probe update
 ```
 
-The current Deployment revision was also confirmed as revision `27`.
+The current Deployment revision was confirmed as:
 
-The Deployment description showed:
+```text
+27
+```
+
+The Deployment description also showed:
 
 ```text
 deployment.kubernetes.io/revision: 27
 ```
 
-and:
+and the change cause:
 
 ```text
 kubernetes.io/change-cause: Release 1.8 - Backend health probe update
 ```
 
-This demonstrates that Kubernetes is maintaining revision history for the backend Deployment.
+This demonstrates that Kubernetes is maintaining a revision history for the FlavorForge backend Deployment.
 
-The rollout history provides a record of previous Deployment revisions:
+The revision history can be represented as:
 
 ```text
 Revision 18
@@ -1970,7 +1964,13 @@ Revision 18
 Revision 19
      |
      v
-   ...
+Revision 20
+     |
+     v
+Revision 21
+     |
+     v
+Revision 22
      |
      v
 Revision 23
@@ -1982,25 +1982,42 @@ Revision 24
 Revision 26
      |
      v
-Revision 27  <-- Current
+Revision 27
+     |
+     v
+Current Deployment
 ```
 
-Deployment revision history is useful because it allows previous application states to be identified and, when required, provides the basis for rolling back to an earlier Deployment revision.
+Deployment revision history is useful because it provides a record of previous Deployment versions and can be used when investigating or rolling back application changes.
 
 ### Evidence
 
-*Figure 24.3 — FlavorForge backend Deployment rollout history showing multiple Kubernetes revisions, with revision 27 as the current revision.*
+![Figure 24.1 — FlavorForge backend Deployment rollout history showing Kubernetes revisions.](../../../../screenshots/kubernetes/rolling-update/1-rollout-history.png)
+
+*Figure 24.1 — FlavorForge backend Deployment rollout history showing multiple Kubernetes revisions, with revision 27 as the current revision.*
 
 ---
 
 ## 24.3.1 Verify the current ReplicaSet
 
-The Deployment description was also used to verify the ReplicaSet associated with the current revision.
+The Deployment was inspected using:
+
+```bash
+kubectl describe deployment backend -n flavorforge
+```
 
 The current Deployment reported:
 
 ```text
-NewReplicaSet: backend-7c8fb9489c (2/2 replicas created)
+Replicas:               2 desired | 2 updated | 2 total | 2 available | 0 unavailable
+StrategyType:           RollingUpdate
+RollingUpdateStrategy:  1 max unavailable, 0 max surge
+```
+
+The current ReplicaSet was:
+
+```text
+NewReplicaSet:   backend-7c8fb9489c (2/2 replicas created)
 ```
 
 The Deployment conditions showed:
@@ -2010,54 +2027,46 @@ Progressing    True    NewReplicaSetAvailable
 Available      True    MinimumReplicasAvailable
 ```
 
-This confirms that:
+There were no Deployment events indicating an active problem:
 
-* The current ReplicaSet was successfully created.
-* Two replicas were created by the current ReplicaSet.
-* The new ReplicaSet is available.
-* The Deployment has the minimum required available replicas.
+```text
+Events:          <none>
+```
 
 The current relationship is:
 
 ```text
-Deployment/backend
+Backend Deployment
         |
         v
 backend-7c8fb9489c
         |
-        +-----------+
-        |           |
-        v           v
-    Backend Pod  Backend Pod
-       Ready         Ready
+        +----------------+
+        |                |
+        v                v
+ Backend Pod 1      Backend Pod 2
+     Ready              Ready
 ```
 
-There were no Deployment events indicating an active rollout problem:
-
-```text
-Events: <none>
-```
-
-This confirms that the current backend Deployment is healthy and that the latest ReplicaSet is successfully managing the required backend Pods.
+This confirms that the current ReplicaSet successfully manages the required backend Pods and that the Deployment is in a healthy state.
 
 ### Evidence
 
-*Figure 24.4 — Backend Deployment showing the current ReplicaSet, available replicas, healthy conditions, and no deployment events.*
+![Figure 24.2 — Backend Deployment showing the current ReplicaSet and healthy Deployment conditions.](../../../../screenshots/kubernetes/rolling-update/2-deployment-describe.png)
 
+*Figure 24.2 — Backend Deployment showing the current ReplicaSet, available replicas, healthy conditions, and no Deployment events.*
 
 ---
 
 ## 24.4 Monitor the rollout
 
-During an application update, Kubernetes provides rollout status information.
+Kubernetes provides rollout status information while a Deployment is being updated.
 
-The rollout can be monitored using:
+The rollout status can be checked using:
 
 ```bash
 kubectl rollout status deployment/backend -n flavorforge
 ```
-
-A successful rollout reports that the Deployment has successfully progressed.
 
 The Pods can also be monitored using:
 
@@ -2067,7 +2076,7 @@ kubectl get pods -n flavorforge -w
 
 The `-w` option watches for changes to the Pods.
 
-During a rolling update, the output may temporarily show both old and new Pods while Kubernetes performs the transition.
+During a rolling update, Kubernetes manages the transition between the old and new ReplicaSets.
 
 The expected lifecycle is:
 
@@ -2090,6 +2099,8 @@ Old Pods terminated
 New ReplicaSet becomes active
 ```
 
+A successful rollout indicates that Kubernetes has completed the Deployment transition.
+
 ---
 
 ## 24.5 Verify the final Deployment state
@@ -2100,37 +2111,39 @@ After the rollout completes, the Deployment should be checked again:
 kubectl get deployment backend -n flavorforge
 ```
 
-The Pods should then be verified:
+The backend Pods can then be verified:
 
 ```bash
 kubectl get pods -n flavorforge
 ```
 
-The expected result is that the required backend replicas are available and the Pods are in the:
-
-```text
-Running
-```
-
-state.
-
-The rollout can be confirmed with:
+The rollout can also be confirmed using:
 
 ```bash
 kubectl rollout status deployment/backend -n flavorforge
 ```
 
-The Deployment should report a successful rollout.
+The expected final state is:
+
+```text
+Backend Deployment
+       |
+       +-----------+
+       |           |
+       v           v
+ Backend Pod    Backend Pod
+   Running        Running
+```
+
+The Deployment should report the required replicas as available and the Pods should remain in the `Running` state.
 
 ---
 
 ## 24.6 Verify application health after the update
 
-A deployment update is not considered complete only because Kubernetes reports a successful rollout.
+A successful Kubernetes rollout should be followed by application-level verification.
 
-The application itself should also be verified.
-
-The backend health endpoint can be tested again after the rollout.
+The backend health endpoint was tested after the Deployment update.
 
 The verification flow is:
 
@@ -2176,7 +2189,7 @@ Verify the Ingress:
 kubectl get ingress -n flavorforge
 ```
 
-The expected architecture remains:
+The application networking architecture remains:
 
 ```text
 Internet
@@ -2193,7 +2206,7 @@ Frontend Service   Backend Service
 Frontend Pods      Backend Pods
 ```
 
-The rolling update therefore changes the application Pods without changing the stable Service endpoints used by the application.
+The rolling update changes the application Pods without changing the stable Service endpoints used by the application.
 
 ---
 
@@ -2207,11 +2220,11 @@ For FlavorForge, this provides:
 
 * Controlled application updates.
 * Reduced downtime during normal updates.
-* Automatic creation of new Pods.
-* Gradual removal of old Pods.
+* Automatic creation and management of new Pods.
+* Gradual replacement of old Pods.
 * Deployment revision tracking.
 * Health-aware rollout progression.
-* The ability to roll back to an earlier revision if required.
+* The ability to roll back to an earlier revision when required.
 
 The overall update process is:
 
@@ -2243,12 +2256,13 @@ This demonstrates how Kubernetes manages application lifecycle changes declarati
 
 ## 24.9 Rolling update verification
 
-The following commands were used to verify the Deployment rollout:
+The following commands were used to verify the backend Deployment and its rolling update configuration:
 
 ```bash
-kubectl get deployment backend -n flavorforge
+kubectl get deployment backend -n flavorforge -o wide
 kubectl rollout status deployment/backend -n flavorforge
 kubectl rollout history deployment/backend -n flavorforge
+kubectl describe deployment backend -n flavorforge
 kubectl get pods -n flavorforge
 kubectl get svc -n flavorforge
 kubectl get ingress -n flavorforge
@@ -2256,19 +2270,36 @@ kubectl get ingress -n flavorforge
 
 Together, these checks verify:
 
-| Verification    | Purpose                                     |
-| --------------- | ------------------------------------------- |
-| Deployment      | Confirms desired replicas and rollout state |
-| Rollout status  | Confirms successful update                  |
-| Rollout history | Shows Deployment revisions                  |
-| Pods            | Confirms application Pods are running       |
-| Services        | Confirms stable application networking      |
-| Ingress         | Confirms external routing remains available |
+| Verification           | Purpose                                       |
+| ---------------------- | --------------------------------------------- |
+| Deployment             | Confirms desired replicas and current image   |
+| Update strategy        | Confirms `RollingUpdate` configuration        |
+| Rollout status         | Confirms rollout progression                  |
+| Rollout history        | Shows Deployment revisions                    |
+| Deployment description | Confirms ReplicaSet and Deployment conditions |
+| Pods                   | Confirms application Pods are running         |
+| Services               | Confirms stable application networking        |
+| Ingress                | Confirms external routing remains available   |
 
-The Kubernetes rolling update mechanism was therefore verified as part of the FlavorForge deployment.
+The Kubernetes rolling update configuration and Deployment state were therefore verified as part of the FlavorForge deployment.
 
 ### Evidence
 
-![Kubernetes rolling update verification](/screenshots/kubernetes/nginx-ingress/6-rollout-history.png)
+The rolling update evidence is stored in:
 
-*Figure 24.1 — FlavorForge Kubernetes rolling update and Deployment rollout successfully verified.*
+```text
+screenshots/kubernetes/rolling-update/
+├── 1-rollout-history.png
+└── 2-deployment-describe.png
+```
+
+The screenshots provide direct evidence of:
+
+* Backend Deployment revision history.
+* Current Deployment revision.
+* RollingUpdate configuration.
+* ReplicaSet state.
+* Available replicas.
+* Deployment health conditions.
+
+This completes the Kubernetes rolling update verification for FlavorForge.
