@@ -1040,3 +1040,715 @@ Application Pods
 The Services therefore provide stable internal networking while the Ingress provides the external HTTP entry point.
 
 ---
+
+# 22. Configure and verify NGINX Ingress
+
+## What we wanted to do
+
+After configuring the internal Kubernetes Services, the next step was to provide a single external HTTP entry point for the FlavorForge application.
+
+NGINX Ingress was used to receive external HTTP traffic and route requests to the appropriate Kubernetes Service.
+
+The request flow is:
+
+```text
+                    Internet
+                       |
+                       v
+              External IP
+               4.157.77.48
+                       |
+                       v
+              NGINX Ingress
+                       |
+              +--------+--------+
+              |                 |
+           /api                /
+              |                 |
+              v                 v
+      Backend Service    Frontend Service
+         port 3000           port 80
+              |                 |
+              v                 v
+       Backend Pods       Frontend Pods
+````
+
+The Ingress resource was configured with the NGINX Ingress class.
+
+The relevant manifest is:
+
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+
+metadata:
+  name: flavorforge-ingress
+  namespace: flavorforge
+
+spec:
+  ingressClassName: nginx
+
+  rules:
+  - http:
+      paths:
+
+      - path: /api
+        pathType: Prefix
+        backend:
+          service:
+            name: backend
+            port:
+              number: 3000
+
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: frontend
+            port:
+              number: 80
+```
+
+This creates two routing rules:
+
+| Request path | Destination                    |
+| ------------ | ------------------------------ |
+| `/api`       | Backend Service on port `3000` |
+| `/`          | Frontend Service on port `80`  |
+
+### 22.1 Verify the NGINX Ingress controller
+
+The NGINX Ingress controller was verified in the `ingress-nginx` namespace.
+
+The controller Pod was checked using:
+
+```bash
+kubectl get pods -n ingress-nginx
+```
+
+The controller was running successfully:
+
+```text
+NAME                                        READY   STATUS    RESTARTS
+ingress-nginx-controller-7d65c586d6-ns6th   1/1     Running   0
+```
+
+The controller Service was then checked:
+
+```bash
+kubectl get svc -n ingress-nginx
+```
+
+The result showed that the controller uses a `LoadBalancer` Service:
+
+```text
+NAME                         TYPE           CLUSTER-IP    EXTERNAL-IP
+ingress-nginx-controller    LoadBalancer   10.0.156.28   4.157.77.48
+```
+
+The Azure Load Balancer therefore provides the external IP address:
+
+```text
+4.157.77.48
+```
+
+### Evidence
+
+![NGINX Ingress controller installation](/screenshots/kubernetes/nginx-ingress/1-installation.png)
+
+*Figure 22.1 — NGINX Ingress controller installed and running in the AKS cluster.*
+
+---
+
+### 22.2 Configure application Services as ClusterIP
+
+The backend and frontend Services were configured as internal `ClusterIP` Services.
+
+This prevents the individual application Services from requiring separate external load balancers.
+
+The backend Service uses:
+
+```text
+backend:3000
+```
+
+and the frontend Service uses:
+
+```text
+frontend:80
+```
+
+The NGINX Ingress controller provides the external entry point instead.
+
+### Evidence
+
+![Services changed to ClusterIP](/screenshots/kubernetes/nginx-ingress/2-change-type-loadbalancer-to-clusterip.png)
+
+*Figure 22.2 — Backend and frontend Services configured as internal `ClusterIP` Services.*
+
+---
+
+### 22.3 Verify the Ingress external address
+
+The deployed Ingress resource was verified using:
+
+```bash
+kubectl get ingress -n flavorforge
+```
+
+The result was:
+
+```text
+NAME                  CLASS   HOSTS   ADDRESS       PORTS
+flavorforge-ingress   nginx   *       4.157.77.48   80
+```
+
+The Ingress therefore exposes the FlavorForge application through:
+
+```text
+http://4.157.77.48
+```
+
+### Evidence
+
+![Ingress external address](/screenshots/kubernetes/nginx-ingress/3-ingress-external-address.png)
+
+*Figure 22.3 — FlavorForge Ingress receiving the external IP `4.157.77.48`.*
+
+---
+
+### 22.4 Verify frontend routing
+
+The frontend was accessed through the Ingress external address:
+
+```text
+http://4.157.77.48
+```
+
+The `/` path is routed to:
+
+```text
+frontend Service → port 80
+```
+
+This confirmed that external HTTP traffic could reach the FlavorForge frontend through NGINX Ingress.
+
+### Evidence
+
+![FlavorForge frontend through Ingress](/screenshots/kubernetes/nginx-ingress/4-frontend-http-4-157-77-48.png)
+
+*Figure 22.4 — FlavorForge frontend accessed through the NGINX Ingress external address.*
+
+---
+
+### 22.5 Verify backend routing
+
+The `/api` path is routed to the backend Service:
+
+```text
+/api
+  |
+  v
+backend Service
+  |
+  v
+port 3000
+```
+
+The backend endpoint was verified through the external Ingress address.
+
+This confirmed that NGINX Ingress was correctly routing API requests to the backend application.
+
+### Evidence
+
+![FlavorForge backend through Ingress](/screenshots/kubernetes/nginx-ingress/5-backend.png)
+
+*Figure 22.5 — FlavorForge backend API routed through NGINX Ingress.*
+
+---
+
+### 22.6 Verify the backend health endpoint through Ingress
+
+The backend health endpoint was also tested through the external Ingress address.
+
+The expected route is:
+
+```text
+http://4.157.77.48/api/health
+```
+
+The successful response confirmed the complete request path:
+
+```text
+Browser
+   |
+   v
+Azure Load Balancer
+   |
+   v
+NGINX Ingress Controller
+   |
+   v
+/api rule
+   |
+   v
+Backend ClusterIP Service
+   |
+   v
+Backend Pod
+   |
+   v
+Health endpoint
+```
+
+### Evidence
+
+![Backend API health through Ingress](/screenshots/kubernetes/nginx-ingress/7-api-health.png)
+
+*Figure 22.6 — FlavorForge backend health endpoint successfully verified through NGINX Ingress.*
+
+---
+
+## 22.7 Final Ingress verification
+
+The final Ingress configuration was verified with:
+
+```bash
+kubectl describe ingress flavorforge-ingress -n flavorforge
+```
+
+The output confirmed:
+
+```text
+Address:          4.157.77.48
+Ingress Class:    nginx
+
+/api   backend:3000
+/      frontend:80
+```
+
+The NGINX controller was also confirmed as:
+
+```text
+STATUS: Running
+TYPE:   LoadBalancer
+EXTERNAL-IP: 4.157.77.48
+```
+
+This verifies that the FlavorForge application has a single external HTTP entry point while the frontend and backend Services remain internal `ClusterIP` Services.
+
+The resulting architecture is:
+
+```text
+                         Internet
+                            |
+                            v
+                    4.157.77.48:80
+                            |
+                            v
+                 Azure Load Balancer
+                            |
+                            v
+                 NGINX Ingress Controller
+                            |
+                +-----------+-----------+
+                |                       |
+             /api                      /
+                |                       |
+                v                       v
+        backend:3000              frontend:80
+        ClusterIP Service         ClusterIP Service
+                |                       |
+                v                       v
+          Backend Pods             Frontend Pods
+```
+
+This establishes the Kubernetes networking layer required for external access to FlavorForge.
+
+---
+
+# 23. Configure Horizontal Pod Autoscaling
+
+## What we wanted to do
+
+The FlavorForge backend should be able to adjust the number of running Pods based on application load.
+
+Kubernetes Horizontal Pod Autoscaler (HPA) was configured for the backend Deployment.
+
+The HPA monitors CPU utilization and adjusts the number of backend replicas within a defined minimum and maximum range.
+
+The scaling model is:
+
+```text
+                  Backend Deployment
+                         |
+                         v
+                 CPU utilization
+                         |
+                         v
+                    Backend HPA
+                    /         \
+                   /           \
+                  v             v
+          Minimum replicas   Maximum replicas
+                 2                 5
+                         |
+                         v
+                  Backend Pods
+````
+
+The backend HPA uses CPU utilization as its scaling metric.
+
+The configured target is:
+
+```text
+CPU target:       70%
+Minimum replicas: 2
+Maximum replicas: 5
+```
+
+---
+
+## 23.1 Verify the Metrics Server
+
+The HPA requires resource metrics from the Kubernetes Metrics Server.
+
+Pod resource usage was verified using:
+
+```bash
+kubectl top pods -n flavorforge
+```
+
+The current metrics showed:
+
+```text
+NAME                        CPU(cores)   MEMORY(bytes)
+backend-7c8fb9489c-fstht    1m           24Mi
+backend-7c8fb9489c-r2rzs    1m           47Mi
+frontend-5585ccd455-25tws   0m           3Mi
+frontend-5585ccd455-zgdr7   0m           3Mi
+```
+
+This confirmed that resource metrics were available for the deployed Pods.
+
+### Evidence
+
+![Kubernetes Metrics Server](/screenshots/kubernetes/hpa/1-metrics-server.png)
+
+*Figure 23.1 — Kubernetes resource metrics available for the FlavorForge Pods.*
+
+---
+
+## 23.2 Configure the backend HPA
+
+The backend HPA targets the `backend` Deployment.
+
+The configuration uses the Kubernetes `autoscaling/v2` API:
+
+```yaml
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+
+metadata:
+  name: backend-hpa
+  namespace: flavorforge
+
+spec:
+  minReplicas: 2
+  maxReplicas: 5
+
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: backend
+
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 70
+```
+
+This configuration means:
+
+```text
+CPU < target
+    |
+    v
+HPA can scale toward minimum
+    |
+    v
+2 Pods minimum
+
+
+CPU increases
+    |
+    v
+HPA increases replicas
+    |
+    v
+Up to 5 Pods maximum
+```
+
+### Evidence
+
+![HPA configuration](/screenshots/kubernetes/hpa/2-autoscaling-configured-successfully.png)
+
+*Figure 23.2 — Backend Horizontal Pod Autoscaler configured successfully.*
+
+---
+
+## 23.3 Verify backend Deployment and Pods
+
+The backend Deployment was verified using:
+
+```bash
+kubectl get deployment -n flavorforge
+```
+
+The current result was:
+
+```text
+NAME       READY   UP-TO-DATE   AVAILABLE
+backend    2/2     2            2
+frontend   2/2     2            2
+```
+
+The backend currently has two available replicas.
+
+This matches the HPA minimum replica configuration.
+
+The current scaling state is therefore:
+
+```text
+HPA minimum:        2
+Current replicas:   2
+Available replicas: 2
+```
+
+### Evidence
+
+![FlavorForge Deployments and Pods](/screenshots/kubernetes/hpa/3-deploymemts-pods.png)
+
+*Figure 23.3 — FlavorForge Deployments and Pods running in the AKS cluster.*
+
+---
+
+## 23.4 Inspect the backend Deployment
+
+The backend Deployment was inspected to verify its Kubernetes configuration and relationship with the HPA.
+
+The Deployment is the scaling target referenced by:
+
+```text
+backend-hpa
+     |
+     v
+Deployment/backend
+     |
+     v
+Backend Pods
+```
+
+### Evidence
+
+![Backend Deployment details](/screenshots/kubernetes/hpa/4-kubectl-describe-deployment-backend-n-flavorforge.png)
+
+*Figure 23.4 — Backend Deployment inspected in the `flavorforge` namespace.*
+
+---
+
+## 23.5 Verify current resource utilization
+
+Current Pod resource consumption was checked with:
+
+```bash
+kubectl top pods -n flavorforge
+```
+
+The backend Pods were using approximately:
+
+```text
+backend Pod 1: 1m CPU
+backend Pod 2: 1m CPU
+```
+
+The HPA reported the current CPU utilization as:
+
+```text
+2% / 70%
+```
+
+This means the current workload is well below the configured CPU scaling target.
+
+### Evidence
+
+![Pod resource usage](/screenshots/kubernetes/hpa/5-kubectl-top-pods-n-flavorforge.png)
+
+*Figure 23.5 — Current CPU and memory utilization of FlavorForge Pods.*
+
+---
+
+## 23.6 Verify HPA status
+
+The HPA was verified using:
+
+```bash
+kubectl get hpa -n flavorforge
+```
+
+The current result was:
+
+```text
+NAME          REFERENCE            TARGETS       MINPODS   MAXPODS   REPLICAS
+backend-hpa   Deployment/backend   cpu: 2%/70%   2         5         2
+```
+
+This confirms:
+
+| HPA setting       | Current value |
+| ----------------- | ------------: |
+| Target Deployment |     `backend` |
+| CPU target        |         `70%` |
+| Minimum Pods      |           `2` |
+| Maximum Pods      |           `5` |
+| Current replicas  |           `2` |
+| Desired replicas  |           `2` |
+
+The HPA is therefore active and currently maintaining the backend at its minimum replica count.
+
+### Evidence
+
+![HPA status](/screenshots/kubernetes/hpa/6-kubectl-get-hpa.png)
+
+*Figure 23.6 — Backend HPA status showing CPU utilization, replica limits, and current replicas.*
+
+---
+
+## 23.7 Verify the HPA configuration and conditions
+
+The HPA configuration was inspected using:
+
+```bash
+kubectl get hpa backend-hpa -n flavorforge -o yaml
+```
+
+The important configuration values were:
+
+```text
+minReplicas: 2
+maxReplicas: 5
+
+scaleTargetRef:
+  kind: Deployment
+  name: backend
+
+CPU target:
+  averageUtilization: 70
+```
+
+The HPA status also confirmed:
+
+```text
+AbleToScale:       True
+ScalingActive:     True
+Current CPU:       2%
+Current replicas:  2
+Desired replicas:  2
+```
+
+The HPA reported:
+
+```text
+the desired replica count is less than the minimum replica count
+```
+
+with the reason:
+
+```text
+TooFewReplicas
+```
+
+This is expected behavior rather than an error. The calculated workload requirement was below the configured minimum, so Kubernetes maintained the backend at two replicas.
+
+The scaling decision can therefore be represented as:
+
+```text
+Current CPU utilization
+        |
+        v
+       2%
+        |
+        v
+Target CPU = 70%
+        |
+        v
+Required replicas below minimum
+        |
+        v
+Minimum replicas enforced
+        |
+        v
+Backend remains at 2 Pods
+```
+
+### Evidence
+
+![Backend HPA YAML](/screenshots/kubernetes/hpa/7-kubectl-get-hpa-backend-hpa-n-flavorforge-o-yaml.png)
+
+*Figure 23.7 — Backend HPA configuration and status verified using Kubernetes YAML output.*
+
+---
+
+## 23.8 Final HPA architecture
+
+The completed autoscaling architecture is:
+
+```text
+                         AKS
+                          |
+                          v
+                 flavorforge namespace
+                          |
+                          v
+                  Backend Deployment
+                          |
+                          v
+                    backend-hpa
+                          |
+                 CPU metrics
+                          |
+              +-----------+-----------+
+              |                       |
+          Below target             Higher load
+              |                       |
+              v                       v
+       Maintain minimum        Increase replicas
+           2 Pods                 up to 5 Pods
+              |                       |
+              +-----------+-----------+
+                          |
+                          v
+                    Backend Pods
+```
+
+The configured HPA policy provides:
+
+```text
+Minimum replicas:     2
+Maximum replicas:     5
+CPU target:          70%
+Current utilization:  2%
+Current replicas:     2
+```
+
+The verification confirmed that the backend HPA was active and successfully obtaining CPU utilization metrics.
+
+At the time of verification, the backend was using approximately `2%` CPU against the configured `70%` target. Therefore, the HPA maintained the minimum replica count of `2`.
+
+This provides horizontal scaling for the FlavorForge backend. When CPU utilization increases, the HPA can increase the number of backend Pods up to the configured maximum of `5`. When utilization decreases, Kubernetes can reduce the replica count while respecting the minimum of `2` Pods.
+
+---
+
