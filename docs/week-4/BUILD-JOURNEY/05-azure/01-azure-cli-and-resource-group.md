@@ -111,7 +111,7 @@ flavorforge-rg
 The Azure region we selected was:
 
 ```text
-West US 2
+East US
 ```
 
 ### Option 1 — Create using Azure CLI
@@ -122,7 +122,7 @@ From the FlavorForge project directory, we ran:
 az group create --name flavorforge-rg --location westus2
 ```
 
-The command creates the Resource Group in the **West US 2** Azure region.
+The command creates the Resource Group in the **East US** Azure region.
 
 ### Verify from the terminal
 
@@ -168,7 +168,7 @@ Then:
 4. It should show:
 
 ```text
-West US 2
+East US
 ```
 
 You can also open the Resource Group's **Overview** page to see the resources that are added to it later.
@@ -250,7 +250,7 @@ Azure subscription
       ↓
 flavorforge-rg
       ↓
-Region: West US 2
+Region: East US
       ↓
 Microsoft.ContainerRegistry registered
 ```
