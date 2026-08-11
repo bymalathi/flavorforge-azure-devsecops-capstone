@@ -1752,3 +1752,371 @@ This provides horizontal scaling for the FlavorForge backend. When CPU utilizati
 
 ---
 
+# 24. Perform a Kubernetes Rolling Update
+
+## What we wanted to do
+
+After verifying the FlavorForge Deployments, Services, Ingress, and Horizontal Pod Autoscaler, the next step was to verify how Kubernetes handles application updates.
+
+Kubernetes Deployments support rolling updates, which allow a new application version to be introduced gradually without stopping the entire application.
+
+For FlavorForge, the rolling update process follows this model:
+
+```text
+Current Deployment
+        |
+        v
+Existing Pods
+        |
+        v
+Update container image
+        |
+        v
+Kubernetes creates new Pods
+        |
+        v
+New Pods become Ready
+        |
+        v
+Old Pods are gradually removed
+        |
+        v
+Updated Deployment
+```
+
+The objective was to verify that Kubernetes could update the application while maintaining the desired number of available replicas.
+
+---
+
+## 24.1 Check the current Deployment
+
+Before performing an update, the current backend Deployment was inspected.
+
+Run:
+
+```bash
+kubectl get deployment backend -n flavorforge
+```
+
+The Deployment status can also be checked using:
+
+```bash
+kubectl rollout status deployment/backend -n flavorforge
+```
+
+The current Pods were verified using:
+
+```bash
+kubectl get pods -n flavorforge
+```
+
+At this stage, the backend Deployment was already running successfully with the configured replicas.
+
+The current deployment model was:
+
+```text
+backend Deployment
+        |
+        +--------+--------+
+        |                 |
+        v                 v
+Backend Pod 1       Backend Pod 2
+```
+
+---
+
+## 24.2 Understand the rolling update strategy
+
+Kubernetes Deployments use a rolling update strategy by default.
+
+Instead of immediately deleting all existing Pods, Kubernetes gradually replaces the old Pods with new Pods.
+
+Conceptually:
+
+```text
+Before update
+
+Old Pod 1
+Old Pod 2
+
+
+During update
+
+Old Pod 1     New Pod 1
+Old Pod 2
+
+
+After new Pod becomes Ready
+
+Old Pod 2     New Pod 1
+               New Pod 2
+
+
+Final state
+
+New Pod 1
+New Pod 2
+```
+
+This approach reduces application downtime during a normal Deployment update.
+
+The Deployment maintains the desired state while Kubernetes manages the transition between the old and new ReplicaSets.
+
+---
+
+## 24.3 Verify the Deployment rollout configuration
+
+The Deployment configuration can be inspected using:
+
+```bash
+kubectl describe deployment backend -n flavorforge
+```
+
+The Deployment manages:
+
+* Replica count
+* Pod template
+* Container image
+* Container ports
+* Environment configuration
+* Update strategy
+* ReplicaSets
+
+The rollout history can be viewed using:
+
+```bash
+kubectl rollout history deployment/backend -n flavorforge
+```
+
+This provides information about previous revisions of the backend Deployment.
+
+---
+
+## 24.4 Monitor the rollout
+
+During an application update, Kubernetes provides rollout status information.
+
+The rollout can be monitored using:
+
+```bash
+kubectl rollout status deployment/backend -n flavorforge
+```
+
+A successful rollout reports that the Deployment has successfully progressed.
+
+The Pods can also be monitored using:
+
+```bash
+kubectl get pods -n flavorforge -w
+```
+
+The `-w` option watches for changes to the Pods.
+
+During a rolling update, the output may temporarily show both old and new Pods while Kubernetes performs the transition.
+
+The expected lifecycle is:
+
+```text
+Old ReplicaSet
+      |
+      v
+New ReplicaSet created
+      |
+      v
+New Pods started
+      |
+      v
+New Pods become Ready
+      |
+      v
+Old Pods terminated
+      |
+      v
+New ReplicaSet becomes active
+```
+
+---
+
+## 24.5 Verify the final Deployment state
+
+After the rollout completes, the Deployment should be checked again:
+
+```bash
+kubectl get deployment backend -n flavorforge
+```
+
+The Pods should then be verified:
+
+```bash
+kubectl get pods -n flavorforge
+```
+
+The expected result is that the required backend replicas are available and the Pods are in the:
+
+```text
+Running
+```
+
+state.
+
+The rollout can be confirmed with:
+
+```bash
+kubectl rollout status deployment/backend -n flavorforge
+```
+
+The Deployment should report a successful rollout.
+
+---
+
+## 24.6 Verify application health after the update
+
+A deployment update is not considered complete only because Kubernetes reports a successful rollout.
+
+The application itself should also be verified.
+
+The backend health endpoint can be tested again after the rollout.
+
+The verification flow is:
+
+```text
+Kubernetes Rolling Update
+          |
+          v
+New Backend Pods
+          |
+          v
+Pods become Ready
+          |
+          v
+Backend Service
+          |
+          v
+NGINX Ingress
+          |
+          v
+/api/health
+          |
+          v
+Healthy Response
+```
+
+A successful health response confirms that the updated backend remains accessible through the Kubernetes networking layer.
+
+---
+
+## 24.7 Verify Services and Ingress after the rollout
+
+The application Services should remain available after the Deployment update.
+
+Verify the Services:
+
+```bash
+kubectl get svc -n flavorforge
+```
+
+Verify the Ingress:
+
+```bash
+kubectl get ingress -n flavorforge
+```
+
+The expected architecture remains:
+
+```text
+Internet
+    |
+    v
+NGINX Ingress
+    |
+    +------------------+
+    |                  |
+    v                  v
+Frontend Service   Backend Service
+    |                  |
+    v                  v
+Frontend Pods      Backend Pods
+```
+
+The rolling update therefore changes the application Pods without changing the stable Service endpoints used by the application.
+
+---
+
+## 24.8 Why rolling updates are important
+
+Rolling updates provide an important Kubernetes deployment capability.
+
+They allow application versions to be updated while Kubernetes continues managing the desired number of application replicas.
+
+For FlavorForge, this provides:
+
+* Controlled application updates.
+* Reduced downtime during normal updates.
+* Automatic creation of new Pods.
+* Gradual removal of old Pods.
+* Deployment revision tracking.
+* Health-aware rollout progression.
+* The ability to roll back to an earlier revision if required.
+
+The overall update process is:
+
+```text
+Application Image
+        |
+        v
+Deployment Updated
+        |
+        v
+New ReplicaSet
+        |
+        v
+New Pods
+        |
+        v
+Readiness Verification
+        |
+        v
+Old Pods Removed
+        |
+        v
+Updated Application
+```
+
+This demonstrates how Kubernetes manages application lifecycle changes declaratively rather than requiring individual containers to be manually stopped and started.
+
+---
+
+## 24.9 Rolling update verification
+
+The following commands were used to verify the Deployment rollout:
+
+```bash
+kubectl get deployment backend -n flavorforge
+kubectl rollout status deployment/backend -n flavorforge
+kubectl rollout history deployment/backend -n flavorforge
+kubectl get pods -n flavorforge
+kubectl get svc -n flavorforge
+kubectl get ingress -n flavorforge
+```
+
+Together, these checks verify:
+
+| Verification    | Purpose                                     |
+| --------------- | ------------------------------------------- |
+| Deployment      | Confirms desired replicas and rollout state |
+| Rollout status  | Confirms successful update                  |
+| Rollout history | Shows Deployment revisions                  |
+| Pods            | Confirms application Pods are running       |
+| Services        | Confirms stable application networking      |
+| Ingress         | Confirms external routing remains available |
+
+The Kubernetes rolling update mechanism was therefore verified as part of the FlavorForge deployment.
+
+### Evidence
+
+
+
+![Kubernetes rolling update verification](/screenshots/kubernetes/nginx-ingress/6-rollout-history.png)
+
+
+*Figure 24.1 — FlavorForge Kubernetes rolling update and Deployment rollout successfully verified.*
