@@ -2,9 +2,11 @@
 
 ## 1. Objective
 
-After the FlavorForge Kubernetes manifests were organized into a common base and environment-specific overlays, Kustomize was used to manage the Kubernetes configuration for different environments without maintaining separate copies of the common manifests.
+After the FlavorForge Kubernetes manifests were organized into a reusable base and environment-specific overlays, **Kustomize** was used to manage Kubernetes configuration for Dev, QA, and Production environments.
 
-The Kustomize structure used in this project is:
+The goal was to avoid maintaining completely separate copies of the same Kubernetes manifests.
+
+The Kustomize structure used in the project is:
 
 ```text
 kubernetes/
@@ -20,9 +22,9 @@ kubernetes/
     ├── dev/
     ├── qa/
     └── prod/
-````
+```
 
-The model is:
+The configuration model is:
 
 ```text
                     Common Kubernetes Resources
@@ -30,17 +32,17 @@ The model is:
                               ▼
                             Base
                               │
-              ┌───────────────┼───────────────┐
-              ▼               ▼               ▼
-             Dev             QA              Prod
-              │               │               │
+             ┌────────────────┼────────────────┐
+             ▼                ▼                ▼
+            Dev              QA               Prod
+             │                │                │
        Dev-specific      QA-specific      Prod-specific
          changes           changes           changes
 ```
 
-The base contains the common FlavorForge Kubernetes resources.
+The **base** contains common Kubernetes resources.
 
-The overlays reuse the base and apply environment-specific configuration.
+The **overlays** reuse the base and apply environment-specific configuration such as namespaces, name suffixes, and replica patches.
 
 ---
 
@@ -52,66 +54,75 @@ The Kustomize configuration is located inside the existing FlavorForge Kubernete
 kubernetes/
 ```
 
-The repository already contains the Kubernetes base and the three environment overlays.
+The repository contains a common Kubernetes base and three environment overlays.
 
-The structure was verified with:
+The structure was verified using:
 
 ```bash
 find kubernetes -maxdepth 3 -type f -print | sort
 ```
 
-The verified structure was:
+The verified structure includes:
 
 ```text
 kubernetes/README.md
+
 kubernetes/base/autoscaling/hpa.yaml
 kubernetes/base/autoscaling/kustomization.yaml
+
 kubernetes/base/backend/deployment.yaml
 kubernetes/base/backend/kustomization.yaml
 kubernetes/base/backend/service.yaml
+
 kubernetes/base/config/backend-configmap.yaml
 kubernetes/base/config/kustomization.yaml
 kubernetes/base/config/secret-template.yaml
+
 kubernetes/base/frontend/deployment.yaml
 kubernetes/base/frontend/kustomization.yaml
 kubernetes/base/frontend/service.yaml
+
 kubernetes/base/ingress/ingress.yaml
 kubernetes/base/ingress/kustomization.yaml
+
 kubernetes/base/kustomization.yaml
 kubernetes/base/namespace.yaml
+
 kubernetes/overlays/dev/backend-replica-patch.yaml
 kubernetes/overlays/dev/frontend-replica-patch.yaml
 kubernetes/overlays/dev/kustomization.yaml
-kubernetes/overlays/prod/backend-replica-patch.yaml
-kubernetes/overlays/prod/frontend-replica-patch.yaml
-kubernetes/overlays/prod/kustomization.yaml
+
 kubernetes/overlays/qa/backend-replica-patch.yaml
 kubernetes/overlays/qa/frontend-replica-patch.yaml
 kubernetes/overlays/qa/kustomization.yaml
+
+kubernetes/overlays/prod/backend-replica-patch.yaml
+kubernetes/overlays/prod/frontend-replica-patch.yaml
+kubernetes/overlays/prod/kustomization.yaml
 ```
 
 This confirms that the project contains:
 
-* a reusable Kubernetes base
-* a development overlay
-* a QA overlay
-* a production overlay
-* environment-specific replica patches
+* A reusable Kubernetes base
+* A Dev overlay
+* A QA overlay
+* A Production overlay
+* Environment-specific replica patches
 * Kustomization files for the base and overlays
 
 ---
 
 # 3. Verify Kustomize Availability
 
-Kustomize is available through the installed Kubernetes client.
+Kustomize support was verified through the installed Kubernetes client.
 
-The version was checked with:
+The command used was:
 
 ```bash
 kubectl version --client
 ```
 
-The actual result was:
+The verified result was:
 
 ```text
 Client Version: v1.35.0
@@ -124,13 +135,11 @@ This confirms that the installed `kubectl` client includes Kustomize support.
 
 # 4. Verify Kustomize Build Support
 
-The Kustomize build command was also checked:
+Kustomize build support was also checked using:
 
 ```bash
 kubectl kustomize --help | head -30
 ```
-
-The command returned help information describing Kustomize build functionality.
 
 The output included:
 
@@ -138,24 +147,23 @@ The output included:
 Build a set of KRM resources using a 'kustomization.yaml' file.
 ```
 
-This confirms that the local Kubernetes client can build Kubernetes resources from a directory containing a `kustomization.yaml` file.
+This confirms that the local Kubernetes client can render Kubernetes resources from a directory containing a `kustomization.yaml` file.
 
 ---
 
 # 5. Verify the Base Kustomization
 
-The base Kustomization file was inspected with:
+The base Kustomization file was inspected using:
 
 ```bash
 cat kubernetes/base/kustomization.yaml
 ```
 
-The actual configuration is:
+The configuration is:
 
 ```yaml
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-
 resources:
 - namespace.yaml
 - backend
@@ -174,15 +182,17 @@ config
 autoscaling
 ```
 
-The `ingress` directory exists under the base directory, but it is not directly listed in the base `kustomization.yaml`.
+The `ingress` directory also exists under the base directory.
 
-Production explicitly adds the base ingress configuration, as shown later in this document.
+However, it is **not directly included by the base `kustomization.yaml`**.
+
+The Production overlay explicitly adds the ingress configuration.
 
 ---
 
 # 6. Verify the Base Directory
 
-The base directory was checked with:
+The base directory was checked using:
 
 ```bash
 find kubernetes/base -maxdepth 2 -type f -print | sort
@@ -214,15 +224,15 @@ kubernetes/base/
 └── namespace.yaml
 ```
 
-The base therefore contains the common configuration for:
+The base therefore contains common configuration for:
 
-* namespace
-* backend
-* frontend
-* application configuration
-* secret template
-* autoscaling
-* ingress configuration
+* Namespace
+* Backend
+* Frontend
+* Application configuration
+* Secret template
+* Autoscaling
+* Ingress configuration
 
 ---
 
@@ -234,13 +244,13 @@ The base was rendered using:
 kubectl kustomize kubernetes/base
 ```
 
-The rendered resource types were summarized with:
+The rendered resource types were summarized using:
 
 ```bash
 kubectl kustomize kubernetes/base | grep '^kind:' | sort | uniq -c
 ```
 
-The actual result was:
+The verified result was:
 
 ```text
 1 kind: ConfigMap
@@ -251,7 +261,7 @@ The actual result was:
 2 kind: Service
 ```
 
-Therefore, the base render produced:
+Therefore, the base render produces:
 
 ```text
 1 Namespace
@@ -268,43 +278,27 @@ This confirms that the base Kustomization can successfully assemble the common F
 
 # 8. Inspect the Rendered Base Resources
 
-The rendered resource names were inspected with:
+The rendered resource names were inspected using:
 
 ```bash
-kubectl kustomize kubernetes/base | grep -E '^(kind:|  name:|  namespace:)'
+kubectl kustomize kubernetes/base
 ```
 
-The verified resources included:
+The rendered configuration contains resources including:
 
 ```text
-kind: Namespace
-name: flavorforge
+Namespace: flavorforge
 
-kind: ConfigMap
-name: backend-config
-namespace: flavorforge
+ConfigMap: backend-config
+Secret: backend-secret
 
-kind: Secret
-name: backend-secret
-namespace: flavorforge
+Service: backend
+Service: frontend
 
-kind: Service
-name: backend
-namespace: flavorforge
+Deployment: backend
+Deployment: frontend
 
-kind: Service
-name: frontend
-namespace: flavorforge
-
-kind: Deployment
-name: backend
-
-kind: Deployment
-name: frontend
-
-kind: HorizontalPodAutoscaler
-name: backend-hpa
-namespace: flavorforge
+HorizontalPodAutoscaler: backend-hpa
 ```
 
 The base therefore provides the common FlavorForge application resources before environment-specific overlay changes are applied.
@@ -313,56 +307,51 @@ The base therefore provides the common FlavorForge application resources before 
 
 # 9. Verify the Development Overlay
 
-The development overlay was inspected with:
+The Dev overlay was inspected using:
 
 ```bash
 cat kubernetes/overlays/dev/kustomization.yaml
 ```
 
-The actual configuration is:
+The configuration is:
 
 ```yaml
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-
 resources:
 - ../../base
-
 namespace: flavorforge-dev
-
 nameSuffix: -dev
-
 patches:
 - path: backend-replica-patch.yaml
   target:
     kind: Deployment
     name: backend
-
 - path: frontend-replica-patch.yaml
   target:
     kind: Deployment
     name: frontend
 ```
 
-The development overlay therefore:
+The Dev overlay therefore:
 
 1. Reuses `../../base`
 2. Uses the `flavorforge-dev` namespace
 3. Adds the `-dev` name suffix
-4. Applies a backend replica patch
-5. Applies a frontend replica patch
+4. Applies the backend replica patch
+5. Applies the frontend replica patch
 
 ---
 
 # 10. Render the Development Overlay
 
-The development overlay was rendered with:
+The Dev overlay was rendered using:
 
 ```bash
 kubectl kustomize kubernetes/overlays/dev
 ```
 
-The rendered development configuration included resources such as:
+The rendered configuration contains environment-specific resources such as:
 
 ```text
 backend-dev
@@ -370,42 +359,25 @@ frontend-dev
 backend-hpa-dev
 ```
 
-The development services were rendered as:
-
-```text
-backend-dev
-frontend-dev
-```
-
-inside:
+The resources are rendered into:
 
 ```text
 namespace: flavorforge-dev
 ```
 
-The development HPA was rendered as:
-
-```text
-backend-hpa-dev
-```
-
-and targets:
-
-```text
-backend-dev
-```
+This demonstrates that the Dev overlay successfully builds on top of the common base and applies its environment-specific configuration.
 
 ---
 
 # 11. Verify Development Resource Types
 
-The development resource types were summarized with:
+The Dev resource types were summarized using:
 
 ```bash
 kubectl kustomize kubernetes/overlays/dev | grep '^kind:' | sort | uniq -c
 ```
 
-The actual result was:
+The verified result was:
 
 ```text
 1 kind: ConfigMap
@@ -416,7 +388,7 @@ The actual result was:
 2 kind: Service
 ```
 
-Therefore, the development overlay renders:
+Therefore, the Dev overlay renders:
 
 ```text
 1 Namespace
@@ -429,71 +401,28 @@ Therefore, the development overlay renders:
 
 ---
 
-# 12. Verify Development Deployments
+# 12. Verify the QA Overlay
 
-The development deployments were inspected with:
-
-```bash
-kubectl kustomize kubernetes/overlays/dev | grep -A8 '^kind: Deployment'
-```
-
-The rendered deployments included:
-
-```text
-name: backend-dev
-namespace: flavorforge-dev
-```
-
-and:
-
-```text
-name: frontend-dev
-namespace: flavorforge-dev
-```
-
-The rendered backend deployment also contained the existing deployment change-cause annotation:
-
-```text
-kubernetes.io/change-cause: Release 1.8 - Backend health probe update
-```
-
-The frontend deployment contained:
-
-```text
-kubernetes.io/change-cause: Release 1.4 - Backend health probe update
-```
-
-These values are part of the existing rendered configuration and were captured during verification.
-
----
-
-# 13. Verify the QA Overlay
-
-The QA overlay was inspected with:
+The QA overlay was inspected using:
 
 ```bash
 cat kubernetes/overlays/qa/kustomization.yaml
 ```
 
-The QA overlay follows the same reusable-base model:
+The configuration is:
 
 ```yaml
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-
 resources:
 - ../../base
-
 namespace: flavorforge-qa
-
 nameSuffix: -qa
-
 patches:
 - path: backend-replica-patch.yaml
   target:
     kind: Deployment
     name: backend
-
 - path: frontend-replica-patch.yaml
   target:
     kind: Deployment
@@ -502,15 +431,15 @@ patches:
 
 The QA overlay therefore:
 
-* reuses the common base
-* uses the `flavorforge-qa` namespace
-* adds the `-qa` suffix
-* applies the QA backend replica patch
-* applies the QA frontend replica patch
+* Reuses the common base
+* Uses the `flavorforge-qa` namespace
+* Adds the `-qa` suffix
+* Applies the QA backend replica patch
+* Applies the QA frontend replica patch
 
 ---
 
-# 14. Render the QA Overlay
+# 13. Render the QA Overlay
 
 The QA overlay was rendered using:
 
@@ -518,7 +447,7 @@ The QA overlay was rendered using:
 kubectl kustomize kubernetes/overlays/qa
 ```
 
-The rendered configuration included:
+The rendered configuration contains resources such as:
 
 ```text
 backend-qa
@@ -526,13 +455,13 @@ frontend-qa
 backend-hpa-qa
 ```
 
-The services were rendered in:
+The resources are rendered in:
 
 ```text
 namespace: flavorforge-qa
 ```
 
-The QA resource summary was:
+The QA resource types are:
 
 ```text
 1 kind: ConfigMap
@@ -543,67 +472,63 @@ The QA resource summary was:
 2 kind: Service
 ```
 
-Therefore, QA produces the same resource categories as Dev while using QA-specific names and namespace configuration.
+This demonstrates that QA uses the same reusable base while applying QA-specific configuration.
 
 ---
 
-# 15. Verify the Production Overlay
+# 14. Verify the Production Overlay
 
-The production overlay was inspected with:
+The Production overlay was inspected using:
 
 ```bash
 cat kubernetes/overlays/prod/kustomization.yaml
 ```
 
-The actual configuration includes:
+The configuration includes:
 
 ```yaml
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-
 resources:
 - ../../base
 - ../../base/ingress
-
 namespace: flavorforge
-
 patches:
 - path: backend-replica-patch.yaml
   target:
     kind: Deployment
     name: backend
-
 - path: frontend-replica-patch.yaml
   target:
     kind: Deployment
     name: frontend
 ```
 
-Unlike Dev and QA, the production overlay explicitly includes:
+Unlike Dev and QA, the Production overlay explicitly includes:
 
 ```yaml
 - ../../base/ingress
 ```
 
-This causes the production render to include the FlavorForge ingress configuration.
+Therefore, the Production render includes the FlavorForge ingress configuration.
 
 ---
 
-# 16. Render the Production Overlay
+# 15. Render the Production Overlay
 
-The production overlay was rendered using:
+The Production overlay was rendered using:
 
 ```bash
 kubectl kustomize kubernetes/overlays/prod
 ```
 
-The production resource summary was:
+The resource types were summarized using:
 
 ```bash
 kubectl kustomize kubernetes/overlays/prod | grep '^kind:' | sort | uniq -c
 ```
 
-The actual result was:
+The verified result was:
 
 ```text
 1 kind: ConfigMap
@@ -615,7 +540,7 @@ The actual result was:
 2 kind: Service
 ```
 
-Therefore, the production overlay renders:
+Therefore, the Production overlay renders:
 
 ```text
 1 Namespace
@@ -627,11 +552,13 @@ Therefore, the production overlay renders:
 1 Ingress
 ```
 
+This confirms that the Production overlay successfully combines the common application resources with the ingress configuration.
+
 ---
 
-# 17. Verify the Production Ingress
+# 16. Verify the Production Ingress
 
-The production render contained:
+The Production render contains:
 
 ```text
 kind: Ingress
@@ -645,105 +572,335 @@ The ingress uses:
 ingressClassName: nginx
 ```
 
-The configured paths include:
+The configured routes include:
 
 ```text
 /api  → backend service → port 3000
 /     → frontend service → port 80
 ```
 
-This confirms that the production overlay includes the ingress configuration in addition to the common application resources.
+The resulting Production ingress was also observed in the running AKS environment.
+
+The cluster currently reports:
+
+```bash
+kubectl get ingress -n flavorforge
+```
+
+```text
+NAME                  CLASS   HOSTS   ADDRESS       PORTS
+flavorforge-ingress   nginx   *       4.157.77.48   80
+```
+
+This provides runtime evidence that the Production ingress exists in the `flavorforge` namespace.
 
 ---
 
-# 18. Compare the Three Environments
+# 17. Verify the Kubernetes Resources in AKS
 
-The verified Kustomize render results can be summarized as follows:
+After the Kustomize configuration was rendered and deployed, the resulting FlavorForge resources were verified in the AKS cluster.
+
+The command used was:
+
+```bash
+kubectl get all -n flavorforge
+```
+
+The verified workloads include:
+
+```text
+backend pods       2
+frontend pods      2
+
+backend deployment     2/2
+frontend deployment    2/2
+
+backend service
+frontend service
+
+backend HPA
+```
+
+The running pods were:
+
+```text
+backend-7c8fb9489c-fstht    1/1 Running
+backend-7c8fb9489c-r2rzs    1/1 Running
+frontend-5585ccd455-25tws   1/1 Running
+frontend-5585ccd455-zgdr7   1/1 Running
+```
+
+The deployments report:
+
+```text
+backend     2/2
+frontend    2/2
+```
+
+This confirms that the FlavorForge backend and frontend workloads are running successfully in the AKS `flavorforge` namespace.
+
+---
+
+# 18. Verify the Production Deployment Details
+
+The backend Deployment was inspected using:
+
+```bash
+kubectl describe deployment backend -n flavorforge
+```
+
+The deployment reports:
+
+```text
+Replicas: 2 desired | 2 updated | 2 total | 2 available
+```
+
+The backend container is running:
+
+```text
+flavorforgeacr2026ms.azurecr.io/flavorforge-backend:1.8
+```
+
+The backend also has:
+
+```text
+Liveness probe:  /api/health
+Readiness probe: /api/health
+```
+
+The frontend Deployment reports:
+
+```text
+Replicas: 2 desired | 2 updated | 2 total | 2 available
+```
+
+The frontend image is:
+
+```text
+flavorforgeacr2026ms.azurecr.io/flavorforge-frontend:1.8
+```
+
+This provides runtime evidence that the rendered Kubernetes application configuration is running successfully in AKS.
+
+---
+
+# 19. Argo CD Tracking Evidence
+
+The running Deployments also contain Argo CD tracking annotations.
+
+For example:
+
+```text
+argocd.argoproj.io/tracking-id:
+flavorforge:apps/Deployment:flavorforge/backend
+```
+
+and:
+
+```text
+argocd.argoproj.io/tracking-id:
+flavorforge:apps/Deployment:flavorforge/frontend
+```
+
+This shows that the running Kubernetes Deployments are tracked by the FlavorForge Argo CD application.
+
+---
+
+# 20. Compare the Kustomize Environments
+
+The verified Kustomize configuration can be summarized as follows:
 
 | Environment | Namespace         | Name Suffix | Deployments | Services | HPA | Ingress |
-| ----------- | ----------------- | ----------- | ----------: | -------: | --: | ------: |
-| Base        | `flavorforge`     | None        |           2 |        2 |   1 |      No |
-| Dev         | `flavorforge-dev` | `-dev`      |           2 |        2 |   1 |      No |
-| QA          | `flavorforge-qa`  | `-qa`       |           2 |        2 |   1 |      No |
-| Prod        | `flavorforge`     | None        |           2 |        2 |   1 |     Yes |
+| ----------- | ----------------- | ----------- | ----------: | -------: | --: | ------- |
+| Base        | `flavorforge`     | None        |           2 |        2 |   1 | No      |
+| Dev         | `flavorforge-dev` | `-dev`      |           2 |        2 |   1 | No      |
+| QA          | `flavorforge-qa`  | `-qa`       |           2 |        2 |   1 | No      |
+| Prod        | `flavorforge`     | None        |           2 |        2 |   1 | Yes     |
 
-The important point is that Dev and QA reuse the common base while applying their environment-specific namespace, naming and replica patches.
+The important design point is that Dev, QA, and Production reuse the common Kubernetes base.
 
-Production additionally includes the base ingress configuration.
+The overlays apply only the environment-specific configuration.
 
----
-
-# 19. What Kustomize Gives This Project
-
-The verified structure allows the project to maintain common Kubernetes configuration in one place.
-
-Instead of maintaining completely separate Kubernetes manifests for:
-
-```text
-Dev
-QA
-Prod
-```
-
-the overlays reuse:
-
-```text
-../../base
-```
-
-and apply only environment-specific changes.
-
-The project therefore follows this configuration model:
-
-```text
-                  kubernetes/base
-                        │
-          ┌─────────────┼─────────────┐
-          │             │             │
-          ▼             ▼             ▼
-        Dev             QA           Prod
-          │             │             │
-      namespace      namespace    namespace
-      name suffix    name suffix  ingress
-      patches        patches      patches
-```
+Production additionally includes the ingress configuration.
 
 ---
 
-# 20. Evidence Collected
+# 21. Kustomize Configuration Model
 
-The Kustomize evidence is stored under:
-
-```text
-screenshots/build-journey/kustomize/
-```
-
-The available evidence files are:
+The final configuration model is:
 
 ```text
-dev-render-success.png
-hpa.png
-ingress.png
-kubectl-get-all.png
-kubernetes-resources.png
-kustomize-overlays.png
-overlay-render-validation.png
-prod-render-success.png
-qa-render-success.png
-services-ingress.png
+                    kubernetes/base
+                           │
+             ┌─────────────┼─────────────┐
+             │             │             │
+             ▼             ▼             ▼
+            Dev           QA            Prod
+             │             │             │
+         namespace     namespace      namespace
+         suffix        suffix         ingress
+         patches       patches        patches
+             │             │             │
+             └─────────────┼─────────────┘
+                           ▼
+                Environment-specific
+                    configuration
 ```
 
-The existing Kustomize structure screenshot is:
+This approach avoids duplicating the common Kubernetes manifests.
+
+---
+
+# 22. Evidence Collected
+
+Kustomize evidence is stored under:
+
+```text
+/screenshots/build-journey/kustomize/
+```
+
+The available evidence includes:
+
+### Kustomize Structure
+
+![Kubernetes-Kustomize structure](/screenshots/build-journey/kustomize/Kubernetes-Kustomize%20structure.png)
+
+![Kustomize overlays](/screenshots/build-journey/kustomize/kustomize-overlays.png)
+
+
+### Kustomize Version
+
+![Kustomize version](/screenshots/build-journey/kustomize/Kustomize%20version.png)
+
+
+### Base Render
+
+![Base render](/screenshots/build-journey/kustomize/Base%20render.png)
+
+
+### Development Render
+
+![Dev render](/screenshots/build-journey/kustomize/Dev%20render.png)
+
+![Dev render success](/screenshots/build-journey/kustomize/dev-render-success.png)
+
+
+### QA Render
+
+![QA render](/screenshots/build-journey/kustomize/QA%20render.png)
+
+![QA render success](/screenshots/build-journey/kustomize/qa-render-success.png)
+
+
+### Production Render
+
+![Production render](/screenshots/build-journey/kustomize/Production%20render.png)
+
+![Production render success](/screenshots/build-journey/kustomize/prod-render-success.png)
+
+
+### Production Resources
+
+![Complete production resources](/screenshots/build-journey/kustomize/Complete%20production%20resources.png)
+
+![Production workloads](/screenshots/build-journey/kustomize/Production%20workloads.png)
+
+![Kubernetes resources](/screenshots/build-journey/kustomize/kubernetes-resources.png)
+
+![Kubectl get all](/screenshots/build-journey/kustomize/kubectl-get-all.png)
+
+
+### Deployments
+
+![Backend Deployment configuration](/screenshots/build-journey/kustomize/Backend%20Deployment%20configuration.png)
+
+![Frontend Deployment configuration](/screenshots/build-journey/kustomize/Frontend%20Deployment%20configuration.png)
+
+
+### Services and HPA
+
+![Services and HPA](/screenshots/build-journey/kustomize/Services%20%2B%20HPA.png)
+
+![HPA](/screenshots/build-journey/kustomize/hpa.png)
+
+
+### Ingress
+
+![Ingress](/screenshots/build-journey/kustomize/Ingress.png)
+
+![Ingress verification](/screenshots/build-journey/kustomize/ingress.png)
+
+![Services and ingress](/screenshots/build-journey/kustomize/services-ingress.png)
+
+
+### Overlay Validation
+
+![Overlay render validation](/screenshots/build-journey/kustomize/overlay-render-validation.png)
+
+The Kustomize structure evidence is:
 
 ![Kustomize base and environment overlay structure](/screenshots/build-journey/kustomize/kustomize-overlays.png)
 
 **Figure 1 — Kustomize base and environment overlay structure**
 
+The production workload evidence is:
+
+![Production workloads](/screenshots/build-journey/kustomize/Production%20workloads.png)
+
+**Figure 2 — Production workloads**
+
+The Kubernetes resource verification evidence is:
+
+![Kubernetes resources](/screenshots/build-journey/kustomize/kubernetes-resources.png)
+
+**Figure 3 — Kubernetes resources**
+
 ---
 
-# 21. Troubleshooting
+# 23. Deployment Evidence Note
 
-## 21.1 `kustomization.yaml` not found
+The Production Kustomize overlay was applied to the AKS cluster using:
+
+```bash
+kubectl apply -k kubernetes/overlays/prod
+```
+
+The command was executed as part of the Production deployment process.
+
+A dedicated screenshot of the `kubectl apply -k` command was not captured. Therefore, this document does not present a screenshot as direct evidence of the command execution.
+
+The resulting Kubernetes resources were subsequently verified in the AKS cluster using:
+
+```bash
+kubectl get all -n flavorforge
+```
+
+and:
+
+```bash
+kubectl get ingress -n flavorforge
+```
+
+The runtime verification confirmed that the Production resources were successfully deployed and running in the `flavorforge` namespace.
+
+The verified resources include:
+
+* Backend Deployment
+* Frontend Deployment
+* Backend Service
+* Frontend Service
+* Backend HPA
+* Production Ingress
+* Running backend pods
+* Running frontend pods
+
+Therefore, the deployment command is documented as part of the actual deployment process, while the available screenshots and runtime commands provide evidence of the resulting deployed state.
+
+---
+
+# 24. Troubleshooting
+
+## 24.1 `kustomization.yaml` not found
 
 If:
 
@@ -751,13 +908,7 @@ If:
 kubectl kustomize kubernetes/base
 ```
 
-reports that a Kustomization file cannot be found, verify that the directory contains:
-
-```text
-kustomization.yaml
-```
-
-Use:
+reports that a Kustomization file cannot be found, verify the available files:
 
 ```bash
 find kubernetes -name kustomization.yaml -print
@@ -765,21 +916,17 @@ find kubernetes -name kustomization.yaml -print
 
 ---
 
-## 21.2 Validate an overlay before applying it
+## 24.2 Validate an overlay before applying it
 
-Kustomize rendering can be checked without changing the cluster:
+Kustomize rendering can be validated without modifying the cluster:
 
 ```bash
 kubectl kustomize kubernetes/overlays/dev
 ```
 
-Similarly:
-
 ```bash
 kubectl kustomize kubernetes/overlays/qa
 ```
-
-and:
 
 ```bash
 kubectl kustomize kubernetes/overlays/prod
@@ -789,22 +936,22 @@ A successful render confirms that Kustomize can process the referenced resources
 
 ---
 
-## 21.3 Inspect only resource types
+## 24.3 Inspect resource types
 
 For a quick summary:
 
 ```bash
-kubectl kustomize kubernetes/overlays/dev \
+kubectl kustomize kubernetes/overlays/prod \
   | grep '^kind:' \
   | sort \
   | uniq -c
 ```
 
-The same approach can be used for QA and Prod.
+The same approach can be used for Dev and QA.
 
 ---
 
-# 22. Reproducibility
+# 25. Reproducibility
 
 A user cloning the FlavorForge repository can inspect and render the Kustomize configurations from the repository root.
 
@@ -815,13 +962,13 @@ git clone <repository-url>
 cd flavorforge-azure-devsecops-capstone
 ```
 
-Then:
+Verify Kustomize support:
 
 ```bash
 kubectl version --client
 ```
 
-and:
+Render the configurations:
 
 ```bash
 kubectl kustomize kubernetes/base
@@ -830,67 +977,70 @@ kubectl kustomize kubernetes/overlays/qa
 kubectl kustomize kubernetes/overlays/prod
 ```
 
-These commands allow the Kubernetes configuration to be inspected and rendered without immediately applying changes to a cluster.
+These commands allow the Kubernetes configurations to be inspected and rendered without immediately changing a cluster.
 
 ---
 
-# 23. Official References
+# 26. Result
 
-Kustomize documentation:
-
-* Kubernetes documentation — Kustomize
-
-Kustomize is integrated into the Kubernetes command-line workflow through commands such as:
-
-```bash
-kubectl kustomize
-```
-
-Official documentation should be consulted for current Kustomize syntax and behavior.
-
----
-
-# 24. Result
-
-The Kustomize stage was verified against the actual FlavorForge repository.
+The Kustomize stage was verified against the actual FlavorForge repository and AKS environment.
 
 The verification confirmed:
 
 * Kustomize is available through `kubectl`
 * Kustomize version `v5.7.1` is installed
-* The Kubernetes configuration contains a reusable base
-* Dev, QA and Prod overlays exist
+* A reusable Kubernetes base exists
+* Dev, QA and Production overlays exist
 * The base renders successfully
 * The Dev overlay renders successfully
 * The QA overlay renders successfully
-* The Prod overlay renders successfully
-* Dev uses the `flavorforge-dev` namespace and `-dev` suffix
-* QA uses the `flavorforge-qa` namespace and `-qa` suffix
+* The Production overlay renders successfully
+* Dev uses the `flavorforge-dev` namespace
+* QA uses the `flavorforge-qa` namespace
 * Production uses the `flavorforge` namespace
-* Production explicitly includes the ingress configuration
 * Environment-specific replica patches are defined
-* The rendered resource types were verified for all environments
+* Production explicitly includes the ingress configuration
+* Production renders an Ingress resource
+* Backend and frontend Deployments are running in AKS
+* Backend and frontend pods are running with `1/1` readiness
+* Backend and frontend Deployments report `2/2` available replicas
+* The Production ingress is available at `4.157.77.48`
+* The running Deployments contain Argo CD tracking annotations
 
-The resulting configuration provides a reusable Kubernetes configuration model for the FlavorForge environments:
+The resulting architecture is:
 
 ```text
-                FlavorForge Kubernetes
-                         │
-                         ▼
-                       Base
-                         │
-             ┌───────────┼───────────┐
-             ▼           ▼           ▼
-            Dev         QA          Prod
-             │           │           │
-          patches      patches     patches
-             │           │           │
-             └───────────┼───────────┘
-                         ▼
-                  Environment-specific
-                     Kubernetes
-                     resources
+                 FlavorForge Kubernetes
+                          │
+                          ▼
+                         Base
+                          │
+            ┌─────────────┼─────────────┐
+            ▼             ▼             ▼
+           Dev           QA            Prod
+            │             │             │
+         patches       patches       patches
+            │             │             │
+            └─────────────┼─────────────┘
+                          ▼
+              Environment-specific
+                  configuration
+                          │
+                          ▼
+                    AKS Cluster
+                          │
+             ┌────────────┴────────────┐
+             ▼                         ▼
+        Backend                     Frontend
+        2 replicas                  2 replicas
+             │                         │
+             └────────────┬────────────┘
+                          ▼
+                       Ingress
+                    4.157.77.48
 ```
 
-The next stage is to verify the rendered configurations against the Kubernetes/AKS environment before moving forward to the Azure DevOps pipeline stage.
+The Kustomize stage therefore establishes the reusable Kubernetes configuration model used by FlavorForge and demonstrates that the resulting Production workloads are running successfully in AKS.
+
+
 
