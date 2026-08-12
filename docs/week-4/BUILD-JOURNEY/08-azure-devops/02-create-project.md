@@ -1,82 +1,67 @@
-Yes — understood. You **already created `02-create-project.md`**, and you want me to **fill that file's content**, not move to Step 3.
-
-Copy-paste this into:
-
-```text
-docs/week-4/BUILD-JOURNEY/08-azure-devops/02-create-project.md
-```
-
-````markdown
 # Step 2 — Create the Azure DevOps Project
 
 ## What We Wanted
 
-After confirming the Azure DevOps organization, the next step was to create the Azure DevOps project for the FlavorForge application.
+After creating the Azure DevOps organization, the next step was to create a dedicated Azure DevOps project for the FlavorForge Azure DevSecOps capstone.
 
-The project provides the workspace where the FlavorForge DevSecOps implementation is managed.
+The project provides the Azure DevOps workspace for:
 
-The project is located inside the Azure DevOps organization:
+- Repositories
+- Pipelines
+- Boards
+- Test Plans
+- Artifacts
+- Project-level settings
+- Service connections
+- Library variable groups
+- CI/CD automation
+
+The project currently exists under the Azure DevOps organization:
 
 ```text
 malathiabhilash
 ````
 
-The project created for the capstone is:
+The project name is:
 
 ```text
 FlavorForge – Azure DevSecOps Capstone
 ```
 
-The overall structure is:
-
-```text
-Azure DevOps
-    ↓
-Organization: malathiabhilash
-    ↓
-Project: FlavorForge – Azure DevSecOps Capstone
-```
-
 ---
 
-# Step 2.1 — Open Azure DevOps
+# Step 1 — Open Azure DevOps
 
 ## Where We Went
 
-Open a web browser and navigate to Azure DevOps:
+Open Azure DevOps in a web browser and sign in.
 
-```text
-https://dev.azure.com/
-```
-
-## What We Clicked
-
-1. Open the browser.
-2. Navigate to Azure DevOps.
-3. Sign in using the Microsoft account associated with the Azure DevOps organization.
-4. Open the Azure DevOps organization:
+Open the Azure DevOps organization:
 
 ```text
 malathiabhilash
 ```
 
-The organization URL is:
+Organization URL:
 
 ```text
 https://dev.azure.com/malathiabhilash/
 ```
 
+## What We Clicked
+
+1. Open a web browser.
+2. Open Azure DevOps.
+3. Sign in with the Azure DevOps account.
+4. Open the `malathiabhilash` organization.
+
 ## What Happened
 
-The Azure DevOps organization page opened.
+The Azure DevOps organization page displayed the available projects.
 
-The Projects section displayed the projects available inside the organization.
-
-At the time of verification, the organization displayed:
+The organization showed:
 
 ```text
-Projects
-
 ACR-Pipeline-Demo
 
 FlavorForge – Azure DevSecOps Capstone
@@ -84,15 +69,11 @@ FlavorForge – Azure DevSecOps Capstone
 
 ---
 
-# Step 2.2 — Open the New Project Option
-
-## What We Wanted
-
-We needed an Azure DevOps project dedicated to the FlavorForge Azure DevSecOps capstone.
+# Step 2 — Start Creating the Project
 
 ## Where We Went
 
-From the Azure DevOps organization page, locate the **Projects** section.
+From the Azure DevOps organization page, go to the Projects area.
 
 ## What We Clicked
 
@@ -102,217 +83,464 @@ Click:
 New project
 ```
 
-## What Happened
-
-Azure DevOps opened the project creation form.
-
-The form provides the fields required to create a new Azure DevOps project.
+This opens the Azure DevOps project creation page.
 
 ---
 
-# Step 2.3 — Enter the Project Name
+# Step 3 — Enter the Project Name
 
 ## What We Entered
 
-For the project name, enter:
+In the **Project name** field, enter:
 
 ```text
 FlavorForge – Azure DevSecOps Capstone
 ```
 
-## Project Name
+## Confirmed Value
 
 | Field        | Value                                    |
 | ------------ | ---------------------------------------- |
 | Project name | `FlavorForge – Azure DevSecOps Capstone` |
+| Organization | `malathiabhilash`                        |
 
-The project name identifies the Azure DevOps workspace used for the FlavorForge capstone.
+The project name is confirmed from the current Azure DevOps project configuration.
 
 ---
 
-# Step 2.4 — Configure the Project
+# Step 4 — Enter the Project Description
 
-Azure DevOps provides additional project configuration options during project creation.
+## What We Entered
 
-Only values that were confirmed from the recovered FlavorForge evidence are documented here.
+The FlavorForge project description is:
 
-The confirmed project name is:
+```text
+Enterprise-grade Azure DevSecOps project demonstrating a complete CI/CD pipeline using GitHub, Azure DevOps, Docker, Azure Container Registry (ACR), Azure Kubernetes Service (AKS), Kubernetes, NGINX Ingress, SonarCloud, Trivy, ConfigMaps, Secrets, and Horizontal Pod Autoscaler (HPA). The pipeline automatically builds, tests, scans, containerizes, pushes images to ACR, and deploys to AKS across Development, QA, and Production environments.
+```
+
+This description explains the purpose and overall DevSecOps scope of the FlavorForge project.
+
+---
+
+# Step 5 — Select the Process
+
+## What We Selected
+
+The confirmed project process is:
+
+```text
+Basic
+```
+
+## Project Configuration
+
+| Field   | Value   |
+| ------- | ------- |
+| Process | `Basic` |
+
+The current Azure DevOps project settings confirm that the FlavorForge project uses the **Basic** process.
+
+---
+
+# Step 6 — Set Project Visibility
+
+## What We Selected
+
+The confirmed project visibility is:
+
+```text
+Private
+```
+
+The Azure DevOps project is displayed as:
 
 ```text
 FlavorForge – Azure DevSecOps Capstone
+
+Private
 ```
 
-Do not assume or document additional historical selections unless they are supported by the available project-creation evidence.
+## Project Configuration
+
+| Field      | Value     |
+| ---------- | --------- |
+| Visibility | `Private` |
+
+The project is therefore not publicly accessible.
 
 ---
 
-# Step 2.5 — Create the Project
+# Step 7 — Create the Project
 
-## What We Clicked
+After entering the project information, use the project creation button provided by Azure DevOps.
 
-After entering the required project information, click:
+Azure DevOps creates the project using the configured project details.
 
-```text
-Create project
-```
-
-## What Happened
-
-Azure DevOps created the project.
-
-The project became available under the `malathiabhilash` organization.
-
-The resulting hierarchy was:
-
-```text
-Azure DevOps
-    ↓
-malathiabhilash
-    ↓
-FlavorForge – Azure DevSecOps Capstone
-```
+> **Evidence note:** The current project settings confirm the resulting project configuration. They do not prove the exact button text or every value selected on the original project-creation screen.
 
 ---
 
-# Step 2.6 — Open the FlavorForge Project
+# Step 8 — Verify the Project Administrator
 
 ## Where We Went
 
-Return to the Azure DevOps organization Projects page.
+Open:
 
-## What We Clicked
+```text
+Project Settings
+    ↓
+Overview
+```
 
-Locate:
+## What We Found
+
+The project administrator shown in the project settings is:
+
+```text
+Malathi Shetty
+```
+
+The associated account shown in the project settings is:
+
+```text
+malathiabhilash@outlook.com
+```
+
+The project settings also provide:
+
+```text
+Add administrator
+```
+
+No additional administrator is documented because no additional administrator was provided in the recovered evidence.
+
+---
+
+# Step 9 — Verify Azure DevOps Services
+
+The current project configuration shows the following Azure DevOps services:
+
+| Service    | Status |
+| ---------- | ------ |
+| Boards     | On     |
+| Repos      | On     |
+| Pipelines  | On     |
+| Test Plans | On     |
+| Artifacts  | On     |
+
+These services provide the Azure DevOps capabilities used by the FlavorForge project.
+
+---
+
+## Boards
+
+The project shows:
+
+```text
+Boards
+Flexible agile planning with boards and cross-product issues
+On
+```
+
+Boards provide project planning and work-tracking capabilities.
+
+---
+
+## Repos
+
+The project shows:
+
+```text
+Repos
+Repos, pull requests, advanced file management and more
+On
+```
+
+Repos provide Git repository functionality for the project.
+
+The FlavorForge repository is:
 
 ```text
 FlavorForge – Azure DevSecOps Capstone
 ```
 
-and open the project.
+---
 
-## What Happened
+## Pipelines
 
-The FlavorForge Azure DevOps project opened.
-
-This project is the central Azure DevOps workspace used for the remaining DevSecOps configuration.
-
-The following work will be configured inside this project:
+The project shows:
 
 ```text
-GitHub Repository
-        ↓
-Service Connections
-        ↓
-Agent Pools
-        ↓
-Library / Variable Groups
-        ↓
-Approvals & Checks
-        ↓
-Pipeline
-        ↓
-SonarCloud
-        ↓
-Docker / ACR
-        ↓
-AKS
-        ↓
-Release / GitOps verification
+Pipelines
+Build, manage, and scale your deployments to the cloud
+On
+```
+
+Pipelines provide the CI/CD functionality used by the FlavorForge implementation.
+
+---
+
+## Test Plans
+
+The project shows:
+
+```text
+Test Plans
+Structured manual testing at any scale for teams of all sizes
+On
+```
+
+Test Plans provide structured testing capabilities.
+
+---
+
+## Artifacts
+
+The project shows:
+
+```text
+Artifacts
+Continuous delivery with artifact feeds containing NuGet, npm, Maven, Universal, and Python packages
+On
+```
+
+Artifacts provide package-feed capabilities within Azure DevOps.
+
+---
+
+# What We Entered
+
+The confirmed project configuration is:
+
+| Field                 | Value                                    |
+| --------------------- | ---------------------------------------- |
+| Organization          | `malathiabhilash`                        |
+| Project Name          | `FlavorForge – Azure DevSecOps Capstone` |
+| Process               | `Basic`                                  |
+| Visibility            | `Private`                                |
+| Project Administrator | `Malathi Shetty`                         |
+| Administrator Account | `malathiabhilash@outlook.com`            |
+| Boards                | `On`                                     |
+| Repos                 | `On`                                     |
+| Pipelines             | `On`                                     |
+| Test Plans            | `On`                                     |
+| Artifacts             | `On`                                     |
+
+---
+
+# What Happened
+
+The FlavorForge Azure DevOps project is available under the `malathiabhilash` organization.
+
+The organization contains:
+
+```text
+malathiabhilash
+│
+├── ACR-Pipeline-Demo
+│
+└── FlavorForge – Azure DevSecOps Capstone
+```
+
+The FlavorForge project is configured as:
+
+```text
+Process:
+Basic
+
+Visibility:
+Private
+
+Administrator:
+Malathi Shetty
+```
+
+The following Azure DevOps services are enabled:
+
+```text
+Boards       → On
+Repos        → On
+Pipelines    → On
+Test Plans   → On
+Artifacts    → On
 ```
 
 ---
 
 # Verify
 
-Verify that the Azure DevOps organization is:
+## Verify the Project
+
+Open the Azure DevOps organization:
 
 ```text
 malathiabhilash
 ```
 
-Verify that the project is:
+Confirm that the following project is present:
 
 ```text
 FlavorForge – Azure DevSecOps Capstone
 ```
 
-The organization and project relationship should be:
+Open the project.
+
+Confirm that the project is shown as:
 
 ```text
-Organization
-    └── malathiabhilash
-            │
-            └── Project
-                  └── FlavorForge – Azure DevSecOps Capstone
+Private
 ```
-
-The project should also appear in the organization's Projects list.
 
 ---
 
-# Screenshot
+## Verify the Process
 
-Use the actual screenshot showing the Azure DevOps project creation or the resulting Projects page.
-
-The available evidence confirms that the organization page displayed:
+Open:
 
 ```text
-dev.azure.com/malathiabhilash (Owner)
+Project Settings
+    ↓
+Overview
+```
+
+Verify:
+
+```text
+Process:
+Basic
+```
+
+---
+
+## Verify the Administrator
+
+In the project settings, verify:
+
+```text
+Project administrator:
+Malathi Shetty
+```
+
+---
+
+## Verify the Services
+
+In the project settings, verify:
+
+```text
+Boards       → On
+Repos        → On
+Pipelines    → On
+Test Plans   → On
+Artifacts    → On
+```
+
+---
+
+## Verify the Repository
+
+Open:
+
+```text
+Repos
+    ↓
+Files
+```
+
+Verify that the FlavorForge repository is available:
+
+```text
+FlavorForge – Azure DevSecOps Capstone
+```
+
+The repository contains the project source code and documentation.
+
+---
+
+# Project Description Verification
+
+The current project configuration contains the following description:
+
+```text
+Enterprise-grade Azure DevSecOps project demonstrating a complete CI/CD pipeline using GitHub, Azure DevOps, Docker, Azure Container Registry (ACR), Azure Kubernetes Service (AKS), Kubernetes, NGINX Ingress, SonarCloud, Trivy, ConfigMaps, Secrets, and Horizontal Pod Autoscaler (HPA). The pipeline automatically builds, tests, scans, containerizes, pushes images to ACR, and deploys to AKS across Development, QA, and Production environments.
+```
+
+This describes the intended scope of the FlavorForge Azure DevSecOps capstone.
+
+---
+
+# Screenshot Evidence
+
+Use the actual screenshots captured during the Azure DevOps setup.
+
+Recommended evidence includes:
+
+```text
+Azure DevOps organization/project page
 ```
 
 and:
 
 ```text
-FlavorForge – Azure DevSecOps Capstone
+Project Settings → Overview
 ```
+
+The Project Settings screenshot should show, where available:
+
+* Project name
+* Project description
+* Process
+* Project administrator
+* Azure DevOps services
+
+## Important
 
 Do not invent a screenshot filename.
 
-When the actual screenshot path is confirmed, add it here.
+Once the actual screenshot filename is confirmed, use its real repository path:
 
 ```text
-[Insert actual Azure DevOps project creation / project page screenshot here]
+![FlavorForge Azure DevOps Project](<actual-screenshot-path>)
 ```
 
 ---
 
 # Result
 
-The Azure DevOps project for the FlavorForge capstone was created under the:
+The Azure DevOps project for the FlavorForge capstone is configured under:
 
 ```text
+Organization:
 malathiabhilash
 ```
 
-organization.
-
-The confirmed project name is:
+with:
 
 ```text
+Project:
 FlavorForge – Azure DevSecOps Capstone
 ```
 
-The final structure is:
+The confirmed project configuration is:
 
 ```text
-Azure DevOps
-    ↓
-Organization: malathiabhilash
-    ↓
-Project: FlavorForge – Azure DevSecOps Capstone
+Process:
+Basic
+
+Visibility:
+Private
+
+Administrator:
+Malathi Shetty
 ```
 
-The Azure DevOps project is now ready for the next configuration steps.
-
-The next step is:
+The enabled Azure DevOps services are:
 
 ```text
-03-github-connection-and-repository.md
+Boards
+Repos
+Pipelines
+Test Plans
+Artifacts
 ```
 
-where the connection between the Azure DevOps project and the FlavorForge GitHub repository will be documented.
-
-```
-
-**Important:** I have deliberately not added unconfirmed values such as the project's visibility, process (`Agile`/`Scrum`), description, README setting, or exact creation date. That keeps this rebuild documentation evidence-based.
-```

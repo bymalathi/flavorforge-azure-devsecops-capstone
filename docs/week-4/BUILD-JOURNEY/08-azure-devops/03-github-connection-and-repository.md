@@ -1,652 +1,958 @@
-Perfect. This gives us the **confirmed values** we were missing. We can now rewrite `02-create-project.md` much more accurately.
-
-One important distinction: your current project page confirms the **current project configuration**. It does not prove every setting selected on the original creation screen. So I will document what the evidence actually shows.
-
-Replace the contents of:
-
-```text
-docs/week-4/BUILD-JOURNEY/08-azure-devops/02-create-project.md
-```
-
-with this:
-
-````markdown
-# Step 2 — Create the Azure DevOps Project
+# Step 3 — GitHub Connection and Azure DevOps Repository
 
 ## What We Wanted
 
-After creating the Azure DevOps organization, the next step was to create a dedicated Azure DevOps project for the FlavorForge Azure DevSecOps capstone.
+After creating the Azure DevOps project, the next step was to connect the FlavorForge source repository hosted on GitHub with the Azure DevOps project.
 
-The project provides the central Azure DevOps workspace for managing:
+For this project:
 
-- Boards
-- Repositories
-- Pipelines
-- Test Plans
-- Artifacts
-- Project-level configuration
-- CI/CD automation
+- GitHub is the primary source-control repository.
+- Azure DevOps contains a corresponding Azure Repos repository.
+- GitHub Actions is used to synchronize changes from GitHub to Azure DevOps.
+- Azure DevOps can then use the synchronized repository for its CI/CD workflow.
 
-The project created for this capstone is:
+The main components are:
 
 ```text
-FlavorForge – Azure DevSecOps Capstone
-````
-
-The project belongs to the Azure DevOps organization:
-
-```text
-malathiabhilash
+GitHub Repository
+        ↓
+GitHub main branch
+        ↓
+GitHub Actions
+        ↓
+Azure DevOps Repository
+        ↓
+Azure DevOps Pipeline
 ```
 
-The resulting structure is:
+The confirmed project details are:
+
+| Component | Value |
+|---|---|
+| GitHub repository | `flavorforge-azure-devsecops-capstone` |
+| GitHub branch | `main` |
+| Azure DevOps organization | `malathiabhilash` |
+| Azure DevOps project | `FlavorForge – Azure DevSecOps Capstone` |
+| Azure DevOps repository | `FlavorForge – Azure DevSecOps Capstone` |
+
+---
+
+# Step 3.1 — Verify the GitHub Repository
+
+## Where We Went
+
+Open the FlavorForge repository in GitHub.
+
+The repository is:
 
 ```text
-Azure DevOps
-    │
-    └── Organization
-          │
-          └── malathiabhilash
-                │
-                └── FlavorForge – Azure DevSecOps Capstone
+flavorforge-azure-devsecops-capstone
+```
+
+## What We Verified
+
+The repository uses:
+
+```text
+main
+```
+
+as the primary branch.
+
+The repository contains the FlavorForge application source code, infrastructure configuration, Kubernetes manifests, pipeline configuration, and project documentation.
+
+The GitHub repository is therefore used as the primary source repository for the project.
+
+The source-control structure is:
+
+```text
+GitHub
+   ↓
+flavorforge-azure-devsecops-capstone
+   ↓
+main
 ```
 
 ---
 
-# Step 2.1 — Open the Azure DevOps Organization
+# Step 3.2 — Open the Azure DevOps Project
 
 ## Where We Went
 
-Open Azure DevOps and sign in.
-
-The Azure DevOps organization used for the FlavorForge project is:
-
-```text
-malathiabhilash
-```
-
-The organization URL is:
+Open the Azure DevOps organization:
 
 ```text
 https://dev.azure.com/malathiabhilash/
 ```
 
-## What We Clicked
-
-1. Open a web browser.
-2. Open Azure DevOps.
-3. Sign in with the Microsoft account associated with the Azure DevOps organization.
-4. Open the `malathiabhilash` organization.
-
-## What Happened
-
-The Azure DevOps organization page displayed the available projects.
-
-The organization showed:
+Open the project:
 
 ```text
-ACR-Pipeline-Demo
-
 FlavorForge – Azure DevSecOps Capstone
 ```
 
-The organization owner displayed in Azure DevOps was:
+## What We Clicked
+
+From the Azure DevOps project, open:
 
 ```text
-Malathi Shetty
+Repos
+    ↓
+Files
+```
+
+## What We Verified
+
+The project contains an Azure Repos repository named:
+
+```text
+FlavorForge – Azure DevSecOps Capstone
+```
+
+The relationship is:
+
+```text
+Azure DevOps Organization
+        ↓
+malathiabhilash
+        ↓
+FlavorForge – Azure DevSecOps Capstone
+        ↓
+Repos
+        ↓
+FlavorForge – Azure DevSecOps Capstone
 ```
 
 ---
 
-# Step 2.2 — Start Creating the Project
+# Step 3.3 — Verify the Azure DevOps Repository
+
+## Repository Name
+
+The Azure DevOps repository is:
+
+```text
+FlavorForge – Azure DevSecOps Capstone
+```
+
+## Repository Branch
+
+The primary branch is:
+
+```text
+main
+```
 
 ## Where We Went
 
-From the Azure DevOps organization page, go to the **Projects** section.
+Open:
+
+```text
+Repos
+    ↓
+Files
+    ↓
+main
+```
+
+## What We Verified
+
+The repository contains the FlavorForge project files.
+
+The repository also contains:
+
+```text
+README.md
+```
+
+The README documents the FlavorForge Azure DevSecOps capstone and its technology stack.
+
+---
+
+# Step 3.4 — Define the GitHub-to-Azure DevOps Synchronization
+
+## What We Wanted
+
+The goal was to avoid manually pushing changes to both GitHub and Azure DevOps.
+
+The required synchronization flow is:
+
+```text
+Local FlavorForge Repository
+        ↓
+git push origin main
+        ↓
+GitHub main
+        ↓
+GitHub Actions
+        ↓
+Azure DevOps main
+```
+
+After the synchronization workflow is configured, changes pushed to GitHub can be automatically synchronized to the Azure DevOps repository.
+
+This removes the need to manually run:
+
+```bash
+git push azure main
+```
+
+for every change.
+
+---
+
+# Step 3.5 — Create an Azure DevOps Personal Access Token
+
+## What We Needed
+
+GitHub Actions requires authentication before it can push repository changes to Azure DevOps.
+
+For this implementation, an Azure DevOps Personal Access Token (PAT) is used for authentication.
+
+The PAT is used by GitHub Actions to authenticate with Azure DevOps.
+
+## Important Security Rule
+
+The PAT must be treated like a password.
+
+The actual PAT value must:
+
+- Not be committed to GitHub.
+- Not be placed directly inside a workflow YAML file.
+- Not be placed inside `azure-pipelines.yml`.
+- Not be included in `sync-to-azure-devops.yml`.
+- Not be included in screenshots or documentation.
+- Not be shared publicly.
+
+---
+
+# Step 3.6 — Create the Azure DevOps PAT
+
+## Where We Went
+
+Open Azure DevOps.
+
+Open the user profile/security area and select:
+
+```text
+Personal Access Tokens
+```
+
+## What We Clicked
+
+Select:
+
+```text
+New Token
+```
+
+## What We Entered
+
+For the token name:
+
+```text
+FlavorForge-GitHub-Sync
+```
+
+Select the required expiration period for the capstone.
+
+The token requires repository permissions sufficient to push code to Azure Repos.
+
+The required code permission is:
+
+```text
+Code → Read & Write
+```
+
+## What Happened
+
+Azure DevOps generated the Personal Access Token.
+
+The token value was copied immediately after creation and stored securely.
+
+The actual token value is intentionally not included in this documentation.
+
+---
+
+# Step 3.7 — Store the PAT in GitHub Secrets
+
+## What We Wanted
+
+GitHub Actions needs access to the Azure DevOps PAT, but the PAT must not be hard-coded in the workflow.
+
+Therefore, the PAT was stored as a GitHub Actions repository secret.
+
+## Where We Went
+
+Open the FlavorForge GitHub repository.
+
+Go to:
+
+```text
+Settings
+    ↓
+Secrets and variables
+    ↓
+Actions
+```
 
 ## What We Clicked
 
 Click:
 
 ```text
-New project
+New repository secret
 ```
-
-## What Happened
-
-Azure DevOps opened the project creation form.
-
-The project creation form allows the project name and other project-level settings to be configured.
-
----
-
-# Step 2.3 — Enter the Project Name
 
 ## What We Entered
 
-The project name used for the FlavorForge capstone is:
+Secret name:
 
 ```text
-FlavorForge – Azure DevSecOps Capstone
+AZURE_DEVOPS_PAT
 ```
 
-## Project Details
+Secret value:
 
-| Field                     | Value                                    |
-| ------------------------- | ---------------------------------------- |
-| Project name              | `FlavorForge – Azure DevSecOps Capstone` |
-| Azure DevOps organization | `malathiabhilash`                        |
+```text
+<Azure DevOps PAT>
+```
 
-The project name identifies the Azure DevOps workspace used for the FlavorForge capstone.
+The actual PAT value is stored securely in GitHub and is not included in the repository.
+
+## What Happened
+
+GitHub stored the PAT as a repository secret.
+
+The workflow accesses it using:
+
+```yaml
+${{ secrets.AZURE_DEVOPS_PAT }}
+```
+
+The actual token value is never written into the workflow file.
 
 ---
 
-# Step 2.4 — Project Description
+# Step 3.8 — Store the Azure DevOps Repository URL
 
-The project contains the following description:
+## What We Wanted
 
-> Enterprise-grade Azure DevSecOps project demonstrating a complete CI/CD pipeline using GitHub, Azure DevOps, Docker, Azure Container Registry (ACR), Azure Kubernetes Service (AKS), Kubernetes, NGINX Ingress, SonarCloud, Trivy, ConfigMaps, Secrets, and Horizontal Pod Autoscaler (HPA). The pipeline automatically builds, tests, scans, containerizes, pushes images to ACR, and deploys to AKS across Development, QA, and Production environments.
+The GitHub Actions workflow also needs to know which Azure DevOps repository should receive the synchronized changes.
 
-The project description also documents the intended DevSecOps flow:
+Therefore, the Azure DevOps repository URL was stored as another GitHub Actions repository secret.
 
-```text
-Developer
-    ↓
-GitHub
-    ↓
-Azure DevOps Pipeline
-    ↓
-Build
-    ↓
-Test
-    ↓
-SonarCloud Analysis
-    ↓
-Trivy Security Scan
-    ↓
-Docker Image Build
-    ↓
-Push to Azure Container Registry (ACR)
-    ↓
-Deploy to Azure Kubernetes Service (AKS)
-    ↓
-Development
-    ↓
-QA
-    ↓
-Production
-    ↓
-NGINX Ingress
-    ↓
-Live Application
-```
-
-This description is visible under the project's **Project details**.
-
----
-
-# Step 2.5 — Project Process
-
-## What We Selected
-
-The project's configured process is:
-
-```text
-Basic
-```
-
-## Project Configuration
-
-| Field   | Value   |
-| ------- | ------- |
-| Process | `Basic` |
-
-The current Azure DevOps Project details page confirms that the FlavorForge project uses the **Basic** process.
-
-## Why This Matters
-
-The process determines the work-tracking methodology and the work item types available in Azure DevOps.
-
-For this project, the confirmed process is:
-
-```text
-Basic
-```
-
-We should not document the project as using Agile or Scrum.
-
----
-
-# Step 2.6 — Project Visibility
-
-The project is shown as:
-
-```text
-Private
-```
-
-The project page displays:
-
-```text
-Private
-Invite
-```
-
-Therefore, the confirmed project visibility is:
-
-```text
-Private
-```
-
-## Project Configuration
-
-| Field      | Value     |
-| ---------- | --------- |
-| Visibility | `Private` |
-
-This means access to the project is restricted rather than being publicly accessible.
-
----
-
-# Step 2.7 — Project Administrator
-
-The Project details page shows the configured project administrator.
-
-## Project Administrator
-
-```text
-Malathi Shetty
-```
-
-The associated account displayed by Azure DevOps is:
-
-```text
-malathiabhilash@outlook.com
-```
-
-The Project administrators section also provides:
-
-```text
-Add administrator
-```
-
-for adding additional project administrators.
-
-## Confirmed Configuration
-
-| Field                 | Value                         |
-| --------------------- | ----------------------------- |
-| Project administrator | `Malathi Shetty`              |
-| Account               | `malathiabhilash@outlook.com` |
-
----
-
-# Step 2.8 — Azure DevOps Services Enabled for the Project
-
-The Project details page shows the Azure DevOps services enabled for the project.
-
-The confirmed services are:
-
-| Azure DevOps Service | Status |
-| -------------------- | ------ |
-| Boards               | On     |
-| Repos                | On     |
-| Pipelines            | On     |
-| Test Plans           | On     |
-| Artifacts            | On     |
-
-The project therefore has the following Azure DevOps capabilities enabled:
-
-```text
-Boards
-Repos
-Pipelines
-Test Plans
-Artifacts
-```
-
----
-
-# Step 2.9 — Boards
-
-The project has:
-
-```text
-Boards
-On
-```
-
-Boards provide agile planning functionality within Azure DevOps.
-
-For this documentation, the important confirmed fact is that Boards are enabled for the FlavorForge project.
-
----
-
-# Step 2.10 — Repos
-
-The project has:
-
-```text
-Repos
-On
-```
-
-Repos provide repository and pull-request functionality within Azure DevOps.
-
-The FlavorForge project also contains a repository entry for:
-
-```text
-FlavorForge – Azure DevSecOps Capstone
-```
-
-The repository contains the project's source code and documentation.
-
-The project README is available at:
-
-```text
-README.md
-```
-
-The repository is connected with the FlavorForge source-control workflow documented in the following steps.
-
----
-
-# Step 2.11 — Pipelines
-
-The project has:
-
-```text
-Pipelines
-On
-```
-
-This is important because the FlavorForge implementation uses Azure DevOps Pipelines for CI/CD automation.
-
-The pipeline workflow documented for this project includes activities such as:
-
-```text
-Build
-↓
-Test
-↓
-SonarCloud Analysis
-↓
-Trivy Security Scan
-↓
-Docker Image Build
-↓
-Push to ACR
-↓
-AKS Deployment
-```
-
-The detailed pipeline configuration will be documented in later BUILD-JOURNEY steps.
-
----
-
-# Step 2.12 — Test Plans
-
-The project has:
-
-```text
-Test Plans
-On
-```
-
-Azure DevOps Test Plans provides structured manual testing capabilities.
-
-The current project configuration confirms that the service is enabled.
-
----
-
-# Step 2.13 — Artifacts
-
-The project has:
-
-```text
-Artifacts
-On
-```
-
-Azure DevOps Artifacts provides package-feed capabilities for packages such as:
-
-```text
-NuGet
-npm
-Maven
-Universal Packages
-Python
-```
-
-The current project configuration confirms that Artifacts is enabled.
-
----
-
-# Step 2.14 — Verify the Project Details
+## Where We Went
 
 Open:
 
 ```text
-Project settings
+GitHub Repository
     ↓
-Overview
+Settings
+    ↓
+Secrets and variables
+    ↓
+Actions
 ```
 
-The Project details page should show the following information.
+## What We Clicked
 
-## Project Details
+Click:
 
-| Field                 | Confirmed Value                          |
-| --------------------- | ---------------------------------------- |
-| Name                  | `FlavorForge – Azure DevSecOps Capstone` |
-| Process               | `Basic`                                  |
-| Visibility            | `Private`                                |
-| Project administrator | `Malathi Shetty`                         |
-| Organization          | `malathiabhilash`                        |
+```text
+New repository secret
+```
 
-## Azure DevOps Services
+## What We Entered
 
-| Service    | Status |
-| ---------- | ------ |
-| Boards     | On     |
-| Repos      | On     |
-| Pipelines  | On     |
-| Test Plans | On     |
-| Artifacts  | On     |
+Secret name:
+
+```text
+AZURE_DEVOPS_REPO
+```
+
+Secret value:
+
+```text
+<Azure DevOps repository URL>
+```
+
+The actual Azure DevOps repository URL used for the project points to:
+
+```text
+malathiabhilash
+    ↓
+FlavorForge – Azure DevSecOps Capstone
+    ↓
+FlavorForge – Azure DevSecOps Capstone
+```
+
+The PAT is not included in the repository URL.
+
+## Final GitHub Secrets
+
+The repository uses the following secrets for the synchronization workflow:
+
+| Secret | Purpose |
+|---|---|
+| `AZURE_DEVOPS_PAT` | Authenticates GitHub Actions with Azure DevOps |
+| `AZURE_DEVOPS_REPO` | Identifies the Azure DevOps repository to synchronize |
 
 ---
 
-# Step 2.15 — Verify the Project README
+# Step 3.9 — Create the GitHub Actions Synchronization Workflow
 
-The project also exposes a repository README:
+## What We Wanted
 
-```text
-README.md
-```
-
-The README identifies the project as:
+The next step was to automate synchronization between:
 
 ```text
-FlavorForge - Enterprise Azure DevSecOps Capstone
+GitHub main
+      ↓
+Azure DevOps main
 ```
 
-It describes FlavorForge as a production-style Azure DevSecOps project using technologies including:
+The workflow runs when changes are pushed to the GitHub `main` branch.
 
-* Azure DevOps
-* Docker
-* Azure Container Registry
-* Azure Kubernetes Service
-* Kubernetes
-* SonarCloud
-* Trivy
-* Azure Monitor
+It also supports manual execution through GitHub Actions.
 
-The README also contains the project objectives, technology stack, repository documentation, roadmap, and project status.
+## Where We Went
+
+Open the local FlavorForge repository in the WSL terminal:
+
+```bash
+cd ~/flavorforge-azure-devsecops-capstone
+```
+
+## Create the Workflow Directory
+
+Run:
+
+```bash
+mkdir -p .github/workflows
+```
+
+## Create the Workflow File
+
+Run:
+
+```bash
+nano .github/workflows/sync-to-azure-devops.yml
+```
+
+---
+
+# Step 3.10 — Add the Synchronization Workflow
+
+Add the following workflow:
+
+```yaml
+name: Sync GitHub to Azure DevOps
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  sync:
+    name: Sync main branch to Azure DevOps
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout GitHub repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Configure Git identity
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Push main to Azure DevOps
+        env:
+          AZURE_DEVOPS_PAT: ${{ secrets.AZURE_DEVOPS_PAT }}
+          AZURE_DEVOPS_REPO: ${{ secrets.AZURE_DEVOPS_REPO }}
+        run: |
+          git remote add azure "$AZURE_DEVOPS_REPO"
+
+          git -c http.extraheader="AUTHORIZATION: Basic $(printf ':%s' "$AZURE_DEVOPS_PAT" | base64 -w 0)" \
+            push azure HEAD:main
+```
+
+Save the file:
+
+```text
+Ctrl + O
+Enter
+Ctrl + X
+```
+
+---
+
+# Step 3.11 — Understand the Synchronization Workflow
+
+The workflow is triggered by:
+
+```yaml
+on:
+  push:
+    branches:
+      - main
+```
+
+This means the workflow starts when a change is pushed to the GitHub `main` branch.
+
+The workflow also supports manual execution through:
+
+```yaml
+workflow_dispatch:
+```
+
+The repository is checked out using:
+
+```yaml
+actions/checkout@v4
+```
+
+The complete Git history is retrieved using:
+
+```yaml
+fetch-depth: 0
+```
+
+The Azure DevOps PAT is obtained securely from:
+
+```yaml
+${{ secrets.AZURE_DEVOPS_PAT }}
+```
+
+The Azure DevOps repository is obtained from:
+
+```yaml
+${{ secrets.AZURE_DEVOPS_REPO }}
+```
+
+The workflow adds the Azure DevOps repository as a Git remote:
+
+```bash
+git remote add azure "$AZURE_DEVOPS_REPO"
+```
+
+Finally, the current GitHub commit is pushed to the Azure DevOps `main` branch:
+
+```bash
+git push azure HEAD:main
+```
+
+The resulting flow is:
+
+```text
+GitHub main
+     ↓
+GitHub Actions
+     ↓
+Checkout repository
+     ↓
+Authenticate using GitHub Secret
+     ↓
+Add Azure DevOps remote
+     ↓
+Push HEAD to Azure DevOps main
+```
+
+---
+
+# Step 3.12 — Verify the Workflow File
+
+## Where We Went
+
+From the WSL terminal, run:
+
+```bash
+cat .github/workflows/sync-to-azure-devops.yml
+```
+
+## What We Checked
+
+The workflow should reference:
+
+```text
+secrets.AZURE_DEVOPS_PAT
+```
+
+and:
+
+```text
+secrets.AZURE_DEVOPS_REPO
+```
+
+The actual PAT value must not appear in the file.
+
+### Correct
+
+```yaml
+AZURE_DEVOPS_PAT: ${{ secrets.AZURE_DEVOPS_PAT }}
+```
+
+### Incorrect
+
+```yaml
+AZURE_DEVOPS_PAT: abc123-your-real-token
+```
+
+The actual token must never be stored in the workflow file.
+
+---
+
+# Step 3.13 — Commit the Synchronization Workflow
+
+From the FlavorForge repository, stage the workflow:
+
+```bash
+git add .github/workflows/sync-to-azure-devops.yml
+```
+
+Create the commit:
+
+```bash
+git commit -m "Add GitHub to Azure DevOps repository sync"
+```
+
+Before pushing, check the repository status:
+
+```bash
+git status
+```
+
+The synchronization workflow is now included in the Git history.
+
+---
+
+# Step 3.14 — Push the Workflow to GitHub
+
+Push the workflow to GitHub:
+
+```bash
+git push origin main
+```
+
+The expected flow is:
+
+```text
+Local Repository
+      ↓
+git push origin main
+      ↓
+GitHub main
+      ↓
+GitHub Actions
+      ↓
+Sync GitHub to Azure DevOps
+      ↓
+Azure DevOps main
+```
+
+---
+
+# Step 3.15 — Verify GitHub Actions
+
+## Where We Went
+
+Open the FlavorForge GitHub repository.
+
+Go to:
+
+```text
+Actions
+```
+
+## What We Looked For
+
+The workflow should appear as:
+
+```text
+Sync GitHub to Azure DevOps
+```
+
+Open the workflow run.
+
+A successful workflow should show steps similar to:
+
+```text
+✓ Checkout GitHub repository
+✓ Configure Git identity
+✓ Push main to Azure DevOps
+```
+
+A successful final step confirms that GitHub Actions was able to authenticate and push the repository contents to Azure DevOps.
+
+---
+
+# Step 3.16 — Verify the Azure DevOps Repository
+
+## Where We Went
+
+Open the Azure DevOps project:
+
+```text
+FlavorForge – Azure DevSecOps Capstone
+```
+
+Go to:
+
+```text
+Repos
+    ↓
+Files
+    ↓
+main
+```
+
+## What We Verified
+
+The latest synchronized changes should be present in Azure DevOps.
+
+The repository should contain the corresponding FlavorForge project files.
+
+The synchronization flow is:
+
+```text
+GitHub main
+      ↓
+GitHub Actions
+      ↓
+Azure DevOps main
+```
+
+---
+
+# Step 3.17 — Verify Commit Synchronization
+
+The GitHub and Azure DevOps repositories should contain the corresponding synchronized commit.
+
+One previously verified synchronization point was:
+
+```text
+23a47f8
+```
+
+This commit can be used as a verification point when comparing the GitHub and Azure DevOps commit histories.
+
+Check the commit history in both repositories and confirm that the corresponding commit is present.
+
+> **Note:** The commit `23a47f8` is documented as a previously verified synchronization point. It should not be described as the commit created by the synchronization workflow unless the corresponding GitHub Actions run was specifically verified.
+
+---
+
+# Step 3.18 — Final Repository Architecture
+
+The completed source-control architecture is:
+
+```text
+                         Developer
+                             │
+                             ▼
+                      GitHub Repository
+              flavorforge-azure-devsecops-capstone
+                             │
+                             │ push main
+                             ▼
+                       GitHub Actions
+                             │
+                             │ authentication
+                             │
+                             │ AZURE_DEVOPS_PAT
+                             ▼
+                      Azure DevOps
+                      malathiabhilash
+                             │
+                             ▼
+              FlavorForge – Azure DevSecOps Capstone
+                             │
+                             ▼
+                        Azure Repos
+                             │
+                             ▼
+                            main
+```
+
+The two repositories serve different roles:
+
+```text
+GitHub
+  ↓
+Primary source repository
+
+Azure DevOps
+  ↓
+Synchronized repository
+  ↓
+Used by Azure DevOps CI/CD workflow
+```
 
 ---
 
 # Verify
 
-The final project configuration confirmed from Azure DevOps is:
+The following project and synchronization components were verified:
 
-```text
-Organization
-    ↓
-malathiabhilash
-
-Project
-    ↓
-FlavorForge – Azure DevSecOps Capstone
-
-Process
-    ↓
-Basic
-
-Visibility
-    ↓
-Private
-
-Administrator
-    ↓
-Malathi Shetty
-```
-
-The enabled Azure DevOps services are:
-
-```text
-Boards       → On
-Repos        → On
-Pipelines    → On
-Test Plans   → On
-Artifacts    → On
-```
+| Item | Confirmed Value |
+|---|---|
+| GitHub repository | `flavorforge-azure-devsecops-capstone` |
+| GitHub branch | `main` |
+| Azure DevOps organization | `malathiabhilash` |
+| Azure DevOps project | `FlavorForge – Azure DevSecOps Capstone` |
+| Azure DevOps repository | `FlavorForge – Azure DevSecOps Capstone` |
+| GitHub secret | `AZURE_DEVOPS_PAT` |
+| GitHub secret | `AZURE_DEVOPS_REPO` |
+| Synchronization workflow | `sync-to-azure-devops.yml` |
+| Synchronization direction | GitHub → Azure DevOps |
 
 ---
 
 # Screenshot
 
-## Screenshot 1 — Project Details
+## Screenshot 1 — GitHub Repository
 
-Use the screenshot/evidence showing:
+Use the actual screenshot captured from GitHub showing:
 
 ```text
-Project details
-
-Name
-FlavorForge – Azure DevSecOps Capstone
-
-Description
-Enterprise-grade Azure DevSecOps project...
-
-Process
-Basic
-
-Project administrators
-Malathi Shetty
+flavorforge-azure-devsecops-capstone
 ```
 
-This screenshot also shows the Azure DevOps services:
+and the:
 
 ```text
-Boards      → On
-Repos       → On
-Pipelines   → On
-Test Plans  → On
-Artifacts   → On
+main
 ```
 
-Add the actual screenshot file here once its repository path is confirmed.
+branch.
+
+Use the actual screenshot filename from the repository.
+
+Do not invent a screenshot path.
 
 ```text
-[Insert actual Project Settings → Overview screenshot]
+[Insert actual GitHub repository screenshot]
 ```
 
 ---
 
-## Screenshot 2 — Project Home
+## Screenshot 2 — Azure DevOps Repository
 
-Use the screenshot/evidence showing:
+Use the actual screenshot captured from:
 
 ```text
 FlavorForge – Azure DevSecOps Capstone
-
-Private
+    ↓
+Repos
+    ↓
+Files
 ```
 
-and the project description.
-
-Add the actual screenshot file here once its repository path is confirmed.
+The screenshot should show the repository contents and `main` branch.
 
 ```text
-[Insert actual FlavorForge Azure DevOps project home screenshot]
+[Insert actual Azure DevOps repository screenshot]
+```
+
+---
+
+## Screenshot 3 — GitHub Actions
+
+Use the actual screenshot captured from:
+
+```text
+GitHub
+    ↓
+Actions
+    ↓
+Sync GitHub to Azure DevOps
+```
+
+The screenshot should show the successful workflow run.
+
+```text
+[Insert actual GitHub Actions synchronization screenshot]
+```
+
+---
+
+## Screenshot 4 — GitHub Repository Secrets
+
+Use the actual screenshot captured from:
+
+```text
+GitHub
+    ↓
+Settings
+    ↓
+Secrets and variables
+    ↓
+Actions
+```
+
+The screenshot should show the secret names:
+
+```text
+AZURE_DEVOPS_PAT
+AZURE_DEVOPS_REPO
+```
+
+**Important:** The actual PAT value must never be visible in the screenshot.
+
+```text
+[Insert actual GitHub Actions Secrets screenshot]
 ```
 
 ---
 
 # Result
 
-The Azure DevOps project was successfully created and configured as:
+The FlavorForge GitHub repository was connected to the corresponding Azure DevOps repository using GitHub Actions.
+
+The final synchronization flow is:
 
 ```text
-FlavorForge – Azure DevSecOps Capstone
-```
-
-under the:
-
-```text
-malathiabhilash
-```
-
-Azure DevOps organization.
-
-The confirmed configuration is:
-
-```text
-Organization
+Developer
     ↓
-malathiabhilash
+GitHub
+    ↓
+main
+    ↓
+GitHub Actions
+    ↓
+Azure DevOps
     ↓
 FlavorForge – Azure DevSecOps Capstone
-    │
-    ├── Visibility: Private
-    ├── Process: Basic
-    ├── Administrator: Malathi Shetty
-    │
-    ├── Boards: On
-    ├── Repos: On
-    ├── Pipelines: On
-    ├── Test Plans: On
-    └── Artifacts: On
+    ↓
+Repos
+    ↓
+main
 ```
 
-The project is now ready for the next stage of the Azure DevOps BUILD-JOURNEY.
+GitHub remains the primary source repository, while Azure DevOps receives synchronized repository changes for the Azure DevOps CI/CD workflow.
 
-The next document is:
+The GitHub Actions workflow uses:
 
 ```text
-03-github-connection-and-repository.md
+AZURE_DEVOPS_PAT
 ```
 
+for Azure DevOps authentication and:
+
+```text
+AZURE_DEVOPS_REPO
 ```
 
-### One correction from the earlier version
+to identify the destination repository.
 
-We can now safely replace the earlier statement:
+The PAT value is not stored in the source code or workflow YAML.
 
-> “Project visibility/process/description were not confirmed.”
+The GitHub-to-Azure DevOps repository synchronization is now configured and ready for the next Azure DevOps configuration step.
 
-with the actual evidence:
 
-- **Name:** FlavorForge – Azure DevSecOps Capstone
-- **Description:** confirmed
-- **Process:** Basic
-- **Visibility:** Private
-- **Administrator:** Malathi Shetty
-- **Boards:** On
-- **Repos:** On
-- **Pipelines:** On
-- **Test Plans:** On
-- **Artifacts:** On
-
-The **only thing I would still not claim** is the exact values selected on the original *Create project* screen (for example, if a README checkbox existed there), because your current Project Settings page doesn't prove what was selected at creation time.
-```
