@@ -648,13 +648,12 @@ should be verified from the Azure DevOps interface rather than reconstructed fro
 
 # Screenshots
 
-![Development Environment](/screenshots/pipeline/13-variable-group.png)
+![QA Variable Group](/screenshots/build-journey/pipeline/qa/qa-variable-group.png)
 
-![QA and Production Variable Groups](/screenshots/pipeline/14-variable-groups.png)
 
-![Variable Group Configuration](/screenshots/pipeline/15-variable-group-details.png)
 
-![Variable Group Pipeline Permissions](/screenshots/pipeline/16-variable-group-permissions.png)
+
+![Production Variable Group](/screenshots/build-journey/pipeline/prod/prod-variable-group.png)
 
 ---
 
