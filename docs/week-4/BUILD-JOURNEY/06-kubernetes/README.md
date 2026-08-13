@@ -113,7 +113,7 @@ Azure
  |
  +-- flavorforge-rg
  |
- +-- flavorforgeacr
+ +-- flavorforgeacr2026ms
  |      |
  |      +-- Backend Image
  |      +-- Frontend Image
@@ -184,7 +184,7 @@ The AKS cluster used for the project was:
 | ------------------ | ----------------- |
 | Resource Group     | `flavorforge-rg`  |
 | AKS Cluster        | `flavorforge-aks` |
-| Container Registry | `flavorforgeacr`  |
+| Container Registry | `flavorforgeacr2026ms`  |
 | Worker Nodes       | 2                 |
 | Kubernetes CLI     | `kubectl`         |
 

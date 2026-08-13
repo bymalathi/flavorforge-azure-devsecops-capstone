@@ -92,7 +92,7 @@ The FlavorForge AKS environment used the following configuration:
 | AKS Cluster        | `flavorforge-aks` |
 | Node Count         | `2`               |
 | Identity           | Managed Identity  |
-| Container Registry | `flavorforgeacr`  |
+| Container Registry | `flavorforgeacr2026ms`  |
 | Kubernetes CLI     | `kubectl`         |
 
 The two-node cluster provided the Kubernetes worker capacity required for the application workloads.
@@ -107,7 +107,7 @@ Before creating AKS, the following resources and configuration were already avai
 * Azure CLI.
 * Authenticated Azure CLI session.
 * `flavorforge-rg` resource group.
-* `flavorforgeacr` Azure Container Registry.
+* `flavorforgeacr2026ms` Azure Container Registry.
 * Docker images stored in ACR.
 
 Azure authentication could be verified with:
@@ -120,7 +120,7 @@ The ACR repositories could be checked with:
 
 ```bash
 az acr repository list \
-  --name flavorforgeacr
+  --name flavorforgeacr2026ms
 ```
 
 This confirmed that the container registry was available before creating the Kubernetes environment.
@@ -204,7 +204,7 @@ The AKS cluster was connected to ACR using:
 az aks update \
   --resource-group flavorforge-rg \
   --name flavorforge-aks \
-  --attach-acr flavorforgeacr
+  --attach-acr flavorforgeacr2026ms
 ```
 
 This integration allows the AKS cluster to authenticate with the Azure Container Registry and pull private container images.
@@ -478,7 +478,7 @@ Azure Subscription
         v                       v
 +----------------+      +----------------------+
 |      ACR       |      |         AKS          |
-| flavorforgeacr |      |  flavorforge-aks     |
+| flavorforgeacr2026ms |      |  flavorforge-aks     |
 +----------------+      +----------------------+
         |                       |
         | Stores images         |
@@ -613,7 +613,7 @@ Azure
  |
  +-- flavorforge-rg
  |
- +-- flavorforgeacr
+ +-- flavorforgeacr2026ms
  |
  +-- flavorforge-aks
        |
@@ -707,7 +707,7 @@ The ACR integration can be configured using:
 az aks update \
   --resource-group flavorforge-rg \
   --name flavorforge-aks \
-  --attach-acr flavorforgeacr
+  --attach-acr flavorforgeacr2026ms
 ```
 
 ---
@@ -804,7 +804,7 @@ First verify the AKS-to-ACR connection:
 az aks check-acr \
   --resource-group flavorforge-rg \
   --name flavorforge-aks \
-  --acr flavorforgeacr
+  --acr flavorforgeacr2026ms
 ```
 
 If the integration needs to be configured again:
@@ -813,7 +813,7 @@ If the integration needs to be configured again:
 az aks update \
   --resource-group flavorforge-rg \
   --name flavorforge-aks \
-  --attach-acr flavorforgeacr
+  --attach-acr flavorforgeacr2026ms
 ```
 
 ---
@@ -883,7 +883,7 @@ Azure
   |
   +-- flavorforge-rg
         |
-        +-- flavorforgeacr
+        +-- flavorforgeacr2026ms
         |      |
         |      +-- Backend Image
         |      +-- Frontend Image

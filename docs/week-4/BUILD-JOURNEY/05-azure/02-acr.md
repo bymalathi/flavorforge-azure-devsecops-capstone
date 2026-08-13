@@ -814,13 +814,13 @@ This version distinction is intentionally preserved so that the BUILD-JOURNEY re
 ## References
 
 * Microsoft Azure Container Registry documentation:
-  [Azure Container Registry documentation](https://learn.microsoft.com/azure/container-registry/?utm_source=chatgpt.com)
+  [Azure Container Registry documentation](https://learn.microsoft.com/azure/container-registry/)
 
 * Microsoft Azure CLI `az acr` documentation:
-  [Azure CLI — az acr](https://learn.microsoft.com/cli/azure/acr?utm_source=chatgpt.com)
+  [Azure CLI — az acr](https://learn.microsoft.com/cli/azure/acr)
 
 * Docker image tag documentation:
-  [Docker image tag reference](https://docs.docker.com/reference/cli/docker/image/tag/?utm_source=chatgpt.com)
+  [Docker image tag reference](https://docs.docker.com/reference/cli/docker/image/tag/)
 
 * Docker push documentation:
-  [Docker push reference](https://docs.docker.com/reference/cli/docker/image/push/?utm_source=chatgpt.com)
+  [Docker push reference](https://docs.docker.com/reference/cli/docker/image/push/)

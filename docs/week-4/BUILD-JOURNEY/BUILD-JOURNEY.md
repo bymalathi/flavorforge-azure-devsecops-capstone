@@ -3981,7 +3981,7 @@ Command:
 ```bash
 az acr create \
 --resource-group flavorforge-rg \
---name flavorforgeacr \
+--name flavorforgeacr2026ms \
 --sku Basic
 ```
 
@@ -4016,7 +4016,7 @@ az acr list -o table
 Expected:
 
 ```text
-flavorforgeacr
+flavorforgeacr2026ms
 ```
 
 ---
@@ -4029,7 +4029,7 @@ Command:
 
 ```bash
 az acr login \
---name flavorforgeacr
+--name flavorforgeacr2026ms
 ```
 
 Expected:
@@ -4048,7 +4048,7 @@ Command:
 
 ```bash
 az acr show \
---name flavorforgeacr \
+--name flavorforgeacr2026ms \
 --query loginServer \
 -o tsv
 ```
@@ -4056,7 +4056,7 @@ az acr show \
 Example:
 
 ```text
-flavorforgeacr.azurecr.io
+flavorforgeacr2026ms.azurecr.io
 ```
 
 This address is required for Docker image tagging.
@@ -4090,7 +4090,7 @@ Command:
 ```bash
 docker tag \
 flavorforge-frontend:latest \
-flavorforgeacr.azurecr.io/flavorforge-frontend:v1
+flavorforgeacr2026ms.azurecr.io/flavorforge-frontend:v1
 ```
 
 ---
@@ -4102,7 +4102,7 @@ Command:
 ```bash
 docker tag \
 flavorforge-backend:latest \
-flavorforgeacr.azurecr.io/flavorforge-backend:v1
+flavorforgeacr2026ms.azurecr.io/flavorforge-backend:v1
 ```
 
 ---
@@ -4118,9 +4118,9 @@ docker images
 Expected:
 
 ```text
-flavorforgeacr.azurecr.io/flavorforge-frontend
+flavorforgeacr2026ms.azurecr.io/flavorforge-frontend
 
-flavorforgeacr.azurecr.io/flavorforge-backend
+flavorforgeacr2026ms.azurecr.io/flavorforge-backend
 ```
 
 ---
@@ -4131,7 +4131,7 @@ Upload frontend image:
 
 ```bash
 docker push \
-flavorforgeacr.azurecr.io/flavorforge-frontend:v1
+flavorforgeacr2026ms.azurecr.io/flavorforge-frontend:v1
 ```
 
 ---
@@ -4142,7 +4142,7 @@ Upload backend image:
 
 ```bash
 docker push \
-flavorforgeacr.azurecr.io/flavorforge-backend:v1
+flavorforgeacr2026ms.azurecr.io/flavorforge-backend:v1
 ```
 
 ---
@@ -4153,7 +4153,7 @@ List repositories:
 
 ```bash
 az acr repository list \
---name flavorforgeacr \
+--name flavorforgeacr2026ms \
 -o table
 ```
 
@@ -4173,7 +4173,7 @@ Frontend:
 
 ```bash
 az acr repository show-tags \
---name flavorforgeacr \
+--name flavorforgeacr2026ms \
 --repository flavorforge-frontend \
 -o table
 ```
@@ -4182,7 +4182,7 @@ Backend:
 
 ```bash
 az acr repository show-tags \
---name flavorforgeacr \
+--name flavorforgeacr2026ms \
 --repository flavorforge-backend \
 -o table
 ```
@@ -4254,7 +4254,7 @@ Confirm registry exists.
 Run:
 
 ```bash
-az acr login --name flavorforgeacr
+az acr login --name flavorforgeacr2026ms
 ```
 
 Expected:
@@ -4271,7 +4271,7 @@ Run:
 
 ```bash
 az acr repository list \
---name flavorforgeacr
+--name flavorforgeacr2026ms
 ```
 
 Confirm:
@@ -4587,7 +4587,7 @@ Verify ACR:
 
 ```bash
 az acr repository list \
---name flavorforgeacr
+--name flavorforgeacr2026ms
 ```
 
 ---
@@ -4663,7 +4663,7 @@ Command:
 az aks update \
 --resource-group flavorforge-rg \
 --name flavorforge-aks \
---attach-acr flavorforgeacr
+--attach-acr flavorforgeacr2026ms
 ```
 
 Purpose:
@@ -5145,7 +5145,7 @@ Verify images:
 
 ```bash
 az acr repository list \
---name flavorforgeacr
+--name flavorforgeacr2026ms
 ```
 
 ---

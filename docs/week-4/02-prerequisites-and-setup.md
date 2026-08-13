@@ -13,7 +13,7 @@ Before implementing the FlavorForge Azure DevSecOps pipeline, the following tool
 | Git | 2.43.0 | `git --version` |
 | Azure Subscription | Active | `az account show` |
 | Azure Kubernetes Service (AKS) | flavorforge-aks | `kubectl get nodes` |
-| Azure Container Registry (ACR) | flavorforgeacr | `az acr list --resource-group flavorforge-rg` |
+| Azure Container Registry (ACR) | flavorforgeacr2026ms | `az acr list --resource-group flavorforge-rg` |
 
 ### Accounts / Access Required
 
