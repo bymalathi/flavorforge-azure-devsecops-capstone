@@ -1,80 +1,28 @@
-# 02 — Trivy Filesystem Scan
+# Trivy Filesystem Scan
 
 ## Objective
 
-The goal of this step is to use **Trivy filesystem scanning** to inspect the FlavorForge repository for known security vulnerabilities and security-related issues.
+The objective of the Trivy filesystem scan is to scan the FlavorForge source repository for known vulnerabilities in application dependencies and identify security issues before the application is packaged and deployed.
 
-The filesystem scan analyzes the project directory rather than a Docker image.
+The filesystem scan is executed from the root of the FlavorForge repository.
 
-For FlavorForge, the scan is performed against the repository root:
+## Scan Location
 
 ```text
 flavorforge-azure-devsecops-capstone/
 ```
 
----
+The scan covers the repository contents, including the application dependency lock files.
 
-## 1. Verify Trivy Installation
+## Step 1 — Create the Trivy Report Directory
 
-Before running the filesystem scan, verify that Trivy is available.
-
-```bash
-trivy --version
-```
-
-Expected result:
-
-```text
-Version: ...
-```
-
-The exact version may vary depending on the installed Trivy release.
-
----
-
-## 2. Navigate to the FlavorForge Repository
-
-```bash
-cd ~/flavorforge-azure-devsecops-capstone
-```
-
-Verify the repository:
-
-```bash
-pwd
-```
-
-Expected:
-
-```text
-/home/malathi/flavorforge-azure-devsecops-capstone
-```
-
----
-
-## 3. Create the Trivy Report Directory
-
-Create a dedicated directory for Trivy reports:
+Create a directory to store the filesystem scan reports:
 
 ```bash
 mkdir -p reports/trivy
 ```
 
-Verify:
-
-```bash
-ls -ld reports/trivy
-```
-
-Expected:
-
-```text
-reports/trivy
-```
-
----
-
-## 4. Run the Trivy Filesystem Scan
+## Step 2 — Run the Filesystem Scan
 
 Run Trivy against the complete repository:
 
@@ -87,32 +35,40 @@ trivy fs \
 ### What this command does
 
 * `trivy fs` — performs a filesystem scan.
-* `--format table` — displays the results in a human-readable table.
+* `--format table` — displays the results in a readable table.
 * `.` — scans the current repository directory.
-* `tee` — displays the results in the terminal and saves them to a report file.
-* `reports/trivy/filesystem-report.txt` — stores the scan output.
+* `tee` — displays the result in the terminal and saves it to a report file.
 
----
+## Step 3 — Filesystem Scan Result
 
-## 5. Verify the Text Report
+The scan completed successfully and detected one known vulnerability in the frontend dependency tree.
 
-Check that the report was created:
+The result was:
 
-```bash
-ls -lh reports/trivy/filesystem-report.txt
+```text
+Total: 1
+UNKNOWN: 0
+LOW: 0
+MEDIUM: 0
+HIGH: 1
+CRITICAL: 0
 ```
 
-Then inspect the report:
+The detected vulnerability was:
 
-```bash
-head -50 reports/trivy/filesystem-report.txt
+| Library      | Vulnerability       | Severity | Installed Version | Fixed Version |
+| ------------ | ------------------- | -------- | ----------------- | ------------- |
+| react-router | GHSA-qwww-vcr4-c8h2 | HIGH     | 7.18.1            | 7.18.2, 8.3.0 |
+
+The vulnerability was reported in:
+
+```text
+frontend/package-lock.json
 ```
 
-The report should contain the Trivy filesystem scan results.
+Trivy reported the vulnerability as fixed and identified the available fixed versions as `7.18.2` and `8.3.0`.
 
----
-
-## 6. Generate the JSON Report
+## Step 4 — Generate the JSON Report
 
 Generate a machine-readable JSON report:
 
@@ -123,53 +79,105 @@ trivy fs \
   .
 ```
 
-Verify the JSON report:
+The command completed successfully.
 
-```bash
-ls -lh reports/trivy/filesystem-report.json
-```
+## Step 5 — Verify the Generated Reports
 
----
-
-## 7. Verify Both Reports
-
-Run:
+Verify the generated report files:
 
 ```bash
 ls -lh reports/trivy/
 ```
 
-Expected files:
+The verification produced:
 
 ```text
-filesystem-report.txt
 filesystem-report.json
+filesystem-report.txt
 ```
 
-The text report is useful for human-readable verification, while the JSON report can be consumed by automation or other security tooling.
+The verified report sizes were approximately:
 
----
+```text
+filesystem-report.txt   2.2K
+filesystem-report.json  2.5K
+```
 
-## 8. Verification Checklist
+## Generated Evidence
 
-* [ ] Trivy is installed and available.
-* [ ] FlavorForge repository is the scan target.
-* [ ] `reports/trivy/` directory exists.
-* [ ] Filesystem scan completed.
-* [ ] `filesystem-report.txt` was generated.
-* [ ] `filesystem-report.json` was generated.
-* [ ] Both reports can be opened and inspected.
+The filesystem scan generated two report formats:
 
----
+```text
+reports/trivy/filesystem-report.txt
+reports/trivy/filesystem-report.json
+```
+
+The text report provides a human-readable security summary, while the JSON report provides structured output that can be consumed by automation and pipeline processes.
+
+## Security Finding
+
+The filesystem scan identified one HIGH-severity vulnerability in `react-router`.
+
+This finding is intentionally documented rather than suppressed because the purpose of DevSecOps scanning is to provide visibility into dependency security risks.
+
+The scan itself completed successfully and produced both required report formats.
+
+## Azure DevOps Pipeline Integration
+
+The same filesystem scan is integrated into the Azure DevOps pipeline in the `TrivyScan` stage.
+
+The pipeline executes:
+
+```yaml
+trivy fs \
+  --format table \
+  . | tee reports/trivy/filesystem-report.txt
+```
+
+and:
+
+```yaml
+trivy fs \
+  --format json \
+  -o reports/trivy/filesystem-report.json \
+  .
+```
+
+The generated reports are then published as the pipeline artifact:
+
+```yaml
+- publish: reports/trivy
+  artifact: trivy-filesystem
+  displayName: "Publish Filesystem Reports"
+```
+
+This ensures that filesystem security results are retained as pipeline evidence.
 
 ## Evidence
 
-The final documentation should include the actual terminal evidence showing:
+![Filesystem scan evidence](/screenshots/build-journey/trivy/Trivy%20filesystem%20evidence.png)
 
-1. Trivy version.
-2. Filesystem scan execution.
-3. Scan results.
-4. Generated report files.
-5. JSON report generation.
+![Text report evidence](/screenshots/build-journey/trivy/filesystem-report-txt.png)
 
-Screenshots will be added after the verification is completed.
+![json-report-verification](/screenshots/build-journey/trivy/Verify%20the%20JSON%20report.png)
+
+
+## Verification Summary
+
+The Trivy filesystem scan was successfully executed against the FlavorForge repository.
+
+The verification confirmed:
+
+* Trivy filesystem scanning is working.
+* The vulnerability database was available and updated before scanning.
+* Vulnerability scanning was enabled.
+* Secret scanning was enabled.
+* The repository dependency files were analyzed.
+* One HIGH-severity dependency vulnerability was identified.
+* A human-readable TXT report was generated.
+* A machine-readable JSON report was generated.
+* Both reports were stored under `reports/trivy/`.
+* The same scan commands are integrated into the Azure DevOps pipeline.
+* The reports are configured to be published as a pipeline artifact.
+
+This completes the filesystem scanning step of the FlavorForge DevSecOps implementation.
