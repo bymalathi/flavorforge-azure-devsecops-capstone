@@ -6,6 +6,22 @@ The documentation is organized as a chronological learning path. Each section ex
 
 ---
 
+## FlavorForge – Use Case
+
+- Build a modern full-stack recipe-sharing web application.
+- Demonstrate an end-to-end Azure DevSecOps implementation.
+- Automate CI/CD using Azure DevOps Pipelines.
+- Perform code quality analysis with SonarCloud.
+- Scan container images for vulnerabilities using Trivy.
+- Containerize the application using Docker.
+- Store Docker images in Azure Container Registry (ACR).
+- Deploy and manage the application on Azure Kubernetes Service (AKS).
+- Implement GitOps-based continuous deployment using Argo CD.
+- Monitor and manage the application using Azure Monitor.
+- Showcase enterprise-grade cloud-native architecture and deployment practices.
+
+---
+
 ## Build Journey Structure
 
 | Stage | Area | Purpose |

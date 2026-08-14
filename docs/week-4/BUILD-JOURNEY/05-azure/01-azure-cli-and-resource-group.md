@@ -64,7 +64,7 @@ This displayed the currently selected Azure subscription and account information
 
 ### Screenshot
 
-![Azure CLI authenticated](../../../../screenshots/azure/01-azure-cli-authenticated.png)
+![Azure CLI authenticated](/screenshots/azure/01-azure-cli-authenticated.png)
 
 ---
 
@@ -113,13 +113,14 @@ The Azure region we selected was:
 ```text
 East US
 ```
+The Resource Group provides a logical container for the Azure resources used by the FlavorForge deployment.
 
 ### Option 1 — Create using Azure CLI
 
 From the FlavorForge project directory, we ran:
 
 ```bash
-az group create --name flavorforge-rg --location westus2
+az group create --name flavorforge-rg --location eastus
 ```
 
 The command creates the Resource Group in the **East US** Azure region.
@@ -135,7 +136,7 @@ az group show --name flavorforge-rg --output table
 Check that the Resource Group appears and that the location is:
 
 ```text
-westus2
+eastus
 ```
 
 You can also list the Resource Groups:
@@ -175,11 +176,11 @@ You can also open the Resource Group's **Overview** page to see the resources th
 
 ### Screenshot — Azure CLI
 
-![FlavorForge Resource Group created](../../../../screenshots/azure/02-resource-group-created.png)
+![FlavorForge Resource Group created](/screenshots/azure/02-resource-group-created.png)
 
 ### Screenshot — Azure Portal
 
-![FlavorForge Resource Group in Azure Portal](../../../../screenshots/azure/flavorforge-rg-microsoft-azure-resource-group.png)
+![FlavorForge Resource Group in Azure Portal](/screenshots/azure/flavorforge-rg-microsoft-azure-resource-group.png)
 
 ---
 
@@ -235,7 +236,7 @@ Registered
 
 ### Screenshot
 
-![Container Registry provider registered](../../../../screenshots/azure/03-containerregistry-provider-registered.png)
+![Container Registry provider registered](/screenshots/azure/03-containerregistry-provider-registered.png)
 
 ---
 

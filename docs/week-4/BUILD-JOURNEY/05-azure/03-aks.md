@@ -596,7 +596,7 @@ Run / Orchestrate
 
 ---
 
-# 16. Files and configuration created
+# 16. Resources and configuration created
 
 The AKS phase did not require application source-code changes.
 
@@ -672,7 +672,8 @@ Ready
 
 ## Mistake 1 — Creating AKS before preparing ACR
 
-The application images should already be available in ACR before Kubernetes deployment.
+Before deploying the application to AKS, the container images
+referenced by the Kubernetes manifests must be available in ACR.
 
 Recommended flow:
 
