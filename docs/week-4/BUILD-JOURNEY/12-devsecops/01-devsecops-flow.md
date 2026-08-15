@@ -86,10 +86,10 @@ The complete workflow can be represented as:
                              │
                              ▼
               ┌──────────────────────────────┐
-              │       Security & Quality    │
+              │       Security & Quality     │
               │                              │
               │  SonarCloud                  │
-              │  Trivy                      │
+              │  Trivy                       │
               └──────────────┬───────────────┘
                              │
                              ▼

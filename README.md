@@ -1,6 +1,7 @@
+
 # 🍽️ FlavorForge
 
-## From Recipe Ideas to a Production-Ready Cloud Platform
+## From Recipe Ideas to a Production-Inspired Azure DevSecOps Platform
 
 ![React](https://img.shields.io/badge/Frontend-React-blue)
 ![Node.js](https://img.shields.io/badge/Backend-Node.js-green)
@@ -11,121 +12,179 @@
 ![Security](https://img.shields.io/badge/Security-Trivy-red)
 ![CI/CD](https://img.shields.io/badge/Pipeline-Azure%20DevOps-blue)
 ![License](https://img.shields.io/badge/License-MIT-green)
-![Last Commit](https://img.shields.io/github/last-commit/shettymalathib/flavorforge-azure-devsecops-capstone)
-![Repo Size](https://img.shields.io/github/repo-size/shettymalathib/flavorforge-azure-devsecops-capstone)
+![Last Commit](https://img.shields.io/github/last-commit/bymalathi/flavorforge-azure-devsecops-capstone)
+![Repo Size](https://img.shields.io/github/repo-size/bymalathi/flavorforge-azure-devsecops-capstone)
 ![AKS](https://img.shields.io/badge/Kubernetes-AKS-326CE5)
 ![Quality Gate](https://img.shields.io/badge/SonarCloud-Passed-brightgreen)
-![Documentation Automation](https://github.com/shettymalathib/flavorforge-azure-devsecops-capstone/actions/workflows/documentation-generator.yml/badge.svg)
-
+![Documentation Automation](https://github.com/bymalathi/flavorforge-azure-devsecops-capstone/actions/workflows/documentation-generator.yml/badge.svg)
 
 ---
 
-> 🍴 **Great recipes need the right ingredients.**  
+> 🍴 **Great recipes need the right ingredients.**
 > 🚀 **Great software requires the right engineering practices.**
 
 ---
 
 # 👨‍🍳 The FlavorForge Story
 
-FlavorForge began as a simple recipe-sharing application built to provide users with an intuitive platform for discovering and exploring recipes through a modern web interface.
+FlavorForge began as a simple recipe-sharing application designed to provide users with an intuitive platform for discovering and exploring recipes through a modern web interface.
 
 While the application itself is straightforward, the primary objective of this project extends far beyond application development.
 
-The real engineering challenge was to transform a basic full-stack application into a production-inspired cloud platform by implementing modern DevSecOps practices, automated delivery pipelines, cloud-native infrastructure, security integration, and GitOps-based deployment.
+The engineering challenge was to transform a full-stack application into a **production-inspired cloud-native platform** by implementing:
 
-This capstone demonstrates that complete transformation—from the first Git commit to a fully deployed application running on **Azure Kubernetes Service (AKS)**.
+* DevSecOps automation
+* Containerization
+* Cloud infrastructure
+* Kubernetes orchestration
+* Continuous integration
+* Security scanning
+* Code quality analysis
+* GitOps
+* Deployment verification
+* Operational monitoring
+* Engineering documentation
 
-<img width="1690" height="153" alt="image" src="https://github.com/user-attachments/assets/4124c654-005b-41c4-9d2c-f3901d514e84" />
+The project demonstrates the journey from application source code to a running application on **Microsoft Azure Kubernetes Service (AKS)**.
 
+<img width="1690" height="153" alt="FlavorForge journey" src="https://github.com/user-attachments/assets/4124c654-005b-41c4-9d2c-f3901d514e84" />
 
-The application is the product.
+**The application is the product.**
 
-The DevSecOps platform behind it is the engineering story.
+**The DevSecOps platform behind it is the engineering story.**
 
 ---
 
 # 🍴 Meet FlavorForge
 
-FlavorForge is a full-stack recipe-sharing platform developed as an **Azure DevSecOps Capstone Project** to demonstrate how modern software is built, secured, deployed, and operated using enterprise DevSecOps practices.
+FlavorForge is a full-stack recipe-sharing platform developed as an **Azure DevSecOps Capstone Project**.
 
-The application combines a modern frontend with a RESTful backend while showcasing an end-to-end cloud-native delivery pipeline running on Microsoft Azure.
+The application combines a React frontend with a Node.js/Express backend while demonstrating an end-to-end cloud-native software delivery workflow.
 
-The solution includes:
+The platform includes:
 
-- **React** frontend for a responsive user experience
-- **Node.js and Express** backend API
-- **Docker** containerization for consistent application packaging
-- **Azure Container Registry (ACR)** for private container image management
-- **Azure Kubernetes Service (AKS)** for container orchestration
-- **Azure DevOps** multi-stage CI/CD pipelines
-- **SonarCloud** for continuous code quality analysis
-- **Trivy** for container vulnerability scanning
-- **ArgoCD** for GitOps-based continuous delivery
-- **Azure Monitor** for application and infrastructure monitoring
+* **React + Vite** frontend
+* **Node.js + Express** backend
+* **SQLite** application database
+* **Docker** containerization
+* **Azure Container Registry (ACR)** for private image storage
+* **Azure Kubernetes Service (AKS)** for container orchestration
+* **Azure DevOps** multi-stage CI/CD pipeline
+* **SonarCloud** for code quality analysis
+* **Trivy** for container vulnerability scanning
+* **Kustomize** for environment-specific Kubernetes configuration
+* **Argo CD** for GitOps-based synchronization
+* **Azure Monitor** for operational visibility
+* **Kubernetes HPA** for workload scaling
+* **Ingress** for application exposure
 
-This project is not intended to demonstrate application development alone.
+The goal is not simply to deploy an application.
 
-Instead, it showcases the complete software delivery lifecycle followed by modern engineering teams—from source code management and automated validation to secure deployment, GitOps synchronization, and operational monitoring.
+The goal is to demonstrate how application code can move through a structured engineering lifecycle involving:
+
+**build → validate → quality → security → package → store → deploy → synchronize → verify → operate**
 
 ---
 
-# 🎯 Project Overview
+# 🚨 WEEK 4 — COMPLETE PROJECT DOCUMENTATION
+
+## 📖 Start Here
+
+### 👉 [Week 4 BUILD-JOURNEY](docs/week-4/BUILD-JOURNEY/README.md)
+
+The **Week 4 BUILD-JOURNEY** is the primary implementation documentation for this project.
+
+It provides the complete journey from application development through cloud deployment and final verification.
+
+It covers:
+
+* Prerequisites and setup
+* GitHub repository setup
+* Application development
+* Docker containerization
+* Azure Container Registry
+* Azure Kubernetes Service
+* Kubernetes deployment
+* Kustomize
+* Azure DevOps
+* SonarCloud
+* Trivy
+* Argo CD
+* DevSecOps implementation
+* Troubleshooting
+* Documentation verification
+* Final project verification
+* Screenshots and implementation evidence
+
+> **If you are reviewing or evaluating this project, start with the [Week 4 BUILD-JOURNEY](docs/week-4/BUILD-JOURNEY/README.md).**
+
+---
+
+# 🎯 Project Objective
 
 Developing an application is only one part of modern software engineering.
 
-Production systems must also address critical operational requirements, including:
+A production-oriented platform must also address questions such as:
 
-- How can application changes be delivered safely?
-- How can code quality be validated automatically?
-- How can security vulnerabilities be detected before deployment?
-- How can deployments remain consistent across multiple environments?
-- How can applications recover from configuration drift or deployment failures?
-- How can engineering teams monitor application health and platform performance?
+* How are application changes validated?
+* How is code quality checked automatically?
+* How are container vulnerabilities identified?
+* How are application artifacts packaged consistently?
+* How are container images securely stored?
+* How are workloads deployed to Kubernetes?
+* How are Kubernetes configurations maintained across environments?
+* How can deployments be verified?
+* How can application workloads scale?
+* How can operational health be monitored?
+* How are deployment failures investigated?
 
-FlavorForge addresses these challenges by implementing an enterprise-inspired DevSecOps workflow that integrates automation, security, infrastructure, and operational best practices into a single delivery platform.
+FlavorForge addresses these challenges by implementing an **enterprise-inspired DevSecOps workflow** using GitHub, Azure DevOps, Docker, Azure Container Registry, AKS, Kubernetes, Kustomize, SonarCloud, Trivy, Argo CD, and Azure monitoring capabilities.
 
 The project demonstrates:
 
-- ✅ Automated CI/CD pipelines using Azure DevOps
-- ✅ Continuous code quality analysis with SonarCloud
-- ✅ Container security scanning using Trivy
-- ✅ Docker-based application containerization
-- ✅ Private image management through Azure Container Registry
-- ✅ Kubernetes orchestration with Azure Kubernetes Service
-- ✅ GitOps-based continuous delivery using ArgoCD
-- ✅ Cloud monitoring with Azure Monitor
-- ✅ Comprehensive engineering documentation and operational guidance
+* ✅ Automated CI/CD using Azure DevOps
+* ✅ Continuous code-quality analysis using SonarCloud
+* ✅ Container vulnerability scanning using Trivy
+* ✅ Docker-based application containerization
+* ✅ Private image storage using Azure Container Registry
+* ✅ Kubernetes orchestration using AKS
+* ✅ Environment configuration using Kustomize
+* ✅ GitOps synchronization using Argo CD
+* ✅ Kubernetes autoscaling using HPA
+* ✅ Application exposure using Ingress
+* ✅ Operational visibility using Azure Monitor
+* ✅ Multi-layer deployment verification
+* ✅ Comprehensive engineering documentation
 
-The objective is not simply to deploy an application, but to demonstrate how production-ready software can be delivered, secured, managed, and continuously improved using modern DevSecOps practices.
+The objective is not simply to deploy an application, but to demonstrate how software can be **built, validated, secured, packaged, deployed, verified, and operated** using modern DevSecOps practices.
 
 ---
 
 # 🧩 The Engineering Challenge
 
-Traditional application deployments often rely on manual processes where building, testing, packaging, and deployment are performed separately. While this approach may be sufficient for small projects, it becomes increasingly difficult to maintain consistency, reliability, and security as applications grow.
+Traditional application deployments may require developers or operators to manually build an application, create container images, push images, update Kubernetes resources, and verify the deployment.
 
 A typical manual deployment workflow looks like this:
 
-<img width="406" height="507" alt="image" src="https://github.com/user-attachments/assets/e35b41ef-2a31-44a7-a94c-2b04ca6fa1f2" />
+<img width="406" height="507" alt="Traditional deployment workflow" src="https://github.com/user-attachments/assets/e35b41ef-2a31-44a7-a94c-2b04ca6fa1f2" />
 
+Such deployments introduce risks such as:
 
-Such deployments introduce several operational challenges:
+* Manual deployment errors
+* Configuration inconsistency
+* Limited traceability
+* Delayed security validation
+* Difficult troubleshooting
+* Repetitive operational work
+* Difficult rollback and recovery
 
-- Manual deployment errors
-- Inconsistent environments
-- Limited deployment traceability
-- Delayed security validation
-- Difficult rollback and recovery
-- Minimal deployment automation
+FlavorForge addresses these challenges by introducing automation and validation throughout the software delivery lifecycle.
 
-FlavorForge addresses these challenges by implementing an enterprise-inspired DevSecOps workflow where every code change is automatically validated, secured, containerized, and prepared for deployment.
+The resulting workflow is:
 
-The modern delivery workflow is illustrated below:
+<img width="402" height="971" alt="FlavorForge DevSecOps workflow" src="https://github.com/user-attachments/assets/07320734-35d3-44f8-a1cc-e64cdb23cfff" />
 
-<img width="402" height="971" alt="image" src="https://github.com/user-attachments/assets/07320734-35d3-44f8-a1cc-e64cdb23cfff" />
-
-
-Each stage introduces an additional layer of automation, quality assurance, security, operational consistency, and deployment reliability.
+Each stage introduces another layer of automation, quality assurance, security, operational consistency, and deployment reliability.
 
 #### Evidence
 
@@ -137,37 +196,74 @@ Each stage introduces an additional layer of automation, quality assurance, secu
 
 # 🔄 The FlavorForge Transformation Journey
 
-FlavorForge was developed incrementally, with each phase introducing a new layer of engineering capability. Rather than focusing only on application development, the project evolved into a complete DevSecOps platform that demonstrates modern software delivery practices.
+FlavorForge evolved incrementally.
 
-<img width="2227" height="906" alt="image" src="https://github.com/user-attachments/assets/c0b34578-e86d-45aa-ab44-246cbdd0d568" />
+The project started as a full-stack application and progressively introduced containerization, cloud infrastructure, Kubernetes, CI/CD, security, GitOps, monitoring, and operational verification.
 
+<img width="2227" height="906" alt="FlavorForge transformation journey" src="https://github.com/user-attachments/assets/c0b34578-e86d-45aa-ab44-246cbdd0d568" />
 
-This phased approach reflects how enterprise engineering teams gradually evolve an application into a secure, automated, cloud-native platform capable of supporting continuous delivery and operational excellence.
+The transformation can be summarized as:
+
+```text
+Application
+     │
+     ▼
+Git Repository
+     │
+     ▼
+Docker
+     │
+     ▼
+Azure Container Registry
+     │
+     ▼
+Kubernetes
+     │
+     ▼
+AKS
+     │
+     ▼
+Azure DevOps
+     │
+     ├── Build
+     ├── Validation
+     ├── Quality
+     ├── Security
+     └── Deployment
+     │
+     ▼
+Kustomize
+     │
+     ▼
+Argo CD / GitOps
+     │
+     ▼
+Monitoring & Verification
+```
+
+Each phase introduced another engineering capability, transforming the application from a local full-stack project into a **production-inspired cloud-native DevSecOps platform**.
 
 ---
 
 # 🏗️ Architecture Foundation
 
-FlavorForge follows a cloud-native architecture that separates application development, continuous integration, container management, cloud infrastructure, deployment automation, and operational monitoring into independent but integrated layers.
+FlavorForge separates application development, CI/CD, container management, cloud infrastructure, Kubernetes deployment, GitOps, and monitoring into logical layers.
 
-This layered design improves maintainability, scalability, security, and deployment consistency while following modern DevSecOps engineering practices.
+<img width="428" height="956" alt="FlavorForge architecture" src="https://github.com/user-attachments/assets/6ddb62fd-565c-48ea-a6ca-8811cbbf330e" />
 
-The overall architecture is illustrated below.
-
-<img width="428" height="956" alt="image" src="https://github.com/user-attachments/assets/6ddb62fd-565c-48ea-a6ca-8811cbbf330e" />
-
-
-Each layer has a clearly defined responsibility within the software delivery lifecycle.
-
-| Layer | Responsibility |
-|--------|----------------|
-| Source Control | Version management and collaboration using GitHub |
-| Continuous Integration | Automated build, validation, code quality analysis, and security scanning using Azure DevOps |
-| Containerization | Packaging frontend and backend applications into Docker images |
-| Container Registry | Secure storage and versioning of container images in Azure Container Registry (ACR) |
-| Container Orchestration | Running and managing workloads using Azure Kubernetes Service (AKS) |
-| GitOps | Continuous synchronization of Kubernetes resources using ArgoCD |
-| Monitoring | Observability and operational visibility using Azure Monitor |
+| Layer            | Implementation             | Responsibility                                |
+| ---------------- | -------------------------- | --------------------------------------------- |
+| Source Control   | GitHub                     | Version control and collaboration             |
+| Application      | React, Node.js, Express    | User interface and API                        |
+| CI/CD            | Azure DevOps               | Automated validation and delivery workflow    |
+| Code Quality     | SonarCloud                 | Static analysis and quality gate              |
+| Security         | Trivy                      | Container vulnerability scanning              |
+| Containerization | Docker                     | Application packaging                         |
+| Registry         | Azure Container Registry   | Private image storage                         |
+| Orchestration    | AKS                        | Kubernetes workload management                |
+| Configuration    | Kustomize                  | Environment-specific Kubernetes configuration |
+| GitOps           | Argo CD                    | Desired-state synchronization                 |
+| Monitoring       | Azure Monitor / Kubernetes | Operational visibility                        |
 
 #### Evidence
 
@@ -179,96 +275,169 @@ Each layer has a clearly defined responsibility within the software delivery lif
 
 # 🚀 From Code Commit to Running Application
 
-Every code change in FlavorForge follows a standardized DevSecOps workflow that transforms source code into a securely deployed cloud-native application.
+The FlavorForge delivery lifecycle follows a structured workflow that transforms source code into a running cloud-native application.
 
-Instead of relying on manual deployment activities, each stage is automated to improve consistency, traceability, and deployment reliability.
-
-The complete delivery workflow is shown below.
-
-<img width="281" height="927" alt="image" src="https://github.com/user-attachments/assets/a4fc3199-a01f-445b-b0b8-93fed1e0b65c" />
-
-
-The delivery lifecycle consists of the following stages:
+<img width="281" height="927" alt="Code to application workflow" src="https://github.com/user-attachments/assets/a4fc3199-a01f-445b-b0b8-93fed1e0b65c" />
 
 ## 1. Source Control
 
-Application source code, Kubernetes manifests, automation scripts, and documentation are maintained in a GitHub repository.
+Application source code, Kubernetes manifests, configuration, automation scripts, and documentation are maintained in GitHub.
 
-GitHub serves as the single source of truth for version control and collaboration.
+Git provides version history and traceability for engineering changes.
 
 ---
 
 ## 2. Continuous Integration
 
-Every code commit automatically triggers an Azure DevOps multi-stage pipeline that performs:
+Azure DevOps executes the multi-stage pipeline.
 
-- Source validation
-- Dependency installation
-- Application build
-- Code quality analysis
-- Security scanning
-- Docker image creation
+The pipeline performs activities including:
+
+* Source checkout
+* Dependency installation
+* Application validation
+* Build
+* Testing / validation
+* SonarCloud analysis
+* Docker image creation
+* Trivy vulnerability scanning
+* Image publishing
 
 ---
 
 ## 3. Container Registry
 
-After successful validation, Docker images are securely published to Azure Container Registry (ACR), where versioned images are stored for deployment.
+Validated Docker images are pushed to:
+
+```text
+flavorforgeacr2026ms.azurecr.io
+```
+
+Azure Container Registry provides private storage and versioned container images.
 
 ---
 
-## 4. Continuous Delivery
+## 4. Kubernetes Deployment
 
-ArgoCD continuously monitors the Git repository and synchronizes Kubernetes resources with the desired application state.
+The pipeline contains a **real AKS deployment stage**.
 
-This GitOps approach minimizes manual deployments and ensures that the running cluster always reflects the version stored in Git.
+The deployment process obtains AKS credentials and applies the production Kustomize configuration.
+
+Conceptually:
+
+```text
+Azure DevOps
+      │
+      ▼
+AKS Credentials
+      │
+      ▼
+kubectl apply -k kubernetes/overlays/prod
+      │
+      ▼
+Update Deployment Images
+      │
+      ▼
+kubectl rollout status
+```
+
+This is the actual deployment path implemented in the project.
 
 ---
 
-## 5. Cloud Operations
+## 5. GitOps with Argo CD
 
-Azure Kubernetes Service (AKS) runs the application workloads, while Azure Monitor provides operational visibility into cluster health, application availability, and runtime performance.
+Argo CD is configured to monitor Kubernetes configuration stored in Git and synchronize the cluster with the declared desired state.
+
+This provides a practical demonstration of GitOps principles including:
+
+* Declarative configuration
+* Git-based desired state
+* Synchronization
+* Drift visibility
+* Deployment traceability
+* Application health visibility
+
+> **Important implementation detail:** Azure DevOps currently performs the actual AKS deployment stage. Argo CD is also implemented to demonstrate GitOps-based synchronization and desired-state management. The project therefore demonstrates both the operational deployment pipeline and the GitOps model rather than claiming that Argo CD is the only deployment mechanism.
+
+---
+
+## 6. Operations and Verification
+
+After deployment, Kubernetes resources and the application are verified.
+
+Verification includes:
+
+* Pods
+* Deployments
+* Services
+* Ingress
+* HPA
+* Application accessibility
+* Backend health
+* Argo CD synchronization
+* Kubernetes workload health
 
 #### Evidence
 
 ![Azure DevOps Pipeline](screenshots/pipeline/9-advance-pipelines-run-pass.png)
 
-*Figure 5.1 – Successful execution of the Azure DevOps pipeline demonstrating the automated CI workflow.*
+*Figure 5.1 – Successful execution of the Azure DevOps pipeline demonstrating the automated CI and deployment workflow.*
 
 ---
 
 # 🧱 Application Architecture
 
-FlavorForge follows a modular full-stack architecture that separates the user interface, business logic, deployment infrastructure, and operational platform into independent components.
+FlavorForge follows a modular full-stack architecture.
 
-This separation improves maintainability, scalability, testing, and deployment while allowing each layer to evolve independently.
+<img width="407" height="615" alt="Application architecture" src="https://github.com/user-attachments/assets/ea2eaa16-d3c6-4b3b-a29a-32ca77c3f20e" />
 
-The overall application architecture is shown below.
-
-<img width="407" height="615" alt="image" src="https://github.com/user-attachments/assets/ea2eaa16-d3c6-4b3b-a29a-32ca77c3f20e" />
-
+```text
+                 User
+                  │
+                  ▼
+            Kubernetes Ingress
+                  │
+                  ▼
+          ┌───────────────┐
+          │    Frontend   │
+          │ React + Vite  │
+          │    + Nginx    │
+          └───────┬───────┘
+                  │
+                  ▼
+          ┌───────────────┐
+          │    Backend    │
+          │ Node.js +     │
+          │    Express    │
+          └───────┬───────┘
+                  │
+                  ▼
+               SQLite
+```
 
 ---
 
 ## 🎨 Frontend Layer
 
-The frontend is developed using **React** and built with **Vite**, then served through an **Nginx** container.
+The frontend is implemented using **React** and **Vite** and served through an Nginx container.
 
 ### Responsibilities
 
-- Responsive user interface
-- Recipe browsing and searching
-- Backend API communication
-- Client-side routing
-- Reusable component architecture
+* Recipe browsing
+* Recipe searching
+* User interface
+* Backend API communication
+* Client-side routing
+* Reusable components
 
-#### Technology Stack
+### Technology
 
-- React
-- Vite
-- JavaScript
-- CSS
-- Nginx
+* React
+* Vite
+* JavaScript
+* CSS
+* Nginx
 
 #### Evidence
 
@@ -280,23 +449,25 @@ The frontend is developed using **React** and built with **Vite**, then served t
 
 ## ⚙️ Backend Layer
 
-The backend is implemented using **Node.js** and **Express**, exposing REST APIs consumed by the frontend.
+The backend is implemented using **Node.js and Express**.
 
-It manages application logic, health monitoring endpoints, and API services while maintaining a clean layered architecture.
+It exposes REST APIs consumed by the frontend.
 
 ### Responsibilities
 
-- REST API endpoints
-- Business logic
-- Health monitoring
-- Application services
-- API responses
+* REST API endpoints
+* Business logic
+* Health endpoint
+* Application services
+* API responses
+* SQLite data access
 
-#### Technology Stack
+### Technology
 
-- Node.js
-- Express
-- JavaScript
+* Node.js
+* Express
+* JavaScript
+* SQLite
 
 #### Evidence
 
@@ -304,71 +475,59 @@ It manages application logic, health monitoring endpoints, and API services whil
 
 *Figure 6.2 – Backend REST API successfully serving application requests.*
 
----
-
-The clear separation between the frontend and backend enables independent development, testing, deployment, and scaling while supporting cloud-native deployment on Azure Kubernetes Service.
+The separation between frontend and backend enables independent development, testing, deployment, and scaling.
 
 ---
 
 # 🔄 DevSecOps Lifecycle
 
-FlavorForge implements DevSecOps principles by integrating quality assurance, security, automation, and deployment practices throughout the software delivery lifecycle.
+FlavorForge integrates security and quality practices into the software delivery lifecycle.
 
-Rather than treating security and operations as separate activities, every stage contributes to delivering reliable, secure, and production-ready software.
+<img width="190" height="907" alt="DevSecOps lifecycle" src="https://github.com/user-attachments/assets/74837dcb-6f6d-440f-ba3d-80014fbf46a0" />
 
-The lifecycle implemented in this project is illustrated below.
+| Stage               | FlavorForge Implementation                        |
+| ------------------- | ------------------------------------------------- |
+| **Plan**            | Project planning, architecture, and documentation |
+| **Code**            | GitHub                                            |
+| **Build**           | Azure DevOps                                      |
+| **Test / Validate** | Application and pipeline validation               |
+| **Secure**          | SonarCloud + Trivy                                |
+| **Package**         | Docker                                            |
+| **Store**           | Azure Container Registry                          |
+| **Deploy**          | Azure DevOps → AKS                                |
+| **GitOps**          | Argo CD                                           |
+| **Operate**         | Kubernetes                                        |
+| **Monitor**         | Azure Monitor + Kubernetes health                 |
 
-<img width="190" height="907" alt="image" src="https://github.com/user-attachments/assets/74837dcb-6f6d-440f-ba3d-80014fbf46a0" />
-
-
-Each phase has a clearly defined responsibility.
-
-| DevSecOps Stage | FlavorForge Implementation |
-|-----------------|----------------------------|
-| **Plan** | Project planning, architecture design, and engineering documentation |
-| **Code** | Application development using GitHub for source control |
-| **Build** | Automated build process using Azure DevOps Pipelines |
-| **Test** | Application validation and build verification |
-| **Secure** | Code quality analysis with SonarCloud and container vulnerability scanning with Trivy |
-| **Package** | Docker image creation and version management |
-| **Deploy** | Azure Kubernetes Service (AKS) deployment using GitOps principles |
-| **Operate** | Application lifecycle management using Kubernetes and ArgoCD |
-| **Monitor** | Cluster and application monitoring through Azure Monitor |
-
-By integrating automation into every stage, FlavorForge reduces manual effort, improves deployment consistency, and ensures quality and security checks are performed before application deployment.
+This demonstrates the central DevSecOps principle of integrating **development, security, operations, and automation** rather than treating them as isolated activities.
 
 #### Evidence
 
 ![Azure DevOps Pipeline](screenshots/pipeline/8-pipelines-run-pass.png)
 
-*Figure 7.1 – Successful execution of the DevSecOps pipeline demonstrating automated build, validation, and deployment stages.*
+*Figure 7.1 – Successful execution of the DevSecOps pipeline demonstrating automated build, validation, security, and deployment stages.*
 
 ---
 
 # 🛠️ Technology Stack
 
-FlavorForge brings together modern open-source technologies and Microsoft Azure services to implement a secure, automated, and cloud-native DevSecOps platform.
-
-Each technology has a well-defined responsibility within the software delivery lifecycle.
-
-| Category | Technology | Purpose |
-|----------|------------|---------|
-| Frontend | React | Builds the responsive user interface |
-| Backend | Node.js + Express | Provides REST API services |
-| Database | SQLite | Stores application data |
-| Source Control | GitHub | Version control and collaboration |
-| CI/CD | Azure DevOps | Multi-stage build and deployment automation |
-| Code Quality | SonarCloud | Static code quality analysis |
-| Security | Trivy | Container vulnerability scanning |
-| Containerization | Docker | Application packaging and portability |
-| Container Registry | Azure Container Registry (ACR) | Secure private container image repository |
-| Cloud Platform | Microsoft Azure | Cloud infrastructure hosting |
-| Container Orchestration | Azure Kubernetes Service (AKS) | Kubernetes cluster management |
-| GitOps | ArgoCD | Continuous deployment and desired state synchronization |
-| Monitoring | Azure Monitor | Cluster and application monitoring |
-| Documentation | Markdown + Mermaid | Technical documentation and architecture visualization |
-
-Each component contributes to a production-inspired DevSecOps workflow, ensuring that application development, security validation, deployment automation, and operational monitoring work together as an integrated engineering platform.
+| Category         | Technology               | Purpose                          |
+| ---------------- | ------------------------ | -------------------------------- |
+| Frontend         | React + Vite             | User interface                   |
+| Backend          | Node.js + Express        | REST API                         |
+| Database         | SQLite                   | Application data                 |
+| Source Control   | GitHub                   | Version control                  |
+| CI/CD            | Azure DevOps             | Pipeline automation              |
+| Code Quality     | SonarCloud               | Static analysis                  |
+| Security         | Trivy                    | Container vulnerability scanning |
+| Containerization | Docker                   | Application packaging            |
+| Registry         | Azure Container Registry | Private image repository         |
+| Cloud            | Microsoft Azure          | Cloud infrastructure             |
+| Orchestration    | AKS                      | Kubernetes platform              |
+| Configuration    | Kustomize                | Environment overlays             |
+| GitOps           | Argo CD                  | Desired-state synchronization    |
+| Monitoring       | Azure Monitor            | Operational visibility           |
+| Documentation    | Markdown + Mermaid       | Engineering documentation        |
 
 #### Evidence
 
@@ -380,120 +539,118 @@ Each component contributes to a production-inspired DevSecOps workflow, ensuring
 
 # 📂 Repository Structure
 
-The repository is organized to separate application source code, infrastructure configuration, automation scripts, and engineering documentation into clearly defined directories.
-
-This structure improves maintainability, collaboration, and scalability while following common enterprise repository practices.
-
 ```text
 flavorforge-azure-devsecops-capstone
 │
 ├── frontend/                 # React frontend application
-├── backend/                  # Node.js & Express backend API
+├── backend/                  # Node.js + Express backend API
 ├── docker/                   # Docker-related resources
-├── kubernetes/               # Kubernetes manifests and overlays
+├── kubernetes/               # Kubernetes manifests
 │   ├── base/
 │   └── overlays/
+│       ├── dev/
+│       ├── qa/
+│       └── prod/
 ├── argocd/                   # GitOps application definitions
 ├── scripts/                  # Automation and lifecycle scripts
 ├── docs/                     # Project documentation
-├── screenshots/              # Evidence used throughout documentation
+├── screenshots/              # Implementation evidence
 ├── azure-pipelines.yml       # Azure DevOps CI/CD pipeline
-├── argocd-pipeline.yml       # ArgoCD bootstrap pipeline
+├── argocd-pipeline.yml       # Argo CD-related pipeline configuration
 ├── sonar-project.properties  # SonarCloud configuration
 └── README.md
 ```
 
-The repository structure separates application development from infrastructure, deployment automation, operational scripts, and documentation, making the project easier to understand, maintain, and extend.
+The repository separates:
+
+* Application code
+* Infrastructure
+* Kubernetes configuration
+* Pipeline automation
+* GitOps configuration
+* Documentation
+* Evidence
 
 #### Evidence
 
 ![Repository Structure](screenshots/enterprise-azure-devops-release-simulation/20-tree-l-2.png)
 
-*Figure 8.2 – Project structure after successful frontend production build.*
+*Figure 8.2 – Repository structure containing application, infrastructure, automation, documentation, and evidence.*
 
 ---
 
-
-
 # 📊 Automated Project Status
 
-To keep the project documentation accurate and up to date, FlavorForge includes an automated documentation generation workflow powered by GitHub Actions.
+FlavorForge includes a GitHub Actions documentation workflow that automatically checks for important project components and updates the README status section.
 
-Whenever changes are pushed to the repository, the workflow scans the project structure, detects implemented components, and automatically updates the project status section in this README.
-
-This ensures that the documented implementation always reflects the current state of the repository.
+Whenever changes are pushed to the repository, the workflow scans the project structure and updates the implementation-status section.
 
 <!-- AUTO_STATUS_START -->
 
 # 📊 FlavorForge Automated Project Status
 
-**Generated:** 2026-08-15 09:26:03
-
-| Component | Status |
-|-----------|--------|
-| Frontend Application | ✅ Detected |
-| Backend API | ✅ Detected |
-| Docker Containerization | ✅ Detected |
-| Azure Container Registry (ACR) | ✅ Detected |
-| Azure DevOps Pipeline | ✅ Detected |
-| Kubernetes Deployment | ✅ Detected |
-| Ingress | ✅ Detected |
-| Secrets | ✅ Detected |
+| Component                       | Status     |
+| ------------------------------- | ---------- |
+| Frontend Application            | ✅ Detected |
+| Backend API                     | ✅ Detected |
+| Docker Containerization         | ✅ Detected |
+| Azure Container Registry (ACR)  | ✅ Detected |
+| Azure DevOps Pipeline           | ✅ Detected |
+| Kubernetes Deployment           | ✅ Detected |
+| Ingress                         | ✅ Detected |
+| Secrets                         | ✅ Detected |
 | Horizontal Pod Autoscaler (HPA) | ✅ Detected |
-| ArgoCD GitOps | ✅ Detected |
-| SonarCloud Integration | ✅ Detected |
-| Trivy Security Scan | ✅ Detected |
-| Azure Monitor | ✅ Detected |
-| Documentation | ✅ Detected |
+| ArgoCD GitOps                   | ✅ Detected |
+| SonarCloud Integration          | ✅ Detected |
+| Trivy Security Scan             | ✅ Detected |
+| Azure Monitor                   | ✅ Detected |
+| Documentation                   | ✅ Detected |
 
 <!-- AUTO_STATUS_END -->
 
-## ✅ What the Documentation Generator Verifies
+## What the Documentation Generator Verifies
 
 The GitHub Actions workflow automatically validates the presence of key project components, including:
 
-- Frontend application
-- Backend API
-- Docker containerization
-- Azure Container Registry (ACR)
-- Azure DevOps pipeline
-- Kubernetes manifests
-- Ingress configuration
-- Horizontal Pod Autoscaler (HPA)
-- ArgoCD GitOps configuration
-- SonarCloud integration
-- Trivy security scanning
-- Azure Monitor configuration
-- Project documentation
+* Frontend application
+* Backend API
+* Docker containerization
+* Azure Container Registry
+* Azure DevOps pipeline
+* Kubernetes manifests
+* Ingress
+* Horizontal Pod Autoscaler
+* Argo CD configuration
+* SonarCloud integration
+* Trivy security scanning
+* Azure Monitor configuration
+* Project documentation
 
-## 🔄 Documentation Automation Workflow
+## Documentation Automation Workflow
 
-<img width="505" height="815" alt="image" src="https://github.com/user-attachments/assets/b543c692-e4c6-4c98-9a4f-a7f8f921d0e7" />
+<img width="505" height="815" alt="Documentation automation workflow" src="https://github.com/user-attachments/assets/b543c692-e4c6-4c98-9a4f-a7f8f921d0e7" />
 
-
-This automation helps keep the project documentation synchronized with the implementation, reducing manual maintenance while providing an accurate overview of the platform's current capabilities.
+This automation reduces manual README maintenance and provides a quick implementation-status overview.
 
 ---
 
 # 📌 Current Implementation Status
 
-FlavorForge has successfully implemented the core capabilities required for a production-inspired Azure DevSecOps platform.
-
-| Component | Status |
-|-----------|--------|
-| Frontend Application | ✅ Completed |
-| Backend REST API | ✅ Completed |
-| Docker Containerization | ✅ Completed |
-| Azure Container Registry (ACR) | ✅ Completed |
-| Azure Kubernetes Service (AKS) | ✅ Completed |
+| Component                         | Status      |
+| --------------------------------- | ----------- |
+| Frontend Application              | ✅ Completed |
+| Backend REST API                  | ✅ Completed |
+| Docker Containerization           | ✅ Completed |
+| Azure Container Registry          | ✅ Completed |
+| Azure Kubernetes Service          | ✅ Completed |
 | Azure DevOps Multi-Stage Pipeline | ✅ Completed |
-| SonarCloud Integration | ✅ Completed |
-| Trivy Security Scanning | ✅ Completed |
-| ArgoCD GitOps | ✅ Completed |
-| Azure Monitor Integration | ✅ Completed |
-| Engineering Documentation | ✅ Completed |
+| SonarCloud Integration            | ✅ Completed |
+| Trivy Security Scanning           | ✅ Completed |
+| Argo CD GitOps                    | ✅ Completed |
+| Azure Monitor Integration         | ✅ Completed |
+| Engineering Documentation         | ✅ Completed |
 
-The project now demonstrates an end-to-end DevSecOps implementation covering application development, automated validation, secure containerization, cloud deployment, GitOps-based delivery, and operational monitoring.
+The project demonstrates an end-to-end **production-inspired** Azure DevSecOps implementation covering application development, automated validation, secure containerization, cloud deployment, GitOps synchronization, and operational monitoring.
 
 #### Evidence
 
@@ -503,36 +660,54 @@ The project now demonstrates an end-to-end DevSecOps implementation covering app
 
 ---
 
-
 # 🔐 DevSecOps Implementation Deep Dive
 
 Developing an application is only the first step in modern software engineering.
 
-Enterprise applications must also ensure that every software release is reliable, secure, repeatable, and observable. FlavorForge achieves this by integrating DevSecOps practices throughout the entire software delivery lifecycle.
+Enterprise-inspired applications must also ensure that releases are reliable, secure, repeatable, and observable.
 
-The implementation combines automated quality validation, security scanning, containerization, cloud deployment, GitOps, and monitoring into a single engineering workflow.
+FlavorForge achieves this by integrating:
+
+* Automated quality validation
+* Security scanning
+* Containerization
+* Cloud deployment
+* Kubernetes orchestration
+* GitOps
+* Monitoring
+* Deployment verification
 
 ---
 
 # 🔄 Azure DevOps Multi-Stage Pipeline
 
-The Azure DevOps pipeline automates the complete journey from source code to a deployable container image.
+The Azure DevOps pipeline is the central automation component of the FlavorForge delivery workflow.
 
-Each pipeline execution performs validation, quality analysis, security scanning, container image creation, and publishing without requiring manual intervention.
+The pipeline contains logical stages for:
 
-The workflow is illustrated below.
+```text
+Build
+  ↓
+Test / Validation
+  ↓
+Security
+  ↓
+SonarCloud / Code Quality
+  ↓
+Docker Build
+  ↓
+Trivy Scan
+  ↓
+Push to ACR
+  ↓
+Deploy to AKS
+  ↓
+Verification / Release Workflow
+```
 
-<img width="355" height="1036" alt="image" src="https://github.com/user-attachments/assets/c2cb8cd8-ef06-47e4-afc4-407ba42958e4" />
+The pipeline demonstrates continuous integration, security validation, containerization, artifact publishing, and Kubernetes deployment.
 
-
-The automated pipeline provides:
-
-- Continuous Integration (CI)
-- Automated validation
-- Code quality enforcement
-- Security verification
-- Standardized container image creation
-- Consistent deployment artifacts
+<img width="355" height="1036" alt="Azure DevOps pipeline" src="https://github.com/user-attachments/assets/c2cb8cd8-ef06-47e4-afc4-407ba42958e4" />
 
 #### Evidence
 
@@ -544,100 +719,150 @@ The automated pipeline provides:
 
 # 🚦 Pipeline Stages
 
-The FlavorForge CI pipeline is organized into multiple logical stages, ensuring that every code change passes quality and security validation before deployment.
-
 ## Stage 1 — Source Validation
 
-The pipeline begins by retrieving the latest source code from GitHub.
+The pipeline retrieves the source repository and prepares the build environment.
 
 ### Activities
 
-- Checkout source code
-- Validate repository structure
-- Prepare the build environment
-- Restore project dependencies
+* Checkout source code
+* Validate repository structure
+* Prepare build environment
+* Restore project dependencies
 
 ### Objective
 
-Ensure that only valid source code progresses through the pipeline.
+Ensure that valid source code progresses through the pipeline.
 
 ---
 
-## Stage 2 — Application Build
+## Stage 2 — Application Build and Validation
 
-Application components are compiled and prepared for deployment.
+The application is built and validated before container images are produced.
 
 ### Activities
 
-- Install frontend dependencies
-- Install backend dependencies
-- Build application artifacts
-- Validate project structure
+* Install frontend dependencies
+* Install backend dependencies
+* Build application artifacts
+* Validate application structure
+* Run application-level validation
 
 ### Objective
 
-Detect build failures before creating deployment artifacts.
+Detect application failures early.
 
 ---
 
 ## Stage 3 — Code Quality Analysis
 
-Static code analysis is performed using SonarCloud.
+SonarCloud performs static code analysis.
 
-The quality gate evaluates:
+The analysis evaluates areas such as:
 
-- Bugs
-- Code smells
-- Maintainability
-- Technical debt
-- Security hotspots
+* Bugs
+* Code smells
+* Maintainability
+* Technical debt
+* Security hotspots
 
-This early validation helps prevent low-quality code from progressing further into the delivery pipeline.
+The project integrates SonarCloud quality validation into the pipeline.
 
 ---
 
-## Stage 4 — Container Security Scanning
+## Stage 4 — Docker Build
 
-After the application is successfully built, Docker images are scanned using Trivy.
+Frontend and backend applications are packaged into Docker images.
 
-Security validation includes:
+The project uses multi-stage Docker builds where applicable to separate build-time dependencies from production runtime components.
 
-- Operating system vulnerabilities
-- Dependency vulnerabilities
-- Known CVEs
-- Security recommendations
+---
 
-Only validated images continue through the delivery workflow.
+## Stage 5 — Trivy Security Scan
+
+Trivy scans container images for known vulnerabilities.
+
+The documented scan results include:
+
+* Backend image: **12 HIGH / 1 CRITICAL**
+* Frontend image: **11 HIGH / 0 CRITICAL**
+
+The critical backend finding was associated with the `tar` package. A fixed version was identified.
+
+> Security scanning provides visibility into vulnerabilities. A successful pipeline should not be interpreted as meaning that an image contains zero vulnerabilities.
 
 #### Evidence
 
 ![Pipeline Execution](screenshots/pipeline/9-advance-pipelines-run-pass.png)
 
-*Figure 9.2 – Azure DevOps pipeline completing all validation stages successfully.*
+*Figure 9.2 – Azure DevOps pipeline completing the validation and security stages.*
+
+---
+
+## Stage 6 — Push to Azure Container Registry
+
+After image creation and security validation, images are tagged and published to:
+
+```text
+flavorforgeacr2026ms.azurecr.io
+```
+
+---
+
+## Stage 7 — Real AKS Deployment
+
+The project contains a **real AKS deployment stage**.
+
+The deployment process:
+
+1. Obtains AKS credentials.
+2. Applies the production Kustomize overlay.
+3. Updates frontend and backend deployment images.
+4. Waits for Kubernetes rollouts to complete.
+
+Conceptually:
+
+```text
+Azure DevOps
+      │
+      ▼
+az aks get-credentials
+      │
+      ▼
+kubectl apply -k kubernetes/overlays/prod
+      │
+      ▼
+kubectl set image
+      │
+      ▼
+kubectl rollout status
+      │
+      ▼
+AKS Workloads Updated
+```
+
+This is the actual deployment mechanism currently implemented in the project.
 
 ---
 
 # 🐳 Docker Containerization Strategy
 
-FlavorForge uses Docker to package the frontend and backend into lightweight, portable, and reproducible containers.
+Docker provides a consistent packaging mechanism for the frontend and backend.
 
-Containerization eliminates environment-specific inconsistencies by ensuring the application behaves identically during local development, testing, and cloud deployment.
+The project uses Docker to provide:
 
-The implementation follows containerization best practices, including multi-stage builds, optimized images, and isolated application services.
+* Reproducible environments
+* Portable application artifacts
+* Consistent runtime behavior
+* Simplified deployment
+* Kubernetes compatibility
+* Independent frontend/backend scaling
+
+The implementation uses multi-stage builds where applicable to reduce unnecessary build-time components in runtime images.
 
 ### Container Architecture
 
-<img width="1386" height="191" alt="image" src="https://github.com/user-attachments/assets/7d562211-e3cc-44a7-8336-bce09a4a8586" />
-
-
-### Key Benefits
-
-- Consistent runtime across all environments
-- Faster application deployment
-- Simplified dependency management
-- Improved portability
-- Better scalability in Kubernetes
-- Lightweight production-ready images
+<img width="1386" height="191" alt="Docker container architecture" src="https://github.com/user-attachments/assets/7d562211-e3cc-44a7-8336-bce09a4a8586" />
 
 #### Evidence
 
@@ -647,24 +872,28 @@ The implementation follows containerization best practices, including multi-stag
 
 ---
 
-# 📦 Azure Container Registry (ACR) Integration
+# 📦 Azure Container Registry Integration
 
-Once Docker images are successfully built and validated, they are pushed to Azure Container Registry (ACR), which serves as the project's private container image repository.
+The project uses Azure Container Registry as the private repository for application images.
 
-Azure Container Registry provides secure image storage, version management, and seamless integration with Azure Kubernetes Service.
+| Property     | Value                             |
+| ------------ | --------------------------------- |
+| Registry     | `flavorforgeacr2026ms`            |
+| Login Server | `flavorforgeacr2026ms.azurecr.io` |
+| Region       | East US                           |
+| SKU          | Basic                             |
 
 ### Image Publishing Workflow
 
-<img width="467" height="676" alt="image" src="https://github.com/user-attachments/assets/144f9e74-a0e8-4bc2-b419-b364f10493f7" />
+<img width="467" height="676" alt="ACR image publishing workflow" src="https://github.com/user-attachments/assets/144f9e74-a0e8-4bc2-b419-b364f10493f7" />
 
+ACR provides:
 
-### Azure Container Registry Responsibilities
-
-- Secure image storage
-- Image version management
-- Private container repository
-- Integration with AKS
-- Reliable image distribution
+* Private image storage
+* Image version management
+* Integration with AKS
+* Reliable image distribution
+* Centralized container image management
 
 #### Evidence
 
@@ -676,98 +905,94 @@ Azure Container Registry provides secure image storage, version management, and 
 
 # 🔀 CI/CD and GitOps Responsibility Separation
 
-FlavorForge separates Continuous Integration (CI) from Continuous Delivery (CD), following enterprise DevOps practices.
+FlavorForge demonstrates both **Azure DevOps CI/CD automation** and **Argo CD GitOps**.
 
-This separation allows the CI pipeline to focus on producing validated deployment artifacts, while GitOps manages application deployment and cluster synchronization.
+These technologies have complementary responsibilities in the current implementation.
 
-## Continuous Integration (Azure DevOps)
+## Azure DevOps — CI and Current AKS Deployment
 
 Azure DevOps is responsible for:
 
-- Building the application
-- Running quality checks
-- Performing security scanning
-- Building Docker images
-- Publishing images to Azure Container Registry
+* Building the application
+* Running validation
+* SonarCloud analysis
+* Building Docker images
+* Trivy vulnerability scanning
+* Publishing images to ACR
+* Performing the current AKS deployment
 
-<img width="432" height="755" alt="image" src="https://github.com/user-attachments/assets/205bb4eb-8f3a-4854-9445-74f974151fd5" />
+The actual deployment stage uses Kubernetes tooling to apply the production configuration and update application images.
 
+<img width="432" height="755" alt="Azure DevOps CI workflow" src="https://github.com/user-attachments/assets/205bb4eb-8f3a-4854-9445-74f974151fd5" />
 
 ---
 
-## Continuous Delivery (ArgoCD)
+## Argo CD — GitOps Synchronization
 
-ArgoCD continuously monitors the Git repository and synchronizes Kubernetes resources with the desired application state.
+Argo CD is configured to monitor the Kubernetes configuration stored in Git and synchronize the cluster with the declared desired state.
 
-<img width="397" height="352" alt="image" src="https://github.com/user-attachments/assets/0c9e69b6-ff0e-477c-9d82-89c9e497b627" />
+<img width="397" height="352" alt="Argo CD synchronization" src="https://github.com/user-attachments/assets/0c9e69b6-ff0e-477c-9d82-89c9e497b627" />
 
+### Important Implementation Distinction
 
-### Benefits of This Architecture
+> **Azure DevOps performs the current real deployment to AKS. Argo CD demonstrates GitOps-based continuous delivery, desired-state synchronization, and drift visibility.**
 
-- Clear separation of responsibilities
-- Improved deployment traceability
-- Git as the single source of truth
-- Automated Kubernetes synchronization
-- Simplified rollback and recovery
+This distinction accurately represents the current project implementation.
 
 #### Evidence
 
 ![ArgoCD Application](screenshots/argo-cd/4-flavorforge-application-details-tree-argo-cd.png)
 
-*Figure 10.3 – ArgoCD managing and synchronizing the FlavorForge Kubernetes application.*
+*Figure 10.3 – Argo CD managing and synchronizing the FlavorForge Kubernetes application.*
 
 ---
 
 # 🌱 GitOps Deployment Model
 
-FlavorForge adopts GitOps to manage Kubernetes deployments declaratively.
+GitOps treats Git as the source of truth for declarative infrastructure and application configuration.
 
-Instead of deploying directly from the CI pipeline, Kubernetes continuously reconciles its running state with the configuration stored in Git.
+FlavorForge uses Argo CD to demonstrate this model.
 
 ## Traditional Deployment
 
-<img width="345" height="372" alt="image" src="https://github.com/user-attachments/assets/71fb101f-dc79-457c-bf19-0f0d456068af" />
-
+<img width="345" height="372" alt="Traditional deployment" src="https://github.com/user-attachments/assets/71fb101f-dc79-457c-bf19-0f0d456068af" />
 
 ---
 
 ## GitOps Deployment
 
-<img width="393" height="487" alt="image" src="https://github.com/user-attachments/assets/cfb610d1-0982-4b2e-ad2c-142a58a954c3" />
+<img width="393" height="487" alt="GitOps deployment" src="https://github.com/user-attachments/assets/cfb610d1-0982-4b2e-ad2c-142a58a954c3" />
 
+The GitOps model provides:
 
-The GitOps approach provides:
+* Declarative configuration
+* Version-controlled deployment configuration
+* Synchronization
+* Drift visibility
+* Deployment traceability
+* Simplified rollback and recovery
 
-- Version-controlled infrastructure
-- Automatic synchronization
-- Drift detection
-- Simplified rollback
-- Declarative deployments
-- Improved operational consistency
+> In this project, GitOps is demonstrated alongside the current Azure DevOps AKS deployment rather than being represented as the only deployment mechanism.
 
 ---
 
-# 🔒 Security-First Engineering Approach
+# 🔒 Security-First Engineering
 
-Security is integrated throughout the FlavorForge software delivery lifecycle rather than being treated as a final deployment activity.
+Security is integrated throughout the FlavorForge software delivery lifecycle.
 
-Each release undergoes automated quality validation, vulnerability assessment, secure containerization, and controlled deployment before reaching the Kubernetes environment.
+| Security Layer      | Implementation                             |
+| ------------------- | ------------------------------------------ |
+| Source Code Quality | SonarCloud                                 |
+| Container Security  | Trivy                                      |
+| Image Storage       | Private Azure Container Registry           |
+| Runtime Platform    | AKS                                        |
+| Secrets             | Kubernetes Secrets with placeholder values |
+| GitOps              | Argo CD                                    |
+| Monitoring          | Azure Monitor                              |
 
-The security implementation consists of multiple complementary layers.
+<img width="482" height="1021" alt="Security architecture" src="https://github.com/user-attachments/assets/055ab686-26a5-4c56-aaf5-2360b4f75287" />
 
-| Security Layer | Implementation |
-|----------------|----------------|
-| Source Code Quality | SonarCloud Static Code Analysis |
-| Container Security | Trivy Vulnerability Scanning |
-| Container Registry | Azure Container Registry (Private) |
-| Deployment Platform | Azure Kubernetes Service (AKS) |
-| Operational Monitoring | Azure Monitor |
-| GitOps | ArgoCD Desired State Management |
-
-<img width="482" height="1021" alt="image" src="https://github.com/user-attachments/assets/055ab686-26a5-4c56-aaf5-2360b4f75287" />
-
-
-By validating application quality and container security before deployment, FlavorForge follows a proactive DevSecOps approach that minimizes deployment risk and improves operational reliability.
+The project also documents limitations of the demonstration implementation and identifies stronger production approaches such as **Azure Key Vault** for future enhancement.
 
 #### Evidence
 
@@ -781,36 +1006,46 @@ By validating application quality and container security before deployment, Flav
 
 FlavorForge evolved through multiple implementation phases, with each phase introducing additional engineering capabilities.
 
-<img width="410" height="763" alt="image" src="https://github.com/user-attachments/assets/eb2fb573-0a37-4e2b-997e-772622e51828" />
+<img width="410" height="763" alt="DevSecOps maturity journey" src="https://github.com/user-attachments/assets/eb2fb573-0a37-4e2b-997e-772622e51828" />
 
-
-The project demonstrates the progression from a standalone application to a production-inspired cloud-native DevSecOps platform.
+The project demonstrates the progression from a standalone application to a **production-inspired cloud-native DevSecOps platform**.
 
 ---
 
-# ☁️ Cloud Deployment & GitOps Operations
+# ☁️ Cloud Deployment & Operations
 
-After successful validation and containerization, FlavorForge is deployed to Microsoft Azure using Azure Kubernetes Service (AKS) and managed through a GitOps workflow powered by ArgoCD.
+After successful validation and containerization, FlavorForge runs on Microsoft Azure using Azure Kubernetes Service.
 
-This deployment model separates application delivery from deployment management while ensuring Kubernetes always reflects the desired state stored in Git.
+The platform combines:
+
+* Azure infrastructure
+* Azure Container Registry
+* Azure Kubernetes Service
+* Kubernetes
+* Kustomize
+* Azure DevOps
+* Argo CD
+* Azure Monitor
 
 ---
 
 # ☁️ Azure Cloud Architecture
 
-FlavorForge uses Microsoft Azure services to provide secure, scalable, and production-inspired infrastructure.
+The primary Azure resources are:
 
-The primary Azure services used in this project are:
+| Resource       | Value / Purpose        |
+| -------------- | ---------------------- |
+| Resource Group | `flavorforge-rg`       |
+| ACR            | `flavorforgeacr2026ms` |
+| ACR Region     | East US                |
+| ACR SKU        | Basic                  |
+| AKS            | `flavorforge-aks`      |
+| AKS Region     | East US                |
+| AKS Node Size  | `Standard_D2as_v7`     |
+| AKS Node Count | 2                      |
+| Monitoring     | Azure Monitor          |
 
-| Azure Service | Purpose |
-|--------------|---------|
-| Azure Resource Group | Groups and manages cloud resources |
-| Azure Container Registry | Stores private Docker images |
-| Azure Kubernetes Service | Hosts Kubernetes workloads |
-| Azure Monitor | Collects logs, metrics, and operational insights |
-
-<img width="465" height="487" alt="image" src="https://github.com/user-attachments/assets/93e23153-cfe5-489a-b507-d49e611c6e15" />
-
+<img width="465" height="487" alt="Azure cloud architecture" src="https://github.com/user-attachments/assets/93e23153-cfe5-489a-b507-d49e611c6e15" />
 
 #### Evidence
 
@@ -820,45 +1055,59 @@ The primary Azure services used in this project are:
 
 ---
 
-# ☸️ Azure Kubernetes Service (AKS)
+# ☸️ Azure Kubernetes Service
 
-Azure Kubernetes Service (AKS) provides the managed Kubernetes environment where FlavorForge workloads are deployed and operated.
+AKS provides the managed Kubernetes environment where FlavorForge workloads run.
 
-AKS manages:
+AKS provides capabilities for:
 
-- Container scheduling
-- Application availability
-- Replica management
-- Service discovery
-- Rolling updates
-- Cluster orchestration
+* Container scheduling
+* Pod lifecycle management
+* Replica management
+* Service discovery
+* Rolling updates
+* Kubernetes orchestration
+* Workload scaling
 
-The platform hosts both frontend and backend workloads while integrating with Azure Container Registry, ArgoCD, and Azure Monitor.
+The cluster hosts the frontend and backend workloads and integrates with ACR, Kubernetes configuration, Argo CD, and Azure monitoring.
 
 #### Evidence
 
-![AKS Workloads](screenshots/azure/15-AKS%20Workloads%20(Deployments%20%26%20Pods).png)
+![AKS Workloads](screenshots/azure/15-AKS%20Workloads%20\(Deployments%20%26%20Pods\).png)
 
-*Figure 11.3 – Azure Kubernetes Service displaying the deployed frontend and backend workloads, ReplicaSets, and running Pods.*
+*Figure 11.3 – AKS displaying deployed frontend and backend workloads, ReplicaSets, and running Pods.*
 
 ---
 
 # 🧱 Kubernetes Deployment Architecture
 
-FlavorForge organizes Kubernetes resources using a structured, reusable, and environment-specific directory layout based on Kustomize.
+FlavorForge uses Kubernetes resources including:
 
-This approach separates common Kubernetes manifests from environment-specific customizations, making deployments easier to maintain across Development, QA, and Production environments.
+* Deployments
+* Services
+* ConfigMaps
+* Secrets
+* Ingress
+* Horizontal Pod Autoscaler
 
-The repository organization is illustrated below.
+The Kubernetes configuration is organized using Kustomize.
 
-<img width="1923" height="347" alt="image" src="https://github.com/user-attachments/assets/dbe015c2-543d-4bf0-8dfb-5f1e06f99656" />
+```text
+kubernetes/
+│
+├── base/
+│
+└── overlays/
+    ├── dev/
+    ├── qa/
+    └── prod/
+```
 
-
-This structure promotes configuration reuse while allowing each deployment environment to maintain its own customized settings.
+<img width="1923" height="347" alt="Kubernetes deployment architecture" src="https://github.com/user-attachments/assets/dbe015c2-543d-4bf0-8dfb-5f1e06f99656" />
 
 #### Evidence
 
-![Kubernetes Repository Structure](screenshots/enterprise-azure-devops-release-simulation/7-overlay.png)
+![Kubernetes Repository Structure](/screenshots/enterprise-azure-devops-release-simulation/7-overlay.png)
 
 *Figure 12.1 – Kustomize base and overlay structure used to manage multiple deployment environments.*
 
@@ -866,24 +1115,22 @@ This structure promotes configuration reuse while allowing each deployment envir
 
 # 🔧 Kubernetes Components
 
-FlavorForge uses multiple Kubernetes resources to deliver a resilient and production-inspired application platform.
-
 ## Deployments
 
-Deployments manage application Pods, ReplicaSets, rolling updates, and self-healing.
+Deployments manage application Pods and ReplicaSets.
 
-Responsibilities include:
+They provide:
 
-- Maintaining desired replica count
-- Performing rolling updates
-- Recovering failed Pods automatically
+* Desired replica management
+* Rolling updates
+* Self-healing
+* Controlled application updates
 
-<img width="258" height="376" alt="image" src="https://github.com/user-attachments/assets/a8b284e0-9a75-49a6-ba99-3b3f096ab7bc" />
-
+<img width="258" height="376" alt="Kubernetes deployments" src="https://github.com/user-attachments/assets/a8b284e0-9a75-49a6-ba99-3b3f096ab7bc" />
 
 #### Evidence
 
-![Deployments](screenshots/azure/15-AKS%20Workloads%20(Deployments%20%26%20Pods).png)
+![Deployments](/screenshots/azure/15-aks-workloads-deployments-pods.png)
 
 *Figure 12.2 – AKS Deployments managing frontend and backend application Pods.*
 
@@ -891,16 +1138,15 @@ Responsibilities include:
 
 ## Services
 
-Kubernetes Services provide stable networking between frontend and backend workloads.
+Kubernetes Services provide stable networking between workloads.
 
-They enable service discovery while abstracting Pod IP addresses.
+They abstract changing Pod IP addresses and provide service discovery.
 
-<img width="341" height="630" alt="image" src="https://github.com/user-attachments/assets/893dfe1e-9b71-4f61-8fe1-f63b8cc76e73" />
-
+<img width="341" height="630" alt="Kubernetes services" src="https://github.com/user-attachments/assets/893dfe1e-9b71-4f61-8fe1-f63b8cc76e73" />
 
 #### Evidence
 
-![Services and Ingress](screenshots/azure/22-Services%20%26%20Ingress.png)
+![Services and Ingress](/screenshots/azure/22-services-ingress.png)
 
 *Figure 12.3 – Kubernetes Services and Ingress resources exposing the FlavorForge application.*
 
@@ -908,17 +1154,17 @@ They enable service discovery while abstracting Pod IP addresses.
 
 ## ConfigMaps
 
-ConfigMaps store non-sensitive application configuration outside container images.
+ConfigMaps store non-sensitive configuration separately from container images.
 
 Examples include:
 
-- Environment configuration
-- Application settings
-- Runtime configuration
+* Environment configuration
+* Application settings
+* Runtime configuration
 
 #### Evidence
 
-![ConfigMap](screenshots/kubernetes/1-configmap.png)
+![ConfigMap](/screenshots/kubernetes/1-configmap.png)
 
 *Figure 12.4 – Kubernetes ConfigMap used to manage application configuration.*
 
@@ -926,64 +1172,77 @@ Examples include:
 
 ## Secrets
 
-Sensitive values are managed using Kubernetes Secrets instead of embedding them inside application code or container images.
+Kubernetes Secrets are used for sensitive configuration.
 
-For this demonstration project, only placeholder values are stored in Git. Production environments should integrate external secret management solutions such as Azure Key Vault.
+The demonstration repository uses placeholder values where secrets need to be represented in Git.
+
+> **Production deployments should use an external secret-management solution such as Azure Key Vault rather than committing sensitive values to source control.**
 
 Examples include:
 
-- API credentials
-- Passwords
-- Access tokens
+* API credentials
+* Passwords
+* Access tokens
 
 #### Evidence
 
 ![Kubernetes Secrets](screenshots/kubernetes/secrets/1-kubectl-get-secrets-n-flavorforge.png)
 
-*Figure 12.5 – Kubernetes Secrets securely managing sensitive application configuration.*
+*Figure 12.5 – Kubernetes Secrets managing sensitive application configuration.*
 
 ---
 
-## Horizontal Pod Autoscaler (HPA)
+## Horizontal Pod Autoscaler
 
-FlavorForge implements Horizontal Pod Autoscaling (HPA) to automatically adjust the number of running Pods based on workload demand.
+FlavorForge includes a Horizontal Pod Autoscaler.
 
-Benefits include:
+The documented configuration includes:
 
-- Automatic scaling
-- Improved application availability
-- Better resource utilization
-- Enhanced fault tolerance
+| Setting          | Value |
+| ---------------- | ----: |
+| Minimum replicas |     2 |
+| Maximum replicas |     5 |
+| CPU target       |   70% |
+| Current replicas |     2 |
 
-<img width="482" height="227" alt="image" src="https://github.com/user-attachments/assets/e213a194-de05-4c98-9a95-6dfe639c49b7" />
+<img width="482" height="227" alt="Horizontal Pod Autoscaler" src="https://github.com/user-attachments/assets/e213a194-de05-4c98-9a95-6dfe639c49b7" />
 
+HPA allows Kubernetes to adjust the number of replicas based on resource utilization.
 
 #### Evidence
 
 ![Horizontal Pod Autoscaler](screenshots/kubernetes/hpa/6-kubectl-get-hpa.png)
 
-*Figure 12.6 – Horizontal Pod Autoscaler configured to scale application workloads automatically.*
+*Figure 12.6 – Horizontal Pod Autoscaler configured to scale application workloads.*
 
 ---
 
 # 🌍 Application Exposure with Ingress
 
-FlavorForge uses Kubernetes Ingress to provide a single entry point for external traffic while routing requests to the appropriate backend services.
+Kubernetes Ingress provides an external entry point for the application.
 
-Instead of exposing every service individually, Ingress centralizes traffic management, simplifies routing, and provides a cleaner architecture for cloud-native applications.
+The request flow is:
 
-The request flow is illustrated below.
+```text
+External User
+      │
+      ▼
+    Ingress
+      │
+      ├──────────────► Frontend Service
+      │
+      └──────────────► Backend Service
+```
 
-<img width="343" height="777" alt="image" src="https://github.com/user-attachments/assets/acb9af6b-dca3-40c7-9a63-50cc7dd2d339" />
+<img width="343" height="777" alt="Ingress architecture" src="https://github.com/user-attachments/assets/acb9af6b-dca3-40c7-9a63-50cc7dd2d339" />
 
+Ingress provides:
 
-Ingress provides the following benefits:
-
-- Centralized traffic routing
-- Simplified external access
-- Reduced service exposure
-- Scalable application architecture
-- Better maintainability
+* Centralized traffic routing
+* Simplified external access
+* Reduced service exposure
+* Scalable application architecture
+* Better maintainability
 
 #### Evidence
 
@@ -995,29 +1254,37 @@ Ingress provides the following benefits:
 
 # 🔄 Kustomize Environment Management
 
-FlavorForge uses **Kustomize** to manage multiple deployment environments while maintaining a single reusable Kubernetes codebase.
-
-Common resources are stored in the **base** directory, while environment-specific customizations are maintained as overlays.
-
-<img width="647" height="528" alt="image" src="https://github.com/user-attachments/assets/67199aad-4ad0-47eb-b64a-88bcc322c7e3" />
-
-
-Environment organization:
+Kustomize allows common Kubernetes resources to be reused while maintaining environment-specific configuration.
 
 ```text
 base/
-overlays/dev/
-overlays/qa/
-overlays/prod/
+│
+├── deployments
+├── services
+├── configmaps
+└── other common resources
+
+overlays/
+├── dev/
+├── qa/
+└── prod/
 ```
 
 Benefits include:
 
-- No duplicated YAML files
-- Consistent deployments
-- Environment-specific customization
-- Simplified maintenance
-- Better scalability
+* Reduced YAML duplication
+* Reusable configuration
+* Environment-specific customization
+* Easier maintenance
+* Consistent Kubernetes configuration
+
+The current real AKS deployment uses:
+
+```bash
+kubectl apply -k kubernetes/overlays/prod
+```
+
+<img width="647" height="528" alt="Kustomize overlays" src="https://github.com/user-attachments/assets/67199aad-4ad0-47eb-b64a-88bcc322c7e3" />
 
 #### Evidence
 
@@ -1027,71 +1294,95 @@ Benefits include:
 
 ---
 
-# 🚀 GitOps with ArgoCD
+# 🚀 GitOps with Argo CD
 
-FlavorForge adopts GitOps using ArgoCD to automate Kubernetes deployments.
+Argo CD is installed in the AKS environment and configured with a FlavorForge Application definition.
 
-Instead of applying manifests directly from the CI pipeline, ArgoCD continuously monitors the Git repository and synchronizes the Kubernetes cluster with the declared desired state.
+The expected healthy state is:
+
+```text
+Sync Status : Synced
+Health      : Healthy
+```
+
+Argo CD provides:
+
+* Git-based desired state
+* Kubernetes synchronization
+* Drift visibility
+* Application health information
+* Deployment traceability
 
 ## Traditional Deployment
 
-<img width="352" height="356" alt="image" src="https://github.com/user-attachments/assets/18b2af9e-c863-40b6-b304-e66c572e8f3d" />
-
+<img width="352" height="356" alt="Traditional deployment" src="https://github.com/user-attachments/assets/18b2af9e-c863-40b6-b304-e66c572e8f3d" />
 
 ---
 
 ## GitOps Deployment
 
-<img width="457" height="497" alt="image" src="https://github.com/user-attachments/assets/3acaa746-9581-46da-8e5b-d45ed2ea8c3b" />
-
-
-The GitOps approach provides:
-
-- Declarative deployments
-- Continuous synchronization
-- Configuration drift detection
-- Simplified rollback
-- Improved deployment traceability
-- Git as the single source of truth
+<img width="457" height="497" alt="GitOps deployment" src="https://github.com/user-attachments/assets/3acaa746-9581-46da-8e5b-d45ed2ea8c3b" />
 
 #### Evidence
 
 ![ArgoCD Application Tree](screenshots/argo-cd/4-flavorforge-application-details-tree-argo-cd.png)
 
-*Figure 13.3 – ArgoCD managing and synchronizing the FlavorForge application deployed on AKS.*
+*Figure 13.3 – Argo CD managing and synchronizing the FlavorForge application deployed on AKS.*
 
 ---
 
 # 🧭 GitOps Deployment Workflow
 
-The deployment workflow implemented in FlavorForge follows a fully automated GitOps model.
+The GitOps demonstration follows this conceptual model:
 
-<img width="427" height="1077" alt="image" src="https://github.com/user-attachments/assets/1c4cd177-946b-4e78-bf31-08f0a41c7dd4" />
+```text
+Git Repository
+      │
+      ▼
+Kubernetes Manifests
+      │
+      ▼
+    Argo CD
+      │
+      ▼
+    AKS Cluster
+      │
+      ▼
+Running Workloads
+```
 
+<img width="427" height="1077" alt="GitOps deployment workflow" src="https://github.com/user-attachments/assets/1c4cd177-946b-4e78-bf31-08f0a41c7dd4" />
 
-This workflow separates application delivery from deployment management while ensuring every Kubernetes change remains version-controlled and auditable.
+This workflow demonstrates:
+
+* Declarative configuration
+* Git-based desired state
+* Synchronization
+* Drift detection
+* Deployment traceability
+* Operational visibility
+
+> **Note:** This GitOps model is demonstrated alongside the current Azure DevOps AKS deployment stage.
 
 ---
 
 # 📊 Monitoring & Operations
 
-Deploying an application is only part of operating a cloud-native platform.
+Operating a cloud-native application requires more than a successful deployment.
 
-FlavorForge incorporates monitoring and operational visibility to help engineers observe application health, troubleshoot issues, and verify that workloads continue to operate as expected.
+FlavorForge combines Kubernetes health information with Azure monitoring capabilities to provide operational visibility.
 
-The monitoring strategy combines Kubernetes health information with Azure platform monitoring.
+<img width="635" height="508" alt="Monitoring architecture" src="https://github.com/user-attachments/assets/24a4ceb2-981b-4abc-983b-20cf5bbc8814" />
 
-<img width="635" height="508" alt="image" src="https://github.com/user-attachments/assets/24a4ceb2-981b-4abc-983b-20cf5bbc8814" />
+Operational verification includes:
 
-
-Operational monitoring provides visibility into:
-
-- Cluster health
-- Pod availability
-- Service status
-- Deployment health
-- Load Balancer status
-- Application availability
+* Cluster health
+* Pod availability
+* Deployment health
+* Service status
+* Ingress status
+* Workload scaling
+* Application availability
 
 #### Evidence
 
@@ -1103,43 +1394,48 @@ Operational monitoring provides visibility into:
 
 # 🩺 Deployment Verification
 
-After deployment, the application was verified at multiple layers to ensure that every component functioned correctly.
+Deployment verification is performed at multiple layers.
 
-| Verification | Status |
-|--------------|--------|
-| Frontend Application | ✅ Verified |
-| Backend REST API | ✅ Verified |
-| Docker Images | ✅ Verified |
-| Azure Container Registry | ✅ Verified |
-| Kubernetes Deployments | ✅ Verified |
-| Services | ✅ Verified |
-| Ingress | ✅ Verified |
-| ArgoCD Synchronization | ✅ Verified |
+The objective is to avoid relying on a single pipeline-success indicator.
 
-Deployment verification confirms that the application is healthy and accessible through the Kubernetes platform.
+| Verification              | Status |
+| ------------------------- | :----: |
+| Frontend Application      |    ✅   |
+| Backend REST API          |    ✅   |
+| Docker Images             |    ✅   |
+| Azure Container Registry  |    ✅   |
+| Kubernetes Deployments    |    ✅   |
+| Kubernetes Pods           |    ✅   |
+| Services                  |    ✅   |
+| Ingress                   |    ✅   |
+| HPA                       |    ✅   |
+| Argo CD Synchronization   |    ✅   |
+| Application Accessibility |    ✅   |
+
+A deployment is considered verified only after checking the actual Kubernetes workloads and application behavior.
 
 #### Evidence
 
-![AKS Workloads](screenshots/azure/15-AKS%20Workloads%20(Deployments%20%26%20Pods).png)
+![AKS Workloads](/screenshots/azure/15-aks-workloads-deployments-pods.png)
 
 *Figure 14.2 – Running frontend and backend workloads successfully verified within Azure Kubernetes Service.*
 
 ---
 
-# 💻 Local Development Setup
+# 💻 Local Development
 
-Developers can run FlavorForge locally for development, testing, or troubleshooting before deploying to Azure.
+Developers can run FlavorForge locally for development, testing, or troubleshooting.
 
 ## Prerequisites
 
-Ensure the following tools are installed:
+Install:
 
-- Git
-- Node.js (v20 or later)
-- npm
-- Docker Desktop
+* Git
+* Node.js 20+
+* npm
+* Docker Desktop
 
-Verify the installations:
+Verify:
 
 ```bash
 git --version
@@ -1150,19 +1446,20 @@ docker --version
 
 ### Evidence
 
-#### Node.js Installation 
- <img width="727" height="132" alt="image" src="https://github.com/user-attachments/assets/97a3efaa-9f8c-47bd-b6c3-25d529feb5ce" />
+#### Node.js Installation
 
-#### npm Project Setup 
- <img width="1056" height="887" alt="image" src="https://github.com/user-attachments/assets/aeea4b6d-190d-4eed-a453-5beedf9b8cd1" />
+<img width="727" height="132" alt="Node.js installation" src="https://github.com/user-attachments/assets/97a3efaa-9f8c-47bd-b6c3-25d529feb5ce" />
 
+#### npm Project Setup
+
+<img width="1056" height="887" alt="npm project setup" src="https://github.com/user-attachments/assets/aeea4b6d-190d-4eed-a453-5beedf9b8cd1" />
 
 ---
 
-## Clone the Repository
+## Clone Repository
 
 ```bash
-git clone https://github.com/shettymalathib/flavorforge-azure-devsecops-capstone.git
+git clone https://github.com/bymalathi/flavorforge-azure-devsecops-capstone.git
 
 cd flavorforge-azure-devsecops-capstone
 ```
@@ -1171,14 +1468,14 @@ cd flavorforge-azure-devsecops-capstone
 
 ## Install Dependencies
 
-Frontend
+### Frontend
 
 ```bash
 cd frontend
 npm install
 ```
 
-Backend
+### Backend
 
 ```bash
 cd backend
@@ -1187,37 +1484,37 @@ npm install
 
 ---
 
-## Run the Application
+## Run Application
 
-Frontend
-
-```bash
-npm run dev
-```
-
-Backend
+### Frontend
 
 ```bash
 npm run dev
 ```
 
-The application will be available locally for development and testing.
+### Backend
+
+```bash
+npm run dev
+```
+
+The application can then be accessed locally for development and testing.
 
 ### Evidence
 
+#### Frontend Running
 
-#### Frontend Running 
-<img width="2217" height="1227" alt="image" src="https://github.com/user-attachments/assets/34d91fdd-719e-4755-9fb4-51e1d2ba14da" />
+<img width="2217" height="1227" alt="Frontend running" src="https://github.com/user-attachments/assets/34d91fdd-719e-4755-9fb4-51e1d2ba14da" />
 
+#### Backend Running
 
-#### Backend Running 
-<img width="836" height="517" alt="image" src="https://github.com/user-attachments/assets/b0d254bf-b2ba-4a7f-976c-17500865719d" />
+<img width="836" height="517" alt="Backend running" src="https://github.com/user-attachments/assets/b0d254bf-b2ba-4a7f-976c-17500865719d" />
 
 ---
 
-# 🐳 Running with Docker Local Execution
+# 🐳 Running with Docker
 
-FlavorForge can also be executed locally using Docker to ensure a consistent runtime environment.
+FlavorForge can also be executed locally using Docker.
 
 ## Build Images
 
@@ -1235,7 +1532,7 @@ docker run -d -p 3000:3000 flavorforge-backend
 docker run -d -p 5173:80 flavorforge-frontend
 ```
 
-Or use Docker Compose:
+Or, if Docker Compose is configured:
 
 ```bash
 docker compose up --build -d
@@ -1243,24 +1540,27 @@ docker compose up --build -d
 
 ### Evidence
 
-
 #### Docker Build
-<img width="1311" height="1220" alt="image" src="https://github.com/user-attachments/assets/cafc0657-7625-409b-b48b-b925b15e52ce" />
 
-#### Docker Images 
-<img width="1462" height="185" alt="image" src="https://github.com/user-attachments/assets/683d3e26-5d0b-4126-b1f2-d2aa696a4b7e" />
+<img width="1311" height="1220" alt="Docker build" src="https://github.com/user-attachments/assets/cafc0657-7625-409b-b48b-b925b15e52ce" />
 
-#### Running Containers 
-<img width="1262" height="822" alt="image" src="https://github.com/user-attachments/assets/2c0afd7f-815f-487f-960c-1c2e62576500" />
+#### Docker Images
 
-#### Docker Compose 
-<img width="1747" height="112" alt="image" src="https://github.com/user-attachments/assets/ec62cef1-b74d-4d28-aaad-4d2de917ceed" />
+<img width="1462" height="185" alt="Docker images" src="https://github.com/user-attachments/assets/683d3e26-5d0b-4126-b1f2-d2aa696a4b7e" />
+
+#### Running Containers
+
+<img width="1262" height="822" alt="Running Docker containers" src="https://github.com/user-attachments/assets/2c0afd7f-815f-487f-960c-1c2e62576500" />
+
+#### Docker Compose
+
+<img width="1747" height="112" alt="Docker Compose" src="https://github.com/user-attachments/assets/ec62cef1-b74d-4d28-aaad-4d2de917ceed" />
 
 ---
 
 # 🔍 Deployment Verification & Troubleshooting
 
-After deployment, verify that the application is healthy.
+After deployment, verify the Kubernetes resources and application health.
 
 ## Verify Kubernetes Resources
 
@@ -1272,6 +1572,8 @@ kubectl get svc
 kubectl get ingress
 
 kubectl get deployments
+
+kubectl get hpa
 ```
 
 ## View Pod Logs
@@ -1286,7 +1588,7 @@ kubectl logs <pod-name>
 kubectl describe pod <pod-name>
 ```
 
-## Verify ArgoCD
+## Verify Argo CD
 
 ```bash
 argocd app list
@@ -1298,38 +1600,43 @@ Expected:
 
 ```text
 Health : Healthy
-
 Sync Status : Synced
 ```
 
 ### Evidence
 
-#### kubectl get all 
-<img width="1025" height="467" alt="image" src="https://github.com/user-attachments/assets/667dfda7-b425-4ff3-87dd-27dac3c49dd4" />
+#### kubectl get all
 
-#### Ingress 
-<img width="1197" height="617" alt="image" src="https://github.com/user-attachments/assets/3868a8b1-adb3-4231-be36-9009b77b7db3" />
+<img width="1025" height="467" alt="kubectl get all" src="https://github.com/user-attachments/assets/667dfda7-b425-4ff3-87dd-27dac3c49dd4" />
 
-#### ArgoCD 
-<img width="2560" height="2769" alt="image" src="https://github.com/user-attachments/assets/d24dcf5f-226e-41df-a071-06e2a725ceb1" />
+#### Ingress
+
+<img width="1197" height="617" alt="Ingress" src="https://github.com/user-attachments/assets/3868a8b1-adb3-4231-be36-9009b77b7db3" />
+
+#### Argo CD
+
+<img width="2560" height="2769" alt="Argo CD" src="https://github.com/user-attachments/assets/d24dcf5f-226e-41df-a071-06e2a725ceb1" />
+
+For detailed troubleshooting procedures, see the Week 4 troubleshooting documentation.
 
 ---
 
 # 🧹 Cleanup & Azure Cost Management
 
-Cloud resources continue to incur charges while running. After completing testing or demonstrations, clean up unused resources to reduce Azure costs.
+Azure resources can incur costs while running.
+
+After demonstrations or testing, remove resources that are no longer required.
 
 ## Recommended Practices
 
-- Stop AKS clusters when not in use
-- Delete unused Resource Groups
-- Remove unused container images from ACR
-- Monitor Azure spending regularly
-- Use development-sized resources where appropriate
+* Delete unused Resource Groups
+* Remove unnecessary ACR images
+* Review AKS resources
+* Monitor Azure spending
+* Use appropriately sized development resources
+* Clean up resources after demonstrations
 
 ## Automation Scripts
-
-FlavorForge includes helper scripts for common lifecycle tasks.
 
 ```text
 scripts/
@@ -1347,36 +1654,45 @@ The cleanup script can be executed using:
 
 ### Evidence
 
-#### Resource Group 
-<img width="2560" height="1229" alt="image" src="https://github.com/user-attachments/assets/73470ec4-05b4-4007-af46-adae6271e4e1" />
+#### Resource Group
 
-#### Azure Resources 
-<img width="2560" height="1229" alt="image" src="https://github.com/user-attachments/assets/5d38f2c5-355a-40b3-98c8-3c0b32a7d02b" />
+<img width="2560" height="1229" alt="Azure Resource Group" src="https://github.com/user-attachments/assets/73470ec4-05b4-4007-af46-adae6271e4e1" />
 
+#### Azure Resources
+
+<img width="2560" height="1229" alt="Azure resources" src="https://github.com/user-attachments/assets/5d38f2c5-355a-40b3-98c8-3c0b32a7d02b" />
 
 ---
 
 # 📖 Documentation
 
-Comprehensive documentation is maintained alongside the application to support development, deployment, operations, troubleshooting, and project demonstrations.
+The project documentation is organized as a **BUILD-JOURNEY**, allowing a reviewer to follow the implementation chronologically.
 
-The documentation covers:
+The primary documentation covers:
 
-- Project setup
-- Backend implementation
-- Frontend implementation
-- Docker containerization
-- Kubernetes deployment
-- Azure infrastructure
-- Azure DevOps pipelines
-- Security implementation
-- GitOps with ArgoCD
-- Monitoring
-- Troubleshooting
-- Demo preparation
-- Operational runbooks
+```text
+01 Prerequisites
+02 GitHub
+03 Application
+04 Docker
+05 Azure
+06 Kubernetes
+07 Kustomize
+08 Azure DevOps
+09 SonarCloud
+10 Trivy
+11 Argo CD
+12 DevSecOps
+13 Documentation
+14 Troubleshooting
+15 Final Verification
+```
 
-Keeping documentation close to the source code improves maintainability, knowledge sharing, and project reproducibility.
+The Week 4 BUILD-JOURNEY contains implementation steps, commands, expected results, actual evidence, screenshots, and explanations.
+
+### Main Documentation
+
+👉 **[Week 4 BUILD-JOURNEY](docs/week-4/BUILD-JOURNEY/README.md)**
 
 #### Evidence
 
@@ -1386,89 +1702,132 @@ Keeping documentation close to the source code improves maintainability, knowled
 
 ---
 
-
-
-
-
 # 🧪 Verification Checklist
 
-The following components were successfully implemented and verified during the project lifecycle.
+The following components were implemented and verified during the project lifecycle.
 
-| Component | Verification |
-|-----------|:-----------:|
-| React Frontend | ✅ |
-| Node.js Backend | ✅ |
-| Docker Images | ✅ |
-| Azure Container Registry | ✅ |
-| Azure Kubernetes Service | ✅ |
-| Kubernetes Services | ✅ |
-| Ingress | ✅ |
-| Azure DevOps Pipeline | ✅ |
-| SonarCloud Analysis | ✅ |
-| Trivy Security Scan | ✅ |
-| ArgoCD GitOps | ✅ |
-| Azure Monitor | ✅ |
-| Engineering Documentation | ✅ |
+| Component                 | Verification |
+| ------------------------- | :----------: |
+| React Frontend            |       ✅      |
+| Node.js Backend           |       ✅      |
+| Docker Images             |       ✅      |
+| Azure Container Registry  |       ✅      |
+| Azure Kubernetes Service  |       ✅      |
+| Kubernetes Deployments    |       ✅      |
+| Kubernetes Services       |       ✅      |
+| Ingress                   |       ✅      |
+| HPA                       |       ✅      |
+| Azure DevOps Pipeline     |       ✅      |
+| SonarCloud Analysis       |       ✅      |
+| Trivy Security Scan       |       ✅      |
+| Argo CD GitOps            |       ✅      |
+| Azure Monitor             |       ✅      |
+| Engineering Documentation |       ✅      |
 
-This verification demonstrates that the project successfully delivers a complete production-inspired Azure DevSecOps implementation.
+This verification demonstrates the complete production-inspired Azure DevSecOps workflow implemented by FlavorForge.
 
 ---
 
 # 🚀 Future Enhancements
 
-Although FlavorForge demonstrates a complete production-inspired Azure DevSecOps platform, several enhancements could further extend its enterprise capabilities.
+FlavorForge is a **production-inspired** implementation rather than a claim of a fully enterprise production platform.
 
-## 🚀 Progressive Delivery
+Possible future improvements include:
 
-- Implement Blue-Green deployment strategies
-- Introduce Canary deployments for controlled releases
-- Configure automated rollback mechanisms using Argo Rollouts
+## Progressive Delivery
 
----
+* Blue-Green deployments
+* Canary deployments
+* Automated rollback
+* Argo Rollouts
 
-## 🔐 Enhanced Security
+## Enhanced Security
 
-- Integrate Azure Key Vault for secure secrets management
-- Enable policy enforcement using Open Policy Agent (OPA) or Azure Policy
-- Strengthen Kubernetes security with Network Policies and Pod Security Standards
+* Azure Key Vault
+* Azure Policy
+* OPA / Gatekeeper
+* Kubernetes Network Policies
+* Pod Security Standards
+* External secret management
 
----
+## Advanced Observability
 
-## 📊 Advanced Observability
+* Prometheus
+* Grafana
+* Centralized logging
+* Distributed tracing
+* Advanced alerting
 
-- Add Prometheus for metrics collection
-- Build Grafana dashboards for visualization
-- Implement centralized logging using Loki or the ELK Stack
+## Infrastructure as Code
 
----
+* Terraform-based Azure provisioning
+* Automated infrastructure lifecycle management
+* Infrastructure drift detection
 
-## ☁️ Infrastructure & Operations
+## Performance Engineering
 
-- Add automated performance and load testing
-- Implement automated backup and disaster recovery strategies
-- Expand multi-environment release governance with approval workflows
-- Provision and manage Azure infrastructure using Terraform
+* Automated load testing
+* Performance benchmarking
+* Capacity planning
+* Resilience testing
 
----
-
-These enhancements would further improve the platform's security, scalability, resilience, observability, and operational maturity while aligning with modern cloud-native and DevSecOps engineering best practices.
+These enhancements would further improve the platform's security, scalability, resilience, observability, and operational maturity.
 
 ---
 
 # 🎬 Demo Walkthrough
 
-The project can be demonstrated using the following sequence:
+A recommended demonstration sequence is:
 
-1. Present the project architecture and repository structure.
-2. Review the Azure infrastructure supporting the application.
-3. Trigger the Azure DevOps multi-stage pipeline.
-4. Demonstrate successful pipeline execution.
-5. Verify Docker images in Azure Container Registry.
-6. Review workloads running in Azure Kubernetes Service.
-7. Demonstrate ArgoCD synchronization.
-8. Access the application through the Ingress endpoint.
-9. Verify backend health endpoints.
-10. Review Azure Monitor for operational visibility.
+1. Introduce the FlavorForge application.
+2. Explain the overall architecture.
+3. Show the GitHub repository structure.
+4. Show the Azure infrastructure.
+5. Explain the Azure DevOps pipeline.
+6. Demonstrate code-quality validation with SonarCloud.
+7. Demonstrate container vulnerability scanning with Trivy.
+8. Show Docker images stored in Azure Container Registry.
+9. Show the AKS workloads.
+10. Show Kubernetes Services and Ingress.
+11. Show the Horizontal Pod Autoscaler.
+12. Show Argo CD synchronization and GitOps state.
+13. Access the running FlavorForge application.
+14. Verify the backend health endpoint.
+15. Review the final verification evidence.
+
+The demonstration should tell **one continuous story**:
+
+```text
+Code
+  ↓
+GitHub
+  ↓
+Azure DevOps
+  ↓
+Build / Validate
+  ↓
+SonarCloud
+  ↓
+Docker Build
+  ↓
+Trivy
+  ↓
+Azure Container Registry
+  ↓
+Real AKS Deployment
+  ↓
+Kubernetes / Kustomize
+  ↓
+Application
+  ↓
+Argo CD GitOps Synchronization
+  ↓
+Monitoring
+  ↓
+Verification
+```
+
+> **Important:** The current implementation contains a real Azure DevOps → AKS deployment stage. Argo CD is implemented alongside it to demonstrate GitOps synchronization and desired-state management.
 
 #### Evidence
 
@@ -1480,23 +1839,30 @@ The project can be demonstrated using the following sequence:
 
 # 📚 Key Learning Outcomes
 
-This capstone project provided practical experience across the complete DevSecOps lifecycle.
+This capstone provided practical experience across the complete DevSecOps lifecycle.
 
-Key areas of learning include:
+Key areas include:
 
-- Designing and developing a full-stack application
-- Containerizing applications using Docker
-- Managing container images with Azure Container Registry
-- Deploying workloads to Azure Kubernetes Service
-- Building automated Azure DevOps multi-stage pipelines
-- Integrating SonarCloud for code quality analysis
-- Performing container vulnerability scanning with Trivy
-- Implementing GitOps using ArgoCD
-- Managing Kubernetes resources with Kustomize
-- Monitoring cloud-native workloads using Azure Monitor
-- Creating enterprise-grade engineering documentation
+* Full-stack application development
+* Git and GitHub
+* Docker containerization
+* Azure Container Registry
+* Azure Kubernetes Service
+* Kubernetes deployments
+* Kustomize
+* Azure DevOps pipelines
+* SonarCloud
+* Trivy
+* Argo CD
+* GitOps concepts
+* Kubernetes autoscaling
+* Ingress
+* Azure monitoring
+* Deployment verification
+* Troubleshooting
+* Engineering documentation
 
-The project demonstrates how modern software engineering combines development, security, automation, cloud infrastructure, and operations into a unified DevSecOps workflow.
+The project demonstrates how application development, security, automation, cloud infrastructure, Kubernetes, GitOps, and operations can be combined into a unified DevSecOps workflow.
 
 ---
 
@@ -1506,87 +1872,51 @@ The FlavorForge documentation is organized to support the complete journey from 
 
 ## 🚀 Getting Started
 
-| #  | Documentation                                         | Purpose                                                    |
-| -- | ----------------------------------------------------- | ---------------------------------------------------------- |
-| 01 | [Documentation Home](docs/README.md)                  | Central index for all project documentation                |
-| 02 | [Implementation Guide](docs/implementation/README.md) | Complete implementation walkthrough                        |
-| 03 | [Build Journey](docs/BUILD-JOURNEY/BUILD-JOURNEY.md)  | Development journey from application to DevSecOps platform |
-
-## 🏗️ Application & Containerization
-
-| #  | Documentation                  | Purpose                                         |
-| -- | ------------------------------ | ----------------------------------------------- |
-| 04 | [Frontend](frontend/README.md) | React frontend architecture and development     |
-| 05 | [Backend](backend/README.md)   | Node.js and Express API documentation           |
-| 06 | [Docker](docker/README.md)     | Dockerfiles, image builds, and containerization |
+| #  | Documentation                                               | Purpose                                           |
+| -- | ----------------------------------------------------------- | ------------------------------------------------- |
+| 01 | [Week 4 BUILD-JOURNEY](docs/week-4/BUILD-JOURNEY/README.md) | Complete Week 4 implementation journey            |
+| 02 | [Week 4 Documentation](docs/week-4/)                        | Complete Week 4 documentation                     |
+| 03 | [Kubernetes](kubernetes/README.md)                          | Kubernetes manifests and deployment configuration |
+| 04 | [Argo CD](argocd/README.md)                                 | GitOps configuration                              |
+| 05 | [Docker](docker/README.md)                                  | Containerization                                  |
+| 06 | [Frontend](frontend/README.md)                              | Frontend documentation                            |
+| 07 | [Backend](backend/README.md)                                | Backend documentation                             |
+| 08 | [Scripts](scripts/README.md)                                | Automation scripts                                |
 
 ## ☁️ Azure & CI/CD
 
-| #  | Documentation                                    | Purpose                                             |
-| -- | ------------------------------------------------ | --------------------------------------------------- |
-| 07 | [Azure DevOps Pipeline](docs/pipeline/README.md) | CI/CD pipeline stages, configuration, and execution |
-| 08 | [Kubernetes](kubernetes/README.md)               | Kubernetes manifests and Kustomize environments     |
-| 09 | [Argo CD GitOps](argocd/README.md)               | GitOps deployment and synchronization               |
-| 10 | [Azure Architecture](docs/architecture/)         | Cloud and application architecture documentation    |
+| #  | Documentation                                    | Purpose                                         |
+| -- | ------------------------------------------------ | ----------------------------------------------- |
+| 09 | [Azure DevOps Pipeline](docs/pipeline/README.md) | CI/CD pipeline stages and execution             |
+| 10 | [Kubernetes](kubernetes/README.md)               | Kubernetes manifests and Kustomize environments |
+| 11 | [Argo CD GitOps](argocd/README.md)               | GitOps deployment and synchronization           |
+| 12 | [Azure Architecture](docs/architecture/)         | Cloud and application architecture              |
 
 ## 🔍 Verification & Operations
 
 | #  | Documentation                                                               | Purpose                                             |
 | -- | --------------------------------------------------------------------------- | --------------------------------------------------- |
-| 11 | [Verification Reports](docs/project/04-verification-and-validation-report/) | Deployment and implementation verification evidence |
-| 12 | [API Documentation](docs/api/README.md)                                     | Backend API reference and health endpoints          |
-| 13 | [Troubleshooting Guide](docs/troubleshooting/README.md)                     | Common problems and resolution procedures           |
-| 14 | [Cleanup & Cost Management](docs/cleanup/README.md)                         | Azure resource cleanup and cost-control guidance    |
+| 13 | [Verification Reports](docs/project/04-verification-and-validation-report/) | Deployment and implementation verification evidence |
+| 14 | [Troubleshooting Guide](docs/troubleshooting/README.md)                     | Common problems and resolution procedures           |
+| 15 | [Cleanup & Cost Management](docs/cleanup/README.md)                         | Azure resource cleanup and cost-control guidance    |
+| 16 | [API Documentation](docs/api/README.md)                                     | Backend API reference and health endpoints          |
 
 ## 🏛️ Engineering Governance
 
-| #  | Documentation                              | Purpose                                               |
-| -- | ------------------------------------------ | ----------------------------------------------------- |
-| 15 | [Architecture Decision Records](docs/adr/) | Important architectural decisions and their rationale |
-| 16 | [Security Policy](SECURITY.md)             | Security practices and vulnerability reporting        |
-| 17 | [License](LICENSE)                         | MIT License                                           |
-
-## 🎬 Demo & Presentation
-
-| #  | Documentation        | Purpose                                               |
-| -- | -------------------- | ----------------------------------------------------- |
-| 18 | Demo Day Guide       | End-to-end project demonstration flow                 |
-| 19 | Presentation Guide   | Presentation structure and speaker guidance           |
-| 20 | Demo Startup Runbook | Steps required before starting the live demonstration |
+| #  | Documentation                  | Purpose                                        |
+| -- | ------------------------------ | ---------------------------------------------- |
+| 17 | [Security Policy](SECURITY.md) | Security practices and vulnerability reporting |
+| 18 | [License](LICENSE)             | MIT License                                    |
 
 > **Recommended reading order:**
-> **Documentation Home → Implementation Guide → Build Journey → Pipeline → Kubernetes → Argo CD → Verification → Troubleshooting → Demo Guide**
-
----
-
-# 📚 Documentation
-
-The complete project documentation is organized by topic for easier navigation.
-
-| Documentation | Description |
-|---------------|-------------|
-| 📖 [Documentation Home](docs/README.md) | Central documentation index |
-| 🏗️ [Implementation Guide](docs/implementation/README.md) | Complete implementation walkthrough |
-| 🚀 [Azure DevOps Pipeline](docs/pipeline/README.md) | Azure DevOps setup and CI/CD pipeline documentation |
-| ☸️ [Kubernetes](kubernetes/README.md) | Kubernetes manifests, Kustomize overlays, and deployment |
-| 🔄 [Argo CD GitOps](argocd/README.md) | GitOps deployment and synchronization |
-| 🐳 [Docker](docker/README.md) | Docker build and containerization |
-| 🌐 [Backend](backend/README.md) | Backend application documentation |
-| 🎨 [Frontend](frontend/README.md) | Frontend application documentation |
-| 🛠️ [Scripts](scripts/README.md) | Automation and helper scripts |
-| 📊 [Verification Reports](docs/project/04-verification-and-validation-report/) | Project verification documents |
-| 🔍 [Troubleshooting](docs/troubleshooting/README.md) | Common issues and solutions |
-| 🧹 [Cleanup Guide](docs/cleanup/README.md) | Azure cleanup and cost management |
-| 📖 [API Documentation](docs/api/README.md) | Backend API reference |
-| 🏛️ [Architecture](docs/architecture/) | Architecture documentation |
-| 📑 [Architecture Decisions (ADR)](docs/adr/) | Design decision records |
-| 📝 [Build Journey](docs/BUILD-JOURNEY/BUILD-JOURNEY.md) | Complete project development journey |
+>
+> **BUILD-JOURNEY → Azure → Kubernetes → Kustomize → Azure DevOps → SonarCloud → Trivy → Argo CD → Troubleshooting → Final Verification**
 
 ---
 
 # 🔐 Security
 
-Security practices, vulnerability reporting, and secret management guidelines are documented in:
+Security practices, vulnerability reporting, and secret-management guidance are documented in:
 
 [SECURITY.md](SECURITY.md)
 
@@ -1596,15 +1926,24 @@ Security practices, vulnerability reporting, and secret management guidelines ar
 
 This project is licensed under the **MIT License**.
 
-See the [LICENSE](LICENSE) file for complete license details.
+See [LICENSE](LICENSE) for details.
 
 ---
 
 # 🙏 Acknowledgements
 
-This project was completed as part of the **CareerByteCode (CBC) DevSecOps Internship** and reflects the practical application of cloud-native development, DevSecOps automation, Kubernetes orchestration, GitOps, and Microsoft Azure services.
+This project was completed as part of the **CareerByteCode (CBC) DevSecOps Internship** and provided practical experience with:
 
-Special thanks to the CBC mentors and the DevOps community for providing valuable learning resources, guidance, and best practices throughout the project.
+* Cloud-native development
+* DevSecOps automation
+* Kubernetes orchestration
+* GitOps
+* Microsoft Azure
+* CI/CD
+* Container security
+* Engineering documentation
+
+Special thanks to the CBC mentors and the DevOps community for their guidance, learning resources, and engineering practices.
 
 ---
 
@@ -1616,11 +1955,9 @@ Senior Software Test Engineer transitioning into DevSecOps and Cloud Engineering
 
 ### Connect
 
-- GitHub: [bymalathi](https://github.com/bymalathi)
-- LinkedIn: [Malathi Shetty](https://www.linkedin.com/in/bymalathi/)
+* GitHub: [bymalathi](https://github.com/bymalathi)
+* LinkedIn: [Malathi Shetty](https://www.linkedin.com/in/bymalathi/)
 
 ---
 
-> **FlavorForge demonstrates how a simple full-stack application can be transformed into a production-inspired Azure DevSecOps platform through automation, security, cloud-native infrastructure, GitOps, and operational excellence.**
-
-
+> **FlavorForge demonstrates how a full-stack application can be transformed into a production-inspired Azure DevSecOps platform through automation, security, containerization, Kubernetes, GitOps, and operational verification.**
