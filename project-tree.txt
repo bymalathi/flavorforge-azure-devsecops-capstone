@@ -78,6 +78,29 @@
 │   │   ├── 03-cost-management.md
 │   │   └── README.md
 │   ├── diagrams
+│   │   ├── AKS Cluster Architecture Overview.png
+│   │   ├── AKS deployment.png
+│   │   ├── Argo CD GitOps Pipeline Architecture.png
+│   │   ├── Azure DevOps CICD Pipeline to AKS.png
+│   │   ├── Azure DevOps Deployment.png
+│   │   ├── Azure DevOps to Verified Pods Pipeline.png
+│   │   ├── Build and Test Pipeline Overview.png
+│   │   ├── Container Security and Image Flow.png
+│   │   ├── DevOps CICD Pipeline Code to Deployment.png
+│   │   ├── DevOps Pipeline Results.png
+│   │   ├── FLAVORFORGE CICD and GitOps Architecture.png
+│   │   ├── GitOps Deployment Pipeline on AKS.png
+│   │   ├── GitOps Flow From Git to AKS.png
+│   │   ├── How My Azure DevOps Pipeline Actually Works.png
+│   │   ├── Main Branch Push Pipeline Flow.png
+│   │   ├── Project Objective Azure DevSecOps Workflow Overview.png
+│   │   ├── Secure DevOps -CICD Pipeline Code to Deployment.png
+│   │   ├── Secure DevOps Pipeline.png
+│   │   ├── Security Scan Pipeline.png
+│   │   ├── Security.png
+│   │   ├── The Real AKS Deployment Flow.png
+│   │   ├── Traditional vs DevSecOps Flow Comparison.png
+│   │   ├── What Happens After Validation.png
 │   │   ├── azure-deployment-architecture-diagram.png
 │   │   ├── before-after-gitops-architecture.png
 │   │   ├── cloud-observability-architecture-diagram.png
@@ -112,7 +135,8 @@
 │   │   ├── 09-presentation-slides.md
 │   │   ├── 10-demo-environment-reset.md
 │   │   ├── 11-demo-startup-runbook.md
-│   │   └── FlavorForge Azure DevSecOps Capstone Project.pptx
+│   │   ├── FlavorForge Azure DevSecOps Capstone Project.pptx
+│   │   └── FlavorForge_Azure_DevSecOps_Capstone_Presentation_FINAL.pptx
 │   ├── project
 │   │   ├── 01-problem-statement.md
 │   │   ├── 02-project-objectives.md
@@ -168,10 +192,19 @@
 │           ├── 14-troubleshooting
 │           ├── 15-final-verification
 │           ├── BUILD-JOURNEY.md
+│           ├── Final.md
 │           └── README.md
 ├── frontend
 │   ├── Dockerfile
 │   ├── README.md
+│   ├── dist
+│   │   ├── assets
+│   │   │   ├── hero-CLDdwZDr.png
+│   │   │   ├── index-BtrBGv9r.js
+│   │   │   └── index-DuGxfU-t.css
+│   │   ├── favicon.svg
+│   │   ├── icons.svg
+│   │   └── index.html
 │   ├── eslint.config.js
 │   ├── index.html
 │   ├── nginx.conf.template
@@ -607,4 +640,4 @@
     │   └── 02-git-verification.mp4
     └── presentation-demo-recreated.mp4
 
-117 directories, 491 files
+119 directories, 522 files
